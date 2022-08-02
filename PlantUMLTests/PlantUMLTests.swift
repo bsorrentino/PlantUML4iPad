@@ -33,4 +33,28 @@ class PlantUMLTests: XCTestCase {
         }
     }
 
+    func testSwiftPlantUML() {
+
+        let clazz = SyntaxStructure(
+            accessibility: .open,
+            attribute: nil,
+            attributes: nil,
+            elements: nil,
+            inheritedTypes: nil,
+            kind: .class,
+            name: "test",
+            runtimename: nil,
+            substructure: nil,
+            typename: nil
+        )
+
+        let script = PlantUMLScript( items: [clazz] )
+
+        let presenter = PlantUMLBrowserPresenter( format: .imagePng)
+
+        let url = presenter.url( of: script )
+        
+        print( url )
+
+    }
 }

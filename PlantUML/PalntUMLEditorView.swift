@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct PalntUMLEditorView: View {
     @Binding var document: PlantUMLDocument
 
     var body: some View {
@@ -17,6 +17,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(document: .constant(PlantUMLDocument()))
+        PalntUMLEditorView(document: .constant(PlantUMLDocument()))
     }
 }

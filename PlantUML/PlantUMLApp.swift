@@ -11,7 +11,7 @@ import SwiftUI
 struct PlantUMLApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: PlantUMLDocument()) { file in
-            ContentView(document: file.$document)
+            PalntUMLEditorView(document: file.$document)
         }
     }
 }
