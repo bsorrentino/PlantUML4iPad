@@ -20,6 +20,8 @@ struct PlantUMLTextField: View  {
     
     var body: some View {
         TextField( "", text: $value )
+            .textInputAutocapitalization(.never)
+            .font(Font.system(size: 15).monospaced())
             .submitLabel(.done)
             .onChange(of: value
                       , perform: onChange )
@@ -34,27 +36,21 @@ struct PalntUMLEditorView: View {
     @Binding var document: PlantUMLDocument
     
     @FocusState var focusedItem: Focusable?
+
+    func SaveButton() -> some View {
         
+        Button( action: saveToDocument ) {
+            Label( "Save", systemImage: "arrow.down.doc.fill" )
+            // .labelStyle(.titleOnly)
+        }
+    }
+
     func PreviewButton() -> some View {
         
         Link(destination: diagram.buildURL(), label: {
             Text("Preview")
                 .foregroundColor(.orange)
         })
-//        Button( action: {
-//
-//        }) {
-//            Label {
-//                Text( "Preview")
-//                    .clipShape(Capsule())
-//            } icon: {
-//                Image( "uml")
-//                    .resizable()
-//                    .frame(width: 64.0, height: 64.0, alignment: .center)
-//                    .clipShape(Capsule())
-//            }
-//            .labelStyle(.titleOnly)
-//        }
     }
     
     func AddAboveButton() -> some View {
@@ -106,11 +102,16 @@ struct PalntUMLEditorView: View {
         .toolbar {
             ToolbarItemGroup {
                 PreviewButton()
+                SaveButton()
             }
         }
         
     }
 
+    internal func saveToDocument() {
+        document.text = diagram.description
+    }
+    
     internal func indexFromFocusedItem() -> Int? {
         if case .row(let id) = focusedItem {
             
