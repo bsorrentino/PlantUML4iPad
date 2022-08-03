@@ -86,9 +86,6 @@ public struct PlantUMLScript {
     }
 
     mutating func processStructureItem(item: SyntaxStructure, index _: Int) -> String? {
-        let processableKinds: [ElementKind] = [.class, .struct, .extension, .enum, .protocol]
-        guard let elementKind = item.kind else { return nil }
-        guard processableKinds.contains(elementKind) else { return nil }
-        return item.plantuml(context: context) ?? nil
+        return item.rawValue
     }
 }

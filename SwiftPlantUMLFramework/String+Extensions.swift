@@ -46,17 +46,5 @@ internal extension String {
 
 internal extension String {
     mutating func addOrSkipMemberAccessLevelAttribute(for element: SyntaxStructure, basedOn configuration: Configuration) {
-        guard configuration.elements.showMemberAccessLevelAttribute == true else { return }
-
-        switch element.accessibility {
-        case .public, .open:
-            self += "+"
-        case .internal:
-            self += "~"
-        case .private:
-            self += "-"
-        default:
-            ()
-        }
     }
 }

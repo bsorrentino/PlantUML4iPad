@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "139024BC-705D-4356-9F0A-E9B6F1D4F745"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SwiftPlantUMLFramework/PlantUMLScript.swift"
@@ -18,38 +18,6 @@
             endingLineNumber = "45"
             landmarkName = "init(items:configuration:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "139024BC-705D-4356-9F0A-E9B6F1D4F745 - 176c2002a7b0936a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PlantUML.PlantUMLScript.init(items: Swift.Array&lt;PlantUML.SyntaxStructure&gt;, configuration: PlantUML.Configuration) -&gt; PlantUML.PlantUMLScript"
-                  moduleName = "PlantUML"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bsorrentino/WORKSPACES/GITHUB.me/AppleOS/PlantUML/SwiftPlantUMLFramework/PlantUMLScript.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45"
-                  offsetFromSymbolStart = "1008">
-               </Location>
-               <Location
-                  uuid = "139024BC-705D-4356-9F0A-E9B6F1D4F745 - 3fd4bfd96a25c0e0"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "PlantUMLTests.PlantUMLScript.init(items: Swift.Array&lt;PlantUMLTests.SyntaxStructure&gt;, configuration: PlantUMLTests.Configuration) -&gt; PlantUMLTests.PlantUMLScript"
-                  moduleName = "PlantUMLTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/bsorrentino/WORKSPACES/GITHUB.me/AppleOS/PlantUML/SwiftPlantUMLFramework/PlantUMLScript.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "45"
-                  endingLineNumber = "45"
-                  offsetFromSymbolStart = "1008">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
