@@ -13,13 +13,16 @@ import WebKit
  
 struct PlantUMLDiagramView: UIViewRepresentable {
  
-    var url: URL
+    var url: URL?
  
     func makeUIView(context: Context) -> WKWebView {
         return WKWebView()
     }
  
     func updateUIView(_ webView: WKWebView, context: Context) {
+        guard let url = url else {
+            return
+        }
         let request = URLRequest(url: url)
         webView.load(request)
     }

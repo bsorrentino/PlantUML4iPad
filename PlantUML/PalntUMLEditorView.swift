@@ -36,21 +36,32 @@ struct PalntUMLEditorView: View {
     @Binding var document: PlantUMLDocument
     
     @FocusState var focusedItem: Focusable?
-
+    
+    @State private var isPreviewVisible = false
+    
     func SaveButton() -> some View {
         
         Button( action: saveToDocument ) {
             Label( "Save", systemImage: "arrow.down.doc.fill" )
-            // .labelStyle(.titleOnly)
+                .labelStyle(.titleOnly)
         }
     }
 
     func PreviewButton() -> some View {
         
-        Link(destination: diagram.buildURL(), label: {
-            Text("Preview")
-                .foregroundColor(.orange)
-        })
+        Button {
+            withAnimation {
+                isPreviewVisible.toggle()
+            }
+        }
+        label: {
+            Label( "Preview", systemImage: "" )
+                .labelStyle(.titleOnly)
+        }
+//        Link(destination: diagram.buildURL(), label: {
+//            Text("Preview")
+//                .foregroundColor(.orange)
+//        })
     }
     
     func AddAboveButton() -> some View {
@@ -71,14 +82,14 @@ struct PalntUMLEditorView: View {
     }
 
     // MARK: Editor View
-    func EditorView() -> some View {
+    func PlantUMLEditorView() -> some View {
         List() {
             ForEach( diagram.items ) { item in
                 
                 PlantUMLTextField( value: item.rawValue, onChange: updateItem )
                     .focused($focusedItem, equals: .row(id: item.id))
                     .onSubmit(of: .text) {
-                        openURL( diagram.buildURL() )
+                        // openURL( diagram.buildURL() )
                     }
 
 
@@ -98,15 +109,23 @@ struct PalntUMLEditorView: View {
     }
     
     var body: some View {
-        EditorView()
+        HStack {
+            PlantUMLEditorView()
+            if !isPreviewVisible {
+                PlantUMLDiagramView( url: diagram.buildURL() )
+            }
+        }
         .toolbar {
-            ToolbarItemGroup {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
                 PreviewButton()
+            }
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
                 SaveButton()
             }
         }
         
     }
+
 
     internal func saveToDocument() {
         document.text = diagram.description
