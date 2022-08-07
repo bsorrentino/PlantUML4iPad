@@ -30,12 +30,13 @@ struct PlantUMLTextField: View  {
     
 }
 struct PalntUMLEditorView: View {
-    @Environment(\.openURL) var openURL
-    @EnvironmentObject var diagram: PlantUMLDiagramObject
+    @Environment(\.editMode) private var editMode
+    @Environment(\.openURL) private var openURL
+    @EnvironmentObject private var diagram: PlantUMLDiagramObject
     
     @Binding var document: PlantUMLDocument
     
-    @FocusState var focusedItem: Focusable?
+    @FocusState private var focusedItem: Focusable?
     
     @State private var isPreviewVisible = false
     
@@ -63,20 +64,36 @@ struct PalntUMLEditorView: View {
 //                .foregroundColor(.orange)
 //        })
     }
-    
-    func AddAboveButton() -> some View {
+    func AddCloneButton( theItem item: SyntaxStructure ) -> some View {
         
-        Button( action: addAbove ) {
-            Label( "add above",
-                   systemImage: "plus.rectangle")
+        return Button {
+            clone( theItem: item )
+        } label: {
+            Label( "clone",
+                   systemImage: "arrow.down.doc")
             .labelStyle(.titleAndIcon)
         }
     }
 
-    func AddBelowButton() -> some View {
-        Button( action: addBelow ) {
+    
+    func AddAboveButton( theItem item: SyntaxStructure? = nil ) -> some View {
+        
+        return Button {
+            addAbove( theItem: item )
+        } label: {
+            Label( "add above",
+                   systemImage: "arrow.up")
+            .labelStyle(.titleAndIcon)
+        }
+    }
+
+    func AddBelowButton( theItem item: SyntaxStructure? = nil ) -> some View {
+        
+        return Button {
+            addBelow( theItem: item )
+        } label: {
             Label( "add below",
-                   systemImage: "plus.rectangle")
+                   systemImage: "arrow.down")
             .labelStyle(.titleAndIcon)
         }
     }
@@ -86,11 +103,21 @@ struct PalntUMLEditorView: View {
         List() {
             ForEach( diagram.items ) { item in
                 
-                PlantUMLTextField( value: item.rawValue, onChange: updateItem )
-                    .focused($focusedItem, equals: .row(id: item.id))
-                    .onSubmit(of: .text) {
-                        // openURL( diagram.buildURL() )
+                HStack {
+                    if editMode?.wrappedValue != .active {
+                        Image(systemName: "plus")
+                            .contextMenu {
+                                AddBelowButton( theItem: item )
+                                AddAboveButton( theItem: item )
+                                AddCloneButton( theItem: item )
+                            }
                     }
+                    PlantUMLTextField( value: item.rawValue, onChange: updateItem )
+                        .focused($focusedItem, equals: .row(id: item.id))
+                        .onSubmit(of: .text) {
+                            // openURL( diagram.buildURL() )
+                        }
+                }
 
 
             }
@@ -100,8 +127,8 @@ struct PalntUMLEditorView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
-                AddAboveButton()
                 AddBelowButton()
+                AddAboveButton()
             }
          }
         .listStyle(SidebarListStyle())
@@ -120,13 +147,18 @@ struct PalntUMLEditorView: View {
                 PreviewButton()
             }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
+                EditButton()
                 SaveButton()
             }
         }
         
     }
 
+}
 
+// MARK: ACTIONS
+extension PalntUMLEditorView {
+    
     internal func saveToDocument() {
         document.text = diagram.description
     }
@@ -146,29 +178,42 @@ struct PalntUMLEditorView: View {
         diagram.items[ offset ].rawValue = value
    }
     
-   func addBelow() {
-        
-        guard let offset = indexFromFocusedItem() else {
-            return
-        }
-        
+    func addBelow( theItem item: SyntaxStructure? ) {
+        let offset = (item != nil) ?
+            diagram.items.firstIndex { $0.id == item!.id } :
+            indexFromFocusedItem()
+
+        guard let offset = offset else { return }
         let newItem = SyntaxStructure( rawValue: "")
         
         diagram.items.insert( newItem, at: offset + 1)
         focusedItem = .row( id: newItem.id )
     }
 
-    func addAbove() {
-        guard let offset = indexFromFocusedItem() else {
-            return
-        }
-        
+    func addAbove( theItem item: SyntaxStructure? ) {
+        let offset = (item != nil) ?
+            diagram.items.firstIndex { $0.id == item!.id } :
+            indexFromFocusedItem()
+
+        guard let offset = offset else { return }
+
         let newItem = SyntaxStructure( rawValue: "")
         
         diagram.items.insert( newItem, at: offset )
         focusedItem = .row( id: newItem.id )
     }
 
+    func clone( theItem item: SyntaxStructure ) {
+        guard let offset = diagram.items.firstIndex( where: { $0.id == item.id } ) else {
+            return
+        }
+        
+        let newItem = SyntaxStructure( rawValue: item.rawValue)
+        
+        diagram.items.insert( newItem, at: offset )
+        focusedItem = .row( id: newItem.id )
+
+    }
     func delete(at offsets: IndexSet) {
         diagram.items.remove(atOffsets: offsets)
         focusedItem = nil
@@ -178,6 +223,7 @@ struct PalntUMLEditorView: View {
         diagram.items.move(fromOffsets: source, toOffset: destination)
         focusedItem = nil
     }
+
 }
 
 struct ContentView_Previews: PreviewProvider {

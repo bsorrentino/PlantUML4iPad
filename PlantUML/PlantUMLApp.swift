@@ -14,7 +14,7 @@ struct PlantUMLApp: App {
         DocumentGroup(newDocument: PlantUMLDocument()) { file in
             
             PalntUMLEditorView(document: file.$document)
-                .environment(\.editMode, Binding.constant(EditMode.active))
+//                .environment(\.editMode, Binding.constant(EditMode.active))
                 .environmentObject( PlantUMLDiagramObject( document: file.document))
                 
         }
