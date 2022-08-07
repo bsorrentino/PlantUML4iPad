@@ -17,7 +17,7 @@ extension UTType {
 struct PlantUMLDocument: FileDocument {
     var text: String
 
-    init(text: String = "") {
+    init(text: String = "Title untitled") {
         self.text = text
     }
 
