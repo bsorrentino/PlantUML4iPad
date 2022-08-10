@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:PlantUML.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:emoji Keyboard/emoji Kayboard.xcodeproj">
+   </FileRef>
+</Workspace>
