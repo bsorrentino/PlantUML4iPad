@@ -148,6 +148,7 @@
 		A0D3C6C72898770F000838D7 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A0D3C6C82898770F000838D7 /* NoLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoLogger.swift; sourceTree = "<group>"; };
 		A0D3C71D28987D94000838D7 /* SwiftPlantUML.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SwiftPlantUML.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +179,7 @@
 		A0D3C63D28984A0E000838D7 = {
 			isa = PBXGroup;
 			children = (
+				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
 				A0C1657C289FD315004EB5C7 /* SwiftPlantUMLView.playground */,
 				A0A42A7B289AD9FA00E929EB /* README.md */,
 				A0D3C71D28987D94000838D7 /* SwiftPlantUML.playground */,
