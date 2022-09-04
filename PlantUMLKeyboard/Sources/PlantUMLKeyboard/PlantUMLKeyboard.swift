@@ -77,7 +77,7 @@ struct PlantUMLKeyboardView: View {
 }
 
 
-struct PlantUMLKeyboardViewPreviews: PreviewProvider {
+struct PlantUMLKeyboardView_Previews: PreviewProvider {
     static var previews: some View {
         PlantUMLKeyboardView( show: Binding.constant(true), txt: Binding.constant("TEST"))
     }
