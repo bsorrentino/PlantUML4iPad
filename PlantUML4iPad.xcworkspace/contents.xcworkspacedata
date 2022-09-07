@@ -5,6 +5,9 @@
       location = "group:PlantUML.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:PlantUMLUITests/../README.md">
+   </FileRef>
+   <FileRef
       location = "group:emoji Keyboard/emoji Kayboard.xcodeproj">
    </FileRef>
 </Workspace>

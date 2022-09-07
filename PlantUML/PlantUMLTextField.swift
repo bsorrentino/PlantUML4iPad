@@ -6,15 +6,92 @@
 //
 
 import SwiftUI
+import PlantUMLKeyboard
+
+fileprivate struct PlantUMLTextField_old: View  {
+    @State var value: String
+    
+    var onChange: ( String ) -> Void
+    
+    var body: some View {
+        TextField( "", text: $value )
+            .textInputAutocapitalization(.never)
+            .font(Font.system(size: 15).monospaced())
+            .submitLabel(.done)
+            .onChange(of: value
+                      , perform: onChange )
+
+    }
+    
+}
 
 struct PlantUMLTextField: View {
+    @State var value: String
+    @Binding var showKeyboard: Bool
+    
+    @FocusState private var isFocused: Bool
+    
+    var onChange: ( String ) -> Void
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+
+        VStack {
+            
+            HStack(spacing: 15){
+                
+                TextField( "", text: $value )
+                    .textInputAutocapitalization(.never)
+                    .font(Font.system(size: 15).monospaced())
+                    .submitLabel(.done)
+                    .focused($isFocused)
+                    .onChange(of: value, perform: onChange )
+                    
+                if( isFocused ) {
+                    ShowKeyboardAccessoryButton
+                }
+            }
+            
+        }
+//        .background(Color("Color")
+//        .animation(.easeInOut(duration: 2), value: 1.0)
+        .edgesIgnoringSafeArea(.all)
+        .onAppear {
+                
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillChangeFrameNotification,
+                                                   object: nil,
+                                                   queue: .main) { (_) in
+                self.showKeyboard = false
+            }
+        }
+
     }
 }
 
+extension PlantUMLTextField {
+    
+    var ShowKeyboardAccessoryButton: some View {
+        
+            Button(action: {
+                
+                print( "show keyboard")
+                
+                if let rootViewController = getRootViewController() {
+                    rootViewController.view.endEditing(true)
+                }
+                
+                self.showKeyboard.toggle()
+                
+            }) {
+                
+                Image(systemName: "smiley").foregroundColor(.black.opacity(0.5))
+            }
+    }
+}
+
+
 struct PlantUMLTextField_Previews: PreviewProvider {
     static var previews: some View {
-        PlantUMLTextField()
+        PlantUMLTextField(value: "test", showKeyboard: .constant(false), onChange:  { (v) in } )
     }
 }

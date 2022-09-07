@@ -1,13 +1,35 @@
 import SwiftUI
 import UIKit
 
+func getFirstWindow() -> UIWindow? {
+    
+    let scenes = UIApplication.shared.connectedScenes
+    guard let windowScene = scenes.first as? UIWindowScene else {
+        return nil
+    }
+    guard let window = windowScene.windows.first else {
+        return nil
+    }
+    return window
 
-struct PlantUMLKeyboardView: View {
+}
+
+public func getRootViewController() -> UIViewController? {
+    getFirstWindow()?.rootViewController
+}
+
+
+public struct PlantUMLKeyboardView: View {
         
     @Binding var show : Bool
-    @Binding var txt : String
+    @Binding var value : String
     
-    var body : some View{
+    public init( show: Binding<Bool>, value: Binding<String> ) {
+        self._show = show
+        self._value = value
+    }
+    
+    public var body : some View{
         
         ZStack(alignment: .topLeading) {
             
@@ -23,7 +45,7 @@ struct PlantUMLKeyboardView: View {
                                 
                                 Button(action: {
                                     
-                                    self.txt += String(UnicodeScalar(j)!)
+                                    self.value += String(UnicodeScalar(j)!)
                                     
                                 }) {
                                     
@@ -79,6 +101,6 @@ struct PlantUMLKeyboardView: View {
 
 struct PlantUMLKeyboardView_Previews: PreviewProvider {
     static var previews: some View {
-        PlantUMLKeyboardView( show: Binding.constant(true), txt: Binding.constant("TEST"))
+        PlantUMLKeyboardView( show: Binding.constant(true), value: Binding.constant("TEST"))
     }
 }
