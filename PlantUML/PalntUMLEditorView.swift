@@ -51,7 +51,7 @@ struct PalntUMLEditorView: View {
             if( showKeyboard ) {
             
                 PlantUMLKeyboardView(
-                    show: Binding.constant(true),
+                    show: $showKeyboard,
                     value:Binding.constant("")
                 )
             }
