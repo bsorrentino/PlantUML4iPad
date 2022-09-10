@@ -14,10 +14,53 @@ func getFirstWindow() -> UIWindow? {
 
 }
 
+// https://stackoverflow.com/a/1823360/521197
+extension UIView {
+    
+    var firstResponder: UIView? {
+        guard !isFirstResponder else { return self }
+
+        for subview in subviews {
+            if let firstResponder = subview.firstResponder {
+                return firstResponder
+            }
+        }
+
+        return nil
+    }
+}
+
+func getFirstTextFieldResponder() -> UITextField? {
+    
+    let scenes = UIApplication.shared.connectedScenes
+    guard let windowScene = scenes.first as? UIWindowScene else {
+        return nil
+    }
+    guard let window = windowScene.windows.first else {
+        return nil
+    }
+    
+    guard let firstResponder = window.firstResponder else {
+        return nil
+    }
+    
+    return firstResponder as? UITextField
+}
+
 public func getRootViewController() -> UIViewController? {
     getFirstWindow()?.rootViewController
 }
 
+fileprivate var plantUMLSymbols = [
+    ["actor",
+    "boundary",
+    "control",
+    "entity",
+    "database",
+    "collections",
+    "queue"],
+
+]
 
 public struct PlantUMLKeyboardView: View {
         
@@ -35,28 +78,23 @@ public struct PlantUMLKeyboardView: View {
             
             ScrollView(.vertical, showsIndicators: false) {
                 
-                VStack(spacing: 15){
+                VStack(spacing: 5){
                     
-                    ForEach(self.getEmojiList(),id: \.self){i in
+                    ForEach(plantUMLSymbols,id: \.self) { i in
                         
-                        HStack(spacing: 25){
+                        HStack(spacing: 10){
                             
-                            ForEach(i,id: \.self){j in
+                            ForEach(i,id: \.self) { symbol in
                                 
                                 Button(action: {
                                     
-                                    self.value += String(UnicodeScalar(j)!)
+                                    self.value = symbol
                                     
+                                    print( "TextViewResponder \(String(describing: getFirstTextFieldResponder()))")
                                 }) {
                                     
-                                    if (UnicodeScalar(j)?.properties.isEmoji)!{
-                                        
-                                        Text(String(UnicodeScalar(j)!)).font(.system(size: 55))
-                                    }
-                                    else{
-                                        
-                                        Text("")
-                                    }
+                                    Text(symbol)
+                                        .font(.system(size: 15))
                                 }
                             }
                         }
@@ -65,7 +103,9 @@ public struct PlantUMLKeyboardView: View {
                 .padding(.top)
             
             }
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+            .frame(
+                width: UIScreen.main.bounds.width,
+                height: UIScreen.main.bounds.height / 3)
             .background(Color.white)
             .cornerRadius(25)
             
@@ -78,29 +118,12 @@ public struct PlantUMLKeyboardView: View {
         }
     }
     
-    func getEmojiList()->[[Int]]{
-        
-        var emojis : [[Int]] = []
-        
-        for i in stride(from: 0x1F601, to: 0x1F64F, by: 4){
-            
-            var temp : [Int] = []
-            
-            for j in i...i+3{
-                
-                temp.append(j)
-            }
-            
-            emojis.append(temp)
-        }
-        
-        return emojis
-    }
 }
 
 
 struct PlantUMLKeyboardView_Previews: PreviewProvider {
     static var previews: some View {
         PlantUMLKeyboardView( show: Binding.constant(true), value: Binding.constant("TEST"))
+            .previewInterfaceOrientation(.landscapeLeft)
     }
 }

@@ -47,6 +47,7 @@ struct PlantUMLTextField: View {
                     .focused($isFocused)
                     .onChange(of: value, perform: onChange )
                     
+                    
                 if( isFocused ) {
                     ShowKeyboardAccessoryButton
                 }
@@ -57,7 +58,13 @@ struct PlantUMLTextField: View {
 //        .animation(.easeInOut(duration: 2), value: 1.0)
         .edgesIgnoringSafeArea(.all)
         .onAppear {
-                
+            
+            // https://twitter.com/steipete/status/331774953336745985
+//            NotificationCenter.default.addObserver(forName: Notification.Name("UIWindowFirstResponderDidChangeNotification"),
+//                                                   object: nil,
+//                                                   queue: .main) { ( object ) in
+//                print( "UIWindowFirstResponderDidChangeNotification \(object)" )
+//            }
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillChangeFrameNotification,
                                                    object: nil,
                                                    queue: .main) { (_) in
