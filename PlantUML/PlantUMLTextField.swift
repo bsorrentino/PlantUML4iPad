@@ -84,7 +84,8 @@ extension PlantUMLTextField {
                 
             }) {
                 
-                Image(systemName: "smiley").foregroundColor(.black.opacity(0.5))
+                Image(systemName: "keyboard.badge.ellipsis")
+                    .foregroundColor(.black.opacity(0.5))
             }
     }
 }

@@ -14,7 +14,7 @@ enum Focusable: Hashable {
   case row(id: String)
 }
 
-struct PalntUMLEditorView: View {
+struct PlantUMLEditorView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     @EnvironmentObject private var diagram: PlantUMLDiagramObject
@@ -32,7 +32,7 @@ struct PalntUMLEditorView: View {
   
             GeometryReader { _ in
                 HStack {
-                    PlantUMLEditorView()
+                    EditorView()
                     if !isPreviewVisible {
                         PlantUMLDiagramView( url: diagram.buildURL() )
                     }
@@ -118,7 +118,7 @@ struct PalntUMLEditorView: View {
     }
 
     // MARK: Editor View
-    func PlantUMLEditorView() -> some View {
+    func EditorView() -> some View {
         List() {
             ForEach( diagram.items ) { item in
                 
@@ -160,7 +160,7 @@ struct PalntUMLEditorView: View {
 }
 
 // MARK: ACTIONS
-extension PalntUMLEditorView {
+extension PlantUMLEditorView {
     
     internal func saveToDocument() {
         document.text = diagram.description
@@ -231,7 +231,7 @@ extension PalntUMLEditorView {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PalntUMLEditorView(document: .constant(PlantUMLDocument()))
+        PlantUMLEditorView(document: .constant(PlantUMLDocument()))
             .environment(\.editMode, Binding.constant(EditMode.active))
             .previewInterfaceOrientation(.landscapeRight)
     }

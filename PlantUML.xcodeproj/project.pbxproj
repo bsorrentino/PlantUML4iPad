@@ -15,7 +15,7 @@
 		A0A42A7A289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */; };
 		A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */; };
 		A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */; };
-		A0D3C64E28984A0E000838D7 /* PalntUMLEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64D28984A0E000838D7 /* PalntUMLEditorView.swift */; };
+		A0D3C64E28984A0E000838D7 /* PlantUMLEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64D28984A0E000838D7 /* PlantUMLEditorView.swift */; };
 		A0D3C65028984A10000838D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0D3C64F28984A10000838D7 /* Assets.xcassets */; };
 		A0D3C65328984A10000838D7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0D3C65228984A10000838D7 /* Preview Assets.xcassets */; };
 		A0D3C65E28984A10000838D7 /* PlantUMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C65D28984A10000838D7 /* PlantUMLTests.swift */; };
@@ -122,7 +122,7 @@
 		A0D3C64628984A0E000838D7 /* PlantUML.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlantUML.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLApp.swift; sourceTree = "<group>"; };
 		A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDocument.swift; sourceTree = "<group>"; };
-		A0D3C64D28984A0E000838D7 /* PalntUMLEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalntUMLEditorView.swift; sourceTree = "<group>"; };
+		A0D3C64D28984A0E000838D7 /* PlantUMLEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLEditorView.swift; sourceTree = "<group>"; };
 		A0D3C64F28984A10000838D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A0D3C65228984A10000838D7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A0D3C65428984A10000838D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
 				A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */,
 				A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */,
-				A0D3C64D28984A0E000838D7 /* PalntUMLEditorView.swift */,
+				A0D3C64D28984A0E000838D7 /* PlantUMLEditorView.swift */,
 				A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */,
 				A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */,
 				A0D3C64F28984A10000838D7 /* Assets.xcassets */,
@@ -480,7 +480,7 @@
 				A0D3C6D22898770F000838D7 /* ConfigurationProvider.swift in Sources */,
 				A0D3C7112898770F000838D7 /* PlantUMLConsolePresenter.swift in Sources */,
 				A0D3C6CF2898770F000838D7 /* FileOptions.swift in Sources */,
-				A0D3C64E28984A0E000838D7 /* PalntUMLEditorView.swift in Sources */,
+				A0D3C64E28984A0E000838D7 /* PlantUMLEditorView.swift in Sources */,
 				A0D3C6D52898770F000838D7 /* ElementOptions.swift in Sources */,
 				A0D3C7142898770F000838D7 /* PlantUMLBrowserPresenter.swift in Sources */,
 				A0D3C6E42898770F000838D7 /* Configuration.swift in Sources */,
