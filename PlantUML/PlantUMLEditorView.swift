@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PlantUMLKeyboard
 
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
 enum Focusable: Hashable {
@@ -13,23 +14,7 @@ enum Focusable: Hashable {
   case row(id: String)
 }
 
-struct PlantUMLTextField: View  {
-    @State var value: String
-    
-    var onChange: ( String ) -> Void
-    
-    var body: some View {
-        TextField( "", text: $value )
-            .textInputAutocapitalization(.never)
-            .font(Font.system(size: 15).monospaced())
-            .submitLabel(.done)
-            .onChange(of: value
-                      , perform: onChange )
-
-    }
-    
-}
-struct PalntUMLEditorView: View {
+struct PlantUMLEditorView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     @EnvironmentObject private var diagram: PlantUMLDiagramObject
@@ -39,6 +24,40 @@ struct PalntUMLEditorView: View {
     @FocusState private var focusedItem: Focusable?
     
     @State private var isPreviewVisible = false
+    
+    @State private var showKeyboard = false
+    
+    var body: some View {
+        ZStack(alignment: .bottom) {
+  
+            GeometryReader { _ in
+                HStack {
+                    EditorView()
+                    if !isPreviewVisible {
+                        PlantUMLDiagramView( url: diagram.buildURL() )
+                    }
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        PreviewButton()
+                    }
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        EditButton()
+                        SaveButton()
+                    }
+                }
+            }
+            
+            if( showKeyboard ) {
+            
+                PlantUMLKeyboardView(
+                    show: $showKeyboard,
+                    value:Binding.constant("")
+                )
+            }
+        }
+        
+    }
     
     func SaveButton() -> some View {
         
@@ -64,6 +83,7 @@ struct PalntUMLEditorView: View {
 //                .foregroundColor(.orange)
 //        })
     }
+    
     func AddCloneButton( theItem item: SyntaxStructure ) -> some View {
         
         return Button {
@@ -75,7 +95,6 @@ struct PalntUMLEditorView: View {
         }
     }
 
-    
     func AddAboveButton( theItem item: SyntaxStructure? = nil ) -> some View {
         
         return Button {
@@ -99,7 +118,7 @@ struct PalntUMLEditorView: View {
     }
 
     // MARK: Editor View
-    func PlantUMLEditorView() -> some View {
+    func EditorView() -> some View {
         List() {
             ForEach( diagram.items ) { item in
                 
@@ -112,7 +131,9 @@ struct PalntUMLEditorView: View {
                                 AddCloneButton( theItem: item )
                             }
                     }
-                    PlantUMLTextField( value: item.rawValue, onChange: updateItem )
+                    PlantUMLTextField( value: item.rawValue,
+                                       showKeyboard: $showKeyboard,
+                                       onChange: updateItem )
                         .focused($focusedItem, equals: .row(id: item.id))
                         .onSubmit(of: .text) {
                             // openURL( diagram.buildURL() )
@@ -135,29 +156,11 @@ struct PalntUMLEditorView: View {
 
     }
     
-    var body: some View {
-        HStack {
-            PlantUMLEditorView()
-            if !isPreviewVisible {
-                PlantUMLDiagramView( url: diagram.buildURL() )
-            }
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-                PreviewButton()
-            }
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                EditButton()
-                SaveButton()
-            }
-        }
-        
-    }
 
 }
 
 // MARK: ACTIONS
-extension PalntUMLEditorView {
+extension PlantUMLEditorView {
     
     internal func saveToDocument() {
         document.text = diagram.description
@@ -228,7 +231,7 @@ extension PalntUMLEditorView {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PalntUMLEditorView(document: .constant(PlantUMLDocument()))
+        PlantUMLEditorView(document: .constant(PlantUMLDocument()))
             .environment(\.editMode, Binding.constant(EditMode.active))
             .previewInterfaceOrientation(.landscapeRight)
     }
