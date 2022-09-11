@@ -19,8 +19,6 @@ public struct PlantUMLScript {
 
         let methodStart = Date()
 
-        let STR2REPLACE = "STR2REPLACE"
-
 //        let plantumlTemplate = """
 //        @startuml
 //        ' STYLE START
@@ -32,14 +30,6 @@ public struct PlantUMLScript {
 //        @enduml
 //        """
 
-        var plantumlTemplate = "@startuml"
-        if let includeRemoteURL = configuration.includeRemoteURL {
-            plantumlTemplate.appendAsNewLine("!include \(includeRemoteURL)")
-        }
-        plantumlTemplate.appendAsNewLine(defaultStyling)
-        plantumlTemplate.appendAsNewLine("STR2REPLACE")
-        plantumlTemplate.appendAsNewLine("@enduml")
-
         var replacingText = "\n"
 
         for (index, element) in items.enumerated() {
@@ -48,9 +38,21 @@ public struct PlantUMLScript {
             }
         }
 
-        let neep = replacingText + "\n" + context.connections.joined(separator: "\n") + "\n" + context.extnConnections.joined(separator: "\n")
+        var includeURL = ""
+        if let includeRemoteURL = configuration.includeRemoteURL {
+            includeURL = "!include \(includeRemoteURL)"
+        }
 
-        text = plantumlTemplate.replacingOccurrences(of: STR2REPLACE, with: neep)
+        text =
+            """
+            @startuml
+            \(includeURL)
+            \(defaultStyling)
+            \(replacingText)
+            \(context.connections.joined(separator: "\n"))
+            \(context.extnConnections.joined(separator: "\n"))
+            @enduml            
+            """
 
         Logger.shared.debug("PlantUML script created in \(Date().timeIntervalSince(methodStart)) seconds")
     }
@@ -77,10 +79,10 @@ public struct PlantUMLScript {
             return ""
         } else {
             return """
-            ' STYLE START
+            '' STYLE START
             \(hideShowCommands.joined(separator: "\n"))
             \(skinparamCommands.joined(separator: "\n"))
-            ' STYLE END
+            '' STYLE END
             """
         }
     }

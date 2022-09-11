@@ -16,7 +16,16 @@ public enum AccessLevel: String, Codable {
 /// Configuration options to influence the generation and visual representation of the class diagram
 public struct Configuration: Codable {
     /// memberwise initializer
-    public init(files: FileOptions = FileOptions(), elements: ElementOptions = ElementOptions(), hideShowCommands: [String]? = ["hide empty members"], skinparamCommands: [String]? = ["skinparam shadowing false"], includeRemoteURL: String? = nil, relationships: RelationshipOptions = RelationshipOptions(), stereotypes: Stereotypes = Stereotypes.default, relationshipExclude _: [String]? = nil) {
+    public init(
+        files: FileOptions = FileOptions(),
+        elements: ElementOptions = ElementOptions(),
+        hideShowCommands: [String]? = ["hide empty members"],
+        skinparamCommands: [String]? = ["skinparam shadowing false"],
+        includeRemoteURL: String? = nil,
+        relationships: RelationshipOptions = RelationshipOptions(),
+        stereotypes: Stereotypes = Stereotypes.default,
+        relationshipExclude _: [String]? = nil)
+    {
         self.files = files
         self.elements = elements
         self.hideShowCommands = hideShowCommands
