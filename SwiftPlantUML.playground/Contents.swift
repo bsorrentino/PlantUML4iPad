@@ -1,4 +1,5 @@
 import UIKit
+import PlantUMLFramework
 
 var greeting = "Hello, playground"
 
