@@ -235,5 +235,11 @@ struct ContentView_Previews: PreviewProvider {
         PlantUMLEditorView(document: .constant(PlantUMLDocument()))
             .environment(\.editMode, Binding.constant(EditMode.active))
             .previewInterfaceOrientation(.landscapeRight)
+            .environmentObject( PlantUMLDiagramObject( text:
+"""
+
+title test
+
+"""))
     }
 }
