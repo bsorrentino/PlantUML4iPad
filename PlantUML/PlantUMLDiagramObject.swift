@@ -17,15 +17,20 @@ class PlantUMLDiagramObject : ObservableObject, CustomStringConvertible {
     }
     
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
-    
-    init( document: PlantUMLDocument ) {
-        
+
+    init( text: String ) {
         self.items =
-            document.text
+            text
                 .split(whereSeparator: \.isNewline)
                 .map { line in
                     SyntaxStructure( rawValue: String(line) )
                 }
+
+    }
+    
+    convenience init( document: PlantUMLDocument ) {
+        
+        self.init(text: document.text )
     }
     
     func buildURL() -> URL {
