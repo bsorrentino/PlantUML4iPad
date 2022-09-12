@@ -29,6 +29,7 @@ public struct PlantUMLScript {
 //        STR2REPLACE
 //        @enduml
 //        """
+
         var replacingText = "\n"
 
         for (index, element) in items.enumerated() {
@@ -50,7 +51,7 @@ public struct PlantUMLScript {
             \(replacingText)
             \(context.connections.joined(separator: "\n"))
             \(context.extnConnections.joined(separator: "\n"))
-            @enduml
+            @enduml            
             """
 
         Logger.shared.debug("PlantUML script created in \(Date().timeIntervalSince(methodStart)) seconds")
@@ -58,9 +59,11 @@ public struct PlantUMLScript {
 
     /**
       encodes diagram text description according to PlantUML.  See https://plantuml.com/en/text-encoding for more information.
+
        1. Encoded in UTF-8
        2. Compressed using Deflate algorithm
        3. Reencoded in ASCII using a transformation *close* to base64
+
      - Returns: encoded diagram text description
      */
     public func encodeText() -> String {

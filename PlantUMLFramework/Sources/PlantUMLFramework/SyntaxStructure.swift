@@ -5,12 +5,11 @@ import Foundation
 public struct SyntaxStructure: Codable, Identifiable {
     public var id: String
     public var rawValue: String
-    
-    public init( rawValue: String ) {
+   
+    public init( rawValue: String  ) {
         self.id = UUID().uuidString
         self.rawValue = rawValue
     }
-    
 }
 
 
