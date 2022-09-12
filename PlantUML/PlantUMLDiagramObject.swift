@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PlantUMLFramework
 
 class PlantUMLDiagramObject : ObservableObject, CustomStringConvertible {
     
