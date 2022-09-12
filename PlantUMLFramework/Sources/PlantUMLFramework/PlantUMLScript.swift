@@ -14,7 +14,7 @@ public struct PlantUMLScript {
     private var context: PlantUMLContext
 
     /// default initializer
-    internal init(items: [SyntaxStructure], configuration: Configuration = .default) {
+    public init(items: [SyntaxStructure], configuration: Configuration = .default) {
         context = PlantUMLContext(configuration: configuration)
 
         let methodStart = Date()

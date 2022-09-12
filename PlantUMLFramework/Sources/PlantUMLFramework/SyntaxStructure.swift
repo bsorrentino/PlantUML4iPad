@@ -2,10 +2,14 @@ import Foundation
 
 
 /// Swift type representationg an AST element (analogue to SourceKitten's Structure)
-struct SyntaxStructure: Codable, Identifiable {
-    var id: String = UUID().uuidString
-    var rawValue: String
-    
+public struct SyntaxStructure: Codable, Identifiable {
+    public var id: String
+    public var rawValue: String
+   
+    public init( rawValue: String  ) {
+        self.id = UUID().uuidString
+        self.rawValue = rawValue
+    }
 }
 
 

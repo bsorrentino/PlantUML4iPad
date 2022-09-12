@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A01552A428CF48A400F2B8A1 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A01552A328CF48A400F2B8A1 /* PlantUMLFramework */; };
 		A077460F28C7D818007C5C13 /* PlantUMLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */; };
 		A077461628C7F25C007C5C13 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A077461528C7F25C007C5C13 /* PlantUMLKeyboard */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
@@ -21,75 +22,6 @@
 		A0D3C65E28984A10000838D7 /* PlantUMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C65D28984A10000838D7 /* PlantUMLTests.swift */; };
 		A0D3C66828984A11000838D7 /* PlantUMLUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C66728984A11000838D7 /* PlantUMLUITests.swift */; };
 		A0D3C66A28984A11000838D7 /* PlantUMLUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C66928984A11000838D7 /* PlantUMLUITestsLaunchTests.swift */; };
-		A0D3C6C92898770F000838D7 /* Stereotype.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6A92898770F000838D7 /* Stereotype.swift */; };
-		A0D3C6CA2898770F000838D7 /* Stereotype.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6A92898770F000838D7 /* Stereotype.swift */; };
-		A0D3C6CB2898770F000838D7 /* Stereotype.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6A92898770F000838D7 /* Stereotype.swift */; };
-		A0D3C6CC2898770F000838D7 /* RelationshipStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AA2898770F000838D7 /* RelationshipStyle.swift */; };
-		A0D3C6CD2898770F000838D7 /* RelationshipStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AA2898770F000838D7 /* RelationshipStyle.swift */; };
-		A0D3C6CE2898770F000838D7 /* RelationshipStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AA2898770F000838D7 /* RelationshipStyle.swift */; };
-		A0D3C6CF2898770F000838D7 /* FileOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AB2898770F000838D7 /* FileOptions.swift */; };
-		A0D3C6D02898770F000838D7 /* FileOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AB2898770F000838D7 /* FileOptions.swift */; };
-		A0D3C6D12898770F000838D7 /* FileOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AB2898770F000838D7 /* FileOptions.swift */; };
-		A0D3C6D22898770F000838D7 /* ConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AC2898770F000838D7 /* ConfigurationProvider.swift */; };
-		A0D3C6D32898770F000838D7 /* ConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AC2898770F000838D7 /* ConfigurationProvider.swift */; };
-		A0D3C6D42898770F000838D7 /* ConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AC2898770F000838D7 /* ConfigurationProvider.swift */; };
-		A0D3C6D52898770F000838D7 /* ElementOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AD2898770F000838D7 /* ElementOptions.swift */; };
-		A0D3C6D62898770F000838D7 /* ElementOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AD2898770F000838D7 /* ElementOptions.swift */; };
-		A0D3C6D72898770F000838D7 /* ElementOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AD2898770F000838D7 /* ElementOptions.swift */; };
-		A0D3C6D82898770F000838D7 /* RelationshipOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AE2898770F000838D7 /* RelationshipOptions.swift */; };
-		A0D3C6D92898770F000838D7 /* RelationshipOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AE2898770F000838D7 /* RelationshipOptions.swift */; };
-		A0D3C6DA2898770F000838D7 /* RelationshipOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AE2898770F000838D7 /* RelationshipOptions.swift */; };
-		A0D3C6DB2898770F000838D7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AF2898770F000838D7 /* Theme.swift */; };
-		A0D3C6DC2898770F000838D7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AF2898770F000838D7 /* Theme.swift */; };
-		A0D3C6DD2898770F000838D7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6AF2898770F000838D7 /* Theme.swift */; };
-		A0D3C6DE2898770F000838D7 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B02898770F000838D7 /* Color.swift */; };
-		A0D3C6DF2898770F000838D7 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B02898770F000838D7 /* Color.swift */; };
-		A0D3C6E02898770F000838D7 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B02898770F000838D7 /* Color.swift */; };
-		A0D3C6E12898770F000838D7 /* ClassDiagramOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B12898770F000838D7 /* ClassDiagramOutput.swift */; };
-		A0D3C6E22898770F000838D7 /* ClassDiagramOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B12898770F000838D7 /* ClassDiagramOutput.swift */; };
-		A0D3C6E32898770F000838D7 /* ClassDiagramOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B12898770F000838D7 /* ClassDiagramOutput.swift */; };
-		A0D3C6E42898770F000838D7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B22898770F000838D7 /* Configuration.swift */; };
-		A0D3C6E52898770F000838D7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B22898770F000838D7 /* Configuration.swift */; };
-		A0D3C6E62898770F000838D7 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B22898770F000838D7 /* Configuration.swift */; };
-		A0D3C6E72898770F000838D7 /* PlantUMLText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B32898770F000838D7 /* PlantUMLText.swift */; };
-		A0D3C6E82898770F000838D7 /* PlantUMLText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B32898770F000838D7 /* PlantUMLText.swift */; };
-		A0D3C6E92898770F000838D7 /* PlantUMLText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B32898770F000838D7 /* PlantUMLText.swift */; };
-		A0D3C6EA2898770F000838D7 /* FileCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B52898770F000838D7 /* FileCollector.swift */; };
-		A0D3C6EB2898770F000838D7 /* FileCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B52898770F000838D7 /* FileCollector.swift */; };
-		A0D3C6EC2898770F000838D7 /* FileCollector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B52898770F000838D7 /* FileCollector.swift */; };
-		A0D3C6ED2898770F000838D7 /* Glob.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B62898770F000838D7 /* Glob.swift */; };
-		A0D3C6EE2898770F000838D7 /* Glob.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B62898770F000838D7 /* Glob.swift */; };
-		A0D3C6EF2898770F000838D7 /* Glob.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B62898770F000838D7 /* Glob.swift */; };
-		A0D3C6F02898770F000838D7 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B72898770F000838D7 /* Version.swift */; };
-		A0D3C6F12898770F000838D7 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B72898770F000838D7 /* Version.swift */; };
-		A0D3C6F22898770F000838D7 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B72898770F000838D7 /* Version.swift */; };
-		A0D3C6F32898770F000838D7 /* PlantUMLScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B82898770F000838D7 /* PlantUMLScript.swift */; };
-		A0D3C6F42898770F000838D7 /* PlantUMLScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B82898770F000838D7 /* PlantUMLScript.swift */; };
-		A0D3C6F52898770F000838D7 /* PlantUMLScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6B82898770F000838D7 /* PlantUMLScript.swift */; };
-		A0D3C6F92898770F000838D7 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BB2898770F000838D7 /* String+Extensions.swift */; };
-		A0D3C6FA2898770F000838D7 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BB2898770F000838D7 /* String+Extensions.swift */; };
-		A0D3C6FB2898770F000838D7 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BB2898770F000838D7 /* String+Extensions.swift */; };
-		A0D3C7022898770F000838D7 /* SyntaxStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BE2898770F000838D7 /* SyntaxStructure.swift */; };
-		A0D3C7032898770F000838D7 /* SyntaxStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BE2898770F000838D7 /* SyntaxStructure.swift */; };
-		A0D3C7042898770F000838D7 /* SyntaxStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BE2898770F000838D7 /* SyntaxStructure.swift */; };
-		A0D3C7052898770F000838D7 /* PlantUMLContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BF2898770F000838D7 /* PlantUMLContext.swift */; };
-		A0D3C7062898770F000838D7 /* PlantUMLContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BF2898770F000838D7 /* PlantUMLContext.swift */; };
-		A0D3C7072898770F000838D7 /* PlantUMLContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6BF2898770F000838D7 /* PlantUMLContext.swift */; };
-		A0D3C70E2898770F000838D7 /* PlantUMLPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C32898770F000838D7 /* PlantUMLPresenting.swift */; };
-		A0D3C70F2898770F000838D7 /* PlantUMLPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C32898770F000838D7 /* PlantUMLPresenting.swift */; };
-		A0D3C7102898770F000838D7 /* PlantUMLPresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C32898770F000838D7 /* PlantUMLPresenting.swift */; };
-		A0D3C7112898770F000838D7 /* PlantUMLConsolePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C42898770F000838D7 /* PlantUMLConsolePresenter.swift */; };
-		A0D3C7122898770F000838D7 /* PlantUMLConsolePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C42898770F000838D7 /* PlantUMLConsolePresenter.swift */; };
-		A0D3C7132898770F000838D7 /* PlantUMLConsolePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C42898770F000838D7 /* PlantUMLConsolePresenter.swift */; };
-		A0D3C7142898770F000838D7 /* PlantUMLBrowserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C52898770F000838D7 /* PlantUMLBrowserPresenter.swift */; };
-		A0D3C7152898770F000838D7 /* PlantUMLBrowserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C52898770F000838D7 /* PlantUMLBrowserPresenter.swift */; };
-		A0D3C7162898770F000838D7 /* PlantUMLBrowserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C52898770F000838D7 /* PlantUMLBrowserPresenter.swift */; };
-		A0D3C7172898770F000838D7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C72898770F000838D7 /* Logger.swift */; };
-		A0D3C7182898770F000838D7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C72898770F000838D7 /* Logger.swift */; };
-		A0D3C7192898770F000838D7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C72898770F000838D7 /* Logger.swift */; };
-		A0D3C71A2898770F000838D7 /* NoLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C82898770F000838D7 /* NoLogger.swift */; };
-		A0D3C71B2898770F000838D7 /* NoLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C82898770F000838D7 /* NoLogger.swift */; };
-		A0D3C71C2898770F000838D7 /* NoLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C6C82898770F000838D7 /* NoLogger.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A077460D28C7D49D007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLTextField.swift; sourceTree = "<group>"; };
 		A077461028C7DF19007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
@@ -131,29 +64,6 @@
 		A0D3C66328984A11000838D7 /* PlantUMLUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantUMLUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D3C66728984A11000838D7 /* PlantUMLUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLUITests.swift; sourceTree = "<group>"; };
 		A0D3C66928984A11000838D7 /* PlantUMLUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		A0D3C6A92898770F000838D7 /* Stereotype.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stereotype.swift; sourceTree = "<group>"; };
-		A0D3C6AA2898770F000838D7 /* RelationshipStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipStyle.swift; sourceTree = "<group>"; };
-		A0D3C6AB2898770F000838D7 /* FileOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileOptions.swift; sourceTree = "<group>"; };
-		A0D3C6AC2898770F000838D7 /* ConfigurationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationProvider.swift; sourceTree = "<group>"; };
-		A0D3C6AD2898770F000838D7 /* ElementOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementOptions.swift; sourceTree = "<group>"; };
-		A0D3C6AE2898770F000838D7 /* RelationshipOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelationshipOptions.swift; sourceTree = "<group>"; };
-		A0D3C6AF2898770F000838D7 /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		A0D3C6B02898770F000838D7 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		A0D3C6B12898770F000838D7 /* ClassDiagramOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassDiagramOutput.swift; sourceTree = "<group>"; };
-		A0D3C6B22898770F000838D7 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
-		A0D3C6B32898770F000838D7 /* PlantUMLText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLText.swift; sourceTree = "<group>"; };
-		A0D3C6B52898770F000838D7 /* FileCollector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCollector.swift; sourceTree = "<group>"; };
-		A0D3C6B62898770F000838D7 /* Glob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Glob.swift; sourceTree = "<group>"; };
-		A0D3C6B72898770F000838D7 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
-		A0D3C6B82898770F000838D7 /* PlantUMLScript.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLScript.swift; sourceTree = "<group>"; };
-		A0D3C6BB2898770F000838D7 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		A0D3C6BE2898770F000838D7 /* SyntaxStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyntaxStructure.swift; sourceTree = "<group>"; };
-		A0D3C6BF2898770F000838D7 /* PlantUMLContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLContext.swift; sourceTree = "<group>"; };
-		A0D3C6C32898770F000838D7 /* PlantUMLPresenting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLPresenting.swift; sourceTree = "<group>"; };
-		A0D3C6C42898770F000838D7 /* PlantUMLConsolePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLConsolePresenter.swift; sourceTree = "<group>"; };
-		A0D3C6C52898770F000838D7 /* PlantUMLBrowserPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLBrowserPresenter.swift; sourceTree = "<group>"; };
-		A0D3C6C72898770F000838D7 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		A0D3C6C82898770F000838D7 /* NoLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoLogger.swift; sourceTree = "<group>"; };
 		A0D3C71D28987D94000838D7 /* SwiftPlantUML.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SwiftPlantUML.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A01552A428CF48A400F2B8A1 /* PlantUMLFramework in Frameworks */,
 				A077461628C7F25C007C5C13 /* PlantUMLKeyboard in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,10 +117,10 @@
 			isa = PBXGroup;
 			children = (
 				A077460C28C7D49D007C5C13 /* Packages */,
+				A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */,
 				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
 				A0C1657C289FD315004EB5C7 /* SwiftPlantUMLView.playground */,
 				A0D3C71D28987D94000838D7 /* SwiftPlantUML.playground */,
-				A0D3C6A72898770F000838D7 /* SwiftPlantUMLFramework */,
 				A0D3C64828984A0E000838D7 /* PlantUML */,
 				A0D3C65C28984A10000838D7 /* PlantUMLTests */,
 				A0D3C66628984A11000838D7 /* PlantUMLUITests */,
@@ -270,68 +181,6 @@
 			path = PlantUMLUITests;
 			sourceTree = "<group>";
 		};
-		A0D3C6A72898770F000838D7 /* SwiftPlantUMLFramework */ = {
-			isa = PBXGroup;
-			children = (
-				A0D3C6A82898770F000838D7 /* Configuration */,
-				A0D3C6B32898770F000838D7 /* PlantUMLText.swift */,
-				A0D3C6B42898770F000838D7 /* FileManagement */,
-				A0D3C6B72898770F000838D7 /* Version.swift */,
-				A0D3C6B82898770F000838D7 /* PlantUMLScript.swift */,
-				A0D3C6BF2898770F000838D7 /* PlantUMLContext.swift */,
-				A0D3C6BB2898770F000838D7 /* String+Extensions.swift */,
-				A0D3C6BE2898770F000838D7 /* SyntaxStructure.swift */,
-				A0D3C6C22898770F000838D7 /* Presenting */,
-				A0D3C6C62898770F000838D7 /* Logging */,
-			);
-			path = SwiftPlantUMLFramework;
-			sourceTree = "<group>";
-		};
-		A0D3C6A82898770F000838D7 /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				A0D3C6A92898770F000838D7 /* Stereotype.swift */,
-				A0D3C6AA2898770F000838D7 /* RelationshipStyle.swift */,
-				A0D3C6AB2898770F000838D7 /* FileOptions.swift */,
-				A0D3C6AC2898770F000838D7 /* ConfigurationProvider.swift */,
-				A0D3C6AD2898770F000838D7 /* ElementOptions.swift */,
-				A0D3C6AE2898770F000838D7 /* RelationshipOptions.swift */,
-				A0D3C6AF2898770F000838D7 /* Theme.swift */,
-				A0D3C6B02898770F000838D7 /* Color.swift */,
-				A0D3C6B12898770F000838D7 /* ClassDiagramOutput.swift */,
-				A0D3C6B22898770F000838D7 /* Configuration.swift */,
-			);
-			path = Configuration;
-			sourceTree = "<group>";
-		};
-		A0D3C6B42898770F000838D7 /* FileManagement */ = {
-			isa = PBXGroup;
-			children = (
-				A0D3C6B52898770F000838D7 /* FileCollector.swift */,
-				A0D3C6B62898770F000838D7 /* Glob.swift */,
-			);
-			path = FileManagement;
-			sourceTree = "<group>";
-		};
-		A0D3C6C22898770F000838D7 /* Presenting */ = {
-			isa = PBXGroup;
-			children = (
-				A0D3C6C32898770F000838D7 /* PlantUMLPresenting.swift */,
-				A0D3C6C42898770F000838D7 /* PlantUMLConsolePresenter.swift */,
-				A0D3C6C52898770F000838D7 /* PlantUMLBrowserPresenter.swift */,
-			);
-			path = Presenting;
-			sourceTree = "<group>";
-		};
-		A0D3C6C62898770F000838D7 /* Logging */ = {
-			isa = PBXGroup;
-			children = (
-				A0D3C6C72898770F000838D7 /* Logger.swift */,
-				A0D3C6C82898770F000838D7 /* NoLogger.swift */,
-			);
-			path = Logging;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -350,6 +199,7 @@
 			name = PlantUML;
 			packageProductDependencies = (
 				A077461528C7F25C007C5C13 /* PlantUMLKeyboard */,
+				A01552A328CF48A400F2B8A1 /* PlantUMLFramework */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUML.app */;
@@ -468,34 +318,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
-				A0D3C6F92898770F000838D7 /* String+Extensions.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
 				A077460F28C7D818007C5C13 /* PlantUMLTextField.swift in Sources */,
-				A0D3C6F32898770F000838D7 /* PlantUMLScript.swift in Sources */,
-				A0D3C70E2898770F000838D7 /* PlantUMLPresenting.swift in Sources */,
-				A0D3C71A2898770F000838D7 /* NoLogger.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
-				A0D3C7022898770F000838D7 /* SyntaxStructure.swift in Sources */,
-				A0D3C6DE2898770F000838D7 /* Color.swift in Sources */,
-				A0D3C6D22898770F000838D7 /* ConfigurationProvider.swift in Sources */,
-				A0D3C7112898770F000838D7 /* PlantUMLConsolePresenter.swift in Sources */,
-				A0D3C6CF2898770F000838D7 /* FileOptions.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLEditorView.swift in Sources */,
-				A0D3C6D52898770F000838D7 /* ElementOptions.swift in Sources */,
-				A0D3C7142898770F000838D7 /* PlantUMLBrowserPresenter.swift in Sources */,
-				A0D3C6E42898770F000838D7 /* Configuration.swift in Sources */,
-				A0D3C6F02898770F000838D7 /* Version.swift in Sources */,
-				A0D3C6D82898770F000838D7 /* RelationshipOptions.swift in Sources */,
-				A0D3C6ED2898770F000838D7 /* Glob.swift in Sources */,
-				A0D3C6DB2898770F000838D7 /* Theme.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
-				A0D3C6CC2898770F000838D7 /* RelationshipStyle.swift in Sources */,
-				A0D3C7052898770F000838D7 /* PlantUMLContext.swift in Sources */,
-				A0D3C7172898770F000838D7 /* Logger.swift in Sources */,
-				A0D3C6EA2898770F000838D7 /* FileCollector.swift in Sources */,
-				A0D3C6C92898770F000838D7 /* Stereotype.swift in Sources */,
-				A0D3C6E12898770F000838D7 /* ClassDiagramOutput.swift in Sources */,
-				A0D3C6E72898770F000838D7 /* PlantUMLText.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,30 +330,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0D3C6EB2898770F000838D7 /* FileCollector.swift in Sources */,
-				A0D3C6F42898770F000838D7 /* PlantUMLScript.swift in Sources */,
-				A0D3C6F12898770F000838D7 /* Version.swift in Sources */,
-				A0D3C6D92898770F000838D7 /* RelationshipOptions.swift in Sources */,
-				A0D3C6FA2898770F000838D7 /* String+Extensions.swift in Sources */,
-				A0D3C6DC2898770F000838D7 /* Theme.swift in Sources */,
-				A0D3C7122898770F000838D7 /* PlantUMLConsolePresenter.swift in Sources */,
-				A0D3C6D32898770F000838D7 /* ConfigurationProvider.swift in Sources */,
-				A0D3C6D62898770F000838D7 /* ElementOptions.swift in Sources */,
-				A0D3C6D02898770F000838D7 /* FileOptions.swift in Sources */,
-				A0D3C7182898770F000838D7 /* Logger.swift in Sources */,
-				A0D3C7062898770F000838D7 /* PlantUMLContext.swift in Sources */,
-				A0D3C6CD2898770F000838D7 /* RelationshipStyle.swift in Sources */,
-				A0D3C6EE2898770F000838D7 /* Glob.swift in Sources */,
 				A0D3C65E28984A10000838D7 /* PlantUMLTests.swift in Sources */,
-				A0D3C7152898770F000838D7 /* PlantUMLBrowserPresenter.swift in Sources */,
-				A0D3C6CA2898770F000838D7 /* Stereotype.swift in Sources */,
-				A0D3C6DF2898770F000838D7 /* Color.swift in Sources */,
-				A0D3C6E22898770F000838D7 /* ClassDiagramOutput.swift in Sources */,
-				A0D3C6E52898770F000838D7 /* Configuration.swift in Sources */,
-				A0D3C71B2898770F000838D7 /* NoLogger.swift in Sources */,
-				A0D3C6E82898770F000838D7 /* PlantUMLText.swift in Sources */,
-				A0D3C70F2898770F000838D7 /* PlantUMLPresenting.swift in Sources */,
-				A0D3C7032898770F000838D7 /* SyntaxStructure.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,33 +338,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0D3C6DD2898770F000838D7 /* Theme.swift in Sources */,
-				A0D3C6EF2898770F000838D7 /* Glob.swift in Sources */,
 				A0D3C66A28984A11000838D7 /* PlantUMLUITestsLaunchTests.swift in Sources */,
 				A0A42A7A289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
-				A0D3C7192898770F000838D7 /* Logger.swift in Sources */,
-				A0D3C71C2898770F000838D7 /* NoLogger.swift in Sources */,
-				A0D3C6CE2898770F000838D7 /* RelationshipStyle.swift in Sources */,
-				A0D3C6E02898770F000838D7 /* Color.swift in Sources */,
 				A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
-				A0D3C6F52898770F000838D7 /* PlantUMLScript.swift in Sources */,
-				A0D3C6DA2898770F000838D7 /* RelationshipOptions.swift in Sources */,
-				A0D3C6D12898770F000838D7 /* FileOptions.swift in Sources */,
-				A0D3C6E62898770F000838D7 /* Configuration.swift in Sources */,
-				A0D3C6E92898770F000838D7 /* PlantUMLText.swift in Sources */,
-				A0D3C6E32898770F000838D7 /* ClassDiagramOutput.swift in Sources */,
-				A0D3C7102898770F000838D7 /* PlantUMLPresenting.swift in Sources */,
 				A0D3C66828984A11000838D7 /* PlantUMLUITests.swift in Sources */,
-				A0D3C6FB2898770F000838D7 /* String+Extensions.swift in Sources */,
-				A0D3C7132898770F000838D7 /* PlantUMLConsolePresenter.swift in Sources */,
-				A0D3C6D72898770F000838D7 /* ElementOptions.swift in Sources */,
-				A0D3C6CB2898770F000838D7 /* Stereotype.swift in Sources */,
-				A0D3C7162898770F000838D7 /* PlantUMLBrowserPresenter.swift in Sources */,
-				A0D3C7042898770F000838D7 /* SyntaxStructure.swift in Sources */,
-				A0D3C7072898770F000838D7 /* PlantUMLContext.swift in Sources */,
-				A0D3C6D42898770F000838D7 /* ConfigurationProvider.swift in Sources */,
-				A0D3C6F22898770F000838D7 /* Version.swift in Sources */,
-				A0D3C6EC2898770F000838D7 /* FileCollector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,6 +651,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A01552A328CF48A400F2B8A1 /* PlantUMLFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PlantUMLFramework;
+		};
 		A077461528C7F25C007C5C13 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
