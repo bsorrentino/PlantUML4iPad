@@ -9,14 +9,20 @@ struct Symbol : Identifiable, CustomStringConvertible {
     
     var id:String
     private var _value:String?
-    
+    private var _additionalValues:[String]?
+
     var value: String {
         get { _value ?? id }
     }
-    
-    init( _ id:String, _ value:String? = nil) {
+
+    var additionalValues: [String]? {
+        get { _additionalValues }
+    }
+
+    init( _ id:String, _ value:String? = nil, _ additionalValues: [String]? = nil) {
         self.id = id
         self._value = value
+        self._additionalValues = additionalValues
     }
 }
 
@@ -53,8 +59,9 @@ fileprivate var plantUMLSymbols:[[Symbol]] = [
     
     [
         Symbol("[#red]"),
-        Symbol("note", "note"),
-        Symbol("end note"),
+        Symbol("note left", "note left /' of participant '/", ["this note is displayed left", "end note"]),
+        Symbol("note right", "note right 'of participant", ["this note is displayed right", "end note"]),
+        Symbol("note over", "note over participant1 ', participant2", ["this note is displayed over participant1", "end note"]),
     ]
     
 ]
@@ -72,11 +79,12 @@ fileprivate var plantUMLImages:[[UIImage?]] = {
 
 public struct PlantUMLKeyboardView: View {
     
-    @Binding var show : Bool
+    @ObservedObject var customKeyboard: CustomKeyboardObject
     
-    public init( show: Binding<Bool> ) {
-        self._show = show
-    }
+//    public init( show: Binding<Bool>, result:Binding<[String]> ) {
+//        self._show = show
+//        self._result = result
+//    }
     
     public var body : some View{
         
@@ -114,7 +122,7 @@ public struct PlantUMLKeyboardView: View {
             .cornerRadius(25)
             
             Button(action: {
-                self.show.toggle()
+                customKeyboard.showKeyboard.toggle()
             }) {
                 Image(systemName: "xmark").foregroundColor(.black)
             }
@@ -136,6 +144,10 @@ public struct PlantUMLKeyboardView: View {
         if let range = handleToYourTextView.selectedTextRange {
             // From your question I assume that you do not want to replace a selection, only insert some text where the cursor is.
             handleToYourTextView.replace(range, withText: symbol.value )
+        }
+        
+        if let additionalValues = symbol.additionalValues {
+            customKeyboard.itemsToAdd = additionalValues
         }
 
     }
@@ -174,8 +186,17 @@ extension PlantUMLKeyboardView {
 }
 
 struct PlantUMLKeyboardView_Previews: PreviewProvider {
+    
+    struct UserView : View {
+        @ObservedObject var customKeyboard = CustomKeyboardObject()
+        
+        public var body : some View {
+            PlantUMLKeyboardView( customKeyboard: customKeyboard )
+        }
+    }
+    
     static var previews: some View {
-        PlantUMLKeyboardView( show: Binding.constant(true) )
+        UserView()
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }

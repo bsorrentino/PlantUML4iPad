@@ -38,7 +38,7 @@ struct PlantUMLTextField: View {
 
         VStack {
             
-            HStack(spacing: 15){
+            HStack(spacing: 15) {
                 
                 TextField( "", text: $value )
                     .textInputAutocapitalization(.never)
@@ -54,7 +54,6 @@ struct PlantUMLTextField: View {
             }
             
         }
-//        .background(Color("Color")
 //        .animation(.easeInOut(duration: 2), value: 1.0)
         .edgesIgnoringSafeArea(.all)
         .onAppear {
@@ -65,11 +64,6 @@ struct PlantUMLTextField: View {
 //                                                   queue: .main) { ( object ) in
 //                print( "UIWindowFirstResponderDidChangeNotification \(object)" )
 //            }
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillChangeFrameNotification,
-                                                   object: nil,
-                                                   queue: .main) { (_) in
-                self.showKeyboard = false
-            }
         }
 
     }
@@ -83,9 +77,9 @@ extension PlantUMLTextField {
                 
                 print( "show keyboard")
                 
-                if let rootViewController = getWindows()?.first?.rootViewController {
-                    rootViewController.view.endEditing(true)
-                }
+//                if let rootViewController = getWindows()?.first?.rootViewController {
+//                    rootViewController.view.endEditing(true)
+//                }
                 
                 self.showKeyboard.toggle()
                 

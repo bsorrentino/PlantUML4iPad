@@ -35,6 +35,10 @@ struct PlantUMLEditorView: View {
             GeometryReader { _ in
                 HStack {
                     EditorView()
+                        .onReceive( customKeyboard.$itemsToAdd ) { items in
+                            print( "\(items)")
+                            appendBelow(values: items)
+                        }
                     if !isPreviewVisible {
                         PlantUMLDiagramView( url: diagram.buildURL() )
                     }
@@ -176,13 +180,27 @@ extension PlantUMLEditorView {
         diagram.items[ offset ].rawValue = value
    }
     
-    func addBelow( theItem item: SyntaxStructure? ) {
+    func appendBelow( theItem item: SyntaxStructure? = nil, values: [String]  ) {
         let offset = (item != nil) ?
             diagram.items.firstIndex { $0.id == item!.id } :
             indexFromFocusedItem()
 
         guard let offset = offset else { return }
-        let newItem = SyntaxStructure( rawValue: "")
+        
+        values.map { SyntaxStructure( rawValue: $0) }
+            .enumerated()
+            .forEach { (index, item ) in
+                diagram.items.insert( item, at: offset + index + 1)
+            }
+    }
+
+    func addBelow( theItem item: SyntaxStructure? = nil, value: String = ""  ) {
+        let offset = (item != nil) ?
+            diagram.items.firstIndex { $0.id == item!.id } :
+            indexFromFocusedItem()
+
+        guard let offset = offset else { return }
+        let newItem = SyntaxStructure( rawValue: value)
         
         diagram.items.insert( newItem, at: offset + 1)
         focusedItem = .row( id: newItem.id )

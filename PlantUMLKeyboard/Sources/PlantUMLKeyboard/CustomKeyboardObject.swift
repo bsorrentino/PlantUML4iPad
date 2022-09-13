@@ -1,11 +1,14 @@
 import Combine
 import SwiftUI
+import PlantUMLFramework
 
 
 public class CustomKeyboardObject : ObservableObject {
     
     @Published public var showKeyboard = false
-    
+
+    @Published public var itemsToAdd:[String] = []
+
     private var controller:UIHostingController<PlantUMLKeyboardView>?
     
     private var keyboardRect:CGRect = .zero
@@ -75,7 +78,7 @@ public class CustomKeyboardObject : ObservableObject {
  
         print( "keyboardRect: \(keyboardRect)")
         
-        let controller = UIHostingController( rootView: PlantUMLKeyboardView( show: showKeyboardBinding) )
+        let controller = UIHostingController( rootView: PlantUMLKeyboardView( customKeyboard: self ) )
         self.controller = controller
         controller.view.frame = CGRect( origin: keyboardRect.origin, size: keyboardRect.size )
         keyboardWindow.addSubview( controller.view )
