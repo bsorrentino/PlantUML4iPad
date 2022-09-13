@@ -1,55 +1,6 @@
 import SwiftUI
 import UIKit
 
-func getFirstWindow() -> UIWindow? {
-    
-    let scenes = UIApplication.shared.connectedScenes
-    guard let windowScene = scenes.first as? UIWindowScene else {
-        return nil
-    }
-    guard let window = windowScene.windows.first else {
-        return nil
-    }
-    return window
-
-}
-
-// https://stackoverflow.com/a/1823360/521197
-extension UIView {
-    
-    var firstResponder: UIView? {
-        guard !isFirstResponder else { return self }
-
-        for subview in subviews {
-            if let firstResponder = subview.firstResponder {
-                return firstResponder
-            }
-        }
-
-        return nil
-    }
-}
-
-func getFirstTextFieldResponder() -> UITextField? {
-    
-    let scenes = UIApplication.shared.connectedScenes
-    guard let windowScene = scenes.first as? UIWindowScene else {
-        return nil
-    }
-    guard let window = windowScene.windows.first else {
-        return nil
-    }
-    
-    guard let firstResponder = window.firstResponder else {
-        return nil
-    }
-    
-    return firstResponder as? UITextField
-}
-
-public func getRootViewController() -> UIViewController? {
-    getFirstWindow()?.rootViewController
-}
 
 struct Symbol : Identifiable, CustomStringConvertible {
     var description: String {
@@ -118,40 +69,13 @@ fileprivate var plantUMLImages:[[UIImage?]] = {
 }()
 
 
-// [StackOverflow](https://stackoverflow.com/a/73628496/521197)
-extension UIImage {
-
-    func extractTiles(with tileSize: CGSize) -> [UIImage?] {
-        
-        let hCount = Int(self.size.height / tileSize.height )
-        let wCount = Int(self.size.width / tileSize.width )
-
-        var tiles:[UIImage] = []
-
-        for i in 0...hCount-1 {
-            for p in 0...wCount-1 {
-                let rect = CGRect(
-                    x: CGFloat(p) * tileSize.width,
-                    y: CGFloat(i) * tileSize.height,
-                    width: tileSize.width,
-                    height: tileSize.height)
-                let temp:CGImage = self.cgImage!.cropping(to: rect)!
-                tiles.append(UIImage(cgImage: temp))
-            }
-        }
-        return tiles
-    }
-    
-}
 
 public struct PlantUMLKeyboardView: View {
-        
-    @Binding var show : Bool
-    @Binding var value : String
     
-    public init( show: Binding<Bool>, value: Binding<String> ) {
+    @Binding var show : Bool
+    
+    public init( show: Binding<Bool> ) {
         self._show = show
-        self._value = value
     }
     
     public var body : some View{
@@ -185,9 +109,8 @@ public struct PlantUMLKeyboardView: View {
                 .padding(.top)
             
             }
-            .frame(
-                width: UIScreen.main.bounds.width,
-                height: UIScreen.main.bounds.height / 3)
+            .frame(maxWidth: .infinity)
+//            .frame( width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
             .background(Color.white)
             .cornerRadius(25)
             
@@ -200,6 +123,8 @@ public struct PlantUMLKeyboardView: View {
         }
     }
     
+    //
+    //
     //
     func replaceSymbolAtCursorPosition( _ symbol: Symbol) {
         guard let handleToYourTextView = getFirstTextFieldResponder() else {
@@ -249,7 +174,7 @@ extension PlantUMLKeyboardView {
 
 struct PlantUMLKeyboardView_Previews: PreviewProvider {
     static var previews: some View {
-        PlantUMLKeyboardView( show: Binding.constant(true), value: Binding.constant("TEST"))
+        PlantUMLKeyboardView( show: Binding.constant(true) )
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }

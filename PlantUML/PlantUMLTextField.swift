@@ -83,7 +83,7 @@ extension PlantUMLTextField {
                 
                 print( "show keyboard")
                 
-                if let rootViewController = getRootViewController() {
+                if let rootViewController = getWindows()?.first?.rootViewController {
                     rootViewController.view.endEditing(true)
                 }
                 

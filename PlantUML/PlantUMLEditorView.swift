@@ -18,15 +18,16 @@ enum Focusable: Hashable {
 struct PlantUMLEditorView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
+    
     @EnvironmentObject private var diagram: PlantUMLDiagramObject
+
+    @ObservedObject var customKeyboard = CustomKeyboardObject()
     
     @Binding var document: PlantUMLDocument
     
     @FocusState private var focusedItem: Focusable?
     
     @State private var isPreviewVisible = false
-    
-    @State private var showKeyboard = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -49,13 +50,6 @@ struct PlantUMLEditorView: View {
                 }
             }
             
-            if( showKeyboard ) {
-            
-                PlantUMLKeyboardView(
-                    show: $showKeyboard,
-                    value:Binding.constant("")
-                )
-            }
         }
         
     }
@@ -133,7 +127,7 @@ struct PlantUMLEditorView: View {
                             }
                     }
                     PlantUMLTextField( value: item.rawValue,
-                                       showKeyboard: $showKeyboard,
+                                       showKeyboard: $customKeyboard.showKeyboard,
                                        onChange: updateItem )
                         .focused($focusedItem, equals: .row(id: item.id))
                         .onSubmit(of: .text) {
