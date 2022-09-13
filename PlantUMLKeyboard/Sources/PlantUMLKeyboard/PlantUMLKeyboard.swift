@@ -109,9 +109,8 @@ public struct PlantUMLKeyboardView: View {
                 .padding(.top)
             
             }
-            .frame(maxWidth: .infinity)
-//            .frame( width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
-            .background(Color.white)
+            .frame(maxWidth: .infinity )
+            .background(Color.gray.opacity(0.1))
             .cornerRadius(25)
             
             Button(action: {
@@ -143,10 +142,12 @@ public struct PlantUMLKeyboardView: View {
 }
 
 struct KeyButtonStyle: ButtonStyle {
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(3)
+            .padding(5)
             .border( .black, width: 1)
+            .background( .white )
     }
 }
 

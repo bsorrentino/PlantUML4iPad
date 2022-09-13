@@ -9,19 +9,19 @@ import UIKit
 
 
 public func getKeyboardWindow() -> UIWindow? {
+//    let _ =  UIApplication.shared.connectedScenes
+//                // Keep only active scenes, onscreen and visible to the user
+//                //.filter { $0.activationState == .foregroundActive }
+//                // Keep only the first `UIWindowScene`
+//                //.first(where: { $0 is UIWindowScene })
+//                // Get its associated windows
+//                .compactMap { $0 as? UIWindowScene }
+//                .compactMap { $0.windows }
+//                .flatMap { $0 }
+//                .last
     return UIApplication.shared.windows.last
-    /*
-    return UIApplication.shared.connectedScenes
-                // Keep only active scenes, onscreen and visible to the user
-                //.filter { $0.activationState == .foregroundActive }
-                // Keep only the first `UIWindowScene`
-                //.first(where: { $0 is UIWindowScene })
-                // Get its associated windows
-                .compactMap { $0 as? UIWindowScene }
-                .compactMap { $0.windows }
-                .flatMap { $0 }
-                .last
-     */
+    
+    
 }
 
 public func getWindows() -> [UIWindow]? {

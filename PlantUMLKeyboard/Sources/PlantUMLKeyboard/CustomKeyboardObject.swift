@@ -31,10 +31,12 @@ public class CustomKeyboardObject : ObservableObject {
 
         NotificationCenter.default.addObserver(
             
-            forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) {_ in
+            forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
             
                 print( "keyboardDidHideNotification" )
-                
+
+                self?.keyboardRect = .zero
+
             }
 
         cancellable = _showKeyboard.projectedValue.sink { value in
@@ -75,7 +77,7 @@ public class CustomKeyboardObject : ObservableObject {
         
         let controller = UIHostingController( rootView: PlantUMLKeyboardView( show: showKeyboardBinding) )
         self.controller = controller
-        controller.view.frame = CGRect( origin: keyboardRect.origin, size: CGSize( width: keyboardRect.width, height: 500.0) )
+        controller.view.frame = CGRect( origin: keyboardRect.origin, size: keyboardRect.size )
         keyboardWindow.addSubview( controller.view )
         
 
@@ -83,7 +85,6 @@ public class CustomKeyboardObject : ObservableObject {
     }
 
     private func hide() {
-        keyboardRect = .zero
         controller?.view.removeFromSuperview()
     }
 }
