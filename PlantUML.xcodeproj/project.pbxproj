@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A01552A428CF48A400F2B8A1 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A01552A328CF48A400F2B8A1 /* PlantUMLFramework */; };
+		A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B128D1E19600090D97 /* PlantUMLFramework */; };
+		A02F69B428D1E19A00090D97 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */; };
 		A077460F28C7D818007C5C13 /* PlantUMLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */; };
-		A077461628C7F25C007C5C13 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A077461528C7F25C007C5C13 /* PlantUMLKeyboard */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */; };
@@ -73,8 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A01552A428CF48A400F2B8A1 /* PlantUMLFramework in Frameworks */,
-				A077461628C7F25C007C5C13 /* PlantUMLKeyboard in Frameworks */,
+				A02F69B428D1E19A00090D97 /* PlantUMLKeyboard in Frameworks */,
+				A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,8 +198,8 @@
 			);
 			name = PlantUML;
 			packageProductDependencies = (
-				A077461528C7F25C007C5C13 /* PlantUMLKeyboard */,
-				A01552A328CF48A400F2B8A1 /* PlantUMLFramework */,
+				A02F69B128D1E19600090D97 /* PlantUMLFramework */,
+				A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUML.app */;
@@ -651,11 +651,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A01552A328CF48A400F2B8A1 /* PlantUMLFramework */ = {
+		A02F69B128D1E19600090D97 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLFramework;
 		};
-		A077461528C7F25C007C5C13 /* PlantUMLKeyboard */ = {
+		A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
 		};
