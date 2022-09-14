@@ -6,15 +6,21 @@ internal enum NetworkError: Error {
 }
 
 /// Swift type representing a PlantUML script (@startuml ... @enduml)
-public struct PlantUMLScript {
+public struct PlantUMLScript : CustomStringConvertible {
+    
     /// textual representation of the script (@startuml ... @enduml)
     public private(set) var text: String = ""
 
     /// public private(set) var configuration: PlantUMLConfiguration = .default
     private var context: PlantUMLContext
 
+    public var description: String {
+        text
+    }
+
     /// default initializer
     public init(items: [SyntaxStructure], configuration: Configuration = .default) {
+        
         context = PlantUMLContext(configuration: configuration)
 
         let methodStart = Date()
