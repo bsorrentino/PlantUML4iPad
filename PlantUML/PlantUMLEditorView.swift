@@ -36,7 +36,7 @@ struct PlantUMLEditorView: View {
                 HStack {
                     EditorView()
                         .onReceive( customKeyboard.$itemsToAdd ) { items in
-                            print( "\(items)")
+                            // print( "\(items)")
                             appendBelow(values: items)
                         }
                     if !isPreviewVisible {
@@ -57,6 +57,7 @@ struct PlantUMLEditorView: View {
         }
         
     }
+    
     
     func SaveButton() -> some View {
         
@@ -91,6 +92,7 @@ struct PlantUMLEditorView: View {
             Label( "clone",
                    systemImage: "arrow.down.doc")
             .labelStyle(.titleAndIcon)
+            
         }
     }
 
@@ -102,6 +104,7 @@ struct PlantUMLEditorView: View {
             Label( "add above",
                    systemImage: "arrow.up")
             .labelStyle(.titleAndIcon)
+            
         }
     }
 
@@ -149,8 +152,12 @@ struct PlantUMLEditorView: View {
             ToolbarItemGroup(placement: .keyboard) {
                 AddBelowButton()
                 AddAboveButton()
+                ShowKeyboardButton( show: $customKeyboard.showKeyboard )
+                    
             }
+            
          }
+        .font(.footnote)
         .listStyle(SidebarListStyle())
 
     }

@@ -33,7 +33,7 @@ struct PlantUMLTextField: View {
                     
                     
                 if( isFocused ) {
-                    ShowKeyboardAccessoryButton
+                    ShowKeyboardAccessoryButton( show: $showKeyboard )
                 }
             }
             
@@ -52,29 +52,6 @@ struct PlantUMLTextField: View {
 
     }
 }
-
-extension PlantUMLTextField {
-    
-    var ShowKeyboardAccessoryButton: some View {
-        
-            Button(action: {
-                
-                print( "show keyboard")
-                
-//                if let rootViewController = getWindows()?.first?.rootViewController {
-//                    rootViewController.view.endEditing(true)
-//                }
-                
-                self.showKeyboard.toggle()
-                
-            }) {
-                
-                Image(systemName: "keyboard.badge.ellipsis")
-                    .foregroundColor(.black.opacity(0.5))
-            }
-    }
-}
-
 
 struct PlantUMLTextField_Previews: PreviewProvider {
     static var previews: some View {
