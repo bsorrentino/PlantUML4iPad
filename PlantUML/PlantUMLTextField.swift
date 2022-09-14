@@ -8,23 +8,6 @@
 import SwiftUI
 import PlantUMLKeyboard
 
-fileprivate struct PlantUMLTextField_old: View  {
-    @State var value: String
-    
-    var onChange: ( String ) -> Void
-    
-    var body: some View {
-        TextField( "", text: $value )
-            .textInputAutocapitalization(.never)
-            .font(Font.system(size: 15).monospaced())
-            .submitLabel(.done)
-            .onChange(of: value
-                      , perform: onChange )
-
-    }
-    
-}
-
 struct PlantUMLTextField: View {
     @State var value: String
     @Binding var showKeyboard: Bool
