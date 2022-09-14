@@ -1,6 +1,5 @@
 import Combine
 import SwiftUI
-import PlantUMLFramework
 
 
 public class CustomKeyboardObject : ObservableObject {
@@ -80,7 +79,12 @@ public class CustomKeyboardObject : ObservableObject {
         
         let controller = UIHostingController( rootView: PlantUMLKeyboardView( customKeyboard: self ) )
         self.controller = controller
-        controller.view.frame = CGRect( origin: keyboardRect.origin, size: keyboardRect.size )
+        
+        let MAGIC_NUMBER = 50.0 // magic number .. height of keyboard top bar
+        var customKeyboardRect = keyboardRect
+        customKeyboardRect.origin.y += MAGIC_NUMBER
+        customKeyboardRect.size.height -= MAGIC_NUMBER
+        controller.view.frame = customKeyboardRect
         keyboardWindow.addSubview( controller.view )
         
 
