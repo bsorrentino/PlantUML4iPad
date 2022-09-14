@@ -41,6 +41,7 @@ struct PlantUMLTextField: View {
             HStack(spacing: 15) {
                 
                 TextField( "", text: $value )
+                    .keyboardType(.asciiCapableNumberPad)
                     .textInputAutocapitalization(.never)
                     .font(Font.system(size: 15).monospaced())
                     .submitLabel(.done)
