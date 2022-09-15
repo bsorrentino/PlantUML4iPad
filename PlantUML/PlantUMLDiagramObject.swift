@@ -36,7 +36,7 @@ class PlantUMLDiagramObject : ObservableObject, CustomStringConvertible {
     func buildURL() -> URL {
         let script = PlantUMLScript( items: items )
         
-        print( "\n\n\(script)\n\n" )
+        // print( "\n\n\(script)\n\n" )
                
         return presenter.url( of: script )
     }

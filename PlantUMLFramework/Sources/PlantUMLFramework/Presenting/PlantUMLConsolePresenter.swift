@@ -10,7 +10,7 @@ public struct PlantUMLConsolePresenter: PlantUMLPresenting {
     ///   - script: in PlantUML notation
     ///   - completionHandler: will to be called when presentation was triggered
     public func present(script: PlantUMLScript, completionHandler: @escaping () -> Void) {
-        print(script.text)
+        // print(script.text)
         completionHandler()
     }
 }

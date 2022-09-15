@@ -68,7 +68,7 @@ var plantUMLSymbols:[[Symbol]] = [
         Symbol("[#red]"),
         Symbol("note left", "note left /' of participant '/", ["this note is displayed left", "end note"]),
         Symbol("note right", "note right /' of participant '/", ["this note is displayed right", "end note"]),
-        Symbol("note over", "note over participant1 /', participant2 */", ["this note is displayed over participant1", "end note"]),
+        Symbol("note over", "note over participant1 /', participant2 '/", ["this note is displayed over participant1", "end note"]),
     ]
     
 ]
