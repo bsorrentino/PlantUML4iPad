@@ -45,10 +45,10 @@ public class CustomKeyboardObject : ObservableObject {
             print( "showKeyboard: \(value)" )
             
             if( value ) {
-                self.show()
+                //self.show()
             }
             else {
-                self.hide()
+                //self.hide()
             }
             
         }

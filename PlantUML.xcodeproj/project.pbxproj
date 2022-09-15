@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B128D1E19600090D97 /* PlantUMLFramework */; };
 		A02F69B428D1E19A00090D97 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */; };
+		A060963328D3BCC300E0EE45 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A060963228D3BCC300E0EE45 /* KeyboardViewController.swift */; };
+		A060963728D3BCC300E0EE45 /* PlantUMLKeyboardEx.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A060963028D3BCC300E0EE45 /* PlantUMLKeyboardEx.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A077460F28C7D818007C5C13 /* PlantUMLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
@@ -25,6 +27,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A060963528D3BCC300E0EE45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0D3C63E28984A0E000838D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A060962F28D3BCC300E0EE45;
+			remoteInfo = PlantUMLKeyboardEx;
+		};
 		A0D3C65A28984A10000838D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A0D3C63E28984A0E000838D7 /* Project object */;
@@ -41,8 +50,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		A060963828D3BCC300E0EE45 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A060963728D3BCC300E0EE45 /* PlantUMLKeyboardEx.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
+		A060963028D3BCC300E0EE45 /* PlantUMLKeyboardEx.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PlantUMLKeyboardEx.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A060963228D3BCC300E0EE45 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
+		A060963428D3BCC300E0EE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A077460D28C7D49D007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLTextField.swift; sourceTree = "<group>"; };
 		A077461028C7DF19007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
@@ -69,6 +95,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A060962D28D3BCC300E0EE45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0D3C64328984A0E000838D7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -95,6 +128,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A060963128D3BCC300E0EE45 /* PlantUMLKeyboardEx */ = {
+			isa = PBXGroup;
+			children = (
+				A060963228D3BCC300E0EE45 /* KeyboardViewController.swift */,
+				A060963428D3BCC300E0EE45 /* Info.plist */,
+			);
+			path = PlantUMLKeyboardEx;
+			sourceTree = "<group>";
+		};
 		A077460C28C7D49D007C5C13 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +166,7 @@
 				A0D3C64828984A0E000838D7 /* PlantUML */,
 				A0D3C65C28984A10000838D7 /* PlantUMLTests */,
 				A0D3C66628984A11000838D7 /* PlantUMLUITests */,
+				A060963128D3BCC300E0EE45 /* PlantUMLKeyboardEx */,
 				A0D3C64728984A0E000838D7 /* Products */,
 				A077461228C7EF6A007C5C13 /* Frameworks */,
 			);
@@ -135,6 +178,7 @@
 				A0D3C64628984A0E000838D7 /* PlantUML.app */,
 				A0D3C65928984A10000838D7 /* PlantUMLTests.xctest */,
 				A0D3C66328984A11000838D7 /* PlantUMLUITests.xctest */,
+				A060963028D3BCC300E0EE45 /* PlantUMLKeyboardEx.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,6 +228,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A060962F28D3BCC300E0EE45 /* PlantUMLKeyboardEx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A060963B28D3BCC300E0EE45 /* Build configuration list for PBXNativeTarget "PlantUMLKeyboardEx" */;
+			buildPhases = (
+				A060962C28D3BCC300E0EE45 /* Sources */,
+				A060962D28D3BCC300E0EE45 /* Frameworks */,
+				A060962E28D3BCC300E0EE45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PlantUMLKeyboardEx;
+			productName = PlantUMLKeyboardEx;
+			productReference = A060963028D3BCC300E0EE45 /* PlantUMLKeyboardEx.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		A0D3C64528984A0E000838D7 /* PlantUML */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A0D3C66D28984A11000838D7 /* Build configuration list for PBXNativeTarget "PlantUML" */;
@@ -191,10 +252,12 @@
 				A0D3C64228984A0E000838D7 /* Sources */,
 				A0D3C64328984A0E000838D7 /* Frameworks */,
 				A0D3C64428984A0E000838D7 /* Resources */,
+				A060963828D3BCC300E0EE45 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A060963628D3BCC300E0EE45 /* PBXTargetDependency */,
 			);
 			name = PlantUML;
 			packageProductDependencies = (
@@ -248,9 +311,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
+					A060962F28D3BCC300E0EE45 = {
+						CreatedOnToolsVersion = 14.0;
+					};
 					A0D3C64528984A0E000838D7 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
@@ -282,11 +348,19 @@
 				A0D3C64528984A0E000838D7 /* PlantUML */,
 				A0D3C65828984A10000838D7 /* PlantUMLTests */,
 				A0D3C66228984A11000838D7 /* PlantUMLUITests */,
+				A060962F28D3BCC300E0EE45 /* PlantUMLKeyboardEx */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A060962E28D3BCC300E0EE45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0D3C64428984A0E000838D7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,6 +387,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A060962C28D3BCC300E0EE45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A060963328D3BCC300E0EE45 /* KeyboardViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0D3C64228984A0E000838D7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -348,6 +430,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A060963628D3BCC300E0EE45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A060962F28D3BCC300E0EE45 /* PlantUMLKeyboardEx */;
+			targetProxy = A060963528D3BCC300E0EE45 /* PBXContainerItemProxy */;
+		};
 		A0D3C65B28984A10000838D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A0D3C64528984A0E000838D7 /* PlantUML */;
@@ -361,6 +448,60 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		A060963928D3BCC300E0EE45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 48J595L9BX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PlantUMLKeyboardEx/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PlantUMLKeyboardEx;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUML.PlantUMLKeyboardEx;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A060963A28D3BCC300E0EE45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 48J595L9BX;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PlantUMLKeyboardEx/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PlantUMLKeyboardEx;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUML.PlantUMLKeyboardEx;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		A0D3C66B28984A11000838D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -478,6 +619,7 @@
 		A0D3C66E28984A11000838D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -509,6 +651,7 @@
 		A0D3C66F28984A11000838D7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -612,6 +755,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A060963B28D3BCC300E0EE45 /* Build configuration list for PBXNativeTarget "PlantUMLKeyboardEx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A060963928D3BCC300E0EE45 /* Debug */,
+				A060963A28D3BCC300E0EE45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUML" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
