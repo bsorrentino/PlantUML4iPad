@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B128D1E19600090D97 /* PlantUMLFramework */; };
 		A02F69B428D1E19A00090D97 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */; };
-		A077460F28C7D818007C5C13 /* PlantUMLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */; };
@@ -44,7 +43,6 @@
 /* Begin PBXFileReference section */
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A077460D28C7D49D007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
-		A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLTextField.swift; sourceTree = "<group>"; };
 		A077461028C7DF19007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A077461128C7DF74007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A077461728C7F279007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
@@ -144,7 +142,6 @@
 			children = (
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
 				A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */,
-				A077460E28C7D818007C5C13 /* PlantUMLTextField.swift */,
 				A0D3C64D28984A0E000838D7 /* PlantUMLEditorView.swift */,
 				A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */,
 				A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */,
@@ -319,7 +316,6 @@
 			files = (
 				A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
-				A077460F28C7D818007C5C13 /* PlantUMLTextField.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLEditorView.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,

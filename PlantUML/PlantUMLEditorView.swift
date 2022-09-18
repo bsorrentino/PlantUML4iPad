@@ -133,13 +133,12 @@ struct PlantUMLEditorView: View {
                                 AddCloneButton( theItem: item )
                             }
                     }
-                    PlantUMLTextField( value: item.rawValue,
-                                       showKeyboard: $customKeyboard.showKeyboard,
-                                       onChange: updateItem )
+
+                    PlantUMLTextFieldWithCustomKeyboard()
+//                    PlantUMLTextField( value: item.rawValue,
+//                                       customKeyboard: customKeyboard,
+//                                       onChange: updateItem )
                         .focused($focusedItem, equals: .row(id: item.id))
-                        .onSubmit(of: .text) {
-                            // openURL( diagram.buildURL() )
-                        }
                 }
 
 

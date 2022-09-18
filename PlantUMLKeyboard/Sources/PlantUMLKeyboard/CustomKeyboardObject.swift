@@ -1,6 +1,6 @@
 import Combine
 import SwiftUI
-
+import UIKit
 
 public class CustomKeyboardObject : ObservableObject {
     
@@ -8,12 +8,22 @@ public class CustomKeyboardObject : ObservableObject {
 
     @Published public var itemsToAdd:[String] = []
 
-    private var controller:UIHostingController<PlantUMLKeyboardView>?
-    
     private var keyboardRect:CGRect = .zero
     
     private var cancellable:AnyCancellable?
     
+    var keyboardView:UIView {
+        
+        let controller = UIHostingController( rootView: PlantUMLKeyboardView( customKeyboard: self ) )
+        
+        let MAGIC_NUMBER = 50.0 // magic number .. height of keyboard top bar
+        var customKeyboardRect = keyboardRect
+        customKeyboardRect.origin.y += MAGIC_NUMBER
+        customKeyboardRect.size.height -= MAGIC_NUMBER
+        controller.view.frame = customKeyboardRect
+        return controller.view
+ 
+    }
     public init() {
        
         NotificationCenter.default.addObserver(
@@ -41,17 +51,17 @@ public class CustomKeyboardObject : ObservableObject {
 
             }
 
-        cancellable = _showKeyboard.projectedValue.sink { value in
-            print( "showKeyboard: \(value)" )
-            
-            if( value ) {
-                self.show()
-            }
-            else {
-                self.hide()
-            }
-            
-        }
+//        cancellable = _showKeyboard.projectedValue.sink { value in
+//            print( "showKeyboard: \(value)" )
+//
+//            if( value ) {
+//                self.show()
+//            }
+//            else {
+//                self.hide()
+//            }
+//
+//        }
         
     }
     
@@ -67,31 +77,5 @@ public class CustomKeyboardObject : ObservableObject {
                 self?.showKeyboard = $0
             }
         )
-    }
-    
-    private func show() {
-        
-        guard !self.showKeyboard && self.keyboardRect != .zero, let keyboardWindow = getKeyboardWindow() else {
-            return
-        }
- 
-        print( "keyboardRect: \(keyboardRect)")
-        
-        let controller = UIHostingController( rootView: PlantUMLKeyboardView( customKeyboard: self ) )
-        self.controller = controller
-        
-        let MAGIC_NUMBER = 50.0 // magic number .. height of keyboard top bar
-        var customKeyboardRect = keyboardRect
-        customKeyboardRect.origin.y += MAGIC_NUMBER
-        customKeyboardRect.size.height -= MAGIC_NUMBER
-        controller.view.frame = customKeyboardRect
-        keyboardWindow.addSubview( controller.view )
-        
-
-        
-    }
-
-    private func hide() {
-        controller?.view.removeFromSuperview()
     }
 }
