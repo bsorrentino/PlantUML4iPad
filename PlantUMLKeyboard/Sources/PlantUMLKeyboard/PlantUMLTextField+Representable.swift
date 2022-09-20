@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import PlantUMLFramework
 
 public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
     public typealias ChangeHandler =  ( String ) -> Void
@@ -14,11 +15,11 @@ public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
     private let textField = UITextField()
     
     
-    public var value:String
+    public var item:SyntaxStructure
     public var onChange:ChangeHandler
     
-    public init( value:String, onChange:@escaping ChangeHandler ) {
-        self.value = value
+    public init( item:SyntaxStructure, onChange:@escaping ChangeHandler ) {
+        self.item = item
         self.onChange = onChange
     }
     
@@ -33,7 +34,7 @@ public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
         textField.autocapitalizationType = .none
         textField.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .regular)
         textField.returnKeyType = .done
-        textField.text = value
+        textField.text = item.rawValue
         return textField
     }
     

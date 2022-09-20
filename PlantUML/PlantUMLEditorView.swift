@@ -20,8 +20,6 @@ struct PlantUMLEditorView: View {
     @Environment(\.openURL) private var openURL
     
     @EnvironmentObject private var diagram: PlantUMLDiagramObject
-
-    @ObservedObject var customKeyboard = CustomKeyboardObject()
     
     @Binding var document: PlantUMLDocument
     
@@ -35,10 +33,9 @@ struct PlantUMLEditorView: View {
             GeometryReader { _ in
                 HStack {
                     EditorView()
-                        .onReceive( customKeyboard.$itemsToAdd ) { items in
-                            // print( "\(items)")
-                            appendBelow(values: items)
-                        }
+//                        .onReceive( customKeyboard.$itemsToAdd ) { items in
+//                            appendBelow(values: items)
+//                        }
                     if !isPreviewVisible {
                         PlantUMLDiagramView( url: diagram.buildURL() )
                     }
@@ -137,7 +134,7 @@ struct PlantUMLEditorView: View {
                             }
                     }
 
-                    PlantUMLTextFieldWithCustomKeyboard( value: item.rawValue, onChange: updateItem )
+                    PlantUMLTextFieldWithCustomKeyboard( item: item, onChange: updateItem )
                         .focused($focusedItem, equals: .row(id: item.id))
                 }
 
