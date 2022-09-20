@@ -9,13 +9,17 @@ import UIKit
 import SwiftUI
 
 public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
-    
+    public typealias ChangeHandler =  ( String ) -> Void
     public typealias UIViewType = UITextField
-
     private let textField = UITextField()
     
-    public init() {
-        
+    
+    public var value:String
+    public var onChange:ChangeHandler
+    
+    public init( value:String, onChange:@escaping ChangeHandler ) {
+        self.value = value
+        self.onChange = onChange
     }
     
     public func makeCoordinator() -> PlantUMLTextFieldWithCustomKeyboard.Coordinator {
@@ -25,22 +29,156 @@ public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
     public func makeUIView(context: Context) -> UITextField {
         
         textField.delegate = context.coordinator
+        textField.keyboardType = .asciiCapableNumberPad
+        textField.autocapitalizationType = .none
+        textField.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .regular)
+        textField.returnKeyType = .done
+        textField.text = value
         return textField
     }
     
     public func updateUIView(_ uiView: UITextField, context: Context) {
         
-    }
-    
-
-    public class Coordinator: NSObject, UITextFieldDelegate {
+        context.coordinator.updateAccesoryView()
         
-        private let parent : PlantUMLTextFieldWithCustomKeyboard
+    }
+}
 
+
+// MARK: - CustomKeyboardPresenter protocol
+protocol CustomKeyboardPresenter {
+    
+    func toggleCustomKeyobard() -> Void
+    
+    func onPressSymbol( _ symbol: Symbol ) -> Void
+    
+}
+
+// MARK: - Coordinator extension
+extension PlantUMLTextFieldWithCustomKeyboard {
+    
+    public class Coordinator: NSObject, UITextFieldDelegate, CustomKeyboardPresenter {
+        
+        
+        private var keyboardRect:CGRect = .zero
+        private let owner : PlantUMLTextFieldWithCustomKeyboard
+        private var showCustomKeyboard:Bool
+        
         public init(textfield : PlantUMLTextFieldWithCustomKeyboard) {
-          self.parent = textfield
+            self.owner = textfield
+            self.showCustomKeyboard = false
+            super.init()
+            
+            updateAccesoryView()
+            
+            NotificationCenter.default.addObserver(
+                
+                forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { [weak self] notification in
+                
+                    print( "keyboardDidShowNotification" )
+                        
+                    if let keyboardFrameEndUser = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue) {
+                            
+                        print( "keyboardFrameEndUser pos=\(keyboardFrameEndUser)")
+
+                        self?.keyboardRect = keyboardFrameEndUser.cgRectValue
+                    }
+                    
+            }
+
+            NotificationCenter.default.addObserver(
+                
+                forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
+                
+                    print( "keyboardDidHideNotification" )
+
+                    self?.keyboardRect = .zero
+
+                }
+
+
+        }
+        
+        func updateAccesoryView() {
+            if owner.textField.inputAccessoryView == nil {
+
+                let bar = UIToolbar()
+                let toggleKeyboard = UIBarButtonItem(title: "PlantUML Keyboard", style: .plain, target: self, action: #selector(toggleCustomKeyobard))
+                bar.items = [
+                    toggleKeyboard
+                ]
+                bar.sizeToFit()
+                owner.textField.inputAccessoryView = bar
+
+            }
+
+        }
+        public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            
+            // print( "shouldChangeCharactersIn",  range, string )
+            if let text = textField.text, let range = Range(range, in: text) {
+                owner.onChange( text.replacingCharacters(in: range, with: string) )
+            }
+            
+            return true
+        }
+        
+        /// Lazy creation Input View
+        var customKeyboardView:UIView {
+            let keyboardView = PlantUMLKeyboardView(onHide: toggleCustomKeyobard, onPressSymbol: onPressSymbol )
+            let controller = UIHostingController( rootView: keyboardView )
+            
+            let MAGIC_NUMBER = 100.0 // 50.0 // magic number .. height of keyboard top bar
+            var customKeyboardRect = keyboardRect
+            customKeyboardRect.origin.y += MAGIC_NUMBER
+            customKeyboardRect.size.height -= MAGIC_NUMBER
+            controller.view.frame = customKeyboardRect
+            return controller.view
+     
+        }
+
+        @objc public func toggleCustomKeyobard() {
+            print("toggleCustomKeyobard:",  showCustomKeyboard)
+            
+            showCustomKeyboard.toggle()
+            
+            if( showCustomKeyboard ) {
+                owner.textField.inputView = customKeyboardView
+            }
+            else {
+                owner.textField.inputView = nil
+            }
+            owner.textField.reloadInputViews()
+            
+        }
+
+        func onPressSymbol(_ symbol: Symbol) {
+            
+            // [How to programmatically enter text in UITextView at the current cursor position](https://stackoverflow.com/a/35888634/521197)
+            if let range = owner.textField.selectedTextRange {
+                // From your question I assume that you do not want to replace a selection, only insert some text where the cursor is.
+                owner.textField.replace(range, withText: symbol.value )
+                
+                if let text = owner.textField.text {
+                    owner.onChange( text )
+                }
+                
+                /*
+                // https://stackoverflow.com/a/63555951/521197
+                let _range = NSMakeRange(
+                            owner.textField.offset(from: owner.textField.beginningOfDocument, to: range.start),
+                            owner.textField.offset(from: range.start, to: range.end))
+                        
+                let _ = self.textField(owner.textField, shouldChangeCharactersIn: _range, replacementString: symbol.value)
+                */
+            }
+            
+//            if let additionalValues = symbol.additionalValues {
+//                customKeyboard.itemsToAdd = additionalValues
+//            }
+
         }
 
     }
-    
+
 }

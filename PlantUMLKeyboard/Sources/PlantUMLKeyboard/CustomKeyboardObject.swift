@@ -12,18 +12,6 @@ public class CustomKeyboardObject : ObservableObject {
     
     private var cancellable:AnyCancellable?
     
-    var keyboardView:UIView {
-        
-        let controller = UIHostingController( rootView: PlantUMLKeyboardView( customKeyboard: self ) )
-        
-        let MAGIC_NUMBER = 50.0 // magic number .. height of keyboard top bar
-        var customKeyboardRect = keyboardRect
-        customKeyboardRect.origin.y += MAGIC_NUMBER
-        customKeyboardRect.size.height -= MAGIC_NUMBER
-        controller.view.frame = customKeyboardRect
-        return controller.view
- 
-    }
     public init() {
        
         NotificationCenter.default.addObserver(

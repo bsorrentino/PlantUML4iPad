@@ -51,6 +51,8 @@ struct PlantUMLEditorView: View {
                         EditButton()
                         SaveButton()
                     }
+                        
+
                 }
             }
             
@@ -121,6 +123,7 @@ struct PlantUMLEditorView: View {
 
     // MARK: Editor View
     func EditorView() -> some View {
+        
         List() {
             ForEach( diagram.items ) { item in
                 
@@ -134,28 +137,15 @@ struct PlantUMLEditorView: View {
                             }
                     }
 
-                    PlantUMLTextFieldWithCustomKeyboard()
-//                    PlantUMLTextField( value: item.rawValue,
-//                                       customKeyboard: customKeyboard,
-//                                       onChange: updateItem )
+                    PlantUMLTextFieldWithCustomKeyboard( value: item.rawValue, onChange: updateItem )
                         .focused($focusedItem, equals: .row(id: item.id))
                 }
-
 
             }
             .onMove(perform: move)
             .onDelete( perform: delete)
 
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                AddBelowButton()
-                AddAboveButton()
-                ShowKeyboardButton( show: $customKeyboard.showKeyboard )
-                    
-            }
-            
-         }
         .font(.footnote)
         .listStyle(SidebarListStyle())
 
@@ -251,7 +241,7 @@ extension PlantUMLEditorView {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PlantUMLEditorView(document: .constant(PlantUMLDocument()))
-            .environment(\.editMode, Binding.constant(EditMode.active))
+            .environment(\.editMode, Binding.constant(EditMode.inactive))
             .previewInterfaceOrientation(.landscapeRight)
             .environmentObject( PlantUMLDiagramObject( text:
 """
