@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import PlantUMLKeyboard
 import PlantUMLFramework
 
@@ -14,6 +15,8 @@ enum Focusable: Hashable {
   case none
   case row(id: String)
 }
+
+
 
 struct PlantUMLEditorView: View {
     @Environment(\.editMode) private var editMode
@@ -33,6 +36,7 @@ struct PlantUMLEditorView: View {
             GeometryReader { _ in
                 HStack {
                     EditorView()
+                        .modifier( KeyboardAdaptive() )
 //                        .onReceive( customKeyboard.$itemsToAdd ) { items in
 //                            appendBelow(values: items)
 //                        }
@@ -134,7 +138,8 @@ struct PlantUMLEditorView: View {
                             }
                     }
 
-                    PlantUMLTextFieldWithCustomKeyboard( item: item, onChange: updateItem )
+                    PlantUMLTextFieldWithCustomKeyboard( item: item,
+                                                         onChange: updateItem )
                         .focused($focusedItem, equals: .row(id: item.id))
                 }
 
@@ -166,19 +171,19 @@ extension PlantUMLEditorView {
         return nil
     }
     
-   func updateItem( newValue value: String ) {
+    func updateItem( newValue value: String, additionalValues values: [String]? ) {
         guard let offset = indexFromFocusedItem() else {
             return
         }
+        
         diagram.items[ offset ].rawValue = value
+        
+        if let values = values {
+            appendBelow(theOffset: offset, values: values)
+        }
    }
     
-    func appendBelow( theItem item: SyntaxStructure? = nil, values: [String]  ) {
-        let offset = (item != nil) ?
-            diagram.items.firstIndex { $0.id == item!.id } :
-            indexFromFocusedItem()
-
-        guard let offset = offset else { return }
+    func appendBelow( theOffset offset: Int, values: [String]  ) {
         
         values.map { SyntaxStructure( rawValue: $0) }
             .enumerated()

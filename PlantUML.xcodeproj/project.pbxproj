@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A001E42C28DAF8750061E5BE /* Keyboard+Avoidance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A001E42B28DAF8750061E5BE /* Keyboard+Avoidance.swift */; };
 		A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B128D1E19600090D97 /* PlantUMLFramework */; };
 		A02F69B428D1E19A00090D97 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A001E42B28DAF8750061E5BE /* Keyboard+Avoidance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keyboard+Avoidance.swift"; sourceTree = "<group>"; };
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A077460D28C7D49D007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A077461028C7DF19007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
+				A001E42B28DAF8750061E5BE /* Keyboard+Avoidance.swift */,
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
 				A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */,
 				A0D3C64D28984A0E000838D7 /* PlantUMLEditorView.swift */,
@@ -316,6 +319,7 @@
 			files = (
 				A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
+				A001E42C28DAF8750061E5BE /* Keyboard+Avoidance.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLEditorView.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,

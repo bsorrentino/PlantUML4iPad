@@ -10,7 +10,7 @@ import SwiftUI
 import PlantUMLFramework
 
 public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
-    public typealias ChangeHandler =  ( String ) -> Void
+    public typealias ChangeHandler =  ( String, [String]? ) -> Void
     public typealias UIViewType = UITextField
     private let textField = UITextField()
     
@@ -30,7 +30,7 @@ public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
     public func makeUIView(context: Context) -> UITextField {
         
         textField.delegate = context.coordinator
-        textField.keyboardType = .asciiCapableNumberPad
+        textField.keyboardType = .asciiCapable
         textField.autocapitalizationType = .none
         textField.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .regular)
         textField.returnKeyType = .done
@@ -118,7 +118,7 @@ extension PlantUMLTextFieldWithCustomKeyboard {
             
             // print( "shouldChangeCharactersIn",  range, string )
             if let text = textField.text, let range = Range(range, in: text) {
-                owner.onChange( text.replacingCharacters(in: range, with: string) )
+                owner.onChange( text.replacingCharacters(in: range, with: string), nil )
             }
             
             return true
@@ -129,8 +129,8 @@ extension PlantUMLTextFieldWithCustomKeyboard {
             let keyboardView = PlantUMLKeyboardView(onHide: toggleCustomKeyobard, onPressSymbol: onPressSymbol )
             let controller = UIHostingController( rootView: keyboardView )
             
-            let MAGIC_NUMBER = 100.0 // 50.0 // magic number .. height of keyboard top bar
             var customKeyboardRect = keyboardRect
+            let MAGIC_NUMBER = 100.0 // 50.0 // magic number .. height of keyboard top bar
             customKeyboardRect.origin.y += MAGIC_NUMBER
             customKeyboardRect.size.height -= MAGIC_NUMBER
             controller.view.frame = customKeyboardRect
@@ -159,25 +159,11 @@ extension PlantUMLTextFieldWithCustomKeyboard {
             if let range = owner.textField.selectedTextRange {
                 // From your question I assume that you do not want to replace a selection, only insert some text where the cursor is.
                 owner.textField.replace(range, withText: symbol.value )
-                
                 if let text = owner.textField.text {
-                    owner.onChange( text )
+                    owner.textField.sendActions(for: .valueChanged)
+                    owner.onChange( text, symbol.additionalValues )
                 }
-                
-                /*
-                // https://stackoverflow.com/a/63555951/521197
-                let _range = NSMakeRange(
-                            owner.textField.offset(from: owner.textField.beginningOfDocument, to: range.start),
-                            owner.textField.offset(from: range.start, to: range.end))
-                        
-                let _ = self.textField(owner.textField, shouldChangeCharactersIn: _range, replacementString: symbol.value)
-                */
             }
-            
-//            if let additionalValues = symbol.additionalValues {
-//                customKeyboard.itemsToAdd = additionalValues
-//            }
-
         }
 
     }
