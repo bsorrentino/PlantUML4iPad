@@ -1,21 +1,12 @@
 import SwiftUI
 import UIKit
 
-
-
-
-
-
-public struct PlantUMLKeyboardView: View {
+struct PlantUMLKeyboardView: View {
     
-    @ObservedObject var customKeyboard: CustomKeyboardObject
+    var onHide:() -> Void
+    var onPressSymbol: (Symbol) -> Void
     
-//    public init( show: Binding<Bool>, result:Binding<[String]> ) {
-//        self._show = show
-//        self._result = result
-//    }
-    
-    public var body : some View{
+    var body : some View{
         
         ZStack(alignment: .topLeading) {
             
@@ -31,14 +22,14 @@ public struct PlantUMLKeyboardView: View {
                                 
                                 Button {
                                     
-                                    replaceSymbolAtCursorPosition(symbol)
+                                    onPressSymbol(symbol)
                                     
                                 } label: {
                                     
                                     ButtonLabel( rowIndex: rowIndex, cellIndex: cellIndex, symbol: symbol )
                                     
                                 }
-                                .buttonStyle( KeyButtonStyle() )
+                                .buttonStyle( KeyButtonStyle2() )
                             }
                         }
                     }
@@ -50,9 +41,7 @@ public struct PlantUMLKeyboardView: View {
             .background(Color.gray.opacity(0.1))
             .cornerRadius(25)
             
-            Button(action: {
-                customKeyboard.showKeyboard.toggle()
-            }) {
+            Button(action: onHide) {
                 Image(systemName: "xmark").foregroundColor(.black)
             }
             .padding()
@@ -63,6 +52,7 @@ public struct PlantUMLKeyboardView: View {
     //
     //
     func replaceSymbolAtCursorPosition( _ symbol: Symbol) {
+        /*
         guard let handleToYourTextView = getFirstTextFieldResponder() else {
             return
         }
@@ -78,11 +68,11 @@ public struct PlantUMLKeyboardView: View {
         if let additionalValues = symbol.additionalValues {
             customKeyboard.itemsToAdd = additionalValues
         }
-
+        */
     }
 }
 
-struct KeyButtonStyle: ButtonStyle {
+fileprivate struct KeyButtonStyle2: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -115,17 +105,9 @@ extension PlantUMLKeyboardView {
 }
 
 struct PlantUMLKeyboardView_Previews: PreviewProvider {
-    
-    struct UserView : View {
-        @ObservedObject var customKeyboard = CustomKeyboardObject()
         
-        public var body : some View {
-            PlantUMLKeyboardView( customKeyboard: customKeyboard )
-        }
-    }
-    
     static var previews: some View {
-        UserView()
+        PlantUMLKeyboardView( onHide: { }, onPressSymbol: { _ in } )
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }

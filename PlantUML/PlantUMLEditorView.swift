@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import PlantUMLKeyboard
 import PlantUMLFramework
 
@@ -15,13 +16,13 @@ enum Focusable: Hashable {
   case row(id: String)
 }
 
+
+
 struct PlantUMLEditorView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     
     @EnvironmentObject private var diagram: PlantUMLDiagramObject
-
-    @ObservedObject var customKeyboard = CustomKeyboardObject()
     
     @Binding var document: PlantUMLDocument
     
@@ -35,10 +36,10 @@ struct PlantUMLEditorView: View {
             GeometryReader { _ in
                 HStack {
                     EditorView()
-                        .onReceive( customKeyboard.$itemsToAdd ) { items in
-                            // print( "\(items)")
-                            appendBelow(values: items)
-                        }
+                        .modifier( KeyboardAdaptive() )
+//                        .onReceive( customKeyboard.$itemsToAdd ) { items in
+//                            appendBelow(values: items)
+//                        }
                     if !isPreviewVisible {
                         PlantUMLDiagramView( url: diagram.buildURL() )
                     }
@@ -51,6 +52,8 @@ struct PlantUMLEditorView: View {
                         EditButton()
                         SaveButton()
                     }
+                        
+
                 }
             }
             
@@ -121,6 +124,7 @@ struct PlantUMLEditorView: View {
 
     // MARK: Editor View
     func EditorView() -> some View {
+        
         List() {
             ForEach( diagram.items ) { item in
                 
@@ -133,30 +137,17 @@ struct PlantUMLEditorView: View {
                                 AddCloneButton( theItem: item )
                             }
                     }
-                    PlantUMLTextField( value: item.rawValue,
-                                       showKeyboard: $customKeyboard.showKeyboard,
-                                       onChange: updateItem )
-                        .focused($focusedItem, equals: .row(id: item.id))
-                        .onSubmit(of: .text) {
-                            // openURL( diagram.buildURL() )
-                        }
-                }
 
+                    PlantUMLTextFieldWithCustomKeyboard( item: item,
+                                                         onChange: updateItem )
+                        .focused($focusedItem, equals: .row(id: item.id))
+                }
 
             }
             .onMove(perform: move)
             .onDelete( perform: delete)
 
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                AddBelowButton()
-                AddAboveButton()
-                ShowKeyboardButton( show: $customKeyboard.showKeyboard )
-                    
-            }
-            
-         }
         .font(.footnote)
         .listStyle(SidebarListStyle())
 
@@ -180,19 +171,19 @@ extension PlantUMLEditorView {
         return nil
     }
     
-   func updateItem( newValue value: String ) {
+    func updateItem( newValue value: String, additionalValues values: [String]? ) {
         guard let offset = indexFromFocusedItem() else {
             return
         }
+        
         diagram.items[ offset ].rawValue = value
+        
+        if let values = values {
+            appendBelow(theOffset: offset, values: values)
+        }
    }
     
-    func appendBelow( theItem item: SyntaxStructure? = nil, values: [String]  ) {
-        let offset = (item != nil) ?
-            diagram.items.firstIndex { $0.id == item!.id } :
-            indexFromFocusedItem()
-
-        guard let offset = offset else { return }
+    func appendBelow( theOffset offset: Int, values: [String]  ) {
         
         values.map { SyntaxStructure( rawValue: $0) }
             .enumerated()
@@ -252,7 +243,7 @@ extension PlantUMLEditorView {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PlantUMLEditorView(document: .constant(PlantUMLDocument()))
-            .environment(\.editMode, Binding.constant(EditMode.active))
+            .environment(\.editMode, Binding.constant(EditMode.inactive))
             .previewInterfaceOrientation(.landscapeRight)
             .environmentObject( PlantUMLDiagramObject( text:
 """
