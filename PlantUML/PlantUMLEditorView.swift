@@ -16,8 +16,6 @@ enum Focusable: Hashable {
   case row(id: String)
 }
 
-
-
 struct PlantUMLEditorView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
@@ -99,10 +97,10 @@ struct PlantUMLEditorView: View {
         }
     }
 
-    func AddAboveButton( theItem item: SyntaxStructure? = nil ) -> some View {
+    func AddAboveButton( theItem item: SyntaxStructure ) -> some View {
         
         return Button {
-            addAbove( theItem: item )
+            addNewItem( relativeToItem: item, atPosition: .ABOVE )
         } label: {
             Label( "add above",
                    systemImage: "arrow.up")
@@ -111,10 +109,10 @@ struct PlantUMLEditorView: View {
         }
     }
 
-    func AddBelowButton( theItem item: SyntaxStructure? = nil ) -> some View {
+    func AddBelowButton( theItem item: SyntaxStructure ) -> some View {
         
         return Button {
-            addBelow( theItem: item )
+            addNewItem( relativeToItem: item, atPosition: .BELOW )
         } label: {
             Label( "add below",
                    systemImage: "arrow.down")
@@ -139,7 +137,8 @@ struct PlantUMLEditorView: View {
                     }
 
                     PlantUMLTextFieldWithCustomKeyboard( item: item,
-                                                         onChange: updateItem )
+                                                         onChange: updateItem,
+                                                         onAddNew: addNewItem )
                         .focused($focusedItem, equals: .row(id: item.id))
                 }
 
@@ -179,42 +178,33 @@ extension PlantUMLEditorView {
         diagram.items[ offset ].rawValue = value
         
         if let values = values {
-            appendBelow(theOffset: offset, values: values)
+            addItemsBelow(theOffset: offset, values: values)
         }
    }
-    
-    func appendBelow( theOffset offset: Int, values: [String]  ) {
+
+    func addNewItem( relativeToItem item: SyntaxStructure, atPosition pos: AppendActionPosition, value: String? = nil ) {
+        let offset = diagram.items.firstIndex { $0.id == item.id }
+
+        guard let offset = offset else { return }
+        let newItem = SyntaxStructure( rawValue: value ?? "")
+
+        switch( pos ) {
+        case .BELOW:
+            diagram.items.insert( newItem, at: offset + 1)
+        case .ABOVE:
+            diagram.items.insert( newItem, at: offset )
+        }
+        
+        focusedItem = .row( id: newItem.id )
+   }
+
+    func addItemsBelow( theOffset offset: Int, values: [String]  ) {
         
         values.map { SyntaxStructure( rawValue: $0) }
             .enumerated()
             .forEach { (index, item ) in
                 diagram.items.insert( item, at: offset + index + 1)
             }
-    }
-
-    func addBelow( theItem item: SyntaxStructure? = nil, value: String = ""  ) {
-        let offset = (item != nil) ?
-            diagram.items.firstIndex { $0.id == item!.id } :
-            indexFromFocusedItem()
-
-        guard let offset = offset else { return }
-        let newItem = SyntaxStructure( rawValue: value)
-        
-        diagram.items.insert( newItem, at: offset + 1)
-        focusedItem = .row( id: newItem.id )
-    }
-
-    func addAbove( theItem item: SyntaxStructure? ) {
-        let offset = (item != nil) ?
-            diagram.items.firstIndex { $0.id == item!.id } :
-            indexFromFocusedItem()
-
-        guard let offset = offset else { return }
-
-        let newItem = SyntaxStructure( rawValue: "")
-        
-        diagram.items.insert( newItem, at: offset )
-        focusedItem = .row( id: newItem.id )
     }
 
     func clone( theItem item: SyntaxStructure ) {

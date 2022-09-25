@@ -8,19 +8,31 @@
 import UIKit
 import SwiftUI
 import PlantUMLFramework
+import Combine
+
+public enum AppendActionPosition {
+    case BELOW
+    case ABOVE
+}
 
 public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
     public typealias ChangeHandler =  ( String, [String]? ) -> Void
+    public typealias AddNewActionHandler = ( SyntaxStructure, AppendActionPosition, String? ) -> Void
     public typealias UIViewType = UITextField
     private let textField = UITextField()
     
     
     public var item:SyntaxStructure
     public var onChange:ChangeHandler
-    
-    public init( item:SyntaxStructure, onChange:@escaping ChangeHandler ) {
+    public var onAddNew:AddNewActionHandler
+
+    public init( item:SyntaxStructure,
+                 onChange:@escaping ChangeHandler,
+                 onAddNew:@escaping AddNewActionHandler
+    ) {
         self.item = item
         self.onChange = onChange
+        self.onAddNew = onAddNew
     }
     
     public func makeCoordinator() -> PlantUMLTextFieldWithCustomKeyboard.Coordinator {
@@ -64,39 +76,38 @@ extension PlantUMLTextFieldWithCustomKeyboard {
         private var keyboardRect:CGRect = .zero
         private let owner : PlantUMLTextFieldWithCustomKeyboard
         private var showCustomKeyboard:Bool
+        private var cancellable:AnyCancellable?
+        
+        private var keyboardRectPublisher: AnyPublisher<CGRect, Never> {
+            // 2.
+            let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
+                .map {
+                    guard let rect = $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                        return CGRect.zero
+                    }
+                    return rect
+                }
+            
+            let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
+                .map { _ in CGRect.zero }
+                
+            // 3.
+            return Publishers.MergeMany(willShow, willHide).eraseToAnyPublisher()
+                    
+        }
+
         
         public init(textfield : PlantUMLTextFieldWithCustomKeyboard) {
             self.owner = textfield
             self.showCustomKeyboard = false
             super.init()
             
-            updateAccesoryView()
-            
-            NotificationCenter.default.addObserver(
-                
-                forName: UIResponder.keyboardDidShowNotification, object: nil, queue: .main) { [weak self] notification in
-                
-                    print( "keyboardDidShowNotification" )
-                        
-                    if let keyboardFrameEndUser = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue) {
-                            
-                        print( "keyboardFrameEndUser pos=\(keyboardFrameEndUser)")
-
-                        self?.keyboardRect = keyboardFrameEndUser.cgRectValue
-                    }
-                    
+            self.cancellable = self.keyboardRectPublisher.sink {  [weak self] rect in
+                self?.keyboardRect = rect
             }
 
-            NotificationCenter.default.addObserver(
-                
-                forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
-                
-                    print( "keyboardDidHideNotification" )
-
-                    self?.keyboardRect = .zero
-
-                }
-
+            updateAccesoryView()
+            
 
         }
         
@@ -105,8 +116,12 @@ extension PlantUMLTextFieldWithCustomKeyboard {
 
                 let bar = UIToolbar()
                 let toggleKeyboard = UIBarButtonItem(title: "PlantUML Keyboard", style: .plain, target: self, action: #selector(toggleCustomKeyobard))
+                let addBelow = UIBarButtonItem(title: "Add Below", style: .plain, target: self, action: #selector(addBelow))
+                let addAbove = UIBarButtonItem(title: "Add Above", style: .plain, target: self, action: #selector(addAbove))
                 bar.items = [
-                    toggleKeyboard
+                    toggleKeyboard,
+                    addBelow,
+                    addAbove
                 ]
                 bar.sizeToFit()
                 owner.textField.inputAccessoryView = bar
@@ -136,6 +151,15 @@ extension PlantUMLTextFieldWithCustomKeyboard {
             controller.view.frame = customKeyboardRect
             return controller.view
      
+        }
+        
+        @objc public func addBelow() {
+            self.owner.onAddNew(owner.item, .BELOW, "")
+        }
+        
+
+        @objc public func addAbove() {
+            self.owner.onAddNew(owner.item, .ABOVE, "")
         }
 
         @objc public func toggleCustomKeyobard() {

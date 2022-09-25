@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+/*
 public func getKeyboardWindow() -> UIWindow? {
 //    let _ =  UIApplication.shared.connectedScenes
 //                // Keep only active scenes, onscreen and visible to the user
@@ -20,9 +20,8 @@ public func getKeyboardWindow() -> UIWindow? {
 //                .flatMap { $0 }
 //                .last
     return UIApplication.shared.windows.last
-    
-    
 }
+*/
 
 public func getWindows() -> [UIWindow]? {
     
