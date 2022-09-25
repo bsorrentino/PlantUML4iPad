@@ -7,8 +7,8 @@
 
 import SwiftUI
 import Combine
-import PlantUMLKeyboard
 import PlantUMLFramework
+import PlantUMLKeyboard
 
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
 enum Focusable: Hashable {

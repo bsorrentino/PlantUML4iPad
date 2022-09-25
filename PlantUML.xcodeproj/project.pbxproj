@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A001E42C28DAF8750061E5BE /* Keyboard+Avoidance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A001E42B28DAF8750061E5BE /* Keyboard+Avoidance.swift */; };
 		A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B128D1E19600090D97 /* PlantUMLFramework */; };
-		A02F69B428D1E19A00090D97 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */; };
+		A043CE7C28E08C4C005A3AF7 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */; };
@@ -44,10 +44,6 @@
 /* Begin PBXFileReference section */
 		A001E42B28DAF8750061E5BE /* Keyboard+Avoidance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keyboard+Avoidance.swift"; sourceTree = "<group>"; };
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
-		A077460D28C7D49D007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
-		A077461028C7DF19007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
-		A077461128C7DF74007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
-		A077461728C7F279007C5C13 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramView.swift; sourceTree = "<group>"; };
 		A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramObject.swift; sourceTree = "<group>"; };
 		A0A42A7B289AD9FA00E929EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -73,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A02F69B428D1E19A00090D97 /* PlantUMLKeyboard in Frameworks */,
+				A043CE7C28E08C4C005A3AF7 /* PlantUMLKeyboard in Frameworks */,
 				A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,17 +91,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A077460C28C7D49D007C5C13 /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				A077460D28C7D49D007C5C13 /* PlantUMLKeyboard */,
-				A077461028C7DF19007C5C13 /* PlantUMLKeyboard */,
-				A077461128C7DF74007C5C13 /* PlantUMLKeyboard */,
-				A077461728C7F279007C5C13 /* PlantUMLKeyboard */,
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
 		A077461228C7EF6A007C5C13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,7 +101,6 @@
 		A0D3C63D28984A0E000838D7 = {
 			isa = PBXGroup;
 			children = (
-				A077460C28C7D49D007C5C13 /* Packages */,
 				A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */,
 				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
 				A0C1657C289FD315004EB5C7 /* SwiftPlantUMLView.playground */,
@@ -199,7 +183,7 @@
 			name = PlantUML;
 			packageProductDependencies = (
 				A02F69B128D1E19600090D97 /* PlantUMLFramework */,
-				A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */,
+				A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUML.app */;
@@ -655,7 +639,7 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLFramework;
 		};
-		A02F69B328D1E19A00090D97 /* PlantUMLKeyboard */ = {
+		A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
 		};
