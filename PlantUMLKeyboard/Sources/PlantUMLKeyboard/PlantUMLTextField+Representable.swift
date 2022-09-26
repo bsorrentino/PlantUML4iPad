@@ -77,14 +77,20 @@ extension PlantUMLTextFieldWithCustomKeyboard {
         private let owner : PlantUMLTextFieldWithCustomKeyboard
         private var showCustomKeyboard:Bool
         private var cancellable:AnyCancellable?
+        private var minimumHeight = 300.0
         
         private var keyboardRectPublisher: AnyPublisher<CGRect, Never> {
             // 2.
             let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
                 .map {
-                    guard let rect = $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                    guard var rect = $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
                         return CGRect.zero
                     }
+                    
+                    self.minimumHeight = max( self.minimumHeight, rect.size.height)
+                    rect.size.height = self.minimumHeight
+                    // print( "keyboardWillShowNotification", self.minimumHeight )
+                    
                     return rect
                 }
             
@@ -144,8 +150,10 @@ extension PlantUMLTextFieldWithCustomKeyboard {
             let keyboardView = PlantUMLKeyboardView(onHide: toggleCustomKeyobard, onPressSymbol: onPressSymbol )
             let controller = UIHostingController( rootView: keyboardView )
             
+            
             var customKeyboardRect = keyboardRect
-            let MAGIC_NUMBER = 100.0 // 50.0 // magic number .. height of keyboard top bar
+            let MAGIC_NUMBER = 104.0 // magic number .. height of keyboard top bar
+            
             customKeyboardRect.origin.y += MAGIC_NUMBER
             customKeyboardRect.size.height -= MAGIC_NUMBER
             controller.view.frame = customKeyboardRect
