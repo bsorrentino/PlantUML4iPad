@@ -77,18 +77,18 @@ extension PlantUMLTextFieldWithCustomKeyboard {
         private let owner : PlantUMLTextFieldWithCustomKeyboard
         private var showCustomKeyboard:Bool
         private var cancellable:AnyCancellable?
-        private var minimumHeight = 300.0
+        private var customKeyboardMinHeight = 300.0
         
         private var keyboardRectPublisher: AnyPublisher<CGRect, Never> {
             // 2.
             let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
                 .map {
-                    guard var rect = $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
+                    guard let rect = $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
                         return CGRect.zero
                     }
                     
-                    self.minimumHeight = max( self.minimumHeight, rect.size.height)
-                    rect.size.height = self.minimumHeight
+                    self.customKeyboardMinHeight = max( self.customKeyboardMinHeight, rect.size.height)
+
                     // print( "keyboardWillShowNotification", self.minimumHeight )
                     
                     return rect
@@ -155,7 +155,7 @@ extension PlantUMLTextFieldWithCustomKeyboard {
             let MAGIC_NUMBER = 104.0 // magic number .. height of keyboard top bar
             
             customKeyboardRect.origin.y += MAGIC_NUMBER
-            customKeyboardRect.size.height -= MAGIC_NUMBER
+            customKeyboardRect.size.height = max( self.customKeyboardMinHeight, customKeyboardRect.size.height) - MAGIC_NUMBER
             controller.view.frame = customKeyboardRect
             return controller.view
      
@@ -194,6 +194,7 @@ extension PlantUMLTextFieldWithCustomKeyboard {
                 if let text = owner.textField.text {
                     owner.textField.sendActions(for: .valueChanged)
                     owner.onChange( text, symbol.additionalValues )
+                    toggleCustomKeyobard()
                 }
             }
         }
