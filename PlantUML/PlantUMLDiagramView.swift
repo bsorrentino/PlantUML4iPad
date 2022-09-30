@@ -10,21 +10,59 @@ import SwiftUI
 
 import SwiftUI
 import WebKit
- 
+import Combine
+
+private class PlantUMLDiagramState: ObservableObject {
+
+    private var updateSubject = PassthroughSubject<URL, Never>()
+    
+    private var cancellabe:Cancellable?
+    
+    func subscribe( onUpdate update: @escaping ( URLRequest ) -> Void ) {
+        
+        if self.cancellabe == nil  {
+            
+            self.cancellabe = updateSubject
+                .removeDuplicates()
+                .debounce(for: .seconds(5), scheduler: RunLoop.main)
+                .print()
+                .map { URLRequest(url: $0 ) }
+                .sink( receiveValue: update )
+
+        }
+
+    }
+    
+    func requestUpdate( forURL url:URL ) {
+        updateSubject.send( url )
+    }
+}
+
+
 struct PlantUMLDiagramView: UIViewRepresentable {
  
+    @StateObject private var state = PlantUMLDiagramState()
+    
     var url: URL?
  
     func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
+        
+        let webView = WKWebView()
+        
+        state.subscribe( onUpdate: { request in
+            webView.load(request)
+        })
+                
+        return webView
     }
  
     func updateUIView(_ webView: WKWebView, context: Context) {
         guard let url = url else {
             return
         }
-        let request = URLRequest(url: url)
-        webView.load(request)
+        
+        state.requestUpdate( forURL: url)
+        
     }
 }
 

@@ -2,7 +2,12 @@
 import Compression
 import Foundation
 
-struct PlantUMLText: RawRepresentable {
+struct PlantUMLText: RawRepresentable, Comparable {
+    
+    static func < (lhs: PlantUMLText, rhs: PlantUMLText) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+    
     var rawValue: String
 
     var encodedValue: String {

@@ -9,7 +9,7 @@ public enum BrowserPresentationFormat {
 }
 
 /// compress  diagram into an URL and launch in browser (PlantText server).
-public struct PlantUMLBrowserPresenter: PlantUMLPresenting {
+public struct PlantUMLBrowserPresenter   {
     /// format in which to present the script in the browser (default: editable script and corresponding diagram)
     public private(set) var format: BrowserPresentationFormat
 
@@ -30,14 +30,5 @@ public struct PlantUMLBrowserPresenter: PlantUMLPresenting {
         }
         return url
 
-    }
-    /// present script / diagram to user
-    /// - Parameters:
-    ///   - script: in PlantUML notation
-    ///   - completionHandler: will be called when presentation was triggered
-    public func present(script: PlantUMLScript, completionHandler: @escaping () -> Void) {
-//      let url = url( of: PlantUMLScript  )
-//      NSWorkspace.shared.open(url)
-        completionHandler()
     }
 }
