@@ -30,19 +30,42 @@ struct Symbol : Identifiable, CustomStringConvertible {
         self._value = value
         self._additionalValues = additionalValues
     }
+    
 }
-
-
-var plantUMLSymbols:[[Symbol]] = [
+//
+// MARK: COMMON DIAGRAMS
+//
+fileprivate let common_symbols = [
+    
     [
         Symbol("title", "title my title"),
         Symbol("header", "header my header"),
         Symbol("footer", "footer my footer"),
+    ],
+    [
+        Symbol("allow_mixing"),
+        Symbol( "hide empty members"),
+        Symbol( "skinparam shadowing false"),
+    ],
+    [
+        Symbol("actor", "actor \"my actor\" as a1"),
+    ]
+    
+]
+
+fileprivate let common_images:[[UIImage?]] = []
+
+//
+// MARK: SEQUENCE DIAGRAMS
+//
+
+fileprivate let sequence_symbols = [
+    
+    [
         Symbol("autonumber")
     ],
     [
         Symbol("participant","participant \"my participant\" as p1"),
-        Symbol("actor", "actor \"my actor\" as a1"),
         Symbol("boundary", "boundary \"my boundary\" as b1"),
         Symbol("control", "control \"my control\" as c1"),
         Symbol("entity", "entity \"my entity\" as e1"),
@@ -70,14 +93,43 @@ var plantUMLSymbols:[[Symbol]] = [
         Symbol("note right", "note right /' of participant '/", ["this note is displayed right", "end note"]),
         Symbol("note over", "note over participant1 /', participant2 '/", ["this note is displayed over participant1", "end note"]),
     ]
-    
 ]
 
-var plantUMLImages:[[UIImage?]] = {
+fileprivate let sequence_images:[[UIImage?]] = {
     
-    guard let arrows = UIImage(named: "plantuml-sequence-arrows")?.extractTiles( with: CGSize( width: 158.0, height: 28.6) ) else {
-        return [ [], [] ,[], [] ]
+    var arrows:[UIImage?] = []
+    
+    if let img = UIImage(named: "plantuml-sequence-arrows", in: .module, compatibleWith: nil)  {
+        arrows = img.extractTiles( with: CGSize( width: 158.0, height: 28.6) )
     }
-
+    
     return [ [], [], arrows, [] ]
 }()
+
+
+enum PlantUMLSymbolGroup : String, CaseIterable {
+    case common = "Commons"
+    case sequence = "Sequence"
+    
+    
+    var symbols: [[ Symbol ]] {
+        switch self {
+        case .common:
+             return  common_symbols
+        case .sequence:
+             return sequence_symbols
+         }
+    }
+
+    var images: [[ UIImage? ]] {
+        switch self {
+        case .common:
+             return  common_images
+        case .sequence:
+             return sequence_images
+         }
+    }
+}
+
+    
+

@@ -86,8 +86,8 @@ public struct PlantUMLScript : CustomStringConvertible {
         } else {
             return """
             '' STYLE START
-            \(hideShowCommands.joined(separator: "\n"))
-            \(skinparamCommands.joined(separator: "\n"))
+            ''\(hideShowCommands.joined(separator: "\n"))
+            ''\(skinparamCommands.joined(separator: "\n"))
             '' STYLE END
             """
         }
