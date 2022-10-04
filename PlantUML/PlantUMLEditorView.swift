@@ -162,20 +162,33 @@ extension PlantUMLEditorView {
         document.text = diagram.description
     }
     
+    @available(*, deprecated, message: "no longer valid!")
     internal func indexFromFocusedItem() -> Int? {
+        logger.trace( "indexFromFocusedItem" )
+        
+        var result:Int? = nil
+        
         if case .row(let id) = focusedItem {
             
-            return diagram.items.firstIndex { $0.id == id }
+            result = diagram.items.firstIndex { $0.id == id }
+            logger.trace( "indexFromFocusedItem: \(result ?? -1 )" )
+            
+            return result
         }
-        return nil
+        
+        return result
     }
     
-    func updateItem( newValue value: String, additionalValues values: [String]? ) {
-        guard let offset = indexFromFocusedItem() else {
+    func updateItem( item: SyntaxStructure, withValue value: String, andAdditionalValues values: [String]? ) {
+
+        guard let offset = diagram.items.firstIndex( where: { $0.id == item.id } )  else {
+            logger.debug( "update failed!" )
             return
         }
         
         diagram.items[ offset ].rawValue = value
+        
+        logger.debug( "update at \(offset): \(value)" )
         
         if let values = values {
             addItemsBelow(theOffset: offset, values: values)

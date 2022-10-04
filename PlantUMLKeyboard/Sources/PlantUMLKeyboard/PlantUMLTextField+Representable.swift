@@ -16,7 +16,7 @@ public enum AppendActionPosition {
 }
 
 public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
-    public typealias ChangeHandler =  ( String, [String]? ) -> Void
+    public typealias ChangeHandler =  ( SyntaxStructure, String, [String]? ) -> Void
     public typealias AddNewActionHandler = ( SyntaxStructure, AppendActionPosition, String? ) -> Void
     public typealias UIViewType = UITextField
     private let textField = UITextField()
@@ -88,8 +88,6 @@ extension PlantUMLTextFieldWithCustomKeyboard {
                     }
                     
                     self.customKeyboardMinHeight = max( self.customKeyboardMinHeight, rect.size.height)
-
-                    // print( "keyboardWillShowNotification", self.minimumHeight )
                     
                     return rect
                 }
@@ -137,9 +135,10 @@ extension PlantUMLTextFieldWithCustomKeyboard {
         }
         public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
             
-            // print( "shouldChangeCharactersIn",  range, string )
             if let text = textField.text, let range = Range(range, in: text) {
-                owner.onChange( text.replacingCharacters(in: range, with: string), nil )
+                owner.onChange( owner.item,
+                                text.replacingCharacters(in: range, with: string),
+                                nil )
             }
             
             return true
@@ -171,7 +170,7 @@ extension PlantUMLTextFieldWithCustomKeyboard {
         }
 
         @objc public func toggleCustomKeyobard() {
-            print("toggleCustomKeyobard:",  showCustomKeyboard)
+            logger.trace( "toggleCustomKeyobard: \(self.showCustomKeyboard)" )
             
             showCustomKeyboard.toggle()
             
@@ -193,7 +192,7 @@ extension PlantUMLTextFieldWithCustomKeyboard {
                 owner.textField.replace(range, withText: symbol.value )
                 if let text = owner.textField.text {
                     owner.textField.sendActions(for: .valueChanged)
-                    owner.onChange( text, symbol.additionalValues )
+                    owner.onChange( owner.item, text, symbol.additionalValues )
                     toggleCustomKeyobard()
                 }
             }
