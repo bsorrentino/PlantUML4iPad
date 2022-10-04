@@ -88,7 +88,11 @@ public struct FileCollector {
                         if fileAttributes.isRegularFile!, fileAttributes.typeIdentifier == "public.swift-source" {
                             files.append(fileURL)
                         }
-                    } catch { print(error, fileURL) }
+                    } catch {
+                        
+                        logger.error( "\(error) - \(fileURL)")
+                        
+                    }
                 }
             }
             return files
