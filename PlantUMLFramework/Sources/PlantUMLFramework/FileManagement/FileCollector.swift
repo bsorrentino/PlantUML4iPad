@@ -21,7 +21,7 @@ public struct FileCollector {
 
         if let include = fileOptions?.include, !include.isEmpty {
             searchPaths = ["."]
-            Logger.shared.info("paths will be ignored in favor of configuration (files:include: \(include.joined(separator: ", ")))")
+            logger.info("paths will be ignored in favor of configuration (files:include: \(include.joined(separator: ", ")))")
         }
 
         let allFiles = getFiles(for: searchPaths, in: directory)

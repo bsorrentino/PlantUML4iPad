@@ -60,7 +60,7 @@ public struct PlantUMLScript : CustomStringConvertible {
             @enduml            
             """
 
-        Logger.shared.debug("PlantUML script created in \(Date().timeIntervalSince(methodStart)) seconds")
+        logger.trace("PlantUML script created in \(Date().timeIntervalSince(methodStart)) seconds")
     }
 
     /**
