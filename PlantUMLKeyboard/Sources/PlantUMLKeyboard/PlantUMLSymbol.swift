@@ -32,6 +32,7 @@ struct Symbol : Identifiable, CustomStringConvertible {
     }
     
 }
+
 //
 // MARK: COMMON DIAGRAMS
 //
@@ -52,8 +53,6 @@ fileprivate let common_symbols = [
     ]
     
 ]
-
-fileprivate let common_images:[[UIImage?]] = []
 
 //
 // MARK: SEQUENCE DIAGRAMS
@@ -106,11 +105,54 @@ fileprivate let sequence_images:[[UIImage?]] = {
     return [ [], [], arrows, [] ]
 }()
 
+//
+// MARK: DEPLOYMENT DIAGRAMS
+//
 
+fileprivate let deployment_symbols = [
+    
+    [
+        Symbol("actor"),
+        Symbol("agent"),
+        Symbol("artifact"),
+        Symbol("boundary"),
+        Symbol("card"),
+        Symbol("circle"),
+        Symbol("cloud"),
+        Symbol("collections" ),
+        Symbol("component" ),
+        Symbol("control" ),
+        Symbol("person" ),
+        Symbol("queue" ),
+        Symbol("rectangle" ),
+    ],
+    [
+        Symbol("database" ),
+        Symbol("entity" ),
+        Symbol("file" ),
+        Symbol("folder" ),
+        Symbol("frame" ),
+        Symbol("hexagon" ),
+        Symbol("interface" ),
+        Symbol("label" ),
+        Symbol("node" ),
+        Symbol("package" ),
+        Symbol("stack" ),
+        Symbol("storage" ),
+        Symbol("usecase" ),
+    ],
+    
+    [
+    ]
+]
+
+//
+// MARK: SYMBOL GROUPS
+//
 enum PlantUMLSymbolGroup : String, CaseIterable {
     case common = "Commons"
     case sequence = "Sequence"
-    
+    case deployment = "Deployment"
     
     var symbols: [[ Symbol ]] {
         switch self {
@@ -118,15 +160,17 @@ enum PlantUMLSymbolGroup : String, CaseIterable {
              return  common_symbols
         case .sequence:
              return sequence_symbols
-         }
+        case .deployment:
+            return deployment_symbols
+        }
     }
 
     var images: [[ UIImage? ]] {
         switch self {
-        case .common:
-             return  common_images
         case .sequence:
-             return sequence_images
+             return  sequence_images
+        default:
+             return []
          }
     }
 }

@@ -21,6 +21,11 @@ struct PlantUMLKeyboardView: View {
                         Label( PlantUMLSymbolGroup.sequence.rawValue, systemImage: "square.and.pencil")
                             .labelStyle(.titleOnly)
                     }
+                ContentView( .deployment )
+                    .tabItem {
+                        Label( PlantUMLSymbolGroup.deployment.rawValue, systemImage: "square.and.pencil")
+                            .labelStyle(.titleOnly)
+                    }
             }
             .frame(maxWidth: .infinity )
             .background(Color.gray.opacity(0.1))

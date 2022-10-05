@@ -24,7 +24,7 @@ private class PlantUMLDiagramState: ObservableObject {
             
             self.cancellabe = updateSubject
                 .removeDuplicates()
-                .debounce(for: .seconds(5), scheduler: RunLoop.main)
+                .debounce(for: .seconds(2), scheduler: RunLoop.main)
                 .print()
                 .map { URLRequest(url: $0 ) }
                 .sink( receiveValue: update )
