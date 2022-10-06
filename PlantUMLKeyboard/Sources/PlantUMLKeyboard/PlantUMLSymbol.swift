@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 struct Symbol : Identifiable, CustomStringConvertible {
     var description: String {
         return id
@@ -36,63 +35,83 @@ struct Symbol : Identifiable, CustomStringConvertible {
 //
 // MARK: COMMON DIAGRAMS
 //
-fileprivate let common_symbols = [
+
+@Symbol.LineBuilder
+fileprivate func _common_symbols() -> [[Symbol]] {
     
-    [
-        Symbol("title", "title my title"),
-        Symbol("header", "header my header"),
-        Symbol("footer", "footer my footer"),
-    ],
-    [
-        Symbol("allow_mixing"),
-        Symbol( "hide empty members"),
-        Symbol( "skinparam shadowing false"),
-    ],
-    [
-        Symbol("actor", "actor \"my actor\" as a1"),
-    ]
+    Symbol.Line {
+        ("title", "title my title")
+        ("header", "header my header")
+        ("footer", "footer my footer")
+    }
     
-]
+    Symbol.Line {
+        ("allow mixing", "allow_mixing")
+        "hide empty members"
+        ("shadowing false", "skinparam shadowing false")
+        ("linetype ortho", "skinparam linetype ortho")
+        ("left to right", "left to right direction")
+        ("top to bottom", "top to bottom direction")
+    }
+    
+    Symbol.Line {
+        "[#red]"
+        "#line.dashed"
+    }
+
+}
+
+fileprivate let common_symbols = {
+    _common_symbols()
+}()
 
 //
 // MARK: SEQUENCE DIAGRAMS
 //
 
-fileprivate let sequence_symbols = [
+@Symbol.LineBuilder
+fileprivate func _sequence_symbols() -> [[Symbol]] {
     
-    [
-        Symbol("autonumber")
-    ],
-    [
-        Symbol("participant","participant \"my participant\" as p1"),
-        Symbol("boundary", "boundary \"my boundary\" as b1"),
-        Symbol("control", "control \"my control\" as c1"),
-        Symbol("entity", "entity \"my entity\" as e1"),
-        Symbol("database", "database \"my database\" as db1"),
-        Symbol("collections","collections \"my collections\" as cc1" ),
-        Symbol("queue", "queue \"my queue\" as q1")
-    ],
+    Symbol.Line {
+        "autonumber"
+    }
     
-    [
-        Symbol("->x"),
-        Symbol("->"),
-        Symbol("->>"),
-        Symbol("-\\\\"),
-        Symbol("\\\\-"),
-        Symbol("//--"),
-        Symbol("->o"),
-        Symbol("o\\\\--"),
-        Symbol("<->"),
-        Symbol("<->o"),
-    ],
+    Symbol.Line {
+        ("actor", "actor \"my actor\" as a1")
+        ("participant","participant \"my participant\" as p1")
+        ("boundary", "boundary \"my boundary\" as b1")
+        ("control", "control \"my control\" as c1")
+        ("entity", "entity \"my entity\" as e1")
+        ("database", "database \"my database\" as db1")
+        ("collections","collections \"my collections\" as cc1" )
+        ("queue", "queue \"my queue\" as q1")
+    }
     
-    [
-        Symbol("[#red]"),
-        Symbol("note left", "note left /' of participant '/", ["this note is displayed left", "end note"]),
-        Symbol("note right", "note right /' of participant '/", ["this note is displayed right", "end note"]),
-        Symbol("note over", "note over participant1 /', participant2 '/", ["this note is displayed over participant1", "end note"]),
-    ]
-]
+    Symbol.Line {
+        "->x"
+        "->"
+        "->>"
+        "-\\\\"
+        "\\\\-"
+        "//--"
+        "->o"
+        "o\\\\--"
+        "<->"
+        "<->o"
+        
+    }
+    
+    Symbol.Line {
+        "[#red]"
+        ("note left", "note left /' of p1 '/", ["this note is displayed left", "end note"])
+        ("note right", "note right /' of p1 '/", ["this note is displayed right", "end note"])
+        ("note over", "note over p1 /', p2 '/", ["this note is displayed over participant1", "end note"])
+    }
+}
+
+fileprivate let sequence_symbols = {
+    _sequence_symbols()
+}()
 
 fileprivate let sequence_images:[[UIImage?]] = {
     
@@ -109,42 +128,52 @@ fileprivate let sequence_images:[[UIImage?]] = {
 // MARK: DEPLOYMENT DIAGRAMS
 //
 
-fileprivate let deployment_symbols = [
+
+@Symbol.LineBuilder
+fileprivate func _deployment_symbols() -> [[Symbol]] {
     
-    [
-        Symbol("actor"),
-        Symbol("agent"),
-        Symbol("artifact"),
-        Symbol("boundary"),
-        Symbol("card"),
-        Symbol("circle"),
-        Symbol("cloud"),
-        Symbol("collections" ),
-        Symbol("component" ),
-        Symbol("control" ),
-        Symbol("person" ),
-        Symbol("queue" ),
-        Symbol("rectangle" ),
-    ],
-    [
-        Symbol("database" ),
-        Symbol("entity" ),
-        Symbol("file" ),
-        Symbol("folder" ),
-        Symbol("frame" ),
-        Symbol("hexagon" ),
-        Symbol("interface" ),
-        Symbol("label" ),
-        Symbol("node" ),
-        Symbol("package" ),
-        Symbol("stack" ),
-        Symbol("storage" ),
-        Symbol("usecase" ),
-    ],
+        Symbol.Line {
+            "actor"
+            "agent"
+            "artifact"
+            "boundary"
+            "card"
+            "circle"
+            "cloud"
+            "collections"
+            "component"
+            "control"
+            "person"
+            "queue"
+            ("rectangle", "rectangle \"Rect1\\n\" as r1 {", ["}"])
+        }
+        
+        Symbol.Line {
+            ("database", "database db1")
+            "entity"
+            "file"
+            "folder"
+            "frame"
+            "hexagon"
+            "interface"
+            "label"
+            "node"
+            "package"
+            "stack"
+            "storage"
+            "usecase"
+        }
+        
+        Symbol.Line {
+            "#line.dashed"
+            "#line.dotted"
+        }
     
-    [
-    ]
-]
+}
+
+fileprivate var deployment_symbols = {
+    _deployment_symbols()
+}()
 
 //
 // MARK: SYMBOL GROUPS
@@ -153,7 +182,7 @@ enum PlantUMLSymbolGroup : String, CaseIterable {
     case common = "Commons"
     case sequence = "Sequence"
     case deployment = "Deployment"
-    
+        
     var symbols: [[ Symbol ]] {
         switch self {
         case .common:
@@ -168,7 +197,7 @@ enum PlantUMLSymbolGroup : String, CaseIterable {
     var images: [[ UIImage? ]] {
         switch self {
         case .sequence:
-             return  sequence_images
+             return  [] // sequence_images
         default:
              return []
          }
