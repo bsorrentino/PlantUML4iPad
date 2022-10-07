@@ -31,46 +31,40 @@ struct PlantUMLEditorView: View {
     @State private var isScaleToFit = true
 
     var body: some View {
-        //ZStack(alignment: .bottom) {
-  
-            GeometryReader { geometry in
-                HStack {
-                    if( isEditorVisible ) {
-                        EditorView()
-                            .modifier( KeyboardAdaptive() )
-                        //                        .onReceive( customKeyboard.$itemsToAdd ) { items in
-                        //                            appendBelow(values: items)
-                        //                        }
-                    }
-                    if isPreviewVisible {
-                        if isScaleToFit {
-                            PlantUMLDiagramView( url: diagram.buildURL() )
-                        }
-                        else {
-                            PlantUMLScrollableDiagramView( url: diagram.buildURL(), width: geometry.size.width )
-                        }
-//
-                    }
+        GeometryReader { geometry in
+            HStack {
+                if( isEditorVisible ) {
+                    EditorView()
+                        .modifier( KeyboardAdaptive() )
+                    //  .onReceive( customKeyboard.$itemsToAdd ) { items in
+                    //        appendBelow(values: items)
+                    //  }
                 }
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        EditButton()
-                        SaveButton()
+                if isPreviewVisible {
+                    if isScaleToFit {
+                        PlantUMLDiagramView( url: diagram.buildURL() )
                     }
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        ScaleToFitButton()
-                        HStack( spacing: 0 ) {
-                            ToggleEditorButton()
-                            TogglePreviewButton()
-                        }
+                    else {
+                        PlantUMLScrollableDiagramView( url: diagram.buildURL(), size: geometry.size )
                     }
-                        
-
                 }
             }
-            
-        //}
-        
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    EditButton()
+                    SaveButton()
+                }
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    ScaleToFitButton()
+                    HStack( spacing: 0 ) {
+                        ToggleEditorButton()
+                        TogglePreviewButton()
+                    }
+                }
+                
+            }
+        }
     }
     
     
