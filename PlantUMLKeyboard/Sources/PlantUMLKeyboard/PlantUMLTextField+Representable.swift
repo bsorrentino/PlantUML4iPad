@@ -151,7 +151,7 @@ extension PlantUMLTextFieldWithCustomKeyboard {
             
             
             var customKeyboardRect = keyboardRect
-            let MAGIC_NUMBER = 104.0 // magic number .. height of keyboard top bar
+            let MAGIC_NUMBER = 50.0 // 104.0 // magic number .. height of keyboard top bar
             
             customKeyboardRect.origin.y += MAGIC_NUMBER
             customKeyboardRect.size.height = max( self.customKeyboardMinHeight, customKeyboardRect.size.height) - MAGIC_NUMBER

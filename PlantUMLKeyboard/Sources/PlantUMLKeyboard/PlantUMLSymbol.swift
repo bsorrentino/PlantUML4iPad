@@ -133,37 +133,54 @@ fileprivate let sequence_images:[[UIImage?]] = {
 fileprivate func _deployment_symbols() -> [[Symbol]] {
     
         Symbol.Line {
-            "actor"
-            "agent"
-            "artifact"
-            "boundary"
-            "card"
-            "circle"
-            "cloud"
-            "collections"
-            "component"
-            "control"
-            "person"
-            "queue"
-            ("rectangle", "rectangle \"Rect1\\n\" as r1 {", ["}"])
+            ("actor", "actor \"my actor\" as ac1")
+            ("agent", "agent \"my agent\" as ag1")
+            ("artifact", "artifact \"my artifact\" as ar1")
+            ("boundary", "boundary \"my boundary\" as bn1")
+            ("card", "card \"my card\" as cd1")
+            ("circle", "circle \"my circle\" as cr1")
+            ("cloud", "cloud \"my cloud\" as cd1")
+            ("collections", "collections \"my collections\" as cl1")
+            ("component", "component \"my component\" as cp1")
+            ("control", "control \"my control\" as cn1")
+            ("person", "person \"my person\" as pr1")
+            ("queue", "queue \"my queue\" as qq1")
+            ("rectangle", "rectangle \"my rect\\n\" as rc1 {", ["}"])
         }
         
         Symbol.Line {
-            ("database", "database db1")
-            "entity"
-            "file"
-            "folder"
-            "frame"
-            "hexagon"
-            "interface"
-            "label"
-            "node"
-            "package"
-            "stack"
-            "storage"
-            "usecase"
+            ("database", "database  \"my database\" as db1")
+            ("entity", "entity \"my entity\" as ee1")
+            ("file", "file \"my file\" as ff1")
+            ("folder", "folder \"my folder\" as fl1")
+            ("frame", "frame \"my frame\" as fr1")
+            ("hexagon", "hexagon \"my hexagon\" as hx1")
+            ("interface", "interface \"my interface\" as if1")
+            ("label", "label \"my label\" as lb1")
+            ("node", "node \"my node\" as nd1")
+            ("package", "package \"my package\" as pc1")
+            ("stack", "stack \"my stack\" as sk1")
+            ("storage", "storage \"my storage\" as st1")
+            ("usecase", "usecase \"my usecase\" as uc1")
         }
         
+        Symbol.Line {
+            "--"
+            ".."
+            "~~"
+            "=="
+            "-->"
+            "--*"
+            "--o"
+            "--+"
+            "--#"
+            "-->>"
+            "--0"
+            "--^"
+            "--(0"
+            "-(0-"
+        }
+    
         Symbol.Line {
             "#line.dashed"
             "#line.dotted"
