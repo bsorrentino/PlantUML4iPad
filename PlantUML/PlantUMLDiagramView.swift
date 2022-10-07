@@ -38,6 +38,20 @@ private class PlantUMLDiagramState: ObservableObject {
     }
 }
 
+struct PlantUMLScrollableDiagramView : View {
+    
+    var url: URL?
+    var width: CGFloat
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: true) {
+            PlantUMLDiagramView( url: url )
+                .frame( width: width )
+        }
+    }
+    
+}
+
 
 struct PlantUMLDiagramView: UIViewRepresentable {
  

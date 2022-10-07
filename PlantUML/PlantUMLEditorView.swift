@@ -26,36 +26,50 @@ struct PlantUMLEditorView: View {
     
     @FocusState private var focusedItem: Focusable?
     
-    @State private var isPreviewVisible = false
-    
+    @State private var isEditorVisible = true
+    @State private var isPreviewVisible = true
+    @State private var isScaleToFit = true
+
     var body: some View {
-        ZStack(alignment: .bottom) {
+        //ZStack(alignment: .bottom) {
   
-            GeometryReader { _ in
+            GeometryReader { geometry in
                 HStack {
-                    EditorView()
-                        .modifier( KeyboardAdaptive() )
-//                        .onReceive( customKeyboard.$itemsToAdd ) { items in
-//                            appendBelow(values: items)
-//                        }
-                    if !isPreviewVisible {
-                        PlantUMLDiagramView( url: diagram.buildURL() )
+                    if( isEditorVisible ) {
+                        EditorView()
+                            .modifier( KeyboardAdaptive() )
+                        //                        .onReceive( customKeyboard.$itemsToAdd ) { items in
+                        //                            appendBelow(values: items)
+                        //                        }
+                    }
+                    if isPreviewVisible {
+                        if isScaleToFit {
+                            PlantUMLDiagramView( url: diagram.buildURL() )
+                        }
+                        else {
+                            PlantUMLScrollableDiagramView( url: diagram.buildURL(), width: geometry.size.width )
+                        }
+//
                     }
                 }
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
-                        PreviewButton()
-                    }
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
                         EditButton()
                         SaveButton()
+                    }
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        ScaleToFitButton()
+                        HStack( spacing: 0 ) {
+                            ToggleEditorButton()
+                            TogglePreviewButton()
+                        }
                     }
                         
 
                 }
             }
             
-        }
+        //}
         
     }
     
@@ -68,23 +82,48 @@ struct PlantUMLEditorView: View {
         }
     }
 
-    func PreviewButton() -> some View {
+    func ScaleToFitButton() -> some View {
+        
+        Toggle("fit image", isOn: $isScaleToFit)
+    }
+
+    func TogglePreviewButton() -> some View {
         
         Button {
             withAnimation {
                 isPreviewVisible.toggle()
+                if !isPreviewVisible && !isEditorVisible  {
+                    isEditorVisible.toggle()
+                }
             }
         }
         label: {
-            Label( "Preview", systemImage: "" )
-                .labelStyle(.titleOnly)
+            Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
+                .labelStyle(.iconOnly)
+                .foregroundColor( isPreviewVisible ? .blue : .gray)
+                
         }
-//        Link(destination: diagram.buildURL(), label: {
-//            Text("Preview")
-//                .foregroundColor(.orange)
-//        })
     }
-    
+
+    func ToggleEditorButton() -> some View {
+        
+        Button {
+            withAnimation {
+                isEditorVisible.toggle()
+                if !isEditorVisible && !isPreviewVisible  {
+                    isPreviewVisible.toggle()
+                }
+
+            }
+        }
+        label: {
+            Label( "Toggle Editor", systemImage: "rectangle.lefthalf.inset.filled" )
+                .labelStyle(.iconOnly)
+                .foregroundColor( isEditorVisible ? .blue : .gray)
+
+        }
+    }
+
     func AddCloneButton( theItem item: SyntaxStructure ) -> some View {
         
         return Button {
