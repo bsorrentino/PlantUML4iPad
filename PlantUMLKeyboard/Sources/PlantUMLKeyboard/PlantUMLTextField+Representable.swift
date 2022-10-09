@@ -21,16 +21,19 @@ public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
     public typealias UIViewType = UITextField
     private let textField = UITextField()
     
-    
     public var item:SyntaxStructure
     public var onChange:ChangeHandler
     public var onAddNew:AddNewActionHandler
 
+    @Binding private var showingKeyboard: Bool
+    
     public init( item:SyntaxStructure,
+                 showingKeyboard: Binding<Bool>,
                  onChange:@escaping ChangeHandler,
                  onAddNew:@escaping AddNewActionHandler
     ) {
         self.item = item
+        self._showingKeyboard = showingKeyboard
         self.onChange = onChange
         self.onAddNew = onAddNew
     }
@@ -47,6 +50,7 @@ public struct PlantUMLTextFieldWithCustomKeyboard : UIViewRepresentable {
         textField.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .regular)
         textField.returnKeyType = .done
         textField.text = item.rawValue
+        
         return textField
     }
     
@@ -71,7 +75,6 @@ protocol CustomKeyboardPresenter {
 extension PlantUMLTextFieldWithCustomKeyboard {
     
     public class Coordinator: NSObject, UITextFieldDelegate, CustomKeyboardPresenter {
-        
         
         private var keyboardRect:CGRect = .zero
         private let owner : PlantUMLTextFieldWithCustomKeyboard
@@ -100,7 +103,6 @@ extension PlantUMLTextFieldWithCustomKeyboard {
                     
         }
 
-        
         public init(textfield : PlantUMLTextFieldWithCustomKeyboard) {
             self.owner = textfield
             self.showCustomKeyboard = false
@@ -112,7 +114,6 @@ extension PlantUMLTextFieldWithCustomKeyboard {
 
             updateAccesoryView()
             
-
         }
         
         func updateAccesoryView() {
@@ -129,10 +130,11 @@ extension PlantUMLTextFieldWithCustomKeyboard {
                 ]
                 bar.sizeToFit()
                 owner.textField.inputAccessoryView = bar
-
+                
             }
 
         }
+        
         public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
             
             if let text = textField.text, let range = Range(range, in: text) {
@@ -164,7 +166,6 @@ extension PlantUMLTextFieldWithCustomKeyboard {
             self.owner.onAddNew(owner.item, .BELOW, "")
         }
         
-
         @objc public func addAbove() {
             self.owner.onAddNew(owner.item, .ABOVE, "")
         }
@@ -181,6 +182,7 @@ extension PlantUMLTextFieldWithCustomKeyboard {
                 owner.textField.inputView = nil
             }
             owner.textField.reloadInputViews()
+            self.owner.showingKeyboard = showCustomKeyboard
             
         }
 

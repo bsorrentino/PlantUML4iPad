@@ -26,10 +26,11 @@ struct PlantUMLEditorView: View {
     
     @FocusState private var focusedItem: Focusable?
     
-    @State private var isEditorVisible = true
+    @State private var isEditorVisible  = true
     @State private var isPreviewVisible = true
-    @State private var isScaleToFit = true
-
+    @State private var isScaleToFit     = true
+    @State private var showingKeyboard  = false
+  
     var body: some View {
         GeometryReader { geometry in
             HStack {
@@ -67,7 +68,44 @@ struct PlantUMLEditorView: View {
         }
     }
     
+    // MARK: Editor View
+    func EditorView() -> some View {
+        
+        List() {
+            ForEach( diagram.items ) { item in
+                
+                HStack {
+                    if editMode?.wrappedValue != .active {
+                        Image(systemName: "plus")
+                            .contextMenu {
+                                AddBelowButton( theItem: item )
+                                AddAboveButton( theItem: item )
+                                AddCloneButton( theItem: item )
+                            }
+                    }
+
+                    PlantUMLTextFieldWithCustomKeyboard( item: item,
+                                                         showingKeyboard: $showingKeyboard,
+                                                         onChange: updateItem,
+                                                         onAddNew: addNewItem )
+                        .focused($focusedItem, equals: .row(id: item.id))
+                }
+
+            }
+            .onMove(perform: move)
+            .onDelete( perform: delete)
+
+        }
+        .onChange( of: showingKeyboard ) {
+            print( "showingKeyboard: \($0)")
+        }
+        .font(.footnote)
+        .listStyle(SidebarListStyle())
+        
+
+    }
     
+
     func SaveButton() -> some View {
         
         Button( action: saveToDocument ) {
@@ -153,38 +191,6 @@ struct PlantUMLEditorView: View {
         }
     }
 
-    // MARK: Editor View
-    func EditorView() -> some View {
-        
-        List() {
-            ForEach( diagram.items ) { item in
-                
-                HStack {
-                    if editMode?.wrappedValue != .active {
-                        Image(systemName: "plus")
-                            .contextMenu {
-                                AddBelowButton( theItem: item )
-                                AddAboveButton( theItem: item )
-                                AddCloneButton( theItem: item )
-                            }
-                    }
-
-                    PlantUMLTextFieldWithCustomKeyboard( item: item,
-                                                         onChange: updateItem,
-                                                         onAddNew: addNewItem )
-                        .focused($focusedItem, equals: .row(id: item.id))
-                }
-
-            }
-            .onMove(perform: move)
-            .onDelete( perform: delete)
-
-        }
-        .font(.footnote)
-        .listStyle(SidebarListStyle())
-
-    }
-    
 
 }
 
