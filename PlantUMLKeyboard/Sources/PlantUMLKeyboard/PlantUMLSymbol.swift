@@ -74,9 +74,11 @@ fileprivate func _sequence_symbols() -> [[Symbol]] {
     
     Symbol.Line {
         "autonumber"
+        "hide footbox"
     }
     
     Symbol.Line {
+        ("box", "box \"\\nmy box\\n", ["end box"])
         ("actor", "actor \"my actor\" as a1")
         ("participant","participant \"my participant\" as p1")
         ("boundary", "boundary \"my boundary\" as b1")
@@ -98,10 +100,12 @@ fileprivate func _sequence_symbols() -> [[Symbol]] {
         "o\\\\--"
         "<->"
         "<->o"
-        
     }
     
     Symbol.Line {
+        ("group",  "group My own label", ["end"] )
+        ("loop",  "loop N times", ["end"] )
+        ("alt", "alt successful case", [ "else some kind of failure", "end"] )
         "[#red]"
         ("note left", "note left /' of p1 '/", ["this note is displayed left", "end note"])
         ("note right", "note right /' of p1 '/", ["this note is displayed right", "end note"])
