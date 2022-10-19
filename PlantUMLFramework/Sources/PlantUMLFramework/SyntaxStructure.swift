@@ -2,7 +2,7 @@ import Foundation
 
 
 /// Swift type representationg an AST element (analogue to SourceKitten's Structure)
-public struct SyntaxStructure: Codable, Identifiable {
+public struct SyntaxStructure: Codable, Identifiable, RawRepresentable {
     public var id: String
     public var rawValue: String
    
