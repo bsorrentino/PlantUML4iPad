@@ -7,53 +7,64 @@
 
 import SwiftUI
 import Combine
-import PlantUMLFramework
 
-typealias Item = SyntaxStructure
-
-protocol SharedActions {
-   
-    func addBelow()
+protocol KeyboardSymbol {
     
-    func addAbove()
-
-    func cloneItem()
+    var value: String {get}
+    
+    var additionalValues: [String]? {get}
 }
 
-
-struct LineEditorView: UIViewControllerRepresentable  {
+public struct LineEditorView<Element: RawRepresentable<String>>: UIViewControllerRepresentable {
     
     @Environment(\.editMode) private var editMode
     
-    typealias UIViewControllerType = Lines
+    public typealias UIViewControllerType = Lines
     
-    @Binding var items:Array<Item>
+    @Binding var items:Array<Element>
     
-    func makeCoordinator() -> Coordinator {
+    public init( items: Binding<Array<Element>> ) {
+        self._items = items
+    }
+    public func makeCoordinator() -> Coordinator {
         Coordinator( owner: self)
     }
     
-    func makeUIViewController(context: Context) -> Lines {
+    public func makeUIViewController(context: Context) -> Lines {
         
         return context.coordinator.lines
     }
     
-    func updateUIViewController(_ uiViewController: Lines, context: Context) {
+    public func updateUIViewController(_ uiViewController: Lines, context: Context) {
         
         if let isEditing = editMode?.wrappedValue.isEditing {
             print( "editMode: \(isEditing)")
             uiViewController.isEditing = isEditing
         }
+        
+        items.forEach { print( $0 ) }
     }
-    
+
 }
 
 // MARK: - Data Model
 extension LineEditorView {
     
-    class Line : UITableViewCell {
+    class TextField : UITextField {
+        var indexPath: IndexPath?
         
-        let textField = UITextField()
+    }
+    
+    public class Line : UITableViewCell {
+        
+        let textField = TextField()
+        
+        private var tableView:UITableView {
+            guard let tableView = self.superview as? UITableView else {
+                fatalError("superview is not a UITableView")
+            }
+            return tableView
+        }
         
         override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
             super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -64,7 +75,6 @@ extension LineEditorView {
             textField.autocapitalizationType = .none
             textField.font = UIFont.monospacedSystemFont(ofSize: 15, weight: .regular)
             textField.returnKeyType = .done
-            
             contentView.addSubview(textField)
             
             setupContraints()
@@ -87,31 +97,61 @@ extension LineEditorView {
             NSLayoutConstraint.activate(constraints)
         }
         
-        
-        
     }
     
     
-    class Lines : UITableViewController {
+    public class Lines : UITableViewController {
         
+        var timerCancellable: Cancellable?
         
-        override func viewDidLoad() {
+        public override func viewDidLoad() {
             tableView.register(LineEditorView.Line.self, forCellReuseIdentifier: "Cell")
             tableView.separatorStyle = .none
 //            tableView.backgroundColor = UIColor.gray
             isEditing = false
         }
         
-        func findFirstTextFieldResponder() -> UITextField? {
+        func findFirstTextFieldResponder() -> LineEditorView.TextField? {
             
             return tableView.visibleCells
-                .compactMap{ cell in
+                .compactMap { cell in
                     guard let cell = cell as? LineEditorView.Line else { return nil }
                     return cell.textField
                 }
                 .first { textField in
                     return textField.isFirstResponder
                 }
+        }
+        
+        private func becomeFirstResponder( at indexPath: IndexPath ) -> Bool {
+            var done = false
+            if let cell = tableView.cellForRow(at: indexPath) as? LineEditorView.Line {
+                done  = cell.textField.becomeFirstResponder()
+            }
+            return done
+        }
+        
+        func becomeFirstResponder( at indexPath: IndexPath, withRetries retries: Int ) {
+            
+            timerCancellable?.cancel()
+            
+            if !becomeFirstResponder(at: indexPath) {
+                tableView.scrollToRow(at: indexPath, at: .bottom, animated: true);
+                
+                timerCancellable = Timer.publish(every: 0.5, on: .main, in: .default)
+                    .autoconnect()
+                    .prefix( max(retries,1) )
+                    .sink { [weak self] _ in
+                        
+                        if let self = self, self.becomeFirstResponder( at: indexPath)  {
+                            print( "becomeFirsResponder: done!")
+                            self.timerCancellable?.cancel()
+                        }
+
+                    }
+
+            }
+                
         }
     }
     
@@ -121,22 +161,18 @@ extension LineEditorView {
 extension LineEditorView {
     
     
-    class Coordinator: NSObject, UITableViewDataSource, UITableViewDelegate  {
+    public class Coordinator: NSObject, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate  {
         
-        let HEIGHT = 30.0
-        
-        var owner: LineEditorView
+        private let ROW_HEIGHT = 30.0
+        private let CUSTOM_KEYBOARD_MIN_HEIGHT = 402.0
+
+        let owner: LineEditorView
         
         let lines = Lines()
         
-        private var customKeyboardMinHeight = 300.0
         private var keyboardRect:CGRect = .zero
         private var keyboardCancellable:AnyCancellable?
         private var showCustomKeyboard:Bool = false
-
-        lazy var customKeybordView: UIView = {
-            makeCustomKeyboardView()
-        }()
         
         lazy var inputAccessoryView: UIView  = {
             makeInputAccesoryView()
@@ -154,6 +190,7 @@ extension LineEditorView {
             lines.tableView.dataSource = self
 
             keyboardCancellable = keyboardRectPublisher.sink {  [weak self] rect in
+                print( "keyboardRect: \(rect)")
                 self?.keyboardRect = rect
             }
 
@@ -161,46 +198,37 @@ extension LineEditorView {
         
         // MARK: - UITableViewDataSource
         
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             owner.items.count
         }
         
-        private func setupTextField( _ textField: UITextField, withText text:String ) {
-            if textField.delegate == nil {
-                textField.delegate = self
-            }
-            
-            if textField.rightView == nil {
-                textField.rightView = rightView
-                textField.rightViewMode = .whileEditing
-
-            }
-            if textField.inputAccessoryView == nil {
-                textField.inputAccessoryView = inputAccessoryView
-            }
-
-            textField.text = text
+        private func disabledCell() -> UITableViewCell {
+            let cell =  UITableViewCell()
+            cell.selectionStyle = .none
+            cell.isUserInteractionEnabled = false
+            return cell
         }
-
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             
             guard let line = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as? LineEditorView.Line else {
-                return UITableViewCell()
+                return disabledCell()
             }
             
-            let text = owner.items[ indexPath.row ].rawValue
+            setupTextField( line.textField,
+                            at: indexPath,
+                            withText: owner.items[ indexPath.row ].rawValue)
             
-            setupTextField( line.textField, withText: text )
-            
+            print( "cellForRowAt: \(indexPath.row) - \(owner.items[ indexPath.row ].rawValue)")
             
             return line
         }
         
-        func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-            return true
+        public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+            true
         }
         
-        func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
             switch( editingStyle ) {
             case .delete:
                 print( "delete" )
@@ -216,39 +244,156 @@ extension LineEditorView {
             }
         }
         
-        func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        public func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+            true
+        }
+        
+        public func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+            owner.items.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        }
+        
+        // MARK: - UITableViewDelegate
+        
+        
+        public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            ROW_HEIGHT
+        }
+     
+        // MARK: - UITextFieldDelegate
+        
+        public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            
+            guard let textField = textField as? LineEditorView.TextField, let indexPath = textField.indexPath else {
+                return false
+            }
+            
+            if let text = textField.text, let range = Range(range, in: text) {
+                if let item = Element(rawValue: text.replacingCharacters(in: range, with: string)) {
+                    owner.items[ indexPath.row ] = item
+                }
+            }
+
             return true
         }
         
-        func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-            
-            owner.items.swapAt(sourceIndexPath.row, destinationIndexPath.row)
-            
-        }
-        // MARK: - UITableViewDelegate
-        
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            HEIGHT
+        public func textFieldDidBeginEditing(_ textField: UITextField) {
+            guard let textField = textField as? LineEditorView.TextField, let indexPath = textField.indexPath else {
+                return
+            }
+            lines.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
         
+        public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+            guard let textField = textField as? LineEditorView.TextField, let indexPath = textField.indexPath else {
+                return
+            }
+            lines.tableView.deselectRow(at: indexPath, animated: false)
+        }
+
     }
     
 }
 
 
-// MARK: - Coordinator::SharedActions
-extension LineEditorView.Coordinator : SharedActions {
+// MARK: - Coordinator::ItemActions
+extension LineEditorView.Coordinator  {
     
-    func addBelow() {
-    }
-    
-    func addAbove() {
-    }
-    
-    func cloneItem()  {
-        
-   }
+    func updateItem( at index: Int, withText text: String ) {
+        if let item = Element(rawValue: text ) {
+            owner.items[ index ] = item
+        }
 
+    }
+    func addItemAbove() {
+
+        if let indexPath = lines.tableView.indexPathForSelectedRow {
+            
+            if let newItem = Element(rawValue: "") {
+
+                lines.tableView.performBatchUpdates {
+                    owner.items.insert( newItem, at: indexPath.row )
+                    self.lines.tableView.insertRows(at: [indexPath], with: .automatic )
+                        
+                } completion: { [unowned self] success in
+                    
+                    self.lines.becomeFirstResponder(at: indexPath, withRetries: 0)
+                    
+                }
+
+            }
+        }
+
+    }
+
+    func addItemsBelow( _ items: [Element], at indexPath: IndexPath ) {
+        
+        let indexes = items
+            .enumerated()
+            .map { (index, item ) in
+                let i = IndexPath( row: indexPath.row + index + 1, section: indexPath.section)
+                owner.items.insert( item, at: i.row)
+                return i
+            }
+
+        lines.tableView.performBatchUpdates {
+                
+            self.lines.tableView.insertRows(at: indexes, with: .automatic )
+            
+        } completion: { [unowned self] success in
+
+            if let last = indexes.last {
+                self.lines.becomeFirstResponder(at: last, withRetries: 5)
+            }
+            
+            
+        }
+
+    }
+    
+
+    func addItemBelow() {
+        
+        if let indexPath = lines.tableView.indexPathForSelectedRow {
+            
+            if let newItem = Element(rawValue: "" ) {
+            
+                
+                let newIndexPath = IndexPath( row: indexPath.row + 1,
+                                              section: indexPath.section )
+
+                lines.tableView.performBatchUpdates {
+                    
+                    owner.items.insert( newItem, at: newIndexPath.row)
+                    self.lines.tableView.insertRows(at: [newIndexPath], with: .automatic )
+                    
+                } completion: { [unowned self] success in
+
+                    self.lines.becomeFirstResponder(at: newIndexPath, withRetries: 5)
+                    
+                }
+            }
+        }
+    }
+
+    func cloneItem() {
+        
+        if let indexPath = lines.tableView.indexPathForSelectedRow {
+            
+            if let newItem = Element(rawValue: owner.items[ indexPath.row ].rawValue ) {
+            
+                lines.tableView.performBatchUpdates {
+                    owner.items.insert( newItem, at: indexPath.row )
+                    self.lines.tableView.insertRows(at: [indexPath], with: .bottom )
+                        
+                } completion: { [unowned self] success in
+                    let newIndexPath = IndexPath( row: indexPath.row + 1,
+                                                  section: indexPath.section )
+                    self.lines.becomeFirstResponder(at: newIndexPath, withRetries: 0)
+                }
+
+            }
+        }
+    }
 
 }
 
@@ -263,8 +408,6 @@ extension LineEditorView.Coordinator {
                     return CGRect.zero
                 }
                 
-                self.customKeyboardMinHeight = max( self.customKeyboardMinHeight, rect.size.height)
-                
                 return rect
             }
         
@@ -276,24 +419,55 @@ extension LineEditorView.Coordinator {
                 
     }
     
+    func processSymbol(_ symbol: KeyboardSymbol, on textField: LineEditorView.TextField) {
+        
+        // [How to programmatically enter text in UITextView at the current cursor position](https://stackoverflow.com/a/35888634/521197)
+        if let indexPath = textField.indexPath, let range = textField.selectedTextRange {
+            // From your question I assume that you do not want to replace a selection, only insert some text where the cursor is.
+            textField.replace(range, withText: symbol.value )
+            if let text = textField.text {
+                textField.sendActions(for: .valueChanged)
+                
+                let offset = indexPath.row
+                
+                updateItem(at: offset, withText: text )
+
+                if let values = symbol.additionalValues {
+                    
+                    addItemsBelow(values.compactMap { Element( rawValue: $0) }, at: indexPath)
+                }
+                // toggleCustomKeyobard()
+            }
+        }
+    }
+
+
+    private func makeCustomKeyboardRect() -> CGRect {
+        var customKeyboardRect = keyboardRect
+        
+        let MAGIC_NUMBER = 102.0
+        
+        customKeyboardRect.origin.y += MAGIC_NUMBER
+        customKeyboardRect.size.height = max( CUSTOM_KEYBOARD_MIN_HEIGHT, customKeyboardRect.size.height)
+        customKeyboardRect.size.height -= MAGIC_NUMBER
+        
+        return customKeyboardRect
+
+    }
+    
     // creation Input View
-    private func makeCustomKeyboardView() -> UIView  {
+    private func makeCustomKeyboardView( for textField: LineEditorView.TextField ) -> UIView  {
         
         let keyboardView = PlantUMLKeyboardView(
             onHide: toggleCustomKeyobard,
-            onPressSymbol: {_ in
-                
+            onPressSymbol: { [weak self] symbol in
+                self?.processSymbol(symbol, on: textField)
             })
         
         let controller = UIHostingController( rootView: keyboardView )
+                
+        controller.view.frame = makeCustomKeyboardRect()
         
-        
-        var customKeyboardRect = keyboardRect
-        let MAGIC_NUMBER = 104.0 // 104.0 // magic number .. height of keyboard top bar
-        
-        customKeyboardRect.origin.y += MAGIC_NUMBER
-        customKeyboardRect.size.height = max( self.customKeyboardMinHeight, customKeyboardRect.size.height) - MAGIC_NUMBER
-        controller.view.frame = customKeyboardRect
         return controller.view
  
     }
@@ -309,16 +483,21 @@ extension LineEditorView.Coordinator {
         showCustomKeyboard.toggle()
         
         if( showCustomKeyboard ) {
-            textField.inputView = customKeybordView
+            textField.inputView = makeCustomKeyboardView( for: textField )
             
-            Task {
-
-                let duration = UInt64(0.5 * 1_000_000_000)
-                try? await Task.sleep(nanoseconds: duration )
+            DispatchQueue.main.async {
                 textField.reloadInputViews()
-                textField.becomeFirstResponder()
-
+                let _ = textField.becomeFirstResponder()
             }
+//            Task {
+//
+//                let duration = UInt64(0.5 * 1_000_000_000)
+//                try? await Task.sleep(nanoseconds: duration )
+//
+//                textField.reloadInputViews()
+//                let _ = textField.becomeFirstResponder()
+//
+//            }
         }
         else {
             textField.inputView = nil
@@ -329,21 +508,32 @@ extension LineEditorView.Coordinator {
         
     }
 
-
 }
 
 
 // MARK: - Coordinator::UITextField
-extension LineEditorView.Coordinator : UITextFieldDelegate {
+extension LineEditorView.Coordinator  {
     
-    // MARK: - UITextFieldDelegate
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    private func setupTextField( _ textField: LineEditorView.TextField, at indexPath: IndexPath, withText text: String ) {
+         
+        textField.indexPath = indexPath
+        
+        if textField.delegate == nil {
+            textField.delegate = self
+        }
+        
+        if textField.rightView == nil {
+            textField.rightView = rightView
+            textField.rightViewMode = .whileEditing
+
+        }
+        if textField.inputAccessoryView == nil {
+            textField.inputAccessoryView = inputAccessoryView
+        }
+
+        textField.text = text
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-    }
-    
+
 
     private func makeInputAccesoryView() -> UIView {
         
@@ -359,7 +549,7 @@ extension LineEditorView.Coordinator : UITextFieldDelegate {
         
         let addBelowTitle = NSLocalizedString("Add Below", comment: "")
         let addBelowAction = UIAction(title: addBelowTitle) { [weak self] action in
-            //self?.owner.addBelow()
+            self?.addItemBelow()
         }
         let addBelow = UIBarButtonItem(title: addBelowTitle,
                                        image: nil,
@@ -367,7 +557,7 @@ extension LineEditorView.Coordinator : UITextFieldDelegate {
         
         let addAboveTitle = NSLocalizedString("Add Above", comment: "")
         let addAboveAction = UIAction(title: addBelowTitle) { [weak self] action in
-            //self?.owner.addAbove()
+            self?.addItemAbove()
         }
         let addAbove = UIBarButtonItem(title: addAboveTitle,
                                        image: nil,
@@ -386,7 +576,7 @@ extension LineEditorView.Coordinator : UITextFieldDelegate {
 }
 
 // MARK: - Coordinator::ContextMenu
-extension LineEditorView.Coordinator : UIContextMenuInteractionDelegate {
+extension LineEditorView.Coordinator  {
     
     private func makeContextMenuView() -> UIView {
         
@@ -413,12 +603,12 @@ extension LineEditorView.Coordinator : UIContextMenuInteractionDelegate {
         let addAboveAction =
         UIAction(title: NSLocalizedString("Add Above", comment: ""),
                  image: UIImage(systemName: "arrow.up.square")) { [weak self] action in
-            self?.addAbove()
+            self?.addItemAbove()
         }
         let addBelowAction =
         UIAction(title: NSLocalizedString("Add Below", comment: ""),
                  image: UIImage(systemName: "arrow.down.square")) { [weak self]  action in
-            self?.addBelow()
+            self?.addItemBelow()
         }
         let cloneRowAction =
         UIAction(title: NSLocalizedString("Clone", comment: ""),
@@ -430,21 +620,26 @@ extension LineEditorView.Coordinator : UIContextMenuInteractionDelegate {
 
     }
 
-    // MARK: - UIContextMenuInteractionDelegate
-            
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration?
-    {
-        return UIContextMenuConfiguration(  identifier: nil,
-                                            previewProvider: nil ) { [weak self] _ in
-            return  self?.makeContextMenu()
-        }
-    }
-
 }
 
 struct LineEditorView_Previews: PreviewProvider {
+    
+    public struct Item: RawRepresentable {
+        public var rawValue: String
+       
+        public init( rawValue: String  ) {
+            self.rawValue = rawValue
+        }
+    }
+    
     static var previews: some View {
-      
-        LineEditorView( items: Binding.constant( [] ))
+        LineEditorView<Item>( items: Binding.constant( [
+            Item(rawValue: "Item1"),
+            Item(rawValue: "Item2"),
+            Item(rawValue: "Item3"),
+            Item(rawValue: "Item4"),
+            Item(rawValue: "Item5"),
+            Item(rawValue: "Item6")
+        ] ))
     }
 }

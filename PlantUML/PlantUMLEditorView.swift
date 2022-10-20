@@ -24,22 +24,15 @@ struct PlantUMLEditorView: View {
     
     @Binding var document: PlantUMLDocument
     
-    @FocusState private var focusedItem: Focusable?
-    
     @State private var isEditorVisible  = true
     @State private var isPreviewVisible = true
     @State private var isScaleToFit     = true
-    @State private var showingKeyboard  = false
   
     var body: some View {
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
-                    EditorView()
-                        .modifier( KeyboardAdaptive() )
-                    //  .onReceive( customKeyboard.$itemsToAdd ) { items in
-                    //        appendBelow(values: items)
-                    //  }
+                    LineEditorView<SyntaxStructure>( items: $diagram.items )
                 }
                 if isPreviewVisible {
                     if isScaleToFit {
@@ -68,44 +61,7 @@ struct PlantUMLEditorView: View {
         }
     }
     
-    // MARK: Editor View
-    func EditorView() -> some View {
         
-        List() {
-            ForEach( diagram.items ) { item in
-                
-                HStack {
-                    if editMode?.wrappedValue != .active {
-                        Image(systemName: "plus")
-                            .contextMenu {
-                                AddBelowButton( theItem: item )
-                                AddAboveButton( theItem: item )
-                                AddCloneButton( theItem: item )
-                            }
-                    }
-
-                    PlantUMLTextFieldWithCustomKeyboard( item: item,
-                                                         showingKeyboard: $showingKeyboard,
-                                                         onChange: updateItem,
-                                                         onAddNew: addNewItem )
-                        .focused($focusedItem, equals: .row(id: item.id))
-                }
-
-            }
-            .onMove(perform: move)
-            .onDelete( perform: delete)
-
-        }
-        .onChange( of: showingKeyboard ) {
-            print( "showingKeyboard: \($0)")
-        }
-        .font(.footnote)
-        .listStyle(SidebarListStyle())
-        
-
-    }
-    
-
     func SaveButton() -> some View {
         
         Button( action: saveToDocument ) {
@@ -156,42 +112,7 @@ struct PlantUMLEditorView: View {
         }
     }
 
-    func AddCloneButton( theItem item: SyntaxStructure ) -> some View {
-        
-        return Button {
-            clone( theItem: item )
-        } label: {
-            Label( "clone",
-                   systemImage: "arrow.down.doc")
-            .labelStyle(.titleAndIcon)
-            
-        }
-    }
-
-    func AddAboveButton( theItem item: SyntaxStructure ) -> some View {
-        
-        return Button {
-            addNewItem( relativeToItem: item, atPosition: .ABOVE )
-        } label: {
-            Label( "add above",
-                   systemImage: "arrow.up")
-            .labelStyle(.titleAndIcon)
-            
-        }
-    }
-
-    func AddBelowButton( theItem item: SyntaxStructure ) -> some View {
-        
-        return Button {
-            addNewItem( relativeToItem: item, atPosition: .BELOW )
-        } label: {
-            Label( "add below",
-                   systemImage: "arrow.down")
-            .labelStyle(.titleAndIcon)
-        }
-    }
-
-
+ 
 }
 
 // MARK: ACTIONS
@@ -200,86 +121,7 @@ extension PlantUMLEditorView {
     internal func saveToDocument() {
         document.text = diagram.description
     }
-    
-    @available(*, deprecated, message: "no longer valid!")
-    internal func indexFromFocusedItem() -> Int? {
-        logger.trace( "indexFromFocusedItem" )
         
-        var result:Int? = nil
-        
-        if case .row(let id) = focusedItem {
-            
-            result = diagram.items.firstIndex { $0.id == id }
-            logger.trace( "indexFromFocusedItem: \(result ?? -1 )" )
-            
-            return result
-        }
-        
-        return result
-    }
-    
-    func updateItem( item: SyntaxStructure, withValue value: String, andAdditionalValues values: [String]? ) {
-
-        guard let offset = diagram.items.firstIndex( where: { $0.id == item.id } )  else {
-            logger.debug( "update failed!" )
-            return
-        }
-        
-        diagram.items[ offset ].rawValue = value
-        
-        logger.debug( "update at \(offset): \(value)" )
-        
-        if let values = values {
-            addItemsBelow(theOffset: offset, values: values)
-        }
-   }
-
-    func addNewItem( relativeToItem item: SyntaxStructure, atPosition pos: AppendActionPosition, value: String? = nil ) {
-        let offset = diagram.items.firstIndex { $0.id == item.id }
-
-        guard let offset = offset else { return }
-        let newItem = SyntaxStructure( rawValue: value ?? "")
-
-        switch( pos ) {
-        case .BELOW:
-            diagram.items.insert( newItem, at: offset + 1)
-        case .ABOVE:
-            diagram.items.insert( newItem, at: offset )
-        }
-        
-        focusedItem = .row( id: newItem.id )
-   }
-
-    func addItemsBelow( theOffset offset: Int, values: [String]  ) {
-        
-        values.map { SyntaxStructure( rawValue: $0) }
-            .enumerated()
-            .forEach { (index, item ) in
-                diagram.items.insert( item, at: offset + index + 1)
-            }
-    }
-
-    func clone( theItem item: SyntaxStructure ) {
-        guard let offset = diagram.items.firstIndex( where: { $0.id == item.id } ) else {
-            return
-        }
-        
-        let newItem = SyntaxStructure( rawValue: item.rawValue)
-        
-        diagram.items.insert( newItem, at: offset )
-        focusedItem = .row( id: newItem.id )
-
-    }
-    func delete(at offsets: IndexSet) {
-        diagram.items.remove(atOffsets: offsets)
-        focusedItem = nil
-    }
-    
-    func move(from source: IndexSet, to destination: Int) {
-        diagram.items.move(fromOffsets: source, toOffset: destination)
-        focusedItem = nil
-    }
-
 }
 
 struct ContentView_Previews: PreviewProvider {
