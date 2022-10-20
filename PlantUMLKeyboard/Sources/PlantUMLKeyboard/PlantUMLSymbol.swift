@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Symbol : Identifiable, CustomStringConvertible {
+struct Symbol : Identifiable, CustomStringConvertible, KeyboardSymbol {
     var description: String {
         return id
     }
