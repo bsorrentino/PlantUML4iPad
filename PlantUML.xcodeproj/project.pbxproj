@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A001E42C28DAF8750061E5BE /* Keyboard+Avoidance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A001E42B28DAF8750061E5BE /* Keyboard+Avoidance.swift */; };
 		A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B128D1E19600090D97 /* PlantUMLFramework */; };
 		A043CE7C28E08C4C005A3AF7 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
@@ -22,6 +21,7 @@
 		A0D3C65E28984A10000838D7 /* PlantUMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C65D28984A10000838D7 /* PlantUMLTests.swift */; };
 		A0D3C66828984A11000838D7 /* PlantUMLUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C66728984A11000838D7 /* PlantUMLUITests.swift */; };
 		A0D3C66A28984A11000838D7 /* PlantUMLUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C66928984A11000838D7 /* PlantUMLUITestsLaunchTests.swift */; };
+		A0F329202902AC5E00E0C47C /* LineEditor in Frameworks */ = {isa = PBXBuildFile; productRef = A0F3291F2902AC5E00E0C47C /* LineEditor */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +42,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A001E42B28DAF8750061E5BE /* Keyboard+Avoidance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keyboard+Avoidance.swift"; sourceTree = "<group>"; };
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramView.swift; sourceTree = "<group>"; };
 		A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramObject.swift; sourceTree = "<group>"; };
@@ -69,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F329202902AC5E00E0C47C /* LineEditor in Frameworks */,
 				A043CE7C28E08C4C005A3AF7 /* PlantUMLKeyboard in Frameworks */,
 				A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */,
 			);
@@ -126,7 +126,6 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
-				A001E42B28DAF8750061E5BE /* Keyboard+Avoidance.swift */,
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
 				A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */,
 				A0D3C64D28984A0E000838D7 /* PlantUMLEditorView.swift */,
@@ -184,6 +183,7 @@
 			packageProductDependencies = (
 				A02F69B128D1E19600090D97 /* PlantUMLFramework */,
 				A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */,
+				A0F3291F2902AC5E00E0C47C /* LineEditor */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUML.app */;
@@ -258,6 +258,7 @@
 			);
 			mainGroup = A0D3C63D28984A0E000838D7;
 			packageReferences = (
+				A0F3291E2902AC5E00E0C47C /* XCRemoteSwiftPackageReference "PlantUML4iPad" */,
 			);
 			productRefGroup = A0D3C64728984A0E000838D7 /* Products */;
 			projectDirPath = "";
@@ -303,7 +304,6 @@
 			files = (
 				A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
-				A001E42C28DAF8750061E5BE /* Keyboard+Avoidance.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLEditorView.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
@@ -634,6 +634,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A0F3291E2902AC5E00E0C47C /* XCRemoteSwiftPackageReference "PlantUML4iPad" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bsorrentino/PlantUML4iPad.git";
+			requirement = {
+				branch = line_editor;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		A02F69B128D1E19600090D97 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -642,6 +653,11 @@
 		A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
+		};
+		A0F3291F2902AC5E00E0C47C /* LineEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0F3291E2902AC5E00E0C47C /* XCRemoteSwiftPackageReference "PlantUML4iPad" */;
+			productName = LineEditor;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

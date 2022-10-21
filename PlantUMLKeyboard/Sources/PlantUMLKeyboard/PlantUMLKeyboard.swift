@@ -1,12 +1,17 @@
 import SwiftUI
 import UIKit
+import LineEditor
 
-struct PlantUMLKeyboardView: View {
+public struct PlantUMLKeyboardView: LineEditorKeyboard {
     
     var onHide:() -> Void
     var onPressSymbol: (Symbol) -> Void
     
-    var body : some View{
+    public init(onHide: @escaping () -> Void, onPressSymbol: @escaping (LineEditorKeyboardSymbol) -> Void) {
+        self.onHide = onHide
+        self.onPressSymbol = onPressSymbol
+    }
+    public var body : some View{
         
         ZStack(alignment: .topLeading) {
             
@@ -37,6 +42,7 @@ struct PlantUMLKeyboardView: View {
             .padding()
                 
         }
+        .padding()
     }
     
     func ContentView( _ group: PlantUMLSymbolGroup ) -> some View {

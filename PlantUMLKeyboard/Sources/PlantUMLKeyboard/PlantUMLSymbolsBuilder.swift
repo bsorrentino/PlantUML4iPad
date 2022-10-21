@@ -11,8 +11,7 @@ extension Symbol {
     
     @resultBuilder
     struct Builder {
-        typealias PART2 = (String, String)
-        typealias PART3 = (String, String, [String])
+        typealias PART2 = (String, [String])
         
         static func buildBlock(_ parts: Any...) -> [Symbol] {
             
@@ -26,9 +25,6 @@ extension Symbol {
                 }
                 else if let part2 = elem as? PART2 {
                     return Symbol(part2.0, part2.1)
-                }
-                else if let part3 = elem as? PART3 {
-                    return Symbol(part3.0, part3.1, part3.2)
                 }
                 
                 return nil

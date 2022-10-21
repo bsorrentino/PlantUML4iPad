@@ -6,26 +6,25 @@
 //
 
 import UIKit
+import LineEditor
 
-struct Symbol : Identifiable, CustomStringConvertible, KeyboardSymbol {
+struct Symbol : LineEditorKeyboardSymbol, Codable, CustomStringConvertible {
     var description: String {
-        return id
+        return value
     }
     
-    var id:String
-    private var _value:String?
+    private var _value:String
     private var _additionalValues:[String]?
 
     var value: String {
-        get { _value ?? id }
+        get { _value }
     }
 
     var additionalValues: [String]? {
         get { _additionalValues }
     }
 
-    init( _ id:String, _ value:String? = nil, _ additionalValues: [String]? = nil) {
-        self.id = id
+    init( _ value:String, _ additionalValues: [String]? = nil) {
         self._value = value
         self._additionalValues = additionalValues
     }

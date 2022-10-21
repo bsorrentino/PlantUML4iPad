@@ -9,12 +9,15 @@ import SwiftUI
 import Combine
 import PlantUMLFramework
 import PlantUMLKeyboard
+import LineEditor
 
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
-enum Focusable: Hashable {
-  case none
-  case row(id: String)
-}
+//enum Focusable: Hashable {
+//  case none
+//  case row(id: String)
+//}
+
+typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,PlantUMLKeyboardView>
 
 struct PlantUMLEditorView: View {
     @Environment(\.editMode) private var editMode
@@ -32,7 +35,7 @@ struct PlantUMLEditorView: View {
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
-                    LineEditorView<SyntaxStructure>( items: $diagram.items )
+                    PlantUMLLineEditorView( items: $diagram.items )
                 }
                 if isPreviewVisible {
                     if isScaleToFit {
