@@ -5,6 +5,12 @@
       location = "group:PlantUML.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:SwiftPlantUML.playground">
+   </FileRef>
+   <FileRef
+      location = "group:SwiftPlantUMLView.playground">
+   </FileRef>
+   <FileRef
       location = "group:PlantUMLUITests/../README.md">
    </FileRef>
 </Workspace>
