@@ -8,26 +8,26 @@
 import UIKit
 import LineEditor
 
-struct Symbol : LineEditorKeyboardSymbol, Codable, CustomStringConvertible {
-    var description: String {
-        return value
-    }
-    
-    private var _value:String
-    private var _additionalValues:[String]?
+struct Symbol : Identifiable, CustomStringConvertible, LineEditorKeyboardSymbol {
+     var description: String { value }
 
-    var value: String {
-        get { _value }
-    }
+     var id:String
+     private var _value:String?
+     private var _additionalValues:[String]?
 
-    var additionalValues: [String]? {
-        get { _additionalValues }
-    }
+     var value: String {
+         get { _value ?? id }
+     }
 
-    init( _ value:String, _ additionalValues: [String]? = nil) {
-        self._value = value
-        self._additionalValues = additionalValues
-    }
+     var additionalValues: [String]? {
+         get { _additionalValues }
+     }
+
+     init( _ id:String, _ value:String? = nil, _ additionalValues: [String]? = nil) {
+         self.id = id
+         self._value = value
+         self._additionalValues = additionalValues
+     }
     
 }
 

@@ -94,7 +94,7 @@ extension PlantUMLKeyboardView {
         Group {
             if group.images.isEmpty || group.images[row].isEmpty || group.images[row].isEmpty || group.images[row][cell]==nil
             {
-                Text(symbol.description)
+                Text(symbol.id)
                     .font(.system(size: 16).bold())
 
             }
