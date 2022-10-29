@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  PlantUML
+
+  Created by Bartolomeo Sorrentino on 29/10/22.
+  
+*/
+"Custom Keyboard" = "PlantUML Keyboard" ;
+"Add Below" = "Add Below" ;
+"Add Above" = "Add Above" ;
+"Clone" = "Clone Line" ;
