@@ -16,21 +16,15 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
         ZStack(alignment: .topLeading) {
             
             TabView {
-                ContentView( .common )
-                    .tabItem {
-                        Label( PlantUMLSymbolGroup.common.rawValue, systemImage: "list.dash")
-                            .labelStyle(.titleOnly)
-                    }
-                ContentView( .sequence )
-                    .tabItem {
-                        Label( PlantUMLSymbolGroup.sequence.rawValue, systemImage: "square.and.pencil")
-                            .labelStyle(.titleOnly)
-                    }
-                ContentView( .deployment )
-                    .tabItem {
-                        Label( PlantUMLSymbolGroup.deployment.rawValue, systemImage: "square.and.pencil")
-                            .labelStyle(.titleOnly)
-                    }
+                
+                ForEach( plantUMLSymbols ) { group in
+                    ContentView( group )
+                        .tabItem {
+                            Label( group.name, systemImage: "list.dash")
+                                .labelStyle(.titleOnly)
+                        }
+
+                }
             }
             .frame(maxWidth: .infinity )
             .background(Color.gray.opacity(0.1))
@@ -50,7 +44,7 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
             
             VStack(spacing: 15){
                 
-                ForEach( Array(group.symbols.enumerated()), id: \.offset) { rowIndex, i in
+                ForEach( Array(group.rows.enumerated()), id: \.offset) { rowIndex, i in
                     
                     HStack(spacing: 10) {
                         
@@ -91,20 +85,22 @@ extension PlantUMLKeyboardView {
     
     func ButtonLabel( for group: PlantUMLSymbolGroup, row: Int, cell: Int, symbol: Symbol ) -> some View  {
         
-        Group {
-            if group.images.isEmpty || group.images[row].isEmpty || group.images[row].isEmpty || group.images[row][cell]==nil
-            {
-                Text(symbol.id)
-                    .font(.system(size: 16).bold())
+        Text(symbol.id).font(.system(size: 16).bold())
 
-            }
-            else {
-                let img = group.images[row][cell]
-                Image( uiImage: img! )
-                    .resizable()
-                    .frame(width: 40, height: 20)
-            }
-        }
+//        Group {
+//            if group.images.isEmpty || group.images[row].isEmpty || group.images[row].isEmpty || group.images[row][cell]==nil
+//            {
+//                Text(symbol.id)
+//                    .font(.system(size: 16).bold())
+//
+//            }
+//            else {
+//                let img = group.images[row][cell]
+//                Image( uiImage: img! )
+//                    .resizable()
+//                    .frame(width: 40, height: 20)
+//            }
+//        }
     }
 }
 
