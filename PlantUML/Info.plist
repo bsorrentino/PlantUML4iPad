@@ -5,14 +5,18 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeName</key>
+			<string>plantuml</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.example.plain-text</string>
+				<string>org.bsc.plantuml</string>
 			</array>
 			<key>NSUbiquitousDocumentUserActivityType</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER).example-document</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).plantuml-document</string>
 		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
@@ -23,14 +27,14 @@
 				<string>public.plain-text</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Example Text</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.example.plain-text</string>
+			<string>plantuml diagram</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
 			<key>UTTypeTagSpecification</key>
 			<dict>
-				<key>public.filename-extension</key>
+				<key>public.puml</key>
 				<array>
-					<string>exampletext</string>
+					<string>puml</string>
 				</array>
 			</dict>
 		</dict>
