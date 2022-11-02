@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0D3C64528984A0E000838D7"
-               BuildableName = "PlantUML.app"
-               BlueprintName = "PlantUML"
+               BuildableName = "PlantUML4iPad.app"
+               BlueprintName = "PlantUML4iPad"
                ReferencedContainer = "container:PlantUML4iPad.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0D3C64528984A0E000838D7"
-            BuildableName = "PlantUML.app"
-            BlueprintName = "PlantUML"
+            BuildableName = "PlantUML4iPad.app"
+            BlueprintName = "PlantUML4iPad"
             ReferencedContainer = "container:PlantUML4iPad.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -82,8 +82,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0D3C64528984A0E000838D7"
-            BuildableName = "PlantUML.app"
-            BlueprintName = "PlantUML"
+            BuildableName = "PlantUML4iPad.app"
+            BlueprintName = "PlantUML4iPad"
             ReferencedContainer = "container:PlantUML4iPad.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
