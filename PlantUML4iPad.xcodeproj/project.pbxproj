@@ -247,7 +247,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUML" */;
+			buildConfigurationList = A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUML4iPad" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -607,7 +607,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUML" */ = {
+		A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUML4iPad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0D3C66B28984A11000838D7 /* Debug */,

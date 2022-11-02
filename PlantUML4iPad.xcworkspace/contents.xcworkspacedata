@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:PlantUML.xcodeproj">
+      location = "group:/Users/bsorrentino/WORKSPACES/GITHUB.me/AppleOS/PlantUML4iPad/PlantUML4iPad.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:SwiftPlantUML.playground">
