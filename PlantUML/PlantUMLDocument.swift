@@ -9,19 +9,20 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 extension UTType {
-    static var exampleText: UTType {
-        UTType(importedAs: "com.example.plain-text")
+    static var umldiagram: UTType {
+        // UTType(importedAs: "com.example.plain-text")
+        UTType(importedAs: "org.bsc.plantuml-text")
     }
 }
 
 struct PlantUMLDocument: FileDocument {
     var text: String
-
+    
     init(text: String = "Title untitled") {
         self.text = text
     }
 
-    static var readableContentTypes: [UTType] { [.exampleText] }
+    static var readableContentTypes: [UTType] { [.umldiagram] }
 
     init(configuration: ReadConfiguration) throws {
         guard let data = configuration.file.regularFileContents,
