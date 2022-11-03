@@ -37,6 +37,7 @@ struct PlantUMLEditorView: View {
                 if( isEditorVisible ) {
                     PlantUMLLineEditorView( items: $diagram.items )
                 }
+                Divider()
                 if isPreviewVisible {
                     if isScaleToFit {
                         PlantUMLDiagramView( url: diagram.buildURL() )
@@ -130,6 +131,7 @@ extension PlantUMLEditorView {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         PlantUMLEditorView(document: .constant(PlantUMLDocument()))
+            .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
             .environment(\.editMode, Binding.constant(EditMode.inactive))
             .previewInterfaceOrientation(.landscapeRight)
             .environmentObject( PlantUMLDiagramObject( text:
@@ -138,5 +140,6 @@ struct ContentView_Previews: PreviewProvider {
 title test
 
 """))
+    
     }
 }
