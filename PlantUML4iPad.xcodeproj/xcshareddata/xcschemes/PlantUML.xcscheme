@@ -93,6 +93,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "PlantUML4iPad"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
