@@ -8,12 +8,12 @@
 			<key>CFBundleTypeName</key>
 			<string>plantuml</string>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>org.bsc.plantuml</string>
+				<string>org.bsc.plantuml-text</string>
 			</array>
 			<key>NSUbiquitousDocumentUserActivityType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).plantuml-document</string>
@@ -28,11 +28,13 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>plantuml diagram</string>
+            <key>UTTypeIdentifier</key>
+            <string>org.bsc.plantuml-text</string>
 			<key>UTTypeIconFiles</key>
 			<array/>
 			<key>UTTypeTagSpecification</key>
 			<dict>
-				<key>public.puml</key>
+				<key>public.filename-extension</key>
 				<array>
 					<string>puml</string>
 				</array>
