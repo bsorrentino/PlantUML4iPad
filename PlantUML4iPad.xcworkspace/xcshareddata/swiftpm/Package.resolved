@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "plantuml4ipad",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bsorrentino/PlantUML4iPad.git",
+      "state" : {
+        "branch" : "line_editor",
+        "revision" : "22dc23f3b42c2727c2332da97e36a2c934987d76"
+      }
+    }
+  ],
+  "version" : 2
+}
