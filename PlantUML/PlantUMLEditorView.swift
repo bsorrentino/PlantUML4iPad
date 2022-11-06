@@ -30,12 +30,15 @@ struct PlantUMLEditorView: View {
     @State private var isEditorVisible  = true
     @State private var isPreviewVisible = true
     @State private var isScaleToFit     = true
-  
+    @State private var fontSize         = CGFloat(15)
+
     var body: some View {
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
-                    PlantUMLLineEditorView( items: $diagram.items )
+                    PlantUMLLineEditorView( items: $diagram.items,
+                                            fontSize: $fontSize )
+                        
                 }
                 Divider()
                 if isPreviewVisible {
@@ -52,6 +55,7 @@ struct PlantUMLEditorView: View {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     EditButton()
                     SaveButton()
+                    fontSizeView()
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     ScaleToFitButton()
@@ -65,6 +69,25 @@ struct PlantUMLEditorView: View {
         }
     }
     
+    func fontSizeView() -> some View {
+        HStack( spacing: 0 ) {
+            Button( action: {
+                fontSize += 1
+            } ) {
+                Image( systemName: "textformat.size.larger")
+            }
+            Button( action: {
+                fontSize -= 1
+            } ) {
+                Image( systemName: "textformat.size.smaller")
+            }
+        }
+        .overlay {
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(.blue, lineWidth: 1)
+        }
+        .padding()
+    }
         
     func SaveButton() -> some View {
         
