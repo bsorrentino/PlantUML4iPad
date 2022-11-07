@@ -27,7 +27,9 @@
     "rows": [
         [
             { "id": "autonumber" },
-            { "id": "hide footbox" }
+            { "id": "hide footbox" },
+            { "id": "teoz", "v0": "!pragma teoz true" }
+            
         ],
         [
             {"id": "box", "v0": "box \"\\nmy box\\n", "v1": ["end box"]},
@@ -53,10 +55,10 @@
             { "id": "<->o" }
         ],
         [
+            { "id":  "{start}", "v0": "{start} " }, { "id":  "{end}", "v0": "{end} " },
             { "id":  "group",  "v0": "group My own label", "v1": ["end"] },
             { "id":  "loop",  "v0": "loop N times", "v1": ["end"] },
             { "id":  "alt", "v0": "alt successful case", "v1": [ "else some kind of failure", "end"] },
-            { "id":  "[#red]"},
             { "id":  "note left", "v0": "note left /' of p1 '/", "v1": ["this note is displayed left", "end note"]},
             { "id":  "note right", "v0": "note right /' of p1 '/", "v1": ["this note is displayed right", "end note"]},
             { "id":  "note over", "v0": "note over p1 /', p2 '/", "v1": ["this note is displayed over participant1", "end note"]}

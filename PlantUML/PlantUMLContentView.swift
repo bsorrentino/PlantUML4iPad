@@ -19,7 +19,7 @@ import LineEditor
 
 typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,PlantUMLKeyboardView>
 
-struct PlantUMLEditorView: View {
+struct PlantUMLContentView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     
@@ -30,7 +30,7 @@ struct PlantUMLEditorView: View {
     @State private var isEditorVisible  = true
     @State private var isPreviewVisible = true
     @State private var isScaleToFit     = true
-    @State private var fontSize         = CGFloat(15)
+    @State private var fontSize         = CGFloat(12)
 
     var body: some View {
         GeometryReader { geometry in
@@ -140,7 +140,7 @@ struct PlantUMLEditorView: View {
 }
 
 // MARK: ACTIONS
-extension PlantUMLEditorView {
+extension PlantUMLContentView {
     
     internal func saveToDocument() {
         document.text = diagram.description
@@ -151,7 +151,7 @@ extension PlantUMLEditorView {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PlantUMLEditorView(document: .constant(PlantUMLDocument()))
+            PlantUMLContentView(document: .constant(PlantUMLDocument()))
                 .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
                 .environment(\.editMode, Binding.constant(EditMode.inactive))
                 
