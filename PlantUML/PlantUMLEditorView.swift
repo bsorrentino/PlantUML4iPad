@@ -40,7 +40,7 @@ struct PlantUMLEditorView: View {
                                             fontSize: $fontSize )
                         
                 }
-                Divider()
+                Divider().background(Color.blue).padding()
                 if isPreviewVisible {
                     if isScaleToFit {
                         PlantUMLDiagramView( url: diagram.buildURL() )
@@ -71,14 +71,11 @@ struct PlantUMLEditorView: View {
     
     func fontSizeView() -> some View {
         HStack( spacing: 0 ) {
-            Button( action: {
-                fontSize += 1
-            } ) {
+            Button( action: { fontSize += 1 } ) {
                 Image( systemName: "textformat.size.larger")
             }
-            Button( action: {
-                fontSize -= 1
-            } ) {
+            Divider().background(Color.blue)
+            Button( action: { fontSize -= 1} ) {
                 Image( systemName: "textformat.size.smaller")
             }
         }
@@ -153,16 +150,19 @@ extension PlantUMLEditorView {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PlantUMLEditorView(document: .constant(PlantUMLDocument()))
-            .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-            .environment(\.editMode, Binding.constant(EditMode.inactive))
-            .previewInterfaceOrientation(.landscapeRight)
-            .environmentObject( PlantUMLDiagramObject( text:
+        NavigationView {
+            PlantUMLEditorView(document: .constant(PlantUMLDocument()))
+                .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
+                .environment(\.editMode, Binding.constant(EditMode.inactive))
+                
+                .environmentObject( PlantUMLDiagramObject( text:
 """
 
 title test
 
 """))
-    
+        }
+        .navigationViewStyle(.stack)
+        .previewInterfaceOrientation(.landscapeRight)
     }
 }
