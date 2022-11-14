@@ -31,13 +31,16 @@ struct PlantUMLContentView: View {
     @State private var isPreviewVisible = true
     @State private var isScaleToFit     = true
     @State private var fontSize         = CGFloat(12)
-
+    @State var showLine:Bool            = false
+    
+    
     var body: some View {
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
                     PlantUMLLineEditorView( items: $diagram.items,
-                                            fontSize: $fontSize )
+                                            fontSize: $fontSize,
+                                            showLine: $showLine)
                         
                 }
                 Divider().background(Color.blue).padding()
@@ -56,6 +59,7 @@ struct PlantUMLContentView: View {
                     EditButton()
                     SaveButton()
                     fontSizeView()
+                    toggleLineNumberView()
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     ScaleToFitButton()
@@ -67,6 +71,13 @@ struct PlantUMLContentView: View {
                 
             }
         }
+    }
+    
+    func toggleLineNumberView() -> some View {
+        Button( action: { showLine.toggle() } ) {
+            Image( systemName: "list.number")
+        }
+
     }
     
     func fontSizeView() -> some View {
