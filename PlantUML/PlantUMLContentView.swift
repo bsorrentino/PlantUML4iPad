@@ -12,10 +12,10 @@ import PlantUMLKeyboard
 import LineEditor
 
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
-//enum Focusable: Hashable {
-//  case none
-//  case row(id: String)
-//}
+//  enum Focusable: Hashable {
+//      case none
+//      case row(id: String)
+//  }
 
 typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,PlantUMLKeyboardView>
 
@@ -28,7 +28,9 @@ struct PlantUMLContentView: View {
     @Binding var document: PlantUMLDocument
     
     @State private var isEditorVisible  = true
-    @State private var isPreviewVisible = true
+    //@State private var isPreviewVisible = false
+    private var isDiagramVisible:Bool { !isEditorVisible}
+    
     @State private var isScaleToFit     = true
     @State private var fontSize         = CGFloat(12)
     @State var showLine:Bool            = false
@@ -44,7 +46,7 @@ struct PlantUMLContentView: View {
                         
                 }
                 Divider().background(Color.blue).padding()
-                if isPreviewVisible {
+                if isDiagramVisible {
                     if isScaleToFit {
                         PlantUMLDiagramView( url: diagram.buildURL() )
                     }
@@ -56,13 +58,20 @@ struct PlantUMLContentView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
-                    EditButton()
-                    SaveButton()
-                    fontSizeView()
-                    toggleLineNumberView()
+                    if isEditorVisible {
+                        HStack {
+                            SaveButton()
+                            EditButton()
+                            Divider().background(Color.blue).padding(10)
+                            fontSizeView()
+                            toggleLineNumberView()
+                        }
+                    }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    ScaleToFitButton()
+                    if isDiagramVisible {
+                        ScaleToFitButton()
+                    }
                     HStack( spacing: 0 ) {
                         ToggleEditorButton()
                         TogglePreviewButton()
@@ -85,15 +94,17 @@ struct PlantUMLContentView: View {
             Button( action: { fontSize += 1 } ) {
                 Image( systemName: "textformat.size.larger")
             }
+            .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
             Divider().background(Color.blue)
             Button( action: { fontSize -= 1} ) {
                 Image( systemName: "textformat.size.smaller")
             }
+            .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
         }
-        .overlay {
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(.blue, lineWidth: 1)
-        }
+//        .overlay {
+//            RoundedRectangle(cornerRadius: 16)
+//                .stroke(.blue, lineWidth: 1)
+//        }
         .padding()
     }
         
@@ -114,16 +125,14 @@ struct PlantUMLContentView: View {
         
         Button {
             withAnimation {
-                isPreviewVisible.toggle()
-                if !isPreviewVisible && !isEditorVisible  {
-                    isEditorVisible.toggle()
-                }
+//                isPreviewVisible.toggle()
+                isEditorVisible.toggle()
             }
         }
         label: {
             Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
                 .labelStyle(.iconOnly)
-                .foregroundColor( isPreviewVisible ? .blue : .gray)
+                .foregroundColor( isDiagramVisible ? .blue : .gray)
                 
         }
     }
@@ -133,10 +142,6 @@ struct PlantUMLContentView: View {
         Button {
             withAnimation {
                 isEditorVisible.toggle()
-                if !isEditorVisible && !isPreviewVisible  {
-                    isPreviewVisible.toggle()
-                }
-
             }
         }
         label: {
