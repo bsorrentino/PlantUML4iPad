@@ -22,6 +22,8 @@
 		A0D3C65E28984A10000838D7 /* PlantUMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C65D28984A10000838D7 /* PlantUMLTests.swift */; };
 		A0D3C66828984A11000838D7 /* PlantUMLUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C66728984A11000838D7 /* PlantUMLUITests.swift */; };
 		A0D3C66A28984A11000838D7 /* PlantUMLUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C66928984A11000838D7 /* PlantUMLUITestsLaunchTests.swift */; };
+		A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */; };
+		A0F2B14329353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */; };
 		A0F329202902AC5E00E0C47C /* LineEditor in Frameworks */ = {isa = PBXBuildFile; productRef = A0F3291F2902AC5E00E0C47C /* LineEditor */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,7 @@
 		A0D3C66728984A11000838D7 /* PlantUMLUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLUITests.swift; sourceTree = "<group>"; };
 		A0D3C66928984A11000838D7 /* PlantUMLUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
+		A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Rotate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +127,7 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
+				A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */,
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
 				A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */,
 				A0D3C64D28984A0E000838D7 /* PlantUMLContentView.swift */,
@@ -306,6 +310,7 @@
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLContentView.swift in Sources */,
+				A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +330,7 @@
 				A0D3C66A28984A11000838D7 /* PlantUMLUITestsLaunchTests.swift in Sources */,
 				A0A42A7A289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
 				A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
+				A0F2B14329353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A0D3C66828984A11000838D7 /* PlantUMLUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,7 +482,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
@@ -509,7 +515,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;

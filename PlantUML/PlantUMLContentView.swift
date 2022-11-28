@@ -55,6 +55,33 @@ struct PlantUMLContentView: View {
                     }
                 }
             }
+            .onRotate(perform: { orientation in
+                switch( orientation ) {
+                case .portrait, .portraitUpsideDown:
+                    print( "portrait: \(orientation)")
+                    if !isEditorVisible {
+                        isEditorVisible.toggle()
+                    }
+                    break
+                case .landscapeLeft, .landscapeRight:
+                    print( "landscape")
+                    if !isDiagramVisible {
+                        isEditorVisible.toggle()
+                    }
+                    break
+                case .faceDown:
+                    print( "faceDown")
+                    break
+                case .faceUp:
+                    print( "faceUp")
+                    break
+                case .unknown:
+                    print( "unknown")
+                    break
+                @unknown default:
+                    print( "default")
+                }
+            })
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
