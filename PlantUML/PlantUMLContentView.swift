@@ -12,14 +12,14 @@ import PlantUMLKeyboard
 import LineEditor
 
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
-//enum Focusable: Hashable {
-//  case none
-//  case row(id: String)
-//}
+//  enum Focusable: Hashable {
+//      case none
+//      case row(id: String)
+//  }
 
 typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,PlantUMLKeyboardView>
 
-struct PlantUMLEditorView: View {
+struct PlantUMLContentView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     
@@ -28,20 +28,25 @@ struct PlantUMLEditorView: View {
     @Binding var document: PlantUMLDocument
     
     @State private var isEditorVisible  = true
-    @State private var isPreviewVisible = true
+    //@State private var isPreviewVisible = false
+    private var isDiagramVisible:Bool { !isEditorVisible}
+    
     @State private var isScaleToFit     = true
-    @State private var fontSize         = CGFloat(15)
-
+    @State private var fontSize         = CGFloat(12)
+    @State var showLine:Bool            = false
+    
+    
     var body: some View {
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
                     PlantUMLLineEditorView( items: $diagram.items,
-                                            fontSize: $fontSize )
+                                            fontSize: $fontSize,
+                                            showLine: $showLine)
                         
                 }
-                Divider()
-                if isPreviewVisible {
+                Divider().background(Color.blue).padding()
+                if isDiagramVisible {
                     if isScaleToFit {
                         PlantUMLDiagramView( url: diagram.buildURL() )
                     }
@@ -53,12 +58,20 @@ struct PlantUMLEditorView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
-                    EditButton()
-                    SaveButton()
-                    fontSizeView()
+                    if isEditorVisible {
+                        HStack {
+                            SaveButton()
+                            EditButton()
+                            Divider().background(Color.blue).padding(10)
+                            fontSizeView()
+                            toggleLineNumberView()
+                        }
+                    }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    ScaleToFitButton()
+                    if isDiagramVisible {
+                        ScaleToFitButton()
+                    }
                     HStack( spacing: 0 ) {
                         ToggleEditorButton()
                         TogglePreviewButton()
@@ -69,23 +82,29 @@ struct PlantUMLEditorView: View {
         }
     }
     
+    func toggleLineNumberView() -> some View {
+        Button( action: { showLine.toggle() } ) {
+            Image( systemName: "list.number")
+        }
+
+    }
+    
     func fontSizeView() -> some View {
         HStack( spacing: 0 ) {
-            Button( action: {
-                fontSize += 1
-            } ) {
+            Button( action: { fontSize += 1 } ) {
                 Image( systemName: "textformat.size.larger")
             }
-            Button( action: {
-                fontSize -= 1
-            } ) {
+            .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
+            Divider().background(Color.blue)
+            Button( action: { fontSize -= 1} ) {
                 Image( systemName: "textformat.size.smaller")
             }
+            .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
         }
-        .overlay {
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(.blue, lineWidth: 1)
-        }
+//        .overlay {
+//            RoundedRectangle(cornerRadius: 16)
+//                .stroke(.blue, lineWidth: 1)
+//        }
         .padding()
     }
         
@@ -106,16 +125,14 @@ struct PlantUMLEditorView: View {
         
         Button {
             withAnimation {
-                isPreviewVisible.toggle()
-                if !isPreviewVisible && !isEditorVisible  {
-                    isEditorVisible.toggle()
-                }
+//                isPreviewVisible.toggle()
+                isEditorVisible.toggle()
             }
         }
         label: {
             Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
                 .labelStyle(.iconOnly)
-                .foregroundColor( isPreviewVisible ? .blue : .gray)
+                .foregroundColor( isDiagramVisible ? .blue : .gray)
                 
         }
     }
@@ -125,10 +142,6 @@ struct PlantUMLEditorView: View {
         Button {
             withAnimation {
                 isEditorVisible.toggle()
-                if !isEditorVisible && !isPreviewVisible  {
-                    isPreviewVisible.toggle()
-                }
-
             }
         }
         label: {
@@ -143,7 +156,7 @@ struct PlantUMLEditorView: View {
 }
 
 // MARK: ACTIONS
-extension PlantUMLEditorView {
+extension PlantUMLContentView {
     
     internal func saveToDocument() {
         document.text = diagram.description
@@ -153,16 +166,19 @@ extension PlantUMLEditorView {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PlantUMLEditorView(document: .constant(PlantUMLDocument()))
-            .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-            .environment(\.editMode, Binding.constant(EditMode.inactive))
-            .previewInterfaceOrientation(.landscapeRight)
-            .environmentObject( PlantUMLDiagramObject( text:
+        NavigationView {
+            PlantUMLContentView(document: .constant(PlantUMLDocument()))
+                .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
+                .environment(\.editMode, Binding.constant(EditMode.inactive))
+                
+                .environmentObject( PlantUMLDiagramObject( text:
 """
 
 title test
 
 """))
-    
+        }
+        .navigationViewStyle(.stack)
+        .previewInterfaceOrientation(.landscapeRight)
     }
 }

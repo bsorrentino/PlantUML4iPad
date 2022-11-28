@@ -13,7 +13,7 @@ struct PlantUMLApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: PlantUMLDocument()) { file in
             
-            PlantUMLEditorView(document: file.$document)
+            PlantUMLContentView(document: file.$document)
 //                .environment(\.editMode, Binding.constant(EditMode.active))
                 .environmentObject( PlantUMLDiagramObject( document: file.document))
                 
