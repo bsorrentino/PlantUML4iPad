@@ -56,30 +56,10 @@ struct PlantUMLContentView: View {
                 }
             }
             .onRotate(perform: { orientation in
-                switch( orientation ) {
-                case .portrait, .portraitUpsideDown:
-                    print( "portrait: \(orientation)")
-                    if !isEditorVisible {
-                        isEditorVisible.toggle()
-                    }
-                    break
-                case .landscapeLeft, .landscapeRight:
-                    print( "landscape")
-                    if !isDiagramVisible {
-                        isEditorVisible.toggle()
-                    }
-                    break
-                case .faceDown:
-                    print( "faceDown")
-                    break
-                case .faceUp:
-                    print( "faceUp")
-                    break
-                case .unknown:
-                    print( "unknown")
-                    break
-                @unknown default:
-                    print( "default")
+                if  (orientation.isPortrait && isDiagramVisible) ||
+                    (orientation.isLandscape && isEditorVisible)
+                {
+                    isEditorVisible.toggle()
                 }
             })
             .navigationBarTitleDisplayMode(.inline)
@@ -192,20 +172,38 @@ extension PlantUMLContentView {
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            PlantUMLContentView(document: .constant(PlantUMLDocument()))
-                .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-                .environment(\.editMode, Binding.constant(EditMode.inactive))
-                
-                .environmentObject( PlantUMLDiagramObject( text:
-"""
+    
+    static var text = """
 
 title test
 
-"""))
+actor myactor
+participant participant1
+
+myactor -> participant1
+
+
+"""
+    static var previews: some View {
+        
+        Group {
+            NavigationView {
+                PlantUMLContentView(document: .constant(PlantUMLDocument()))
+                    .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
+                    .environment(\.editMode, Binding.constant(EditMode.inactive))
+                    .environmentObject( PlantUMLDiagramObject( text: text) )
+            }
+            .navigationViewStyle(.stack)
+            .previewInterfaceOrientation(.landscapeRight)
+
+            NavigationView {
+                PlantUMLContentView(document: .constant(PlantUMLDocument()))
+                    .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
+                    .environment(\.editMode, Binding.constant(EditMode.inactive))
+                    .environmentObject( PlantUMLDiagramObject( text: text) )
+            }
+            .navigationViewStyle(.stack)
+            .previewInterfaceOrientation(.portrait)
         }
-        .navigationViewStyle(.stack)
-        .previewInterfaceOrientation(.landscapeRight)
     }
 }
