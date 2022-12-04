@@ -12,6 +12,58 @@ import SwiftUI
 import WebKit
 import Combine
 
+
+struct PlantUMLScrollableDiagramView : View {
+    
+    var url: URL?
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: true) {
+            PlantUMLDiagramView( url: url, contentMode: .fill )
+        }
+    }
+    
+}
+
+struct PlantUMLDiagramView : View {
+    var url: URL?
+    var contentMode = ContentMode.fit
+    
+    var body: some View {
+        CachedAsyncImage(url: url, scale: 1 ) { phase in
+            
+            if let image = phase.image {
+                // if the image is valid
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: contentMode)
+            }
+            else if let _ = phase.error {
+                EmptyView()
+            }
+            else {
+                // showing progress view as placeholder
+                Image("uml")
+                    .resizable()
+                    .frame( width: 200, height: 150)
+                ProgressView()
+                    .font(.largeTitle)
+            }
+        }
+    }
+}
+
+
+struct PlantUMLDiagramView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlantUMLDiagramView( url: URL( string: "https://picsum.photos/id/870/100/150" ) )
+    }
+}
+
+
+///
+/// OLD IMPLEMENTATION
+///
 private class PlantUMLDiagramState: ObservableObject {
 
     private var updateSubject = PassthroughSubject<URL, Never>()
@@ -38,22 +90,10 @@ private class PlantUMLDiagramState: ObservableObject {
     }
 }
 
-struct PlantUMLScrollableDiagramView : View {
-    
-    var url: URL?
-    var size: CGSize
-    
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: true) {
-            PlantUMLDiagramView( url: url )
-                .frame( width: size.width, height: size.height )
-        }
-    }
-    
-}
-
-
-struct PlantUMLDiagramView: UIViewRepresentable {
+///
+/// OLD IMPLEMENTATION
+///
+private struct PlantUMLDiagramView_old: UIViewRepresentable {
  
     @StateObject private var state = PlantUMLDiagramState()
     
@@ -77,11 +117,5 @@ struct PlantUMLDiagramView: UIViewRepresentable {
         
         state.requestUpdate( forURL: url)
         
-    }
-}
-
-struct PlantUMLPreviw_Previews: PreviewProvider {
-    static var previews: some View {
-        PlantUMLDiagramView( url: URL( string: "http://www.soulsoftware.it" )! )
     }
 }

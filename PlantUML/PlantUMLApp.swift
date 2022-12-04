@@ -9,7 +9,12 @@ import SwiftUI
 
 @main
 struct PlantUMLApp: App {
-
+    
+    init() {
+        URLCache.shared.memoryCapacity = 10_000_000 // ~10 MB memory space
+        URLCache.shared.diskCapacity = 100_000_000 // ~1GB disk cache space
+    }
+    
     var body: some Scene {
         DocumentGroup(newDocument: PlantUMLDocument()) { file in
             

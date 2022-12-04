@@ -45,13 +45,15 @@ struct PlantUMLContentView: View {
                                             showLine: $showLine)
                         
                 }
-                Divider().background(Color.blue).padding()
+//                Divider().background(Color.blue).padding()
                 if isDiagramVisible {
                     if isScaleToFit {
                         PlantUMLDiagramView( url: diagram.buildURL() )
+                            .frame( width: geometry.size.width, height: geometry.size.height )
                     }
                     else {
-                        PlantUMLScrollableDiagramView( url: diagram.buildURL(), size: geometry.size )
+                        PlantUMLScrollableDiagramView( url: diagram.buildURL() )
+                            .frame( width: geometry.size.width, height: geometry.size.height )
                     }
                 }
             }
