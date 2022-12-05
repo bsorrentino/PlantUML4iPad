@@ -48,12 +48,15 @@ struct PlantUMLContentView: View {
 //                Divider().background(Color.blue).padding()
                 if isDiagramVisible {
                     if isScaleToFit {
-                        PlantUMLDiagramView( url: diagram.buildURL() )
+                        PlantUMLDiagramView( url: diagram.buildURL(), contentMode: .fit )
                             .frame( width: geometry.size.width, height: geometry.size.height )
                     }
                     else {
-                        PlantUMLScrollableDiagramView( url: diagram.buildURL() )
-                            .frame( width: geometry.size.width, height: geometry.size.height )
+                        ScrollView([.horizontal, .vertical], showsIndicators: true) {
+                            PlantUMLDiagramView( url: diagram.buildURL(), contentMode: .fill )
+                                .frame( minWidth: geometry.size.width)
+                        }
+                        .frame( minWidth: geometry.size.width, minHeight: geometry.size.height )
                     }
                 }
             }
