@@ -13,21 +13,9 @@ import WebKit
 import Combine
 
 
-struct PlantUMLScrollableDiagramView : View {
-    
-    var url: URL?
-    
-    var body: some View {
-        ScrollView(.horizontal, showsIndicators: true) {
-            PlantUMLDiagramView( url: url, contentMode: .fill )
-        }
-    }
-    
-}
-
 struct PlantUMLDiagramView : View {
     var url: URL?
-    var contentMode = ContentMode.fit
+    var contentMode:ContentMode
     
     var body: some View {
         CachedAsyncImage(url: url, scale: 1 ) { phase in
@@ -43,11 +31,13 @@ struct PlantUMLDiagramView : View {
             }
             else {
                 // showing progress view as placeholder
-                Image("uml")
-                    .resizable()
-                    .frame( width: 200, height: 150)
-                ProgressView()
-                    .font(.largeTitle)
+                VStack(alignment: .center ) {
+                    Image("uml")
+                        .resizable()
+                        .frame( width: 200, height: 150)
+                    ProgressView()
+                        .font(.largeTitle)
+                }
             }
         }
     }
@@ -56,13 +46,14 @@ struct PlantUMLDiagramView : View {
 
 struct PlantUMLDiagramView_Previews: PreviewProvider {
     static var previews: some View {
-        PlantUMLDiagramView( url: URL( string: "https://picsum.photos/id/870/100/150" ) )
+        PlantUMLDiagramView( url: URL( string: "https://picsum.photos/id/870/100/150" ), contentMode: .fill )
     }
 }
 
 
 ///
 /// OLD IMPLEMENTATION
+///
 ///
 private class PlantUMLDiagramState: ObservableObject {
 
@@ -90,9 +81,18 @@ private class PlantUMLDiagramState: ObservableObject {
     }
 }
 
-///
-/// OLD IMPLEMENTATION
-///
+private struct PlantUMLScrollableDiagramView : View {
+    
+    var url: URL?
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: true) {
+            PlantUMLDiagramView_old( url: url )
+        }
+    }
+    
+}
+
 private struct PlantUMLDiagramView_old: UIViewRepresentable {
  
     @StateObject private var state = PlantUMLDiagramState()
