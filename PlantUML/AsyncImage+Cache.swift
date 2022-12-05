@@ -4,6 +4,8 @@
 //
 //  Created by Bartolomeo Sorrentino on 04/12/22.
 //
+// Inspired by : https://stackoverflow.com/a/70916651/521197
+//
 
 import SwiftUI
 
@@ -28,10 +30,8 @@ struct CachedAsyncImage<Content>: View where Content: View {
     var body: some View {
         
         if let cached = ImageCache[url] {
-//            let _ = print("cached: \(url.absoluteString)")
             content(.success(cached))
         } else {
-//            let _ = print("request: \(url.absoluteString)")
             AsyncImage(
                 url: url,
                 scale: scale,
