@@ -30,10 +30,12 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
             .background(Color.gray.opacity(0.1))
             .cornerRadius(25)
             
-            Button(action: onHide) {
-                Image(systemName: "xmark").foregroundColor(.black)
+            HStack {
+                Button(action: onHide) {
+                    Image(systemName: "xmark").foregroundColor(.black)
+                }
+                Spacer()
             }
-            .padding()
                 
         }
         .padding()
