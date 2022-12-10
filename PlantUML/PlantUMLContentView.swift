@@ -81,12 +81,12 @@ struct PlantUMLContentView: View {
                     }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if isDiagramVisible {
-                        ScaleToFitButton()
-                    }
                     HStack( spacing: 0 ) {
                         ToggleEditorButton()
                         TogglePreviewButton()
+                        if isDiagramVisible {
+                            ScaleToFitButton()
+                        }
                     }
                 }
                 
@@ -131,18 +131,24 @@ struct PlantUMLContentView: View {
     func ScaleToFitButton() -> some View {
         
         Toggle("fit image", isOn: $isScaleToFit)
+            .toggleStyle(ScaleToFitToggleStyle())
+            
     }
 
     func TogglePreviewButton() -> some View {
         
         Button {
-            withAnimation {
-//                isPreviewVisible.toggle()
-                isEditorVisible.toggle()
+            if isEditorVisible {
+                withAnimation {
+                    // isPreviewVisible.toggle()
+                    isEditorVisible.toggle()
+                }
             }
         }
         label: {
-            Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
+//            Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
+            Label( "Toggle Preview", systemImage: "photo.fill" )
+            
                 .labelStyle(.iconOnly)
                 .foregroundColor( isDiagramVisible ? .blue : .gray)
                 
@@ -152,12 +158,15 @@ struct PlantUMLContentView: View {
     func ToggleEditorButton() -> some View {
         
         Button {
-            withAnimation {
-                isEditorVisible.toggle()
+            if !isEditorVisible {
+                withAnimation {
+                    isEditorVisible.toggle()
+                }
             }
         }
         label: {
-            Label( "Toggle Editor", systemImage: "rectangle.lefthalf.inset.filled" )
+//            Label( "Toggle Editor", systemImage: "rectangle.lefthalf.inset.filled" )
+            Label( "Toggle Editor", systemImage: "doc.plaintext.fill" )
                 .labelStyle(.iconOnly)
                 .foregroundColor( isEditorVisible ? .blue : .gray)
 

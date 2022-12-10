@@ -10,6 +10,8 @@
 		A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */; };
 		A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B128D1E19600090D97 /* PlantUMLFramework */; };
 		A043CE7C28E08C4C005A3AF7 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */; };
+		A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
+		A0943A702944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */; };
@@ -47,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
+		A0943A6D29448A1700342426 /* AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppStore.xcassets; sourceTree = "<group>"; };
+		A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScaleToFit+ToggleStyle.swift"; sourceTree = "<group>"; };
 		A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncImage+Cache.swift"; sourceTree = "<group>"; };
 		A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramView.swift; sourceTree = "<group>"; };
 		A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramObject.swift; sourceTree = "<group>"; };
@@ -106,6 +110,7 @@
 		A0D3C63D28984A0E000838D7 = {
 			isa = PBXGroup;
 			children = (
+				A0943A6D29448A1700342426 /* AppStore.xcassets */,
 				A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */,
 				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
 				A0D3C64828984A0E000838D7 /* PlantUML */,
@@ -129,6 +134,7 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
+				A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */,
 				A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */,
 				A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */,
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
@@ -312,6 +318,7 @@
 				A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */,
 				A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
+				A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLContentView.swift in Sources */,
 				A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
@@ -336,6 +343,7 @@
 				A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 				A0F2B14329353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A0D3C66828984A11000838D7 /* PlantUMLUITests.swift in Sources */,
+				A0943A702944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,7 +494,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
@@ -519,7 +527,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
