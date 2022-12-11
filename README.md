@@ -1,7 +1,23 @@
 # PlantUML4IPAD
 
-> PlantUML Editor for IPAD 
+> Native PlantUML Editor thought for iPad providing a improved user experience to use this popular "diagram-as-code" tool 
 
+This is a native PlantUML editor app for iPad. It allows using iPad to draw diagrams in effective way minimising use of typing on the keyboard providing a custom one with useful shortcuts.
+
+## Features
+
+1. Create,Update,Delete plantUML Documents
+1. Share Documents with iCLoud
+1. Line Text Editor 
+    * Support of Paste from Clipboard
+    * Provides add below / add above keyboard buttons 
+1. PlantUML Custom Keyboard 
+    * Common symbols
+    * Sequence symbols
+    * Deployment symbols
+1. Diagram Preview (require internet connection) 
+    * Built in cache management
+    * Scale to fit
 
 # References
 
