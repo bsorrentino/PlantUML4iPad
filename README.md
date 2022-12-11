@@ -1,4 +1,4 @@
-# PlantUML4IPAD
+# PlantUML4iPad
 
 > Native PlantUML Editor thought for iPad providing a improved user experience to use this popular "diagram-as-code" tool 
 
