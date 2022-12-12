@@ -11,6 +11,15 @@
     {
       "idiom" : "universal",
       "scale" : "3x"
+    },
+    {
+      "filename" : "Screenshot04.png",
+      "idiom" : "ipad",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "2x"
     }
   ],
   "info" : {
