@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "screenshot02.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,6 +11,14 @@
     {
       "idiom" : "universal",
       "scale" : "3x"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "2x"
     }
   ],
   "info" : {
