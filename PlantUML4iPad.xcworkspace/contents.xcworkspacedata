@@ -13,4 +13,7 @@
    <FileRef
       location = "group:PlantUMLUITests/../README.md">
    </FileRef>
+   <FileRef
+      location = "group:privacy_policy.md">
+   </FileRef>
 </Workspace>
