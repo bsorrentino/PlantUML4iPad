@@ -10,6 +10,8 @@
 		A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */; };
 		A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02F69B128D1E19600090D97 /* PlantUMLFramework */; };
 		A043CE7C28E08C4C005A3AF7 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */; };
+		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
+		A047207029549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
 		A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A0943A702944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
@@ -50,6 +52,7 @@
 /* Begin PBXFileReference section */
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A01907EF2951CD5C0059CCBE /* privacy_policy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacy_policy.md; sourceTree = "<group>"; };
+		A047206E29549ACC007E061F /* SwiftUI+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Share.swift"; sourceTree = "<group>"; };
 		A0943A6D29448A1700342426 /* AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppStore.xcassets; sourceTree = "<group>"; };
 		A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScaleToFit+ToggleStyle.swift"; sourceTree = "<group>"; };
 		A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncImage+Cache.swift"; sourceTree = "<group>"; };
@@ -136,6 +139,7 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
+				A047206E29549ACC007E061F /* SwiftUI+Share.swift */,
 				A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */,
 				A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */,
 				A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */,
@@ -323,6 +327,7 @@
 				A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLContentView.swift in Sources */,
+				A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */,
 				A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 			);
@@ -345,6 +350,7 @@
 				A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 				A0F2B14329353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A0D3C66828984A11000838D7 /* PlantUMLUITests.swift in Sources */,
+				A047207029549ACC007E061F /* SwiftUI+Share.swift in Sources */,
 				A0943A702944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
