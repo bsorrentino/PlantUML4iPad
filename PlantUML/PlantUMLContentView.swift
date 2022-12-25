@@ -35,6 +35,11 @@ struct PlantUMLContentView: View {
     @State private var fontSize         = CGFloat(12)
     @State var showLine:Bool            = false
     
+    @State var diagramImage:UIImage?
+    
+    var PlantUMLDiagramViewFit: some View {
+        PlantUMLDiagramView( url: diagram.buildURL(), contentMode: .fit )
+    }
     
     var body: some View {
         GeometryReader { geometry in
@@ -46,9 +51,10 @@ struct PlantUMLContentView: View {
                         
                 }
 //                Divider().background(Color.blue).padding()
+                
                 if isDiagramVisible {
                     if isScaleToFit {
-                        PlantUMLDiagramView( url: diagram.buildURL(), contentMode: .fit )
+                        PlantUMLDiagramViewFit
                             .frame( width: geometry.size.width, height: geometry.size.height )
                     }
                     else {
@@ -59,6 +65,7 @@ struct PlantUMLContentView: View {
                         .frame( minWidth: geometry.size.width, minHeight: geometry.size.height )
                     }
                 }
+                    
             }
             .onRotate(perform: { orientation in
                 if  (orientation.isPortrait && isDiagramVisible) ||
@@ -86,6 +93,7 @@ struct PlantUMLContentView: View {
                         TogglePreviewButton()
                         if isDiagramVisible {
                             ScaleToFitButton()
+                            ShareDiagramButton()
                         }
                     }
                 }
@@ -128,6 +136,22 @@ struct PlantUMLContentView: View {
         }
     }
 
+    func ShareDiagramButton() -> some View {
+        
+        Button(action: {
+            if let image = PlantUMLDiagramViewFit.asUIImage() {
+                diagramImage = image
+            }
+        }) {
+            ZStack {
+                Image(systemName:"square.and.arrow.up")
+                SwiftUIActivityViewController( uiImage: $diagramImage )
+            }
+            
+        }
+
+    }
+
     func ScaleToFitButton() -> some View {
         
         Toggle("fit image", isOn: $isScaleToFit)
@@ -160,6 +184,7 @@ struct PlantUMLContentView: View {
         Button {
             if !isEditorVisible {
                 withAnimation {
+                    diagramImage = nil // avoid popup of share image UIActivityViewController
                     isEditorVisible.toggle()
                 }
             }
