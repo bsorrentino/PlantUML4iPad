@@ -9,40 +9,39 @@
 import SwiftUI
 
 
-class ActivityViewController : UIViewController {
-
-    @objc func shareImage( _ uiImage: UIImage ) {
-        let vc = UIActivityViewController(activityItems: [uiImage], applicationActivities: [])
-        vc.excludedActivityTypes =  [
-            UIActivity.ActivityType.postToWeibo,
-            UIActivity.ActivityType.assignToContact,
-            UIActivity.ActivityType.addToReadingList,
-            UIActivity.ActivityType.postToVimeo,
-            UIActivity.ActivityType.postToTencentWeibo
-        ]
-        present(vc,
-                animated: true,
-                completion: nil)
-        vc.popoverPresentationController?.sourceView = self.view
-    }
-}
-
-
 struct SwiftUIActivityViewController : UIViewControllerRepresentable {
+    
+    class ActivityViewController : UIViewController {
 
-    let activityViewController = ActivityViewController()
+        @objc func shareImage( _ uiImage: UIImage? ) {
+            guard let uiImage else {
+                return
+            }
+            let vc = UIActivityViewController(activityItems: [uiImage], applicationActivities: [])
+            vc.excludedActivityTypes =  [
+                UIActivity.ActivityType.postToWeibo,
+                UIActivity.ActivityType.assignToContact,
+                UIActivity.ActivityType.addToReadingList,
+                UIActivity.ActivityType.postToVimeo,
+                UIActivity.ActivityType.postToTencentWeibo
+            ]
+            present(vc,
+                    animated: true,
+                    completion: nil)
+            vc.popoverPresentationController?.sourceView = self.view
+        }
+    }
+
+    @Binding var uiImage: UIImage?
 
     func makeUIViewController(context: Context) -> ActivityViewController {
-        activityViewController
+        ActivityViewController()
     }
     
     func updateUIViewController(_ uiViewController: ActivityViewController, context: Context) {
-        //
+        uiViewController.shareImage( uiImage )
     }
 
-    func shareImage(uiImage: UIImage) {
-        activityViewController.shareImage( uiImage )
-    }
 }
 
 // MARK: - Preview
@@ -50,20 +49,22 @@ struct SwiftUIActivityViewController_Previews: PreviewProvider {
     
     struct ContentView_Previews : View {
         
-        let activityViewController = SwiftUIActivityViewController()
+        @State var uiImage:UIImage?
         
-        @State var uiImage = UIImage(named: "uml")
+        // @ref https://stackoverflow.com/a/65095862/521197
+        @State var id = 1
         
         var body: some View {
             VStack {
                 Button(action: {
-                    self.activityViewController.shareImage(uiImage: self.uiImage!)
+                    id += 1
+                    uiImage = UIImage(named: "uml")
                 }) {
                     ZStack {
                         Image(systemName:"square.and.arrow.up")
                             .renderingMode(.original)
                             .font(Font.title.weight(.regular))
-                        activityViewController
+                        SwiftUIActivityViewController( uiImage: $uiImage ).id(id)
                     }
                 }
                 .frame(width: 60, height: 60)

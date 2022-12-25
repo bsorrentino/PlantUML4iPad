@@ -17,9 +17,7 @@ struct PlantUMLDiagramView : View {
     var url: URL?
     var contentMode:ContentMode
     
-    let activityViewController = SwiftUIActivityViewController()
-    
-    var imageView: some View {
+    var body: some View {
         CachedAsyncImage(url: url, scale: 1 ) { phase in
             
             if let image = phase.image {
@@ -44,25 +42,7 @@ struct PlantUMLDiagramView : View {
         }
 
     }
-    var body: some View {
-        VStack {
-            imageView
-            Button(action: {
-                if let image = imageView.asUIImage() {
-                    activityViewController.shareImage(uiImage: image)
-                }
-            }) {
-                ZStack {
-                    Image(systemName:"square.and.arrow.up")
-                        .renderingMode(.original)
-                        .font(Font.title.weight(.regular))
-                    activityViewController
-                }
-            }
-            .frame(width: 60, height: 60)
-
-        }
-    }
+    
 }
 
 
