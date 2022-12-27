@@ -21,7 +21,7 @@ private extension PlantUMLText {
     /**
      deflates according to IETF RFC 1951
 
-     https://developer.apple.com/documentation/accelerate/compressing_and_decompressing_data_with_buffer_compression
+     [Compressing and Decompressing Data with Buffer Compression](https://developer.apple.com/documentation/accelerate/compressing_and_decompressing_data_with_buffer_compression)
 
       - Parameter text: diagram textual description ("@startuml ... @enduml")
       - Returns: compressed data according to DEFLATE (IETF RFC 1951) a.k.a zlib compression algorithm
@@ -48,7 +48,7 @@ internal extension PlantUMLText {
       For PlantUML, the mapping array for values 0-63 is:
      `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_`
 
-       See https://plantuml.com/en/text-encoding for more info
+      [PlantUML Text Encoding](https://plantuml.com/en/text-encoding) for more info
 
      - Parameter compressedData: of a deflated string
      - Returns: encoded string

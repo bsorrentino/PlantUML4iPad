@@ -4,7 +4,7 @@
 //
 //  Created by Bartolomeo Sorrentino on 03/08/22.
 //
-// inspired by: https://www.appcoda.com/swiftui-wkwebview/
+// inspired by: [How to Display Web Page Using WKWebView](https://www.appcoda.com/swiftui-wkwebview/)
 
 import SwiftUI
 

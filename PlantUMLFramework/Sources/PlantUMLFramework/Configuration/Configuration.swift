@@ -12,7 +12,7 @@ public enum AccessLevel: String, Codable {
     case `private`
 }
 
-// https://plantuml.com/class-diagram
+// [Class Diagram](https://plantuml.com/class-diagram)
 /// Configuration options to influence the generation and visual representation of the class diagram
 public struct Configuration: Codable {
     /// memberwise initializer

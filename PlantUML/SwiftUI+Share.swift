@@ -4,7 +4,7 @@
 //
 //  Created by Bartolomeo Sorrentino on 22/12/22.
 //
-// inspired by https://stackoverflow.com/a/56828100/521197
+// inspired by [SwiftUI exporting or sharing files](https://stackoverflow.com/a/56828100/521197)
 
 import SwiftUI
 
@@ -51,7 +51,7 @@ struct SwiftUIActivityViewController_Previews: PreviewProvider {
         
         @State var uiImage:UIImage?
         
-        // @ref https://stackoverflow.com/a/65095862/521197
+        // [SwiftUI: Forcing an Update](https://stackoverflow.com/a/65095862/521197)
         @State var id = 1
         
         var body: some View {

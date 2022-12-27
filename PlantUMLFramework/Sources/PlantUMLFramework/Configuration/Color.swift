@@ -1,6 +1,6 @@
 import Foundation
 
-/// Colors supported by PlantUML, see https://github.com/qywx/PlantUML-colors/blob/master/plantuml-colors-table.puml
+/// [Colors supported by PlantUML](https://github.com/qywx/PlantUML-colors/blob/master/plantuml-colors-table.puml)
 public enum Color: String, CaseIterable, Codable {
     /// AliceBlue
     case AliceBlue

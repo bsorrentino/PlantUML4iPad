@@ -64,7 +64,7 @@ public struct PlantUMLScript : CustomStringConvertible {
     }
 
     /**
-      encodes diagram text description according to PlantUML.  See https://plantuml.com/en/text-encoding for more information.
+      encodes diagram text description according to PlantUML. [PlantUML Text Encoding](https://plantuml.com/en/text-encoding) for more information.
 
        1. Encoded in UTF-8
        2. Compressed using Deflate algorithm

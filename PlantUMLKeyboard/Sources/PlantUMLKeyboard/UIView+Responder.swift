@@ -4,10 +4,10 @@
 //
 //  Created by Bartolomeo Sorrentino on 13/09/22.
 //
+// Insèired by [Get the current first responder without using a private API](https://stackoverflow.com/a/1823360/521197)
 
 import UIKit
 
-// [Get the current first responder without using a private API](https://stackoverflow.com/a/1823360/521197)
 extension UIView {
     
     var firstResponder: UIView? {

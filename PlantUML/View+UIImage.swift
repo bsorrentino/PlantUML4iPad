@@ -4,7 +4,7 @@
 //
 //  Created by Bartolomeo Sorrentino on 23/12/22.
 //
-//  inspired by @ref https://www.hackingwithswift.com/quick-start/swiftui/how-to-convert-a-swiftui-view-to-an-image
+//  inspired by [How to convert a SwiftUI view to an image](https://www.hackingwithswift.com/quick-start/swiftui/how-to-convert-a-swiftui-view-to-an-image)
 //
 
 import SwiftUI
