@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0D3C64528984A0E000838D7"
-               BuildableName = "PlantUML4iPad.app"
-               BlueprintName = "PlantUML4iPad"
-               ReferencedContainer = "container:PlantUML4iPad.xcodeproj">
+               BuildableName = "PlantUMLApp.app"
+               BlueprintName = "PlantUMLApp"
+               ReferencedContainer = "container:PlantUMLApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "A0D3C65828984A10000838D7"
                BuildableName = "PlantUMLTests.xctest"
                BlueprintName = "PlantUMLTests"
-               ReferencedContainer = "container:PlantUML4iPad.xcodeproj">
+               ReferencedContainer = "container:PlantUMLApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "A0D3C66228984A11000838D7"
                BuildableName = "PlantUMLUITests.xctest"
                BlueprintName = "PlantUMLUITests"
-               ReferencedContainer = "container:PlantUML4iPad.xcodeproj">
+               ReferencedContainer = "container:PlantUMLApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -65,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0D3C64528984A0E000838D7"
-            BuildableName = "PlantUML4iPad.app"
-            BlueprintName = "PlantUML4iPad"
-            ReferencedContainer = "container:PlantUML4iPad.xcodeproj">
+            BuildableName = "PlantUMLApp.app"
+            BlueprintName = "PlantUMLApp"
+            ReferencedContainer = "container:PlantUMLApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -82,9 +82,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0D3C64528984A0E000838D7"
-            BuildableName = "PlantUML4iPad.app"
-            BlueprintName = "PlantUML4iPad"
-            ReferencedContainer = "container:PlantUML4iPad.xcodeproj">
+            BuildableName = "PlantUMLApp.app"
+            BlueprintName = "PlantUMLApp"
+            ReferencedContainer = "container:PlantUMLApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -63,7 +63,7 @@
 		A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramObject.swift; sourceTree = "<group>"; };
 		A0A42A7B289AD9FA00E929EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A0BFBA9B290D551F008340E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A0D3C64628984A0E000838D7 /* PlantUML4iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlantUML4iPad.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0D3C64628984A0E000838D7 /* PlantUMLApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlantUMLApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLApp.swift; sourceTree = "<group>"; };
 		A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDocument.swift; sourceTree = "<group>"; };
 		A0D3C64D28984A0E000838D7 /* PlantUMLContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLContentView.swift; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 		A0D3C64728984A0E000838D7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A0D3C64628984A0E000838D7 /* PlantUML4iPad.app */,
+				A0D3C64628984A0E000838D7 /* PlantUMLApp.app */,
 				A0D3C65928984A10000838D7 /* PlantUMLTests.xctest */,
 				A0D3C66328984A11000838D7 /* PlantUMLUITests.xctest */,
 			);
@@ -189,9 +189,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A0D3C64528984A0E000838D7 /* PlantUML4iPad */ = {
+		A0D3C64528984A0E000838D7 /* PlantUMLApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A0D3C66D28984A11000838D7 /* Build configuration list for PBXNativeTarget "PlantUML4iPad" */;
+			buildConfigurationList = A0D3C66D28984A11000838D7 /* Build configuration list for PBXNativeTarget "PlantUMLApp" */;
 			buildPhases = (
 				A0D3C64228984A0E000838D7 /* Sources */,
 				A0D3C64328984A0E000838D7 /* Frameworks */,
@@ -201,14 +201,14 @@
 			);
 			dependencies = (
 			);
-			name = PlantUML4iPad;
+			name = PlantUMLApp;
 			packageProductDependencies = (
 				A02F69B128D1E19600090D97 /* PlantUMLFramework */,
 				A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */,
 				A0F3291F2902AC5E00E0C47C /* LineEditor */,
 			);
 			productName = PlantUML;
-			productReference = A0D3C64628984A0E000838D7 /* PlantUML4iPad.app */;
+			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A0D3C65828984A10000838D7 /* PlantUMLTests */ = {
@@ -270,7 +270,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUML4iPad" */;
+			buildConfigurationList = A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUMLApp" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -286,7 +286,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A0D3C64528984A0E000838D7 /* PlantUML4iPad */,
+				A0D3C64528984A0E000838D7 /* PlantUMLApp */,
 				A0D3C65828984A10000838D7 /* PlantUMLTests */,
 				A0D3C66228984A11000838D7 /* PlantUMLUITests */,
 			);
@@ -366,12 +366,12 @@
 /* Begin PBXTargetDependency section */
 		A0D3C65B28984A10000838D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A0D3C64528984A0E000838D7 /* PlantUML4iPad */;
+			target = A0D3C64528984A0E000838D7 /* PlantUMLApp */;
 			targetProxy = A0D3C65A28984A10000838D7 /* PBXContainerItemProxy */;
 		};
 		A0D3C66528984A11000838D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A0D3C64528984A0E000838D7 /* PlantUML4iPad */;
+			target = A0D3C64528984A0E000838D7 /* PlantUMLApp */;
 			targetProxy = A0D3C66428984A11000838D7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -508,13 +508,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlantUML/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = PlantUML4iPad;
+				INFOPLIST_KEY_CFBundleDisplayName = PlantUMLApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -544,13 +544,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlantUML/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = PlantUML4iPad;
+				INFOPLIST_KEY_CFBundleDisplayName = PlantUMLApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -649,7 +649,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUML4iPad" */ = {
+		A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUMLApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0D3C66B28984A11000838D7 /* Debug */,
@@ -658,7 +658,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A0D3C66D28984A11000838D7 /* Build configuration list for PBXNativeTarget "PlantUML4iPad" */ = {
+		A0D3C66D28984A11000838D7 /* Build configuration list for PBXNativeTarget "PlantUMLApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0D3C66E28984A11000838D7 /* Debug */,
