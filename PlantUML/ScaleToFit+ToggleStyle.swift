@@ -4,7 +4,7 @@
 //
 //  Created by Bartolomeo Sorrentino on 10/12/22.
 //
-// inspired by: https://www.hackingwithswift.com/quick-start/swiftui/customizing-toggle-with-togglestyle
+// inspired by: [Customizing Toggle with ToggleStyle](https://www.hackingwithswift.com/quick-start/swiftui/customizing-toggle-with-togglestyle)
 //
 
 import SwiftUI

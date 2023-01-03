@@ -6,7 +6,7 @@ internal extension String {
     }
 }
 
-// https://useyourloaf.com/blog/how-to-percent-encode-a-url-string/
+// [How to percent encode a URL String](https://useyourloaf.com/blog/how-to-percent-encode-a-url-string/)
 internal extension String {
     func stringByAddingPercentEncodingForFormData(plusForSpace: Bool = false) -> String? {
         let unreserved = "*-._"

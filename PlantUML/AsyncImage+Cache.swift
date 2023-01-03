@@ -4,7 +4,7 @@
 //
 //  Created by Bartolomeo Sorrentino on 04/12/22.
 //
-// Inspired by : https://stackoverflow.com/a/70916651/521197
+// Inspired by : [How can I add caching to AsyncImage](https://stackoverflow.com/a/70916651/521197)
 //
 
 import SwiftUI

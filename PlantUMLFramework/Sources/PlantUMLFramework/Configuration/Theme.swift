@@ -6,7 +6,7 @@ protocol Theme {
     var includeRemoteURL: String { get }
 }
 
-/// Open-source themes for PlantUML diagrams, see https://bschwarz.github.io/puml-themes/gallery.html
+/// [Open-source themes for PlantUML diagrams](https://bschwarz.github.io/puml-themes/gallery.html)
 public enum PumlThemes: String, Theme {
     /// blackKnight (https://github.com/bschwarz/puml-themes/blob/master/themes/blackKnight/class-ex.svg)
     case blackKnight

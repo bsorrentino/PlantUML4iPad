@@ -28,7 +28,7 @@ public struct Stereotypes: Codable {
     public var `protocol`: Stereotype?
 }
 
-/// you can define your own spot for a entity when you define the stereotype, adding a single character and a color. For further info see https://plantuml.com/class-diagram#4b62dd14f1d33739
+/// you can define your own spot for a entity when you define the stereotype, adding a single character and a color. [For further info](https://plantuml.com/class-diagram#4b62dd14f1d33739)
 public struct Stereotype: Codable {
     /// displayed as << name >> in diagram
     public var name: String?
@@ -54,7 +54,7 @@ public struct Stereotype: Codable {
     public private(set) static var `protocol` = Stereotype(name: "protocol", spot: Spot(character: "P", color: .GoldenRod))
 }
 
-/// Usually, a spotted character (C, S, E, X or P) is used for classes, struct, enum, extension and protocols. But you can define your own spot for a entity when you define the stereotype, adding a single character and a color. For further info see https://plantuml.com/class-diagram#4b62dd14f1d33739
+/// Usually, a spotted character (C, S, E, X or P) is used for classes, struct, enum, extension and protocols. But you can define your own spot for a entity when you define the stereotype, adding a single character and a color. [For further info](https://plantuml.com/class-diagram#4b62dd14f1d33739)
 public struct Spot : Codable {
     /// spotted character
     public var character: Character

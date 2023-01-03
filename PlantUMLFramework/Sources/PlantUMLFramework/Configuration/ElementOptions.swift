@@ -13,7 +13,7 @@ public struct ElementOptions: Codable {
     /// show Swift extensions  (default: true)
     public private(set) var showExtensions: Bool = true
 
-    /// show [access level](https://plantuml.com/class-diagram#3644720244dd6c6a) for members
+    /// [show access level](https://plantuml.com/class-diagram#3644720244dd6c6a) for members
     public private(set) var showMemberAccessLevelAttribute: Bool = true
 
     /// exclude elements for given names (wildcard support with `*`), e.g. use `*Test*`to hide classes/structs/... who contain `Test` in their name

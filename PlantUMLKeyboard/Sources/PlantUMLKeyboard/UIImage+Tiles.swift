@@ -4,10 +4,10 @@
 //
 //  Created by Bartolomeo Sorrentino on 13/09/22.
 //
+// Inspired by [Split Picture in tiles and put in array](https://stackoverflow.com/a/73628496/521197)
 
 import UIKit
 
-// [StackOverflow](https://stackoverflow.com/a/73628496/521197)
 extension UIImage {
 
     func extractTiles(with tileSize: CGSize) -> [UIImage?] {
