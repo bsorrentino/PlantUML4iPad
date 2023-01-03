@@ -4,8 +4,19 @@
 
 ## [Unreleased](https://gitlab.com/html-validate/html-validate/compare/Unreleased) ()
 
+
+
+
+
+
+
+"name: v1.0.14" is a release tag
+
+## [v1.0.14](https://gitlab.com/html-validate/html-validate/compare/v1.0.14) (2023-01-03)
+
 ### Features
 
+ -  **changelog**  add support of git-changelog-command-line for generating changelog ([230aefe2c86d148](https://gitlab.com/html-validate/html-validate/commit/230aefe2c86d148cf7dfa2137f6cf89b1c11a567))
  -  integrate share diagram image ([faa8a76bff81715](https://gitlab.com/html-validate/html-validate/commit/faa8a76bff81715bb2f0a85ec8b8ce75652ea597))
  -  convert View to UIImage ([a2cf3acf73eabd8](https://gitlab.com/html-validate/html-validate/commit/a2cf3acf73eabd87315b7f7497293301a8ae1eb1))
  -  add Share popup management ([34d88d0445a1e38](https://gitlab.com/html-validate/html-validate/commit/34d88d0445a1e38372efc1dafdd9e74d73535c8b))
