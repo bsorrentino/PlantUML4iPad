@@ -4,20 +4,20 @@
     "name": "general",
     "rows": [
         [
-            { "id": "title",    "v0": "title my title" },
-            { "id": "header",   "v0": "header my header" },
-            { "id": "footer",   "v0": "footer my footer" }
+            { "id": "title",    "value": "title my title" },
+            { "id": "header",   "value": "header my header" },
+            { "id": "footer",   "value": "footer my footer" }
         ],
         [
-            { "id": "allow mixing", "v0": "allow_mixing" },
+            { "id": "allow mixing", "value": "allow_mixing" },
             { "id": "hide empty members" },
-            { "id": "shadowing false", "v0": "skinparam shadowing false" },
-            { "id": "linetype ortho", "v0": "skinparam linetype ortho" },
-            { "id": "left to right", "v0": "left to right direction" },
-            { "id": "top to bottom", "v0": "top to bottom direction" }
+            { "id": "shadowing false", "value": "skinparam shadowing false" },
+            { "id": "linetype ortho", "value": "skinparam linetype ortho" },
+            { "id": "left to right", "value": "left to right direction" },
+            { "id": "top to bottom", "value": "top to bottom direction" }
         ],
         [
-            { "id": "[#red]" },
+            { "id": "[#color]", "value": "[%s]", "type": "color" },
             { "id": "#line.dashed" }
         ]
     ]
@@ -28,19 +28,19 @@
         [
             { "id": "autonumber" },
             { "id": "hide footbox" },
-            { "id": "teoz", "v0": "!pragma teoz true" }
+            { "id": "teoz", "value": "!pragma teoz true" }
             
         ],
         [
-            {"id": "box", "v0": "box \"\\nmy box\\n", "v1": ["end box"]},
-            {"id": "actor", "v0": "actor \"my actor\" as a1"},
-            {"id": "participant", "v0": "participant \"my participant\" as p1"},
-            {"id": "boundary", "v0": "boundary \"my boundary\" as b1"},
-            {"id": "control", "v0": "control \"my control\" as c1"},
-            {"id": "entity", "v0": "entity \"my entity\" as e1"},
-            {"id": "database", "v0": "database \"my database\" as db1"},
-            {"id": "collections","v0": "collections \"my collections\" as cc1" },
-            {"id": "queue", "v0": "queue \"my queue\" as q1"}
+            {"id": "box", "value": "box \"\\nmy box\\n", "additional": ["end box"]},
+            {"id": "actor", "value": "actor \"my actor\" as a1"},
+            {"id": "participant", "value": "participant \"my participant\" as p1"},
+            {"id": "boundary", "value": "boundary \"my boundary\" as b1"},
+            {"id": "control", "value": "control \"my control\" as c1"},
+            {"id": "entity", "value": "entity \"my entity\" as e1"},
+            {"id": "database", "value": "database \"my database\" as db1"},
+            {"id": "collections","value": "collections \"my collections\" as cc1" },
+            {"id": "queue", "value": "queue \"my queue\" as q1"}
         ],
         [
             { "id": "->x" },
@@ -55,13 +55,13 @@
             { "id": "<->o" }
         ],
         [
-            { "id":  "{start}", "v0": "{start} " }, { "id":  "{end}", "v0": "{end} " },
-            { "id":  "group",  "v0": "group My own label", "v1": ["end"] },
-            { "id":  "loop",  "v0": "loop N times", "v1": ["end"] },
-            { "id":  "alt", "v0": "alt successful case", "v1": [ "else some kind of failure", "end"] },
-            { "id":  "note left", "v0": "note left /' of p1 '/", "v1": ["this note is displayed left", "end note"]},
-            { "id":  "note right", "v0": "note right /' of p1 '/", "v1": ["this note is displayed right", "end note"]},
-            { "id":  "note over", "v0": "note over p1 /', p2 '/", "v1": ["this note is displayed over participant1", "end note"]}
+            { "id":  "{start}", "value": "{start} " }, { "id":  "{end}", "value": "{end} " },
+            { "id":  "group",  "value": "group My own label", "additional": ["end"] },
+            { "id":  "loop",  "value": "loop N times", "additional": ["end"] },
+            { "id":  "alt", "value": "alt successful case", "additional": [ "else some kind of failure", "end"] },
+            { "id":  "note left", "value": "note left /' of p1 '/", "additional": ["this note is displayed left", "end note"]},
+            { "id":  "note right", "value": "note right /' of p1 '/", "additional": ["this note is displayed right", "end note"]},
+            { "id":  "note over", "value": "note over p1 /', p2 '/", "additional": ["this note is displayed over participant1", "end note"]}
 
         ]
     ]
@@ -70,34 +70,34 @@
     "name": "deployment",
     "rows": [
         [
-            { "id":  "actor", "v0": "actor \"my actor\" as ac1"},
-            { "id":  "agent", "v0": "agent \"my agent\" as ag1"},
-            { "id":  "artifact", "v0": "artifact \"my artifact\" as ar1"},
-            { "id":  "boundary", "v0": "boundary \"my boundary\" as bn1"},
-            { "id":  "card", "v0": "card \"my card\" as cd1"},
-            { "id":  "circle", "v0": "circle \"my circle\" as cr1"},
-            { "id":  "cloud", "v0": "cloud \"my cloud\" as cd1"},
-            { "id":  "collections", "v0": "collections \"my collections\" as cl1"},
-            { "id":  "component", "v0": "component \"my component\" as cp1"},
-            { "id":  "control", "v0": "control \"my control\" as cn1"},
-            { "id":  "person", "v0": "person \"my person\" as pr1"},
-            { "id":  "queue", "v0": "queue \"my queue\" as qq1"},
-            { "id":  "rectangle", "v0": "rectangle \"my rect\\n\" as rc1 {", "v1": [ "}" ] }
+            { "id":  "actor", "value": "actor \"my actor\" as ac1"},
+            { "id":  "agent", "value": "agent \"my agent\" as ag1"},
+            { "id":  "artifact", "value": "artifact \"my artifact\" as ar1"},
+            { "id":  "boundary", "value": "boundary \"my boundary\" as bn1"},
+            { "id":  "card", "value": "card \"my card\" as cd1"},
+            { "id":  "circle", "value": "circle \"my circle\" as cr1"},
+            { "id":  "cloud", "value": "cloud \"my cloud\" as cd1"},
+            { "id":  "collections", "value": "collections \"my collections\" as cl1"},
+            { "id":  "component", "value": "component \"my component\" as cp1"},
+            { "id":  "control", "value": "control \"my control\" as cn1"},
+            { "id":  "person", "value": "person \"my person\" as pr1"},
+            { "id":  "queue", "value": "queue \"my queue\" as qq1"},
+            { "id":  "rectangle", "value": "rectangle \"my rect\\n\" as rc1 {", "additional": [ "}" ] }
         ],
         [
-            { "id":  "database", "v0": "database  \"my database\" as db1" },
-            { "id":  "entity", "v0": "entity \"my entity\" as ee1"},
-            { "id":  "file", "v0": "file \"my file\" as ff1"},
-            { "id":  "folder", "v0": "folder \"my folder\" as fl1"},
-            { "id":  "frame", "v0": "frame \"my frame\" as fr1"},
-            { "id":  "hexagon", "v0": "hexagon \"my hexagon\" as hx1"},
-            { "id":  "interface", "v0": "interface \"my interface\" as if1"},
-            { "id":  "label", "v0": "label \"my label\" as lb1"},
-            { "id":  "node", "v0": "node \"my node\" as nd1"},
-            { "id":  "package", "v0": "package \"my package\" as pc1"},
-            { "id":  "stack", "v0": "stack \"my stack\" as sk1"},
-            { "id":  "storage", "v0": "storage \"my storage\" as st1"},
-            { "id":  "usecase", "v0": "usecase \"my usecase\" as uc1"}
+            { "id":  "database", "value": "database  \"my database\" as db1" },
+            { "id":  "entity", "value": "entity \"my entity\" as ee1"},
+            { "id":  "file", "value": "file \"my file\" as ff1"},
+            { "id":  "folder", "value": "folder \"my folder\" as fl1"},
+            { "id":  "frame", "value": "frame \"my frame\" as fr1"},
+            { "id":  "hexagon", "value": "hexagon \"my hexagon\" as hx1"},
+            { "id":  "interface", "value": "interface \"my interface\" as if1"},
+            { "id":  "label", "value": "label \"my label\" as lb1"},
+            { "id":  "node", "value": "node \"my node\" as nd1"},
+            { "id":  "package", "value": "package \"my package\" as pc1"},
+            { "id":  "stack", "value": "stack \"my stack\" as sk1"},
+            { "id":  "storage", "value": "storage \"my storage\" as st1"},
+            { "id":  "usecase", "value": "usecase \"my usecase\" as uc1"}
         ],
         [
         

@@ -12,27 +12,29 @@ struct Symbol : Decodable, Identifiable, CustomStringConvertible, LineEditorKeyb
 
     enum CodingKeys: String, CodingKey {
             case id
-            case value = "v0"
-            case additionalValues = "v1"
+            case value
+            case additionalValues = "additional"
+            case type
         }
      var description: String { value }
 
      var id:String
      private var _value:String?
-     private var _additionalValues:[String]?
+     private(set) var additionalValues:[String]?
+     var type = "string"
 
      var value: String {
          get { _value ?? id }
      }
 
-     var additionalValues: [String]? {
-         get { _additionalValues }
-     }
+//     var additionalValues: [String]? {
+//         get { _additionalValues }
+//     }
 
-     init( _ id:String, _ value:String? = nil, _ additionalValues: [String]? = nil) {
+     init( id:String, value:String? = nil, additionalValues: [String]? = nil) {
          self.id = id
          self._value = value
-         self._additionalValues = additionalValues
+         self.additionalValues = additionalValues
      }
     
     init(from decoder: Decoder) throws {
@@ -41,7 +43,10 @@ struct Symbol : Decodable, Identifiable, CustomStringConvertible, LineEditorKeyb
         
         self.id = try container.decode(String.self, forKey: CodingKeys.id)
         self._value = try container.decodeIfPresent(String.self, forKey: CodingKeys.value)
-        self._additionalValues = try container.decodeIfPresent([String].self, forKey: CodingKeys.additionalValues)
+        self.additionalValues = try container.decodeIfPresent([String].self, forKey: CodingKeys.additionalValues)
+        if let type = try container.decodeIfPresent(String.self, forKey: CodingKeys.type) {
+            self.type = type
+        }
 
     }
 

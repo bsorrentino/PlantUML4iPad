@@ -4,6 +4,7 @@ import LineEditor
 
 public struct PlantUMLKeyboardView: LineEditorKeyboard {
     
+    
     var onHide:() -> Void
     var onPressSymbol: (Symbol) -> Void
     
@@ -11,6 +12,7 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
         self.onHide = onHide
         self.onPressSymbol = onPressSymbol
     }
+    
     public var body : some View{
         
         ZStack(alignment: .topLeading) {
@@ -41,6 +43,7 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
         .padding()
     }
     
+  
     func ContentView( _ group: PlantUMLSymbolGroup ) -> some View {
         ScrollView(.vertical, showsIndicators: false) {
             
@@ -52,39 +55,45 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
                         
                         ForEach( Array(i.enumerated()), id: \.offset ) { cellIndex, symbol in
                             
-                            Button {
-                                
-                                onPressSymbol(symbol)
-                                
-                            } label: {
-                                
-                                ButtonLabel( for: group, row: rowIndex, cell: cellIndex, symbol: symbol )
-                                
+                            VStack {
+                              if symbol.type == "color" {
+                                  ColorKeyView( symbol: symbol, onPressSymbol: onPressSymbol )
+                                }
+                                else {
+                                    Button {
+                                        onPressSymbol(symbol)
+                                    } label: {
+                                        ButtonLabel( for: group, row: rowIndex, cell: cellIndex, symbol: symbol )
+                                    }
+                                    .buttonStyle( KeyButtonStyle() )
+                                }
                             }
-                            .buttonStyle( KeyButtonStyle() )
+
                         }
+                        
                     }
                 }
             }
             .padding(.top)
-        
+
         }
     }
-}
-
-fileprivate struct KeyButtonStyle: ButtonStyle {
     
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .padding(5)
-            .border( .black, width: 1)
-            .background( .white )
-    }
 }
 
-
+// MARK: Plain Button Extension
 extension PlantUMLKeyboardView {
-    
+
+    fileprivate struct KeyButtonStyle: ButtonStyle {
+        
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .padding(5)
+                .border( .black, width: 1)
+                .background( .white )
+        }
+    }
+
     func ButtonLabel( for group: PlantUMLSymbolGroup, row: Int, cell: Int, symbol: Symbol ) -> some View  {
         
         Text(symbol.id).font(.system(size: 16).bold())
@@ -105,6 +114,7 @@ extension PlantUMLKeyboardView {
 //        }
     }
 }
+
 
 struct PlantUMLKeyboardView_Previews: PreviewProvider {
         
