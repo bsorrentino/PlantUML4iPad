@@ -34,6 +34,10 @@ public func getWindows() -> [UIWindow]? {
 
 }
 
+func getRootViewController() -> UIViewController? {
+    getWindows()?.first?.rootViewController
+}
+
 func getFirstTextFieldResponder() -> UITextField? {
     
     guard let firstWindow = getWindows()?.first, let firstResponder = firstWindow.firstResponder else {
