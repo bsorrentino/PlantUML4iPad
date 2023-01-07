@@ -57,7 +57,10 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
                             
                             VStack {
                               if symbol.type == "color" {
-                                  ColorKeyView( symbol: symbol, onPressSymbol: onPressSymbol )
+//                                  ColorKeyView( symbol: symbol, onPressSymbol: onPressSymbol )
+                                  ColorKeyButton( symbol: symbol, onPressSymbol: onPressSymbol )
+                                      .frame( maxWidth: 100)
+                                      
                                 }
                                 else {
                                     Button {
@@ -89,8 +92,12 @@ extension PlantUMLKeyboardView {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .padding(5)
-                .border( .black, width: 1)
                 .background( .white )
+//                .border( .black, width: 1)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(.black, lineWidth: 1)
+                }
         }
     }
 

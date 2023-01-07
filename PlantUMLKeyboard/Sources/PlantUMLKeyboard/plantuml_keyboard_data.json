@@ -17,7 +17,8 @@
             { "id": "top to bottom", "value": "top to bottom direction" }
         ],
         [
-            { "id": "[#color]", "value": "[%s]", "type": "color" },
+            { "id": "#color", "value": "%@", "type": "color" },
+            { "id": "[#color]", "value": "[%@]", "type": "color" },
             { "id": "#line.dashed" }
         ]
     ]
