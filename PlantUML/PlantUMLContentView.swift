@@ -19,11 +19,12 @@ import LineEditor
 //      case row(id: String)
 //  }
 
-typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,PlantUMLKeyboardView>
+typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,Symbol>
 
 struct PlantUMLContentView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
+    @State var keyboardTab: String = "general"
     
     @EnvironmentObject private var diagram: PlantUMLDiagramObject
     
@@ -49,7 +50,12 @@ struct PlantUMLContentView: View {
                 if( isEditorVisible ) {
                     PlantUMLLineEditorView( items: $diagram.items,
                                             fontSize: $fontSize,
-                                            showLine: $showLine)
+                                            showLine: $showLine) { onHide, onPressSymbol in
+                        PlantUMLKeyboardView( selectedTab: $keyboardTab,
+                                              onHide: onHide,
+                                              onPressSymbol: onPressSymbol)
+                    }
+                    
                         
                 }
 //                Divider().background(Color.blue).padding()

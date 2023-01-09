@@ -2,13 +2,14 @@ import SwiftUI
 import UIKit
 import LineEditor
 
-public struct PlantUMLKeyboardView: LineEditorKeyboard {
+public struct PlantUMLKeyboardView: View {
     
-    
+    @Binding var selectedTab:String
     var onHide:() -> Void
     var onPressSymbol: (Symbol) -> Void
     
-    public init(onHide: @escaping () -> Void, onPressSymbol: @escaping (LineEditorKeyboardSymbol) -> Void) {
+    public init(selectedTab: Binding<String>, onHide: @escaping () -> Void, onPressSymbol: @escaping (Symbol) -> Void) {
+        self._selectedTab = selectedTab
         self.onHide = onHide
         self.onPressSymbol = onPressSymbol
     }
@@ -17,7 +18,7 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
         
         ZStack(alignment: .topLeading) {
             
-            TabView {
+            TabView( selection: $selectedTab ) {
                 
                 ForEach( plantUMLSymbols ) { group in
                     ContentView( group )
@@ -25,6 +26,7 @@ public struct PlantUMLKeyboardView: LineEditorKeyboard {
                             Label( group.name, systemImage: "list.dash")
                                 .labelStyle(.titleOnly)
                         }
+                        tag( group.name )
 
                 }
             }
@@ -126,7 +128,7 @@ extension PlantUMLKeyboardView {
 struct PlantUMLKeyboardView_Previews: PreviewProvider {
         
     static var previews: some View {
-        PlantUMLKeyboardView( onHide: { }, onPressSymbol: { _ in } )
+        PlantUMLKeyboardView( selectedTab: .constant("general"), onHide: { }, onPressSymbol: { _ in } )
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }
