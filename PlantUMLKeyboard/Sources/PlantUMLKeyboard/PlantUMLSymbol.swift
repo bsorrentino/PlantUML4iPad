@@ -8,7 +8,7 @@
 import UIKit
 import LineEditor
 
-struct Symbol : Decodable, Identifiable, CustomStringConvertible, LineEditorKeyboardSymbol {
+public struct Symbol : Decodable, Identifiable, CustomStringConvertible, LineEditorKeyboardSymbol {
 
     enum CodingKeys: String, CodingKey {
             case id
@@ -16,14 +16,14 @@ struct Symbol : Decodable, Identifiable, CustomStringConvertible, LineEditorKeyb
             case additionalValues = "additional"
             case type
         }
-     var description: String { value }
+     public var description: String { value }
 
-     var id:String
+     public var id:String
      private var _value:String?
-     private(set) var additionalValues:[String]?
-     var type = "string"
+     public private(set) var additionalValues:[String]?
+     public var type = "string"
 
-     var value: String {
+     public var value: String {
          get { _value ?? id }
      }
 
@@ -31,13 +31,13 @@ struct Symbol : Decodable, Identifiable, CustomStringConvertible, LineEditorKeyb
 //         get { _additionalValues }
 //     }
 
-     init( id:String, value:String? = nil, additionalValues: [String]? = nil) {
+     public init( id:String, value:String? = nil, additionalValues: [String]? = nil) {
          self.id = id
          self._value = value
          self.additionalValues = additionalValues
      }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
 
         let container = try decoder.container(keyedBy: CodingKeys.self )
         
