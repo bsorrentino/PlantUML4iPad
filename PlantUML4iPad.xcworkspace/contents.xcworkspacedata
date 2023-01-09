@@ -11,6 +11,9 @@
       location = "group:SwiftPlantUMLView.playground">
    </FileRef>
    <FileRef
+      location = "group:EnvironmentBinding.playground">
+   </FileRef>
+   <FileRef
       location = "group:PlantUMLUITests/../README.md">
    </FileRef>
    <FileRef
