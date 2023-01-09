@@ -15,6 +15,8 @@ This is a native PlantUML editor app for iPad. It allows using iPad to draw diag
     * Common symbols
     * Sequence symbols
     * Deployment symbols
+    * Color key
+      > Open a color picker for choosing the color to apply 
 5. Diagram Preview 
     > Preview relies on [PlantUML online server](https://plantuml.com/server) so it requires internet connection
     * Built in cache management
