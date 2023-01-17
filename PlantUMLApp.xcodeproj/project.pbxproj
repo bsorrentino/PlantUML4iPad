@@ -17,8 +17,8 @@
 		A0943A702944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
-		A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */; };
-		A0A42A7A289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */; };
+		A0A42A79289AC37C00E929EB /* PlantUMLDocumentProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDocumentProxy.swift */; };
+		A0A42A7A289AC37C00E929EB /* PlantUMLDocumentProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDocumentProxy.swift */; };
 		A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0BFBA9C290D551F008340E3 /* Localizable.strings */; };
 		A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */; };
 		A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */; };
@@ -60,7 +60,7 @@
 		A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScaleToFit+ToggleStyle.swift"; sourceTree = "<group>"; };
 		A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncImage+Cache.swift"; sourceTree = "<group>"; };
 		A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramView.swift; sourceTree = "<group>"; };
-		A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramObject.swift; sourceTree = "<group>"; };
+		A0A42A78289AC37C00E929EB /* PlantUMLDocumentProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDocumentProxy.swift; sourceTree = "<group>"; };
 		A0A42A7B289AD9FA00E929EB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A0BFBA9B290D551F008340E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A0D3C64628984A0E000838D7 /* PlantUMLApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlantUMLApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,9 +149,9 @@
 				A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */,
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
 				A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */,
+				A0A42A78289AC37C00E929EB /* PlantUMLDocumentProxy.swift */,
 				A0D3C64D28984A0E000838D7 /* PlantUMLContentView.swift */,
 				A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */,
-				A0A42A78289AC37C00E929EB /* PlantUMLDiagramObject.swift */,
 				A0BFBA9C290D551F008340E3 /* Localizable.strings */,
 				A0D3C64F28984A10000838D7 /* Assets.xcassets */,
 				A0D3C65428984A10000838D7 /* Info.plist */,
@@ -327,7 +327,7 @@
 			files = (
 				A0FB8F9C295616BF00910896 /* View+UIImage.swift in Sources */,
 				A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */,
-				A0A42A79289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
+				A0A42A79289AC37C00E929EB /* PlantUMLDocumentProxy.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
 				A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
@@ -351,7 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0D3C66A28984A11000838D7 /* PlantUMLUITestsLaunchTests.swift in Sources */,
-				A0A42A7A289AC37C00E929EB /* PlantUMLDiagramObject.swift in Sources */,
+				A0A42A7A289AC37C00E929EB /* PlantUMLDocumentProxy.swift in Sources */,
 				A0A42A77289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 				A0F2B14329353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A08AA78429561170004DE329 /* View+UIImage.swift in Sources */,

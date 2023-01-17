@@ -3,7 +3,7 @@ import Foundation
 
 /// Swift type representationg an AST element (analogue to SourceKitten's Structure)
 public struct SyntaxStructure: Codable, Identifiable, RawRepresentable {
-    public var id: String
+    public private(set) var id: String
     public var rawValue: String
    
     public init( rawValue: String  ) {
@@ -12,7 +12,9 @@ public struct SyntaxStructure: Codable, Identifiable, RawRepresentable {
     }
 }
 
-
+extension SyntaxStructure : Equatable {
+    
+}
 extension String.StringInterpolation {
     mutating func appendInterpolation(_ item: SyntaxStructure) {
         appendInterpolation(item.rawValue)

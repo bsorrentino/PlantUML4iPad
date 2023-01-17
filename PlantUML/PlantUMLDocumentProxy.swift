@@ -7,11 +7,34 @@
 
 import Foundation
 import PlantUMLFramework
+import Combine
 
-class PlantUMLDiagramObject : ObservableObject, CustomStringConvertible {
+
+class DebounceRequest {
+
+    private var requestSubject = PassthroughSubject<Void, Never>()
+    
+    public let publisher:AnyPublisher<Void,Never>
+
+    init( debounceInSeconds seconds: Double ) {
+        
+        publisher = requestSubject
+            .debounce(for: .seconds(seconds), scheduler: RunLoop.main)
+            .eraseToAnyPublisher()
+
+    }
+    
+    func send() {
+        requestSubject.send(())
+    }
+}
+
+class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
     @Published var items:Array<SyntaxStructure>
-
+    
+    let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
+    
     var description: String {
         self.items.map { $0.rawValue }.joined( separator: "\n" )
     }
@@ -19,13 +42,14 @@ class PlantUMLDiagramObject : ObservableObject, CustomStringConvertible {
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
 
     init( text: String ) {
+        print( "PlantUMLDiagramObject.init" )
         self.items =
             text
                 .split(whereSeparator: \.isNewline)
                 .map { line in
                     SyntaxStructure( rawValue: String(line) )
                 }
-
+        
     }
     
     convenience init( document: PlantUMLDocument ) {
