@@ -26,9 +26,7 @@ struct PlantUMLContentView: View {
     @Environment(\.openURL) private var openURL
     @State var keyboardTab: String = "general"
     
-    @EnvironmentObject private var diagram: PlantUMLDiagramObject
-    
-    @Binding var document: PlantUMLDocument
+    @StateObject var document: PlantUMLDocumentProxy
     
     @State private var isEditorVisible  = true
     //@State private var isPreviewVisible = false
@@ -41,22 +39,26 @@ struct PlantUMLContentView: View {
     @State var diagramImage:UIImage?
     
     var PlantUMLDiagramViewFit: some View {
-        PlantUMLDiagramView( url: diagram.buildURL(), contentMode: .fit )
+        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
     }
     
     var body: some View {
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
-                    PlantUMLLineEditorView( items: $diagram.items,
+                    PlantUMLLineEditorView( items: $document.items,
                                             fontSize: $fontSize,
                                             showLine: $showLine) { onHide, onPressSymbol in
                         PlantUMLKeyboardView( selectedTab: $keyboardTab,
                                               onHide: onHide,
                                               onPressSymbol: onPressSymbol)
                     }
-                    
-                        
+                    .onChange(of: document.items ) { _ in
+                        document.updateRequest.send()
+                    }
+                    .onReceive(document.updateRequest.publisher) { _ in
+                        document.save()
+                    }
                 }
 //                Divider().background(Color.blue).padding()
                 
@@ -67,7 +69,7 @@ struct PlantUMLContentView: View {
                     }
                     else {
                         ScrollView([.horizontal, .vertical], showsIndicators: true) {
-                            PlantUMLDiagramView( url: diagram.buildURL(), contentMode: .fill )
+                            PlantUMLDiagramView( url: document.buildURL(), contentMode: .fill )
                                 .frame( minWidth: geometry.size.width)
                         }
                         .frame( minWidth: geometry.size.width, minHeight: geometry.size.height )
@@ -87,7 +89,7 @@ struct PlantUMLContentView: View {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     if isEditorVisible {
                         HStack {
-                            SaveButton()
+                            // SaveButton()
                             EditButton()
                             Divider().background(Color.blue).padding(10)
                             fontSizeView()
@@ -138,10 +140,13 @@ struct PlantUMLContentView: View {
         
     func SaveButton() -> some View {
         
-        Button( action: saveToDocument ) {
-            Label( "Save", systemImage: "arrow.down.doc.fill" )
-                .labelStyle(.titleOnly)
-        }
+        Button( action: {
+                    document.save()
+                },
+                label:  {
+                    Label( "Save", systemImage: "arrow.down.doc.fill" )
+                        .labelStyle(.titleOnly)
+                })
     }
 
     func ShareDiagramButton() -> some View {
@@ -209,15 +214,6 @@ struct PlantUMLContentView: View {
  
 }
 
-// MARK: ACTIONS
-extension PlantUMLContentView {
-    
-    internal func saveToDocument() {
-        document.text = diagram.description
-    }
-        
-}
-
 struct ContentView_Previews: PreviewProvider {
     
     static var text = """
@@ -235,22 +231,21 @@ myactor -> participant1
         
         Group {
             NavigationView {
-                PlantUMLContentView(document: .constant(PlantUMLDocument()))
+                PlantUMLContentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
                     .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
                     .environment(\.editMode, Binding.constant(EditMode.inactive))
-                    .environmentObject( PlantUMLDiagramObject( text: text) )
             }
             .navigationViewStyle(.stack)
             .previewInterfaceOrientation(.landscapeRight)
 
             NavigationView {
-                PlantUMLContentView(document: .constant(PlantUMLDocument()))
+                PlantUMLContentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
                     .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
                     .environment(\.editMode, Binding.constant(EditMode.inactive))
-                    .environmentObject( PlantUMLDiagramObject( text: text) )
             }
             .navigationViewStyle(.stack)
             .previewInterfaceOrientation(.portrait)
         }
     }
 }
+
