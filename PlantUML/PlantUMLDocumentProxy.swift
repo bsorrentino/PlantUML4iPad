@@ -8,7 +8,7 @@
 import Foundation
 import PlantUMLFramework
 import Combine
-
+import SwiftUI
 
 class DebounceRequest {
 
@@ -31,6 +31,7 @@ class DebounceRequest {
 
 class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
+    @Binding var object: PlantUMLDocument
     @Published var items:Array<SyntaxStructure>
     
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
@@ -41,20 +42,14 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
 
-    init( text: String ) {
+    init( document: Binding<PlantUMLDocument> ) {
         print( "PlantUMLDiagramObject.init" )
-        self.items =
-            text
-                .split(whereSeparator: \.isNewline)
-                .map { line in
-                    SyntaxStructure( rawValue: String(line) )
-                }
-        
-    }
-    
-    convenience init( document: PlantUMLDocument ) {
-        
-        self.init(text: document.text )
+        self._object = document
+        self.items = document.wrappedValue.text
+                        .split(whereSeparator: \.isNewline)
+                        .map { line in
+                            SyntaxStructure( rawValue: String(line) )
+                        }
     }
     
     func buildURL() -> URL {
@@ -63,5 +58,10 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
         return presenter.url( of: script )
     }
     
+    func save() {
+        print( "save document")
+        self.object.text = self.description
+    }
+
     
 }
