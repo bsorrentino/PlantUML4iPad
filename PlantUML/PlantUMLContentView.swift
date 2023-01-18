@@ -19,9 +19,10 @@ import LineEditor
 //      case row(id: String)
 //  }
 
-typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,Symbol>
 
 struct PlantUMLContentView: View {
+    typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,Symbol>
+    
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     @State var keyboardTab: String = "general"
@@ -34,15 +35,14 @@ struct PlantUMLContentView: View {
     
     @State private var isScaleToFit     = true
     @State private var fontSize         = CGFloat(12)
-    @State var showLine:Bool            = false
+    @State private var showLine:Bool            = false
     
-    @State var diagramImage:UIImage?
+    @State private var diagramImage:UIImage?
     
-    var PlantUMLDiagramViewFit: some View {
-        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
-    }
+    @State private var saving = false
     
     var body: some View {
+        
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
@@ -53,14 +53,18 @@ struct PlantUMLContentView: View {
                                               onHide: onHide,
                                               onPressSymbol: onPressSymbol)
                     }
-                    .onChange(of: document.items ) { _ in
-                        document.updateRequest.send()
-                    }
-                    .onReceive(document.updateRequest.publisher) { _ in
-                        document.save()
-                    }
+                                            .onChange(of: document.items ) { _ in
+                                                saving = true
+                                                document.updateRequest.send()
+                                            }
+                                            .onReceive(document.updateRequest.publisher) { _ in
+                                                withAnimation(.easeInOut(duration: 1.0)) {
+                                                    document.save()
+                                                    saving = false
+                                                }
+                                            }
                 }
-//                Divider().background(Color.blue).padding()
+                //                Divider().background(Color.blue).padding()
                 
                 if isDiagramVisible {
                     if isScaleToFit {
@@ -75,23 +79,23 @@ struct PlantUMLContentView: View {
                         .frame( minWidth: geometry.size.width, minHeight: geometry.size.height )
                     }
                 }
-                    
+                
             }
+            //.navigationBarTitleDisplayMode(.inline)
             .onRotate(perform: { orientation in
                 if  (orientation.isPortrait && isDiagramVisible) ||
-                    (orientation.isLandscape && isEditorVisible)
+                        (orientation.isLandscape && isEditorVisible)
                 {
                     isEditorVisible.toggle()
                 }
             })
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
                     if isEditorVisible {
                         HStack {
                             // SaveButton()
+                            // Divider().background(Color.blue).padding(10)
                             EditButton()
-                            Divider().background(Color.blue).padding(10)
                             fontSizeView()
                             toggleLineNumberView()
                         }
@@ -99,24 +103,79 @@ struct PlantUMLContentView: View {
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     HStack( spacing: 0 ) {
+                        SavingStateView( saving: saving )
                         ToggleEditorButton()
-                        TogglePreviewButton()
+                        ToggleDiagramButton()
                         if isDiagramVisible {
                             ScaleToFitButton()
                             ShareDiagramButton()
                         }
                     }
                 }
-                
             }
+            
         }
+        
+    }
+    
+    var PlantUMLDiagramViewFit: some View {
+        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
+    }
+    
+}
+
+//
+// MARK: - Editor actions -
+//
+extension PlantUMLContentView {
+    
+    // [SwiftUI Let View disappear automatically](https://stackoverflow.com/a/60820491/521197)
+    struct SavedStateView: View {
+        @Binding var visible: Bool
+        let timer = Timer.publish(every: 5.0, on: .main, in: .common).autoconnect()
+        
+        var body: some View {
+            
+            Text("_saved_" )
+                .onReceive(timer) { _ in
+                    withAnimation {
+                        self.visible.toggle()
+                    }
+                }
+                .transition( AnyTransition.asymmetric(insertion: .scale, removal: .opacity))
+        }
+    }
+    
+    struct SavingStateView: View {
+        var saving:Bool
+        @State private var visible = false
+        
+        var body: some View {
+            HStack(alignment: .bottom, spacing: 5) {
+                if( saving ) {
+                    ProgressView()
+                    Text( "_saving..._")
+                        .onAppear {
+                            visible = true
+                        }
+                }
+                else {
+                    if visible {
+                        PlantUMLContentView.SavedStateView( visible: $visible )
+                    }
+                }
+            }
+            .foregroundColor(Color.secondary)
+            .frame( maxWidth: 100 )
+        }
+        
     }
     
     func toggleLineNumberView() -> some View {
         Button( action: { showLine.toggle() } ) {
             Image( systemName: "list.number")
         }
-
+        
     }
     
     func fontSizeView() -> some View {
@@ -125,30 +184,57 @@ struct PlantUMLContentView: View {
                 Image( systemName: "textformat.size.larger")
             }
             .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
-            Divider().background(Color.blue)
+            Divider().background(Color.blue).frame(height:20)
             Button( action: { fontSize -= 1} ) {
                 Image( systemName: "textformat.size.smaller")
             }
             .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
         }
-//        .overlay {
-//            RoundedRectangle(cornerRadius: 16)
-//                .stroke(.blue, lineWidth: 1)
-//        }
-        .padding()
+        //        .overlay {
+        //            RoundedRectangle(cornerRadius: 16)
+        //                .stroke(.blue, lineWidth: 1)
+        //        }
+        //.padding()
     }
+    
+    func ToggleEditorButton() -> some View {
         
+        Button {
+            if !isEditorVisible {
+                withAnimation {
+                    diagramImage = nil // avoid popup of share image UIActivityViewController
+                    isEditorVisible.toggle()
+                }
+            }
+        }
+    label: {
+        //            Label( "Toggle Editor", systemImage: "rectangle.lefthalf.inset.filled" )
+        Label( "Toggle Editor", systemImage: "doc.plaintext.fill" )
+            .labelStyle(.iconOnly)
+            .foregroundColor( isEditorVisible ? .blue : .gray)
+        
+    }
+    }
+    
+    @available(swift, obsoleted: 1.1,message: "from 1.1 auto save has been introduced")
     func SaveButton() -> some View {
         
         Button( action: {
-                    document.save()
-                },
+            document.save()
+        },
                 label:  {
-                    Label( "Save", systemImage: "arrow.down.doc.fill" )
-                        .labelStyle(.titleOnly)
-                })
+            Label( "Save", systemImage: "arrow.down.doc.fill" )
+                .labelStyle(.titleOnly)
+        })
     }
+    
+}
 
+//
+// MARK: - Diagram actions
+//
+extension PlantUMLContentView {
+    
     func ShareDiagramButton() -> some View {
         
         Button(action: {
@@ -162,17 +248,17 @@ struct PlantUMLContentView: View {
             }
             
         }
-
+        
     }
-
+    
     func ScaleToFitButton() -> some View {
         
         Toggle("fit image", isOn: $isScaleToFit)
             .toggleStyle(ScaleToFitToggleStyle())
-            
+        
     }
-
-    func TogglePreviewButton() -> some View {
+    
+    func ToggleDiagramButton() -> some View {
         
         Button {
             if isEditorVisible {
@@ -182,38 +268,22 @@ struct PlantUMLContentView: View {
                 }
             }
         }
-        label: {
-//            Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
-            Label( "Toggle Preview", systemImage: "photo.fill" )
-            
-                .labelStyle(.iconOnly)
-                .foregroundColor( isDiagramVisible ? .blue : .gray)
-                
-        }
-    }
-
-    func ToggleEditorButton() -> some View {
+    label: {
+        //            Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
+        Label( "Toggle Preview", systemImage: "photo.fill" )
         
-        Button {
-            if !isEditorVisible {
-                withAnimation {
-                    diagramImage = nil // avoid popup of share image UIActivityViewController
-                    isEditorVisible.toggle()
-                }
-            }
-        }
-        label: {
-//            Label( "Toggle Editor", systemImage: "rectangle.lefthalf.inset.filled" )
-            Label( "Toggle Editor", systemImage: "doc.plaintext.fill" )
-                .labelStyle(.iconOnly)
-                .foregroundColor( isEditorVisible ? .blue : .gray)
-
-        }
+            .labelStyle(.iconOnly)
+            .foregroundColor( isDiagramVisible ? .blue : .gray)
+        
     }
-
- 
+    }
+    
+    
+    
 }
 
+
+// MARK: - Preview -
 struct ContentView_Previews: PreviewProvider {
     
     static var text = """
@@ -237,7 +307,7 @@ myactor -> participant1
             }
             .navigationViewStyle(.stack)
             .previewInterfaceOrientation(.landscapeRight)
-
+            
             NavigationView {
                 PlantUMLContentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
                     .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
