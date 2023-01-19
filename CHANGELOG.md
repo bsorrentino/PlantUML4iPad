@@ -4,10 +4,31 @@
 
 ## [Unreleased](https://gitlab.com/html-validate/html-validate/compare/Unreleased) ()
 
+### Features
+
+ -  **PlantUMLContentView**  add saving state indicator ([a2ac033e07e874a](https://gitlab.com/html-validate/html-validate/commit/a2ac033e07e874a23cccc7c62e3489fbf61bd2a9))
+ -  (SwiftUI+Conditional) add conditional view extension ([1f5b822dacbebb8](https://gitlab.com/html-validate/html-validate/commit/1f5b822dacbebb813314d4c7df1bf9c3c441b7cb))
+ -  manage auto save document ([e1b9d4bccc235c6](https://gitlab.com/html-validate/html-validate/commit/e1b9d4bccc235c6df8fcf192033e6078be024f54))
+ -  complete 'Save Custom Keyboard state' feature ([af060cd8bbe8d21](https://gitlab.com/html-validate/html-validate/commit/af060cd8bbe8d21e9847481fb1a163fd459ef664))
+ -  add support for color button on custom keyboard that opens a color picker ([e93686ee94a86ea](https://gitlab.com/html-validate/html-validate/commit/e93686ee94a86ea2a5c1c13c70f19756df3250d5))
+ -  **DebounceObject**  add Debounce utility ([7e17ee05ade68b3](https://gitlab.com/html-validate/html-validate/commit/7e17ee05ade68b3a09ac6490aa6ae128569e8cba))
+ -  start implementation of support for ColorPicker Key in custom keyboard ([f919613f397870d](https://gitlab.com/html-validate/html-validate/commit/f919613f397870d80b37f7f2182784f4308d9208))
 
 
+### Documentation
 
+ -  **readme**  update readme ([bcee03131792841](https://gitlab.com/html-validate/html-validate/commit/bcee03131792841980a806d166fc2cf40d2293a0))
 
+### Refactor
+
+ -  move PlantUMLDocument in PlantUMLDocumentProxy ([aa37d8c80a8afae](https://gitlab.com/html-validate/html-validate/commit/aa37d8c80a8afae1634a4347a40e7f5ddf527182))
+
+### ALM 
+
+ -  set next version build ([caf494a0fefa965](https://gitlab.com/html-validate/html-validate/commit/caf494a0fefa965f71050cc69c4196e8996990f1))
+ -  update line editor package ([98e6d07c1cc7133](https://gitlab.com/html-validate/html-validate/commit/98e6d07c1cc71338e63cd766216dda1e04c37fd7))
+ -  upgrade version from 1.0 to  1.1 ([8869f4cea125167](https://gitlab.com/html-validate/html-validate/commit/8869f4cea125167c701d69c24d92f94fd546b3d5))
+ -  **usersettings.json**  update configuration ([e522bbd48961481](https://gitlab.com/html-validate/html-validate/commit/e522bbd48961481e4b6caf40fbe03f9d2e75e38c))
 
 
 "name: v1.0.14" is a release tag
