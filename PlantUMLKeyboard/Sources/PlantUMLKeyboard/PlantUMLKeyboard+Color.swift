@@ -60,6 +60,7 @@ extension Color {
 
 
 struct ColorKeyButton : UIViewRepresentable {
+    @Environment(\.colorScheme) var colorScheme
 
     var symbol:Symbol
     var onPressSymbol: (Symbol) -> Void
@@ -81,9 +82,13 @@ struct ColorKeyButton : UIViewRepresentable {
         // title
         //
         button.setTitle(symbol.id, for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
+        button.layer.backgroundColor = (colorScheme == .dark) ? UIColor.black.cgColor : UIColor.white.cgColor
+        
+        button.setTitleColor( (colorScheme == .dark) ? UIColor.white : UIColor.black, for: .normal)
         if let label = button.titleLabel {
-            label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            label.font = (colorScheme == .dark) ?
+                UIFont.systemFont(ofSize: 16, weight: .regular) :
+                UIFont.systemFont(ofSize: 16, weight: .bold)
         }
         
         //
@@ -99,7 +104,7 @@ struct ColorKeyButton : UIViewRepresentable {
         //
         // Border
         //
-        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderColor = (colorScheme == .dark) ? UIColor.white.cgColor : UIColor.black.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 5
         
@@ -212,6 +217,15 @@ struct ColorKeyView: View {
 // MARK: Preview
 struct ColorKeyButton_Previews: PreviewProvider {
     static var previews: some View {
-        ColorKeyButton( symbol:Symbol( id: "test" ), onPressSymbol: { _ in } )
+        
+        ForEach(ColorScheme.allCases, id: \.self) {
+            VStack {
+
+                ColorKeyButton( symbol:Symbol( id: "test" ), onPressSymbol: { _ in } )
+                    .frame( width: 130, height: 60)
+                
+            }
+            .preferredColorScheme($0)
+        }
     }
 }

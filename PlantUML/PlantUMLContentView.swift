@@ -298,23 +298,26 @@ myactor -> participant1
 
 """
     static var previews: some View {
-        
-        Group {
-            NavigationView {
-                PlantUMLContentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
-                    .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-                    .environment(\.editMode, Binding.constant(EditMode.inactive))
+        ForEach(ColorScheme.allCases, id: \.self) {
+            Group {
+                NavigationView {
+                    PlantUMLContentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
+                        .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
+                        .environment(\.editMode, Binding.constant(EditMode.inactive))
+                }
+                .navigationViewStyle(.stack)
+                .previewInterfaceOrientation(.landscapeRight)
+                
+                NavigationView {
+                    PlantUMLContentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
+                        .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
+                        .environment(\.editMode, Binding.constant(EditMode.inactive))
+                }
+                .navigationViewStyle(.stack)
+                .previewInterfaceOrientation(.portrait)
+                
             }
-            .navigationViewStyle(.stack)
-            .previewInterfaceOrientation(.landscapeRight)
-            
-            NavigationView {
-                PlantUMLContentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
-                    .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-                    .environment(\.editMode, Binding.constant(EditMode.inactive))
-            }
-            .navigationViewStyle(.stack)
-            .previewInterfaceOrientation(.portrait)
+            .preferredColorScheme($0)
         }
     }
 }
