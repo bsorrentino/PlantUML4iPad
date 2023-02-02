@@ -30,16 +30,16 @@ class Canvas1ViewController: UIViewController {
 
 		let image = self.image
 
+        self.canvasView.delegate = self
 		self.canvasView.translatesAutoresizingMaskIntoConstraints = false
 		self.canvasView.contentInsetAdjustmentBehavior = .never
 		self.canvasView.layer.borderColor = UIColor.red.cgColor
 		self.canvasView.layer.borderWidth = 2.0
-		self.canvasView.delegate = self
 		self.canvasView.maximumZoomScale = 2.0
 		self.canvasView.isOpaque = false
 		self.canvasView.backgroundColor = .clear
 		self.canvasView.contentOffset = CGPoint.zero
-		self.canvasView.contentSize = image.size
+		//self.canvasView.contentSize = image.size
 
 		self.underlayView.contentMode = .scaleToFill
 		self.underlayView.frame = CGRect(origin: CGPoint.zero, size: image.size)
@@ -67,12 +67,14 @@ class Canvas1ViewController: UIViewController {
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		
-		let contentSize = self.image.size
-		self.canvasView.contentSize = contentSize
-		self.underlayView.frame = CGRect(origin: CGPoint.zero, size: contentSize)
-		let margin = (self.canvasView.bounds.size - contentSize) * 0.5
-		let insets = [margin.width, margin.height].map { $0 > 0 ? $0 : 0 }
-		self.canvasView.contentInset = UIEdgeInsets(top: insets[1], left: insets[0], bottom: insets[1], right: insets[0])
+        print( "\(canvasView.frame) - \(canvasView.bounds) - \(canvasView.contentSize) - \(image.size)" )
+  
+//		let contentSize = image.size
+//		self.canvasView.contentSize = contentSize
+//		self.underlayView.frame = CGRect(origin: CGPoint.zero, size: contentSize)
+//		let margin = (self.canvasView.bounds.size - contentSize) * 0.5
+//		let insets = [margin.width, margin.height].map { $0 > 0 ? $0 : 0 }
+//		self.canvasView.contentInset = UIEdgeInsets(top: insets[1], left: insets[0], bottom: insets[1], right: insets[0])
 	}
 	
 }
