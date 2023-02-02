@@ -15,6 +15,8 @@ class Canvas1ViewController: UIViewController {
 	@IBOutlet weak var canvasView: PKCanvasView!
 	@IBOutlet weak var underlayView: UIImageView!
 
+    let toolPicker = PKToolPicker()
+    
 	lazy var image: UIImage = {
 //		UIImage(named: "001")!
         UIImage(named: "diagram1")!
@@ -45,13 +47,10 @@ class Canvas1ViewController: UIViewController {
 		self.underlayView.layer.borderColor = UIColor.orange.cgColor
 		self.underlayView.layer.borderWidth = 1.0
 
-		if let window = UIApplication.shared.windows.first, let toolPicker = PKToolPicker.shared(for: window) {
-			toolPicker.setVisible(true, forFirstResponder: self.canvasView)
-			toolPicker.addObserver(self.canvasView)
-			toolPicker.addObserver(self)
-			self.canvasView.becomeFirstResponder()
-		}
-
+        toolPicker.setVisible(true, forFirstResponder: self.canvasView)
+        toolPicker.addObserver(self.canvasView)
+        toolPicker.addObserver(self)
+        self.canvasView.becomeFirstResponder()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
