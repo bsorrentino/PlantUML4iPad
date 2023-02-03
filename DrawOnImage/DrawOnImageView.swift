@@ -14,6 +14,7 @@ import UIKit
 struct DrawOnImageView: View {
 
     @State private var canvasView: PKCanvasView = PKCanvasView()
+    var image: UIImage?
 //    @State private var drawingOnImage: UIImage = UIImage()
 
 //    @Binding var image: UIImage
@@ -24,12 +25,22 @@ struct DrawOnImageView: View {
 //        self.onSave = onSave
 //    }
 
+    init(image: UIImage?) {
+        self.image = image
+    }
+
     var body: some View {
-        Image("diagram1")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .edgesIgnoringSafeArea(.all)
-            .overlay( CanvasView(canvasView: $canvasView, onSaved: onChanged), alignment: .bottomLeading )
+        if let image  {
+            Image( uiImage: image )
+                //.resizable()
+                .aspectRatio(contentMode: .fit)
+                .edgesIgnoringSafeArea(.all)
+                .overlay( CanvasView(canvasView: $canvasView, onSaved: onChanged), alignment: .bottomLeading )
+
+        }
+        else {
+            EmptyView()
+        }
     }
 
     private func onChanged() -> Void {
@@ -37,12 +48,12 @@ struct DrawOnImageView: View {
 //            from: canvasView.bounds, scale: UIScreen.main.scale)
     }
 
-    private func initCanvas() -> Void {
-        self.canvasView = PKCanvasView();
-        self.canvasView.isOpaque = false
-        self.canvasView.backgroundColor = UIColor.clear
-        self.canvasView.becomeFirstResponder()
-    }
+//    private func initCanvas() -> Void {
+//        self.canvasView = PKCanvasView();
+//        self.canvasView.isOpaque = false
+//        self.canvasView.backgroundColor = UIColor.clear
+//        self.canvasView.becomeFirstResponder()
+//    }
 
     private func save() -> Void {
 //        onSave(self.image.mergeWith(topImage: drawingOnImage))
@@ -64,6 +75,7 @@ extension CanvasView: UIViewRepresentable {
         canvasView.drawingPolicy = .anyInput
         #endif
         canvasView.isOpaque = false
+        canvasView.backgroundColor = UIColor.clear
         canvasView.delegate = context.coordinator
         showToolPicker()
         return canvasView
