@@ -8,18 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    var image: UIImage?
+    
     var body: some View {
-        DrawOnImageView()
+        ScrollView {
+            DrawOnImageView( image: image )
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            ContentView()
-                .previewInterfaceOrientation(.portrait)
-            ContentView()
-                .previewInterfaceOrientation(.landscapeLeft)
+        ForEach( ["001a", "diagram1"], id: \.self ) { imgName in
+            Group {
+                ContentView( image: UIImage( named: imgName ))
+                    .previewInterfaceOrientation(.portrait)
+                ContentView( image: UIImage( named: imgName ) )
+                    .previewInterfaceOrientation(.landscapeLeft)
+            }
         }
     }
 }
