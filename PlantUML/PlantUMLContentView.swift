@@ -21,7 +21,7 @@ import LineEditor
 
 
 struct PlantUMLContentView: View {
-    typealias PlantUMLLineEditorView = LineEditorView<SyntaxStructure,Symbol>
+    typealias PlantUMLLineEditorView = StandardLineEditorView<SyntaxStructure,Symbol>
     
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
