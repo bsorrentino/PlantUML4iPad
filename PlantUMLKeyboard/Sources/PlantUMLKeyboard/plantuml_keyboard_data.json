@@ -56,6 +56,9 @@
             { "id": "<->o" }
         ],
         [
+            { "id":  "activate", "value": "activate " },
+            { "id":  "deactivate", "value": "deactivate " },
+            { "id":  "return", "value": "return " },
             { "id":  "{start}", "value": "{start} " }, { "id":  "{end}", "value": "{end} " },
             { "id":  "group",  "value": "group My own label", "additional": ["end"] },
             { "id":  "loop",  "value": "loop N times", "additional": ["end"] },
