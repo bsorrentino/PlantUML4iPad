@@ -43,9 +43,16 @@ struct ChoiceKeyButton: View {
         .disabled( symbol.additionalValues == nil )
         .buttonStyle( TextKeyButtonStyle() )
         .onChange(of: selection) { _ in
-            let symbol = Symbol( id: symbol.id, value: selection )
             
-            onPressSymbol( symbol )
+            if let selection {
+
+                let value = String(format: symbol.value, selection )
+
+                let symbol = Symbol( id: symbol.id, value: value )
+                
+                onPressSymbol( symbol )
+
+            }
         }
 //        .sheet( isPresented: $showingSheet ) {
 //            ChoiceView( symbol: symbol )
@@ -63,7 +70,7 @@ struct ChoiceView: View {
         symbol.additionalValues ?? []
     }
 
-    func Navigation( content: () -> some View ) -> some View {
+    private func Navigation( content: () -> some View ) -> some View {
         if #available(iOS 16.0, *) {
             return NavigationStack( root: content )
         }
@@ -81,7 +88,7 @@ struct ChoiceView: View {
             .onChange(of: selection) { _ in
                 dismiss()
             }
-            .navigationTitle( symbol.value )
+            .navigationTitle( symbol.id )
             .toolbar {
                 ToolbarItem( placement: .navigationBarTrailing ) {
                     Button {

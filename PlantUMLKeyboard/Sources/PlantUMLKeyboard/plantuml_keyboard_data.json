@@ -11,9 +11,22 @@
         [
             { "id": "allow mixing", "value": "allow_mixing" },
             { "id": "hide empty members" },
-            { "id": "shadowing false", "value": "skinparam shadowing false" },
-            { "id": "linetype ortho", "value": "skinparam linetype ortho" },
-            { "id": "direction", "type": "choice", "additional": ["left to right direction", "top to bottom direction"] }
+            { "id": "skinparam", "value": "skinparam %@", "type": "choice", "additional": [
+                "linetype ortho",
+                "linetype polyline",
+                "shadowing true",
+                "monochrome true",
+                "monochrome reverse",
+                "handwritten true",
+                "sequenceMessageAlign left",
+                "sequenceMessageAlign center",
+                "sequenceMessageAlign right",
+                "sequenceMessageAlign direction"
+            ]},
+            { "id": "direction", "value": "%@ direction", "type": "choice", "additional": [
+                "left to right",
+                "top to bottom"
+            ]}
         ],
         [
             { "id": "#color", "value": "%@", "type": "color" },

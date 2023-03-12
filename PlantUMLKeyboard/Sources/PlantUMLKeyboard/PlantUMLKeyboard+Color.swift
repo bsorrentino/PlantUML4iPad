@@ -205,7 +205,9 @@ struct ColorKeyButton: View {
             if let color {
                 print( Self.self, "onReceive", color)
                 
-                let symbol = Symbol( id: symbol.id, value: color )
+                let value = String(format: symbol.value, color )
+                
+                let symbol = Symbol( id: symbol.id, value: value )
                 
                 onPressSymbol( symbol )
             }
