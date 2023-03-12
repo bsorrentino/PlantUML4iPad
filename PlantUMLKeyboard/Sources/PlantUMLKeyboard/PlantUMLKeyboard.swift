@@ -52,7 +52,6 @@ public struct PlantUMLKeyboardView: View {
             }
             else if symbol.type == "choice" {
                 ChoiceKeyButton( symbol: symbol, onPressSymbol: onPressSymbol )
-                    .frame( maxWidth: 100)
             }
             else {
                 TextKeyButton( symbol: symbol)
