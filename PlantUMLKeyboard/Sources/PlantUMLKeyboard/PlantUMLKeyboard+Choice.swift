@@ -1,5 +1,5 @@
 //
-//  PlantUMLKeyboard+Choices.swift
+//  PlantUMLKeyboard+Choice.swift
 //  
 //
 //  Created by Bartolomeo Sorrentino on 11/03/23.
@@ -37,7 +37,7 @@ struct ChoiceKeyButton: View {
             presentViewOnRootController(  ChoiceView( symbol: symbol, selection: $selection ) )
         }
         label: {
-            Text(symbol.id)
+            Label(symbol.id, systemImage: "list.bullet")
                 .font( (colorScheme == .dark) ? .system(size: 16) : .system(size: 16).bold() )
         }
         .disabled( symbol.additionalValues == nil )
@@ -59,6 +59,9 @@ struct ChoiceView: View {
     var symbol: Symbol
     @Binding var selection: String?
 
+    private var items: [String] {
+        symbol.additionalValues ?? []
+    }
 
     func Navigation( content: () -> some View ) -> some View {
         if #available(iOS 16.0, *) {
@@ -72,24 +75,38 @@ struct ChoiceView: View {
     var body: some View {
         Navigation {
         
-            List(symbol.additionalValues ?? [], id: \.self, selection: $selection) { name in
+            List(items, id: \.self, selection: $selection) { name in
                 Text(name)
             }
             .onChange(of: selection) { _ in
                 dismiss()
             }
             .navigationTitle( symbol.value )
-//            .toolbar {
-//                EditButton()
-//            }
+            .toolbar {
+                ToolbarItem( placement: .navigationBarTrailing ) {
+                    Button {
+                        dismiss()
+                    }
+                    label: {
+                        Label(symbol.id, systemImage: "xmark")
+                            .labelStyle( .iconOnly )
+                    }
+                }
+            }
         }
     }
 }
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        ChoiceKeyButton(
-            symbol:Symbol( id: "test", additionalValues: [ "Item1", "Item2", "item3" ] ),
-            onPressSymbol: { _ in } )
+        
+        ForEach(ColorScheme.allCases, id: \.self) {
+            
+            ChoiceKeyButton(
+                symbol:Symbol( id: "test", additionalValues: [ "Item1", "Item2", "item3" ] ),
+                onPressSymbol: { _ in } )
+                .preferredColorScheme($0)
+        }
+        
     }
 }
