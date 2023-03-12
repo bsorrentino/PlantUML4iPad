@@ -1,3 +1,8 @@
+//
+//  PlantUMLKeyboard.swift
+//
+//
+
 import SwiftUI
 import UIKit
 import LineEditor
@@ -48,7 +53,6 @@ public struct PlantUMLKeyboardView: View {
         Group {
             if symbol.type == "color" {
                 ColorKeyButton( symbol: symbol, onPressSymbol: onPressSymbol )
-                    .frame( maxWidth: 100)
             }
             else if symbol.type == "choice" {
                 ChoiceKeyButton( symbol: symbol, onPressSymbol: onPressSymbol )
