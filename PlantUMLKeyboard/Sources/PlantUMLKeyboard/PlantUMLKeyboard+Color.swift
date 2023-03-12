@@ -129,7 +129,9 @@ struct ColorKeyButton : UIViewRepresentable {
             
             colorPicker.delegate = context.coordinator
             
-            getRootViewController()?.presentedViewController?.present( colorPicker, animated: true, completion: nil )
+            getRootViewController()?.presentedViewController?.present( colorPicker,
+                                                                       animated: true,
+                                                                       completion: nil )
         }
     
         button.addAction( action, for: .touchDown )

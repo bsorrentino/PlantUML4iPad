@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PlantUMLSymbol.swift
 //  
 //
 //  Created by Bartolomeo Sorrentino on 14/09/22.
