@@ -13,8 +13,9 @@ struct ChoiceKeyButton: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    @State private var showingSheet = false
-    
+//    @State private var showingSheet = false
+    @State private var selection: String?
+
     var symbol:Symbol
     var onPressSymbol: (Symbol) -> Void
     
@@ -23,9 +24,17 @@ struct ChoiceKeyButton: View {
         self.onPressSymbol = onPressSymbol
     }
 
+    private func presentViewOnRootController<T : View>( _ view: T ) {
+        getRootViewController()?.presentedViewController?.present(
+            UIHostingController(rootView: view ),
+            animated: true,
+            completion: nil )
+
+    }
     var body: some View {
         Button {
-            showingSheet.toggle()
+//            showingSheet.toggle()
+            presentViewOnRootController(  ChoiceView( symbol: symbol, selection: $selection ) )
         }
         label: {
             Text(symbol.id)
@@ -33,18 +42,23 @@ struct ChoiceKeyButton: View {
         }
         .disabled( symbol.additionalValues == nil )
         .buttonStyle( TextKeyButtonStyle() )
-        .sheet( isPresented: $showingSheet ) {
-            ChoiceView( symbol: symbol )
+        .onChange(of: selection) { _ in
+            let symbol = Symbol( id: symbol.id, value: selection )
+            
+            onPressSymbol( symbol )
         }
+//        .sheet( isPresented: $showingSheet ) {
+//            ChoiceView( symbol: symbol )
+//        }
     }
 }
 
 struct ChoiceView: View {
     @Environment(\.dismiss) var dismiss
     
-    @State private var selection: String?
-
     var symbol: Symbol
+    @Binding var selection: String?
+
 
     func Navigation( content: () -> some View ) -> some View {
         if #available(iOS 16.0, *) {
@@ -56,19 +70,19 @@ struct ChoiceView: View {
     }
     
     var body: some View {
-//        Navigation {
+        Navigation {
         
             List(symbol.additionalValues ?? [], id: \.self, selection: $selection) { name in
                 Text(name)
             }
             .onChange(of: selection) { _ in
-                // dismiss()
+                dismiss()
             }
             .navigationTitle( symbol.value )
 //            .toolbar {
 //                EditButton()
 //            }
-//        }
+        }
     }
 }
 
