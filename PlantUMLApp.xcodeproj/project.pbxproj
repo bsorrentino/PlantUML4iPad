@@ -12,7 +12,6 @@
 		A043CE7C28E08C4C005A3AF7 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
 		A047207029549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
-		A05923192978106B00A1E12F /* SwiftUI+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05923182978106B00A1E12F /* SwiftUI+Conditional.swift */; };
 		A08AA78429561170004DE329 /* View+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08AA78329561170004DE329 /* View+UIImage.swift */; };
 		A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A0943A702944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
@@ -56,7 +55,6 @@
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A01907EF2951CD5C0059CCBE /* privacy_policy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacy_policy.md; sourceTree = "<group>"; };
 		A047206E29549ACC007E061F /* SwiftUI+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Share.swift"; sourceTree = "<group>"; };
-		A05923182978106B00A1E12F /* SwiftUI+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Conditional.swift"; sourceTree = "<group>"; };
 		A08AA78329561170004DE329 /* View+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+UIImage.swift"; sourceTree = "<group>"; };
 		A0943A6D29448A1700342426 /* AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppStore.xcassets; sourceTree = "<group>"; };
 		A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScaleToFit+ToggleStyle.swift"; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 			children = (
 				A08AA78329561170004DE329 /* View+UIImage.swift */,
 				A047206E29549ACC007E061F /* SwiftUI+Share.swift */,
-				A05923182978106B00A1E12F /* SwiftUI+Conditional.swift */,
 				A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */,
 				A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */,
 				A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */,
@@ -337,7 +334,6 @@
 				A0D3C64E28984A0E000838D7 /* PlantUMLContentView.swift in Sources */,
 				A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */,
 				A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
-				A05923192978106B00A1E12F /* SwiftUI+Conditional.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

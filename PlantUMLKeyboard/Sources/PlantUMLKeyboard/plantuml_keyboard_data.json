@@ -13,8 +13,7 @@
             { "id": "hide empty members" },
             { "id": "shadowing false", "value": "skinparam shadowing false" },
             { "id": "linetype ortho", "value": "skinparam linetype ortho" },
-            { "id": "left to right", "value": "left to right direction" },
-            { "id": "top to bottom", "value": "top to bottom direction" }
+            { "id": "direction", "type": "choice", "additional": ["left to right direction", "top to bottom direction"] }
         ],
         [
             { "id": "#color", "value": "%@", "type": "color" },

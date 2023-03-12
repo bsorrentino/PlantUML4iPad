@@ -44,6 +44,22 @@ public struct PlantUMLKeyboardView: View {
     }
     
   
+    private func keyButton( from symbol: Symbol ) -> some View {
+        Group {
+            if symbol.type == "color" {
+                ColorKeyButton( symbol: symbol, onPressSymbol: onPressSymbol )
+                    .frame( maxWidth: 100)
+            }
+            else if symbol.type == "choice" {
+                ChoiceKeyButton( symbol: symbol, onPressSymbol: onPressSymbol )
+                    .frame( maxWidth: 100)
+            }
+            else {
+                TextKeyButton( symbol: symbol)
+            }
+        }
+    }
+    
     func ContentView( _ group: PlantUMLSymbolGroup ) -> some View {
         ScrollView(.vertical, showsIndicators: false) {
             
@@ -56,14 +72,7 @@ public struct PlantUMLKeyboardView: View {
                         ForEach( Array(i.enumerated()), id: \.offset ) { cellIndex, symbol in
                             
                             VStack {
-                              if symbol.type == "color" {
-                                  ColorKeyButton( symbol: symbol, onPressSymbol: onPressSymbol )
-                                      .frame( maxWidth: 100)
-                                      
-                                }
-                                else {
-                                    TextKeyButton( symbol: symbol)
-                                }
+                                keyButton(from: symbol)
                             }
 
                         }
@@ -78,26 +87,27 @@ public struct PlantUMLKeyboardView: View {
     
 }
 
+struct TextKeyButtonStyle: ButtonStyle {
+    @Environment(\.colorScheme) var colorScheme
+    
+    // [Button border with corner radius in Swift UI](https://stackoverflow.com/a/62544642/521197)
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(5)
+            .foregroundColor( (colorScheme == .dark) ? .white : .black )
+            .background( (colorScheme == .dark) ? .black : .white )
+            .cornerRadius(5)
+            .overlay {
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke((colorScheme == .dark) ? .white : .black, lineWidth: 1)
+            }
+    }
+}
+
+
 // MARK: Plain Button Extension
 extension PlantUMLKeyboardView {
     
-    fileprivate struct TextKeyButtonStyle: ButtonStyle {
-        @Environment(\.colorScheme) var colorScheme
-        
-        // [Button border with corner radius in Swift UI](https://stackoverflow.com/a/62544642/521197)
-        func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .padding(5)
-                .foregroundColor( (colorScheme == .dark) ? .white : .black )
-                .background( (colorScheme == .dark) ? .black : .white )
-                .cornerRadius(5)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke((colorScheme == .dark) ? .white : .black, lineWidth: 1)
-                }
-        }
-    }
-
     func TextKeyButton( symbol: Symbol ) -> some View {
         
         Button {
