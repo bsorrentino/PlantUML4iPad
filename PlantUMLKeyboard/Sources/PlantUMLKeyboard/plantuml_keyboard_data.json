@@ -1,6 +1,16 @@
 [
 
 {
+    "name": "references",
+    "rows": [
+        [
+            { "id":  "note left", "value": "note left /' of p1 '/", "additional": ["this note is displayed left", "end note"]},
+            { "id":  "note right", "value": "note right /' of p1 '/", "additional": ["this note is displayed right", "end note"]},
+            { "id":  "note over", "value": "note over p1 /', p2 '/", "additional": ["this note is displayed over participant1", "end note"]}    
+        ]
+    ]
+},
+{
     "name": "general",
     "rows": [
         [
@@ -11,10 +21,24 @@
         [
             { "id": "allow mixing", "value": "allow_mixing" },
             { "id": "hide empty members" },
-            { "id": "shadowing false", "value": "skinparam shadowing false" },
-            { "id": "linetype ortho", "value": "skinparam linetype ortho" },
-            { "id": "left to right", "value": "left to right direction" },
-            { "id": "top to bottom", "value": "top to bottom direction" }
+            { "id": "skinparam", "value": "skinparam %@", "type": "choice", "additional": [
+                "linetype ortho",
+                "linetype polyline",
+                "shadowing true",
+                "monochrome true",
+                "monochrome reverse",
+                "handwritten true",
+                "ParticipantPadding 20",
+                "BoxPadding 20",
+                "sequenceMessageAlign left",
+                "sequenceMessageAlign center",
+                "sequenceMessageAlign right",
+                "sequenceMessageAlign direction"
+            ]},
+            { "id": "direction", "value": "%@ direction", "type": "choice", "additional": [
+                "left to right",
+                "top to bottom"
+            ]}
         ],
         [
             { "id": "#color", "value": "%@", "type": "color" },
@@ -56,14 +80,18 @@
             { "id": "<->o" }
         ],
         [
+            { "id":  "activate", "value": "activate " },
+            { "id":  "deactivate", "value": "deactivate " },
+            { "id":  "return", "value": "return " },
             { "id":  "{start}", "value": "{start} " }, { "id":  "{end}", "value": "{end} " },
             { "id":  "group",  "value": "group My own label", "additional": ["end"] },
             { "id":  "loop",  "value": "loop N times", "additional": ["end"] },
             { "id":  "alt", "value": "alt successful case", "additional": [ "else some kind of failure", "end"] },
-            { "id":  "note left", "value": "note left /' of p1 '/", "additional": ["this note is displayed left", "end note"]},
-            { "id":  "note right", "value": "note right /' of p1 '/", "additional": ["this note is displayed right", "end note"]},
-            { "id":  "note over", "value": "note over p1 /', p2 '/", "additional": ["this note is displayed over participant1", "end note"]}
-
+            { "id": "note", "value": "note %@", "type": "choice", "additional": [
+                "#ref(note left)",
+                "#ref(note right)",
+                "#ref(note over)"
+            ]}
         ]
     ]
 },

@@ -58,8 +58,9 @@ extension Color {
     }
 }
 
-
-struct ColorKeyButton : UIViewRepresentable {
+/*
+struct ColorKeyButton2 : UIViewRepresentable {
+    @Environment(\.colorScheme) var colorScheme
 
     var symbol:Symbol
     var onPressSymbol: (Symbol) -> Void
@@ -81,9 +82,13 @@ struct ColorKeyButton : UIViewRepresentable {
         // title
         //
         button.setTitle(symbol.id, for: .normal)
-        button.setTitleColor(UIColor.black, for: .normal)
+        button.layer.backgroundColor = (colorScheme == .dark) ? UIColor.black.cgColor : UIColor.white.cgColor
+        
+        button.setTitleColor( (colorScheme == .dark) ? UIColor.white : UIColor.black, for: .normal)
         if let label = button.titleLabel {
-            label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            label.font = (colorScheme == .dark) ?
+                UIFont.systemFont(ofSize: 16, weight: .regular) :
+                UIFont.systemFont(ofSize: 16, weight: .bold)
         }
         
         //
@@ -99,7 +104,7 @@ struct ColorKeyButton : UIViewRepresentable {
         //
         // Border
         //
-        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderColor = (colorScheme == .dark) ? UIColor.white.cgColor : UIColor.black.cgColor
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 5
         
@@ -124,7 +129,9 @@ struct ColorKeyButton : UIViewRepresentable {
             
             colorPicker.delegate = context.coordinator
             
-            getRootViewController()?.presentedViewController?.present( colorPicker, animated: true, completion: nil )
+            getRootViewController()?.presentedViewController?.present( colorPicker,
+                                                                       animated: true,
+                                                                       completion: nil )
         }
     
         button.addAction( action, for: .touchDown )
@@ -134,17 +141,13 @@ struct ColorKeyButton : UIViewRepresentable {
     
 
 }
+*/
 
 extension ColorKeyButton {
     
-    class Coordinator: NSObject, UIColorPickerViewControllerDelegate {
-        
-        private let update = DebounceUpdate<String>()
-        private var owner: ColorKeyButton
-        
-        init( _ owner: ColorKeyButton ) {
-            self.owner = owner
-        }
+    class Coordinator:  NSObject, ObservableObject, UIColorPickerViewControllerDelegate {
+
+        @Published var selectedColor: String?
         
         func colorPickerViewController(_ viewController: UIColorPickerViewController, didSelect color: UIColor, continuously: Bool) {
             
@@ -152,66 +155,78 @@ extension ColorKeyButton {
                 return
             }
                 
-            update.subscribe( debounceInSeconds: 0 ) { [self] value in
-                
-                viewController.dismiss(animated: true, completion: nil)
-
-                let symbol = Symbol( id: owner.symbol.id, value: value )
-                
-                owner.onPressSymbol( symbol )
-
-            }
-
-            let value = String(format: owner.symbol.value, hexColor )
+            viewController.dismiss(animated: true, completion: nil)
             
-            update.request(for: value)
+            if( selectedColor != hexColor ) {
+                selectedColor = hexColor
+            }
+            
         }
 
     }
 }
 
-/*
-struct ColorKeyView: View {
-    @StateObject private var updateColor = DebounceUpdateObject<String>()
+
+
+struct ColorKeyButton: View {
     
-    @State private var selectedColor = Color.blue.opacity(0.5)
+    @Environment(\.colorScheme) var colorScheme
+    
+    @StateObject private var coordinator = Coordinator()
 
     var symbol:Symbol
     var onPressSymbol: (Symbol) -> Void
     
+    init(symbol: Symbol, onPressSymbol: @escaping (Symbol) -> Void) {
+        self.symbol = symbol
+        self.onPressSymbol = onPressSymbol
+        
+    }
+
+    private func presentViewOnRootController<T : UIViewController>( _ controller: T ) {
+        getRootViewController()?.presentedViewController?.present(
+            controller,
+            animated: true,
+            completion: nil )
+
+    }
     var body: some View {
-        VStack {
-
-            ColorPicker( selection: $selectedColor, label: {
-                Text(symbol.id).font(.system(size: 16).bold())
-
-            })
-            .frame( maxWidth: 110 )
-            .border(.black)
-            .padding()
-            .onChange(of: selectedColor ) { color in
-                updateColor.update.subscribe( debounceInSeconds: 0 ) {
-                    onPressSymbol( makeSymbol( from: $0 ) )
-                }
-                updateColor.update.request(for: color.hexValue() ?? "")
+        Button {
+            let colorPicker = UIColorPickerViewController()
+            colorPicker.delegate = coordinator
+            presentViewOnRootController( colorPicker  )
+        }
+        label: {
+            Label(symbol.id, systemImage: "paintbrush.fill")
+                .font( (colorScheme == .dark) ? .system(size: 16) : .system(size: 16).bold() )
+        }
+        .buttonStyle( TextKeyButtonStyle() )
+        .onReceive(coordinator.$selectedColor ) { color in
+            if let color {
+                print( Self.self, "onReceive", color)
                 
+                let value = String(format: symbol.value, color )
+                
+                let symbol = Symbol( id: symbol.id, value: value )
+                
+                onPressSymbol( symbol )
             }
         }
-        
-    }
-    
-    private func makeSymbol( from hexColor: String ) -> Symbol {
-        
-        let value = String(format: symbol.value, hexColor )
-        return Symbol( id: symbol.id, value: value )
     }
 }
- 
-*/
 
 // MARK: Preview
 struct ColorKeyButton_Previews: PreviewProvider {
     static var previews: some View {
-        ColorKeyButton( symbol:Symbol( id: "test" ), onPressSymbol: { _ in } )
+        
+        ForEach(ColorScheme.allCases, id: \.self) {
+            VStack {
+
+                ColorKeyButton( symbol:Symbol( id: "test" ), onPressSymbol: { _ in } )
+                    .frame( width: 130, height: 60)
+                
+            }
+            .preferredColorScheme($0)
+        }
     }
 }
