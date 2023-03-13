@@ -5,12 +5,40 @@
 ## [Unreleased](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/Unreleased) ()
 
 
+
+
+
+
+
+"name: v1.3.2" is a release tag
+
+## [v1.3.2](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v1.3.2) (2023-03-13)
+
+### Features
+
+ -  add support for symbol reference ([f74a6dcba0e4613](https://github.com/bsorrentino/PlantUML4iPad/commit/f74a6dcba0e4613ac9b7c53edfbd0679efa577ac))
+ -  **plantuml_keyboard_data.json**  add new skinparam options ([39fed2e996a93a5](https://github.com/bsorrentino/PlantUML4iPad/commit/39fed2e996a93a5a00003855eed7bdd9c357d41c))
+ -  add new symbols on keyboard ([97decc9323f04dc](https://github.com/bsorrentino/PlantUML4iPad/commit/97decc9323f04dc86a30dc9344bb499b43dd7fdf))
+ -  integrate choice key button ([e367db38d227abd](https://github.com/bsorrentino/PlantUML4iPad/commit/e367db38d227abdf628c8453897e4f4c695451a2))
+ -  **plantuml_keyboard_data.json**  add activate, deactivate, return ([8aa96d29fab115d](https://github.com/bsorrentino/PlantUML4iPad/commit/8aa96d29fab115d0d2ddc118973db119ace4948f))
+ -  **PlantUMLContentView**  update line_editor package ([0cdc336e12b22b7](https://github.com/bsorrentino/PlantUML4iPad/commit/0cdc336e12b22b7d347354055c4d67026709d0cc))
+
 ### Bug Fixes
 
+ -  **PlantUMLKeyboard**  dark mode support ([5922a0ae445c34a](https://github.com/bsorrentino/PlantUML4iPad/commit/5922a0ae445c34a0ccafea0b5fc5d04f02dbd69d))
+ -  **PlantUMLKeyboard**  add 'LineEditor' dependency ([39219cd870d17fc](https://github.com/bsorrentino/PlantUML4iPad/commit/39219cd870d17fc897901ffefb034756bb8588f4))
  -  **changelog.mustache**  fix repository url ([1cb371a60989ec1](https://github.com/bsorrentino/PlantUML4iPad/commit/1cb371a60989ec1bcf3fd1289939a0c1687623a2))
 
+### Documentation
+
+ -  **CHANGELOG.md**  update changelog ([5b94fbb8ff431b2](https://github.com/bsorrentino/PlantUML4iPad/commit/5b94fbb8ff431b2f5d3269b5307df350f924f1ab))
 
 
+### ALM 
+
+ -  update version ([fc5c924edba02d9](https://github.com/bsorrentino/PlantUML4iPad/commit/fc5c924edba02d95e94efd91cbd25bad8ce8d9be))
+ -  move to next version ([fb046047406a17b](https://github.com/bsorrentino/PlantUML4iPad/commit/fb046047406a17b70bdab48f6f909a66719a6baa))
+ -  update version 1.2.1 ([f590e4a0cf4ee73](https://github.com/bsorrentino/PlantUML4iPad/commit/f590e4a0cf4ee7331be34543ee13eb2859a54ce9))
 
 
 "name: v1.1.2" is a release tag
@@ -26,10 +54,6 @@
  -  add support for color button on custom keyboard that opens a color picker ([e93686ee94a86ea](https://github.com/bsorrentino/PlantUML4iPad/commit/e93686ee94a86ea2a5c1c13c70f19756df3250d5))
  -  **DebounceObject**  add Debounce utility ([7e17ee05ade68b3](https://github.com/bsorrentino/PlantUML4iPad/commit/7e17ee05ade68b3a09ac6490aa6ae128569e8cba))
  -  start implementation of support for ColorPicker Key in custom keyboard ([f919613f397870d](https://github.com/bsorrentino/PlantUML4iPad/commit/f919613f397870d80b37f7f2182784f4308d9208))
- -  **changelog**  add support of git-changelog-command-line for generating changelog ([230aefe2c86d148](https://github.com/bsorrentino/PlantUML4iPad/commit/230aefe2c86d148cf7dfa2137f6cf89b1c11a567))
- -  integrate share diagram image ([faa8a76bff81715](https://github.com/bsorrentino/PlantUML4iPad/commit/faa8a76bff81715bb2f0a85ec8b8ce75652ea597))
- -  convert View to UIImage ([a2cf3acf73eabd8](https://github.com/bsorrentino/PlantUML4iPad/commit/a2cf3acf73eabd87315b7f7497293301a8ae1eb1))
- -  add Share popup management ([34d88d0445a1e38](https://github.com/bsorrentino/PlantUML4iPad/commit/34d88d0445a1e38372efc1dafdd9e74d73535c8b))
 
 
 ### Documentation
@@ -37,15 +61,10 @@
  -  add screenshot to appstore assets ([aa3e0b00ec3a7f3](https://github.com/bsorrentino/PlantUML4iPad/commit/aa3e0b00ec3a7f3d14abee2ee3578862637e9ac0))
  -  update changelog and readme ([11b96e6284b29c5](https://github.com/bsorrentino/PlantUML4iPad/commit/11b96e6284b29c5530bfb45fd59ed65187442367))
  -  **readme**  update readme ([bcee03131792841](https://github.com/bsorrentino/PlantUML4iPad/commit/bcee03131792841980a806d166fc2cf40d2293a0))
- -  **readme**  update readme ([c3668483c76c0af](https://github.com/bsorrentino/PlantUML4iPad/commit/c3668483c76c0af7e7350e860f25d7370795552f))
- -  update README ([a5b083f64466aad](https://github.com/bsorrentino/PlantUML4iPad/commit/a5b083f64466aadb629cb32168d2e9a5683d268e))
- -  update link in the comments ([877e0792a00532b](https://github.com/bsorrentino/PlantUML4iPad/commit/877e0792a00532b4ff49a2e51bb817583f36d10b))
- -  update links in the comments ([2c66a9212b82b4d](https://github.com/bsorrentino/PlantUML4iPad/commit/2c66a9212b82b4d8789d98a3c3850cc7192f0fa5))
 
 ### Refactor
 
  -  move PlantUMLDocument in PlantUMLDocumentProxy ([aa37d8c80a8afae](https://github.com/bsorrentino/PlantUML4iPad/commit/aa37d8c80a8afae1634a4347a40e7f5ddf527182))
- -  rename app name ([3bbcccb6e3a6cf2](https://github.com/bsorrentino/PlantUML4iPad/commit/3bbcccb6e3a6cf2d5b469bcb0b221337eda47344))
 
 ### ALM 
 
@@ -55,8 +74,6 @@
  -  upgrade version from 1.0 to  1.1 ([8869f4cea125167](https://github.com/bsorrentino/PlantUML4iPad/commit/8869f4cea125167c701d69c24d92f94fd546b3d5))
  -  upgrade version from 1.0 to  1.1 ([a6e65bfc1613d7b](https://github.com/bsorrentino/PlantUML4iPad/commit/a6e65bfc1613d7b7ae8b0d1d7be08b385eb3b30d))
  -  **usersettings.json**  update configuration ([e522bbd48961481](https://github.com/bsorrentino/PlantUML4iPad/commit/e522bbd48961481e4b6caf40fbe03f9d2e75e38c))
- -  update package ([38602162ccb9ad9](https://github.com/bsorrentino/PlantUML4iPad/commit/38602162ccb9ad962ff1594fa43ad86c5b920619))
- -  new build version ([03e1890eefbba1a](https://github.com/bsorrentino/PlantUML4iPad/commit/03e1890eefbba1ae69416c08d61cc0483fd139fd))
 
 
 "name: v1.0.14" is a release tag
@@ -65,6 +82,10 @@
 
 ### Features
 
+ -  **changelog**  add support of git-changelog-command-line for generating changelog ([230aefe2c86d148](https://github.com/bsorrentino/PlantUML4iPad/commit/230aefe2c86d148cf7dfa2137f6cf89b1c11a567))
+ -  integrate share diagram image ([faa8a76bff81715](https://github.com/bsorrentino/PlantUML4iPad/commit/faa8a76bff81715bb2f0a85ec8b8ce75652ea597))
+ -  convert View to UIImage ([a2cf3acf73eabd8](https://github.com/bsorrentino/PlantUML4iPad/commit/a2cf3acf73eabd87315b7f7497293301a8ae1eb1))
+ -  add Share popup management ([34d88d0445a1e38](https://github.com/bsorrentino/PlantUML4iPad/commit/34d88d0445a1e38372efc1dafdd9e74d73535c8b))
  -  **ContentView**  update scale_to_fit appearance ([d39bd483d8f524b](https://github.com/bsorrentino/PlantUML4iPad/commit/d39bd483d8f524b537fcb3379e31159175210b59))
  -  add appstore screenshots ([29d14c9f8b57a8d](https://github.com/bsorrentino/PlantUML4iPad/commit/29d14c9f8b57a8d22750e9b685a817c67490303f))
  -  **PlantUMLDiagramView**  add support for CachedAsyncImage in diagram view ([f9c2c6f1d1930c7](https://github.com/bsorrentino/PlantUML4iPad/commit/f9c2c6f1d1930c77c4220ae9ccf5d4dcff4604b0))
@@ -112,12 +133,17 @@
 
 ### Documentation
 
+ -  **readme**  update readme ([c3668483c76c0af](https://github.com/bsorrentino/PlantUML4iPad/commit/c3668483c76c0af7e7350e860f25d7370795552f))
+ -  update README ([a5b083f64466aad](https://github.com/bsorrentino/PlantUML4iPad/commit/a5b083f64466aadb629cb32168d2e9a5683d268e))
+ -  update link in the comments ([877e0792a00532b](https://github.com/bsorrentino/PlantUML4iPad/commit/877e0792a00532b4ff49a2e51bb817583f36d10b))
+ -  update links in the comments ([2c66a9212b82b4d](https://github.com/bsorrentino/PlantUML4iPad/commit/2c66a9212b82b4d8789d98a3c3850cc7192f0fa5))
  -  **privacy_policy.md**  add privacy policy file ([e9caf098a6f0c9d](https://github.com/bsorrentino/PlantUML4iPad/commit/e9caf098a6f0c9d780361cd48ecdc5f03bc82cea))
  -  update readme ([631b3c45e1994f1](https://github.com/bsorrentino/PlantUML4iPad/commit/631b3c45e1994f19e7f1cfd02f204bfb33c64ed3))
  -  update readme ([67c9c8eff177077](https://github.com/bsorrentino/PlantUML4iPad/commit/67c9c8eff1770772b45c148daf6dfcfb7e2e30cd))
 
 ### Refactor
 
+ -  rename app name ([3bbcccb6e3a6cf2](https://github.com/bsorrentino/PlantUML4iPad/commit/3bbcccb6e3a6cf2d5b469bcb0b221337eda47344))
  -  dismiss use of PlantUMLScrollableDiagramView ([7abdfdfbcfab272](https://github.com/bsorrentino/PlantUML4iPad/commit/7abdfdfbcfab272e3cd4c1270b5a7d391fb46616))
  -  align progress view position ([4f9c5b70490b5bc](https://github.com/bsorrentino/PlantUML4iPad/commit/4f9c5b70490b5bce618c3d99a407efb4234083c3))
  -  preview refinements ([3b0a87ed8f1952b](https://github.com/bsorrentino/PlantUML4iPad/commit/3b0a87ed8f1952b405cc8cbeead46d44b7acfb9e))
@@ -133,6 +159,8 @@
 
 ### ALM 
 
+ -  update package ([38602162ccb9ad9](https://github.com/bsorrentino/PlantUML4iPad/commit/38602162ccb9ad962ff1594fa43ad86c5b920619))
+ -  new build version ([03e1890eefbba1a](https://github.com/bsorrentino/PlantUML4iPad/commit/03e1890eefbba1ae69416c08d61cc0483fd139fd))
  -  update project build ([ef76ce4823f5ea1](https://github.com/bsorrentino/PlantUML4iPad/commit/ef76ce4823f5ea1b518bfa6f79243018237d23a1))
  -  update package ([1e134ecb236013a](https://github.com/bsorrentino/PlantUML4iPad/commit/1e134ecb236013a1d423854c4e6a2cd5f472ea0e))
  -  update App Store screenshot ([84fff0db56761e8](https://github.com/bsorrentino/PlantUML4iPad/commit/84fff0db56761e83e3ce67a5bde321d54de3ca8f))
