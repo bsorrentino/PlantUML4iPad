@@ -18,6 +18,8 @@
                 "monochrome true",
                 "monochrome reverse",
                 "handwritten true",
+                "ParticipantPadding 20",
+                "BoxPadding 20",
                 "sequenceMessageAlign left",
                 "sequenceMessageAlign center",
                 "sequenceMessageAlign right",
