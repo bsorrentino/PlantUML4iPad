@@ -1,6 +1,16 @@
 [
 
 {
+    "name": "references",
+    "rows": [
+        [
+            { "id":  "note left", "value": "note left /' of p1 '/", "additional": ["this note is displayed left", "end note"]},
+            { "id":  "note right", "value": "note right /' of p1 '/", "additional": ["this note is displayed right", "end note"]},
+            { "id":  "note over", "value": "note over p1 /', p2 '/", "additional": ["this note is displayed over participant1", "end note"]}    
+        ]
+    ]
+},
+{
     "name": "general",
     "rows": [
         [
@@ -77,10 +87,11 @@
             { "id":  "group",  "value": "group My own label", "additional": ["end"] },
             { "id":  "loop",  "value": "loop N times", "additional": ["end"] },
             { "id":  "alt", "value": "alt successful case", "additional": [ "else some kind of failure", "end"] },
-            { "id":  "note left", "value": "note left /' of p1 '/", "additional": ["this note is displayed left", "end note"]},
-            { "id":  "note right", "value": "note right /' of p1 '/", "additional": ["this note is displayed right", "end note"]},
-            { "id":  "note over", "value": "note over p1 /', p2 '/", "additional": ["this note is displayed over participant1", "end note"]}
-
+            { "id": "note", "value": "note %@", "type": "choice", "additional": [
+                "#ref(note left)",
+                "#ref(note right)",
+                "#ref(note over)"
+            ]}
         ]
     ]
 },

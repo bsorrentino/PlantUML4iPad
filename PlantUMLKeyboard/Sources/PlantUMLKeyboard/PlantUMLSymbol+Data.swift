@@ -8,6 +8,40 @@
 import Foundation
 import UIKit
 import PlantUMLFramework
+
+
+//
+// LOAD JSON DATA
+//
+let plantUMLSymbols: Array<PlantUMLSymbolGroup> = {
+    
+    guard let path = Bundle.module.path(forResource: "plantuml_keyboard_data", ofType: "json") else {
+        return []
+    }
+    
+    let decoder = JSONDecoder()
+    
+    do {
+        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+        
+        let result =  try decoder.decode(Array<PlantUMLSymbolGroup>.self, from: data)
+
+        Symbol.references = result.first { $0.name == "references" }
+        
+        return result.filter { $0.name != "references" } 
+        
+    } catch {
+        logger.error( "\(error.localizedDescription)")
+        return []
+    }
+    
+}()
+
+// /////////////////////////////////////////////////////////////////
+// @resultBuilder based implementation
+// /////////////////////////////////////////////////////////////////
+
+
 //
 // MARK: COMMON DIAGRAMS
 //
@@ -37,10 +71,10 @@ fileprivate func common_symbols() -> [[Symbol]] {
     
 }
 
+
 //
 // MARK: SEQUENCE DIAGRAMS
 //
-
 @Symbol.LineBuilder
 fileprivate func sequence_symbols() -> [[Symbol]] {
     
@@ -99,8 +133,6 @@ fileprivate func sequence_symbols() -> [[Symbol]] {
 //
 // MARK: DEPLOYMENT DIAGRAMS
 //
-
-
 @Symbol.LineBuilder
 fileprivate func deployment_symbols() -> [[Symbol]] {
     
@@ -162,31 +194,8 @@ fileprivate func deployment_symbols() -> [[Symbol]] {
 
 
 let plantUMLSymbols_static = [
-    
+
     PlantUMLSymbolGroup( name: "general", rows: common_symbols() ),
     PlantUMLSymbolGroup( name: "sequence", rows: sequence_symbols() ),
     PlantUMLSymbolGroup( name: "deployment", rows: deployment_symbols() ),
 ]
-
-
-let plantUMLSymbols: Array<PlantUMLSymbolGroup> = {
-    
-    guard let path = Bundle.module.path(forResource: "plantuml_keyboard_data", ofType: "json") else {
-        return []
-    }
-    
-    let decoder = JSONDecoder()
-    
-    do {
-        let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-        
-        let result =  try decoder.decode(Array<PlantUMLSymbolGroup>.self, from: data)
-
-        return result
-        
-    } catch {
-        logger.error( "\(error.localizedDescription)")
-        return []
-    }
-    
-}()

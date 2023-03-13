@@ -42,7 +42,44 @@ final class PlantUMLKeyboardTests: XCTestCase {
 
         XCTAssertEqual( symbols[0][11].value,  "queue as q1" )
 
-        print( symbols )
+//        print( symbols )
+
+    }
+
+    
+    func testRef() throws {
+    
+        do {
+            
+            let ref_1 = try Symbol.matchRef( in: "test" )
+            XCTAssertNil(ref_1)
+
+            let ref_2 = try Symbol.matchRef( in: "#ref(note left)" )
+            XCTAssertNotNil(ref_2)
+            XCTAssertEqual(  ref_2 , "note left" )
+            
+            let ref_3 = try Symbol.matchRef( in: "#ref(   note left)" )
+            XCTAssertNotNil(ref_3)
+            XCTAssertEqual(  ref_3 , "note left" )
+
+            let ref_4 = try Symbol.matchRef( in: "#ref(note left    )" )
+            XCTAssertNotNil(ref_4)
+            XCTAssertEqual(  ref_4 , "note left" )
+
+            let ref_5 = try Symbol.matchRef( in: "#ref(  note left    )" )
+            XCTAssertNotNil(ref_5)
+            XCTAssertEqual(  ref_5 , "note left" )
+
+            let ref_6 = try Symbol.matchRef( in: "#ref(  mixed by erry    )" )
+            XCTAssertNotNil(ref_6)
+            XCTAssertEqual(  ref_6 , "mixed by erry" )
+
+        } catch {
+            XCTFail( "error evaluating isReference regular expression: \(error)")
+        }
+ 
+
+//        print( symbols )
 
     }
 }

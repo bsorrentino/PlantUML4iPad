@@ -14,7 +14,7 @@ struct ChoiceKeyButton: View {
     @Environment(\.colorScheme) var colorScheme
     
 //    @State private var showingSheet = false
-    @State private var selection: String?
+    @State private var selection: Symbol?
 
     var symbol:Symbol
     var onPressSymbol: (Symbol) -> Void
@@ -34,7 +34,15 @@ struct ChoiceKeyButton: View {
     var body: some View {
         Button {
 //            showingSheet.toggle()
-            presentViewOnRootController(  ChoiceView( symbol: symbol, selection: $selection ) )
+            if let choices = symbol.additionalValues?.map({
+                if let ref = try? Symbol.matchRef(in: $0 ), let choice = Symbol.references?.first(where: { s in s.id == ref }) {
+                    return choice
+                }
+                return Symbol( id: symbol.id, value: String(format: symbol.value, $0 ) )
+            }) {
+                presentViewOnRootController(  ChoiceView( title: symbol.id, choices: choices, selection: $selection ) )
+
+            }
         }
         label: {
             Label(symbol.id, systemImage: "list.bullet")
@@ -45,12 +53,8 @@ struct ChoiceKeyButton: View {
         .onChange(of: selection) { _ in
             
             if let selection {
-
-                let value = String(format: symbol.value, selection )
-
-                let symbol = Symbol( id: symbol.id, value: value )
                 
-                onPressSymbol( symbol )
+                onPressSymbol( selection )
 
             }
         }
@@ -63,12 +67,9 @@ struct ChoiceKeyButton: View {
 struct ChoiceView: View {
     @Environment(\.dismiss) var dismiss
     
-    var symbol: Symbol
-    @Binding var selection: String?
-
-    private var items: [String] {
-        symbol.additionalValues ?? []
-    }
+    var title: String
+    var choices: [Symbol]
+    @Binding var selection: Symbol?
 
     private func Navigation( content: () -> some View ) -> some View {
         if #available(iOS 16.0, *) {
@@ -82,20 +83,20 @@ struct ChoiceView: View {
     var body: some View {
         Navigation {
         
-            List(items, id: \.self, selection: $selection) { name in
-                Text(name)
+            List(choices, id: \.self, selection: $selection) {
+                Text($0.id)
             }
             .onChange(of: selection) { _ in
                 dismiss()
             }
-            .navigationTitle( symbol.id )
+            .navigationTitle( title )
             .toolbar {
                 ToolbarItem( placement: .navigationBarTrailing ) {
                     Button {
                         dismiss()
                     }
                     label: {
-                        Label(symbol.id, systemImage: "xmark")
+                        Label(title, systemImage: "xmark")
                             .labelStyle( .iconOnly )
                     }
                 }
