@@ -48,7 +48,7 @@ internal extension PlantUMLText {
       For PlantUML, the mapping array for values 0-63 is:
      `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_`
 
-      [PlantUML Text Encoding](https://plantuml.com/en/text-encoding) for more info
+      PlantUML Text Encoding: (https://plantuml.com/en/text-encoding) for more info
 
      - Parameter compressedData: of a deflated string
      - Returns: encoded string
