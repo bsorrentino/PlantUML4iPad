@@ -38,7 +38,7 @@ struct ChoiceKeyButton: View {
                 if let ref = try? Symbol.matchRef(in: $0 ), let choice = Symbol.references?.first(where: { s in s.id == ref }) {
                     return choice
                 }
-                return Symbol( id: symbol.id, value: String(format: symbol.value, $0 ) )
+                return Symbol( id: $0, value: String(format: symbol.value, $0 ) )
             }) {
                 presentViewOnRootController(  ChoiceView( title: symbol.id, choices: choices, selection: $selection ) )
 
