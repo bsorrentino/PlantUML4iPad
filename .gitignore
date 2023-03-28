@@ -4,3 +4,6 @@
 # xcode
 xcuserdata/
 .xcodesamplecode.plist
+.gitsecret/keys/random_seed
+!*.secret
+OpenAI.xcconfig
