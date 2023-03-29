@@ -32,7 +32,7 @@ class OpenAIService : ObservableObject {
         case Editing
     }
 
-    public var status: Status = .Ready
+    @Published public var status: Status = .Ready
     
     lazy var openAI: OpenAI? = {
         
@@ -92,33 +92,67 @@ struct OpenAIView : View {
                               @enduml
                               """
     @State var instruction:String = ""
+    var onApply:(() -> Void)
+    var onUndo:(() -> Void)
+    
+    var isEditing:Bool {
+        if case .Editing = service.status {
+            return true
+        }
+        return false
+    }
     
     var body: some View {
         VStack {
             TextEditor(text: $instruction)
                 .font(.title2)
                 .lineSpacing(20)
-                .autocapitalization(.words)
+                .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .border(.green, width: 1)
                 .padding()
             
-            Button( action: {
-                Task {
-                    if let res = await service.generateEdit( input: input, instruction: instruction ) {
-                        result = res
+            HStack {
+                Button( action: {
+                    Task {
+                        if let res = await service.generateEdit( input: input, instruction: instruction ) {
+                            result = res
+                        }
                     }
-                }
-            },
-            label: {
-                Label( "Submit", systemImage: "brain")
-            })
+                },
+                label: {
+                    if isEditing {
+                        ProgressView("AI editing....")
+                    }
+                    else {
+                        Label( "Submit", systemImage: "brain")
+                    }
+                })
+                .disabled( isEditing  )
+                Button( action: {
+                    onApply()
+                },
+                label: {
+                    Label( "Apply", systemImage: "")
+                        .labelStyle(.titleOnly)
+                })
+                Button( action: {
+                    onUndo()
+                },
+                label: {
+                    Label( "Undo", systemImage: "")
+                        .labelStyle(.titleOnly)
+                })
+            }
             if case .Error( let err ) = service.status {
-                Divider()
                 Text( err )
+                    .foregroundColor(.red)
             }
             else {
-                Text( input )
+                Divider()
+                ScrollView {
+                    Text( input )
+                }.padding()
             }
         }
 
@@ -136,6 +170,6 @@ struct OpenAIView_Previews: PreviewProvider {
         
     }
     static var previews: some View {
-        OpenAIView( result: Binding.constant("") )
+        OpenAIView( result: Binding.constant(""), onApply: { }, onUndo: { }  )
     }
 }

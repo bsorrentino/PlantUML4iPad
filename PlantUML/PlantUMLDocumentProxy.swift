@@ -50,12 +50,14 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
                         .map { line in
                             SyntaxStructure( rawValue: String(line) )
                         }
+        self.text = "@startuml\n\(document.wrappedValue.text)\n@enduml"
     }
     
-    func buildInputString() -> String {
-        let text = self.items.map { $0.rawValue }.joined( separator: "\n" )
-        return "@startuml\n\(text)\n@enduml"
-    }
+    @Published var text:String
+//    func buildInputString() -> String {
+//        let text = self.items.map { $0.rawValue }.joined( separator: "\n" )
+//        return "@startuml\n\(text)\n@enduml"
+//    }
     
     func buildFrom( string: String ) {
         items = string
@@ -66,6 +68,7 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
             .map { line in
                 SyntaxStructure( rawValue: String(line) )
             }
+        self.text = string
     }
     
     func buildURL() -> URL {

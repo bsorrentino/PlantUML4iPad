@@ -43,6 +43,7 @@ struct PlantUMLContentView: View {
     @State private var saving = false
     
     @State private var openAIResult:String = ""
+    @State private var editorViewId = 1
     
     var body: some View {
         
@@ -57,6 +58,7 @@ struct PlantUMLContentView: View {
                                                   onHide: onHide,
                                                   onPressSymbol: onPressSymbol)
                         }
+                        
                         .onChange(of: document.items ) { _ in
                             saving = true
                             document.updateRequest.send()
@@ -70,12 +72,20 @@ struct PlantUMLContentView: View {
 
                         if isOpenAIVisible {
                             Divider()
-                            OpenAIView( result: $openAIResult, input: document.buildInputString() )
+                            OpenAIView( result: $openAIResult, input: document.text,
+                                        onApply: {
+                                
+                                        },
+                                        onUndo: {
+                                
+                                        })
                                 .onChange(of: openAIResult ) { result in
                                     document.buildFrom(string: result )
+                                    editorViewId += 1
                                 }
                         }
                     }
+                    .id( editorViewId )
 
                 }
                 
