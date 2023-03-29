@@ -29,7 +29,8 @@ struct PlantUMLContentView: View {
     
     @StateObject var document: PlantUMLDocumentProxy
     
-    @State private var isEditorVisible  = true
+    @State var isOpenAIVisible  = false
+    @State var isEditorVisible  = true
     //@State private var isPreviewVisible = false
     private var isDiagramVisible:Bool { !isEditorVisible}
     
@@ -41,30 +42,42 @@ struct PlantUMLContentView: View {
     
     @State private var saving = false
     
+    @State private var openAIResult:String = ""
+    
     var body: some View {
         
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
-                    PlantUMLLineEditorView( items: $document.items,
-                                            fontSize: $fontSize,
-                                            showLine: $showLine) { onHide, onPressSymbol in
-                        PlantUMLKeyboardView( selectedTab: $keyboardTab,
-                                              onHide: onHide,
-                                              onPressSymbol: onPressSymbol)
+                    VStack {
+                        PlantUMLLineEditorView( items: $document.items,
+                                                fontSize: $fontSize,
+                                                showLine: $showLine) { onHide, onPressSymbol in
+                            PlantUMLKeyboardView( selectedTab: $keyboardTab,
+                                                  onHide: onHide,
+                                                  onPressSymbol: onPressSymbol)
+                        }
+                        .onChange(of: document.items ) { _ in
+                            saving = true
+                            document.updateRequest.send()
+                        }
+                        .onReceive(document.updateRequest.publisher) { _ in
+                            withAnimation(.easeInOut(duration: 1.0)) {
+                                document.save()
+                                saving = false
+                            }
+                        }
+
+                        if isOpenAIVisible {
+                            Divider()
+                            OpenAIView( result: $openAIResult, input: document.buildInputString() )
+                                .onChange(of: openAIResult ) { result in
+                                    document.buildFrom(string: result )
+                                }
+                        }
                     }
-                                            .onChange(of: document.items ) { _ in
-                                                saving = true
-                                                document.updateRequest.send()
-                                            }
-                                            .onReceive(document.updateRequest.publisher) { _ in
-                                                withAnimation(.easeInOut(duration: 1.0)) {
-                                                    document.save()
-                                                    saving = false
-                                                }
-                                            }
+
                 }
-                //                Divider().background(Color.blue).padding()
                 
                 if isDiagramVisible {
                     if isScaleToFit {
@@ -91,20 +104,28 @@ struct PlantUMLContentView: View {
             })
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
-                    if isEditorVisible {
-                        HStack {
-                            // SaveButton()
-                            // Divider().background(Color.blue).padding(10)
-                            EditButton()
-                            fontSizeView()
-                            toggleLineNumberView()
-                        }
-                    }
+//                    if isEditorVisible {
+//                        HStack {
+//                            EditButton()
+//                            fontSizeView()
+//                            toggleLineNumberView()
+//                        }
+//                    }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     HStack( spacing: 0 ) {
                         SavingStateView( saving: saving )
+
                         ToggleEditorButton()
+                        if isEditorVisible {
+                            HStack {
+                                EditButton()
+                                fontSizeView()
+                                toggleLineNumberView()
+                                ToggleOpenAIButton()
+                            }
+                        }
+
                         ToggleDiagramButton()
                         if isDiagramVisible {
                             ScaleToFitButton()

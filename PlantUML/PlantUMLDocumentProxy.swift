@@ -52,6 +52,22 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
                         }
     }
     
+    func buildInputString() -> String {
+        let text = self.items.map { $0.rawValue }.joined( separator: "\n" )
+        return "@startuml\n\(text)\n@enduml"
+    }
+    
+    func buildFrom( string: String ) {
+        items = string
+            .split(whereSeparator: \.isNewline)
+            .filter { line in
+                line != "@startuml" && line != "@enduml"
+            }
+            .map { line in
+                SyntaxStructure( rawValue: String(line) )
+            }
+    }
+    
     func buildURL() -> URL {
         let script = PlantUMLScript( items: items )
                

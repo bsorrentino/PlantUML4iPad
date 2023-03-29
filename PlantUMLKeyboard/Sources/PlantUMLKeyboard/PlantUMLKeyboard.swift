@@ -26,12 +26,6 @@ public struct PlantUMLKeyboardView: View {
             
             TabView( selection: $selectedTab ) {
                 
-                OpenAIView().tabItem {
-                    Label("OpenAI", systemImage: "list.dash")
-                        .labelStyle(.titleOnly)
-                    }
-                    .tag( "OpenAI" )
-                
                 ForEach( plantUMLSymbols ) { group in
                     ContentView( group )
                         .tabItem {
