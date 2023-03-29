@@ -129,6 +129,8 @@ struct OpenAIView : View {
                     }
                 })
                 .disabled( isEditing  )
+                .padding( .trailing, 10 )
+                
                 Button( action: {
                     onApply()
                 },
@@ -136,6 +138,9 @@ struct OpenAIView : View {
                     Label( "Apply", systemImage: "")
                         .labelStyle(.titleOnly)
                 })
+                .disabled( isEditing  )
+                .padding( .trailing, 10 )
+                
                 Button( action: {
                     onUndo()
                 },
@@ -143,6 +148,7 @@ struct OpenAIView : View {
                     Label( "Undo", systemImage: "")
                         .labelStyle(.titleOnly)
                 })
+                .disabled( isEditing  )
             }
             if case .Error( let err ) = service.status {
                 Text( err )
