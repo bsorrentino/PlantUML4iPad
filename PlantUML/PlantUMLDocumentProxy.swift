@@ -33,6 +33,7 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
     @Binding var object: PlantUMLDocument
     @Published var items:Array<SyntaxStructure>
+    @Published var text:String
     
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
     
@@ -42,33 +43,17 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
 
+    private var textCancellable:AnyCancellable?
+    
     init( document: Binding<PlantUMLDocument> ) {
-        print( "PlantUMLDiagramObject.init" )
+        let contents = "@startuml\n\(document.wrappedValue.text)\n@enduml"
         self._object = document
-        self.items = document.wrappedValue.text
-                        .split(whereSeparator: \.isNewline)
-                        .map { line in
-                            SyntaxStructure( rawValue: String(line) )
-                        }
-        self.text = "@startuml\n\(document.wrappedValue.text)\n@enduml"
-    }
-    
-    @Published var text:String
-//    func buildInputString() -> String {
-//        let text = self.items.map { $0.rawValue }.joined( separator: "\n" )
-//        return "@startuml\n\(text)\n@enduml"
-//    }
-    
-    func buildFrom( string: String ) {
-        items = string
-            .split(whereSeparator: \.isNewline)
-            .filter { line in
-                line != "@startuml" && line != "@enduml"
-            }
-            .map { line in
-                SyntaxStructure( rawValue: String(line) )
-            }
-        self.text = string
+        self.text = contents
+        self.items = Self.itemsFromText(contents)
+        
+        self.textCancellable = self.$text.sink {
+            self.items = Self.itemsFromText($0)
+        }
     }
     
     func buildURL() -> URL {
@@ -77,10 +62,32 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
         return presenter.url( of: script )
     }
     
+    /**
+        set current text with original document text
+     */
+    func reset() {
+        self.text = self.object.text
+    }
     func save() {
         print( "save document")
         self.object.text = self.description
     }
 
     
+}
+
+
+extension PlantUMLDocumentProxy {
+    
+    private static func itemsFromText( _ text: String ) -> Array<SyntaxStructure> {
+        return text
+            .split(whereSeparator: \.isNewline)
+            .filter { line in
+                line != "@startuml" && line != "@enduml"
+            }
+            .map { line in
+                SyntaxStructure( rawValue: String(line) )
+            }
+    }
+
 }

@@ -45,6 +45,15 @@ struct PlantUMLContentView: View {
     @State private var openAIResult:String = ""
     @State private var editorViewId = 1
     
+    
+    var PlantUMLDiagramViewFit: some View {
+        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
+    }
+    
+    func forceUpdate() {
+        editorViewId += 1
+    }
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -63,29 +72,31 @@ struct PlantUMLContentView: View {
                             saving = true
                             document.updateRequest.send()
                         }
-                        .onReceive(document.updateRequest.publisher) { _ in
-                            withAnimation(.easeInOut(duration: 1.0)) {
-                                document.save()
-                                saving = false
-                            }
-                        }
 
                         if isOpenAIVisible {
                             Divider()
                             OpenAIView( result: $openAIResult, input: document.text,
                                         onApply: {
-                                
+                                            saving = true
+                                            document.updateRequest.send()
                                         },
                                         onUndo: {
-                                
+                                            document.reset()
+                                            forceUpdate()
                                         })
                                 .onChange(of: openAIResult ) { result in
-                                    document.buildFrom(string: result )
-                                    editorViewId += 1
+                                    document.text = result
+                                    forceUpdate()
                                 }
                         }
                     }
                     .id( editorViewId )
+                    .onReceive(document.updateRequest.publisher) { _ in
+                        withAnimation(.easeInOut(duration: 1.0)) {
+                            document.save()
+                            saving = false
+                        }
+                    }
 
                 }
                 
@@ -147,10 +158,6 @@ struct PlantUMLContentView: View {
             
         }
         
-    }
-    
-    var PlantUMLDiagramViewFit: some View {
-        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
     }
     
 }

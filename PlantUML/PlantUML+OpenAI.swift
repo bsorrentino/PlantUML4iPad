@@ -104,15 +104,23 @@ struct OpenAIView : View {
     
     var body: some View {
         VStack {
-            TextEditor(text: $instruction)
-                .font(.title2)
-                .lineSpacing(20)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .border(.green, width: 1)
-                .padding()
             
             HStack {
+                TextEditor(text: $instruction)
+                    .font(.title2)
+                    .lineSpacing(20)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .border(.gray, width: 1)
+                    .padding()
+
+                ScrollView {
+                    Text( input )
+                }.padding()
+
+            }
+            
+            HStack(spacing: 10) {
                 Button( action: {
                     Task {
                         if let res = await service.generateEdit( input: input, instruction: instruction ) {
@@ -129,7 +137,7 @@ struct OpenAIView : View {
                     }
                 })
                 .disabled( isEditing  )
-                .padding( .trailing, 10 )
+                .padding( .bottom, 10 )
                 
                 Button( action: {
                     onApply()
@@ -139,7 +147,7 @@ struct OpenAIView : View {
                         .labelStyle(.titleOnly)
                 })
                 .disabled( isEditing  )
-                .padding( .trailing, 10 )
+                .padding( .bottom, 10 )
                 
                 Button( action: {
                     onUndo()
@@ -149,18 +157,15 @@ struct OpenAIView : View {
                         .labelStyle(.titleOnly)
                 })
                 .disabled( isEditing  )
+                .padding( .bottom, 10 )
             }
             if case .Error( let err ) = service.status {
                 Text( err )
                     .foregroundColor(.red)
             }
-            else {
-                Divider()
-                ScrollView {
-                    Text( input )
-                }.padding()
-            }
+            
         }
+        .frame( maxHeight: 300 )
 
     }
 }
