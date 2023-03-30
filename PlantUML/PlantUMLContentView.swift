@@ -22,144 +22,160 @@ import LineEditor
 
 struct PlantUMLContentView: View {
     typealias PlantUMLLineEditorView = StandardLineEditorView<SyntaxStructure,Symbol>
-    
+
+    class ViewState : ObservableObject, Identifiable {
+        
+        @Published var isOpenAIVisible  = false
+        @Published var isEditorVisible  = true
+        @Published var id = 1
+
+        var isDiagramVisible:Bool { !isEditorVisible }
+
+        func forceUpdate() {
+            id += 1
+        }
+
+    }
+
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     @State var keyboardTab: String = "general"
     
     @StateObject var document: PlantUMLDocumentProxy
     
-    @State var isOpenAIVisible  = false
-    @State var isEditorVisible  = true
-    //@State private var isPreviewVisible = false
-    private var isDiagramVisible:Bool { !isEditorVisible}
-    
+    @StateObject var viewState = ViewState()
+        
     @State private var isScaleToFit     = true
     @State private var fontSize         = CGFloat(12)
-    @State private var showLine:Bool            = false
+    @State private var showLine:Bool    = false
     
     @State private var diagramImage:UIImage?
     
     @State private var saving = false
     
     @State private var openAIResult:String = ""
-    @State private var editorViewId = 1
     
     
     var PlantUMLDiagramViewFit: some View {
         PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
     }
     
-    func forceUpdate() {
-        editorViewId += 1
+    
+    var EditorView_Fragment: some View {
+        
+        PlantUMLLineEditorView( items: $document.items,
+                                fontSize: $fontSize,
+                                showLine: $showLine) { onHide, onPressSymbol in
+            PlantUMLKeyboardView( selectedTab: $keyboardTab,
+                                  onHide: onHide,
+                                  onPressSymbol: onPressSymbol)
+        }
+                                .onChange(of: document.items ) { _ in
+                                    saving = true
+                                    document.updateRequest.send()
+                                }
     }
     
-    var body: some View {
+    var OpenAIView_Fragment: some View {
         
-        GeometryReader { geometry in
-            HStack {
-                if( isEditorVisible ) {
-                    VStack {
-                        PlantUMLLineEditorView( items: $document.items,
-                                                fontSize: $fontSize,
-                                                showLine: $showLine) { onHide, onPressSymbol in
-                            PlantUMLKeyboardView( selectedTab: $keyboardTab,
-                                                  onHide: onHide,
-                                                  onPressSymbol: onPressSymbol)
-                        }
-                        
-                        .onChange(of: document.items ) { _ in
-                            saving = true
-                            document.updateRequest.send()
-                        }
-
-                        if isOpenAIVisible {
-                            Divider()
-                            OpenAIView( result: $openAIResult, input: document.text,
-                                        onApply: {
-                                            saving = true
-                                            document.updateRequest.send()
-                                        },
-                                        onUndo: {
-                                            document.reset()
-                                            forceUpdate()
-                                        })
-                                .onChange(of: openAIResult ) { result in
-                                    document.text = result
-                                    forceUpdate()
-                                }
-                        }
-                    }
-                    .id( editorViewId )
-                    .onReceive(document.updateRequest.publisher) { _ in
-                        withAnimation(.easeInOut(duration: 1.0)) {
-                            document.save()
-                            saving = false
-                        }
-                    }
-
-                }
-                
-                if isDiagramVisible {
-                    if isScaleToFit {
-                        PlantUMLDiagramViewFit
-                            .frame( width: geometry.size.width, height: geometry.size.height )
-                    }
-                    else {
-                        ScrollView([.horizontal, .vertical], showsIndicators: true) {
-                            PlantUMLDiagramView( url: document.buildURL(), contentMode: .fill )
-                                .frame( minWidth: geometry.size.width)
-                        }
-                        .frame( minWidth: geometry.size.width, minHeight: geometry.size.height )
-                    }
-                }
-                
-            }
-            //.navigationBarTitleDisplayMode(.inline)
-            .onRotate(perform: { orientation in
-                if  (orientation.isPortrait && isDiagramVisible) ||
-                        (orientation.isLandscape && isEditorVisible)
-                {
-                    isEditorVisible.toggle()
-                }
-            })
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarLeading) {
-//                    if isEditorVisible {
-//                        HStack {
-//                            EditButton()
-//                            fontSizeView()
-//                            toggleLineNumberView()
-//                        }
-//                    }
-                }
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    HStack( spacing: 0 ) {
-                        SavingStateView( saving: saving )
-
-                        ToggleEditorButton()
-                        if isEditorVisible {
-                            HStack {
-                                EditButton()
-                                fontSizeView()
-                                toggleLineNumberView()
-                                ToggleOpenAIButton()
-                            }
-                        }
-
-                        ToggleDiagramButton()
-                        if isDiagramVisible {
-                            ScaleToFitButton()
-                            ShareDiagramButton()
-                        }
-                    }
-                }
-            }
-            
+        OpenAIView( result: $openAIResult, input: document.text,
+                    onApply: {
+            saving = true
+            document.updateRequest.send()
+        },
+                    onUndo: {
+            document.reset()
+            viewState.forceUpdate()
+        })
+        .onChange(of: openAIResult ) { result in
+            document.text = result
+            viewState.forceUpdate()
         }
         
     }
     
+    func DiagramView_Fragment( size: CGSize ) -> some View {
+        
+        Group {
+            if isScaleToFit {
+                PlantUMLDiagramViewFit
+                    .frame( width: size.width, height: size.height  )
+            }
+            else {
+                ScrollView([.horizontal, .vertical], showsIndicators: true) {
+                    PlantUMLDiagramView( url: document.buildURL(), contentMode: .fill )
+                        .frame( minWidth: size.width)
+                }
+                .frame( minWidth: size.width, minHeight: size.height )
+            }
+        }
+        
+    }
+    
+    var body: some View {
+        
+        VStack {
+            GeometryReader { geometry in
+                if( viewState.isEditorVisible ) {
+                    EditorView_Fragment
+                }
+                if viewState.isDiagramVisible {
+                    DiagramView_Fragment( size: geometry.size )
+                }
+            }
+            if viewState.isOpenAIVisible {
+                Divider()
+                OpenAIView_Fragment
+            }
+        }
+        .id( viewState.id )
+        .onReceive(document.updateRequest.publisher) { _ in
+            withAnimation(.easeInOut(duration: 1.0)) {
+                document.save()
+                saving = false
+            }
+        }
+        //.navigationBarTitleDisplayMode(.inline)
+        .onRotate(perform: { orientation in
+            if  (orientation.isPortrait && viewState.isDiagramVisible) ||
+                    (orientation.isLandscape && viewState.isEditorVisible)
+            {
+                viewState.isEditorVisible.toggle()
+            }
+        })
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarLeading) {
+                //                    if isEditorVisible {
+                //                        HStack {
+                //                            EditButton()
+                //                            fontSizeView()
+                //                            toggleLineNumberView()
+                //                        }
+                //                    }
+            }
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                HStack( spacing: 0 ) {
+                    SavingStateView( saving: saving )
+                    
+                    ToggleEditorButton()
+                    if viewState.isEditorVisible {
+                        HStack {
+                            EditButton()
+                            fontSizeView()
+                            toggleLineNumberView()
+                            ToggleOpenAIButton()
+                        }
+                    }
+                    
+                    ToggleDiagramButton()
+                    if viewState.isDiagramVisible {
+                        ScaleToFitButton()
+                        ShareDiagramButton()
+                    }
+                }
+            }
+        }
+    }
 }
 
 //
@@ -238,20 +254,19 @@ extension PlantUMLContentView {
     func ToggleEditorButton() -> some View {
         
         Button {
-            if !isEditorVisible {
+            if !viewState.isEditorVisible {
                 withAnimation {
                     diagramImage = nil // avoid popup of share image UIActivityViewController
-                    isEditorVisible.toggle()
+                    viewState.isEditorVisible.toggle()
                 }
             }
         }
-    label: {
-        //            Label( "Toggle Editor", systemImage: "rectangle.lefthalf.inset.filled" )
-        Label( "Toggle Editor", systemImage: "doc.plaintext.fill" )
-            .labelStyle(.iconOnly)
-            .foregroundColor( isEditorVisible ? .blue : .gray)
+        label: {
+            Label( "Toggle Editor", systemImage: "doc.plaintext.fill" )
+                .labelStyle(.iconOnly)
+                .foregroundColor( viewState.isEditorVisible ? .blue : .gray)
         
-    }
+        }
     }
     
     @available(swift, obsoleted: 1.1,message: "from 1.1 auto save has been introduced")
@@ -299,21 +314,18 @@ extension PlantUMLContentView {
     func ToggleDiagramButton() -> some View {
         
         Button {
-            if isEditorVisible {
+            if viewState.isEditorVisible {
                 withAnimation {
                     // isPreviewVisible.toggle()
-                    isEditorVisible.toggle()
+                    viewState.isEditorVisible.toggle()
                 }
             }
         }
-    label: {
-        //            Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
-        Label( "Toggle Preview", systemImage: "photo.fill" )
-        
-            .labelStyle(.iconOnly)
-            .foregroundColor( isDiagramVisible ? .blue : .gray)
-        
-    }
+        label: {
+            Label( "Toggle Preview", systemImage: "photo.fill" )
+                .labelStyle(.iconOnly)
+                .foregroundColor( viewState.isDiagramVisible ? .blue : .gray)
+        }
     }
     
     

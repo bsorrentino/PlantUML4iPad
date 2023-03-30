@@ -12,12 +12,12 @@ extension PlantUMLContentView {
     func ToggleOpenAIButton() -> some View {
         
         Button {
-            isOpenAIVisible.toggle()
+            viewState.isOpenAIVisible.toggle()
         }
         label: {
             Label( "OpenAI Editor", systemImage: "brain" )
                 .labelStyle(.iconOnly)
-                .foregroundColor( isEditorVisible ? .blue : .gray)
+                .foregroundColor( viewState.isEditorVisible ? .blue : .gray)
         
         }
     }
