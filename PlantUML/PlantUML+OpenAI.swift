@@ -33,6 +33,7 @@ class OpenAIService : ObservableObject {
     }
 
     @Published public var status: Status = .Ready
+    private (set) var clipboard: [String] = []
     
     lazy var openAI: OpenAI? = {
         
@@ -48,15 +49,27 @@ class OpenAIService : ObservableObject {
         return OpenAI( Configuration(organizationId: orgId, apiKey: apiKey))
 
     }()
+    
+    func pushToClipboard( _ item: String ) {
+        clipboard.append( item )
+    }
+
+    func popFromClipboard() -> String? {
+        guard  !clipboard.isEmpty else {
+            return nil
+        }
+        
+        return clipboard.removeLast()
+    }
 
     func generateEdit( input: String, instruction: String ) async -> String? {
         
         guard let openAI, case .Ready = status else {
             return nil
         }
-
+        
         Task { @MainActor in
-            status = .Editing
+            self.status = .Editing
         }
         
         do {
@@ -70,10 +83,9 @@ class OpenAIService : ObservableObject {
             
             let editResponse = try await openAI.generateEdit(parameters: editParameter)
       
-            Task { @MainActor in
-                status = .Ready
-            }
-            return editResponse.choices[0].text
+            let result = editResponse.choices[0].text
+            
+            return result
         }
         catch {
             status = .Error( error.localizedDescription )
@@ -84,7 +96,7 @@ class OpenAIService : ObservableObject {
 
 struct OpenAIView : View {
   
-    @StateObject var service = OpenAIService()
+    @ObservedObject var service:OpenAIService
     @Binding var result: String
     @State var input:String = """
                               @startuml
@@ -114,17 +126,19 @@ struct OpenAIView : View {
                     .border(.gray, width: 1)
                     .padding()
 
-                ScrollView {
-                    Text( input )
-                        .font( .system(size: 10.0, design: .monospaced) )
-                }.padding()
-
+//                ScrollView {
+//                    Text( input )
+//                        .font( .system(size: 10.0, design: .monospaced) )
+//                }.padding()
             }
             
             HStack(spacing: 10) {
                 Button( action: {
+                    
                     Task {
                         if let res = await service.generateEdit( input: input, instruction: instruction ) {
+                            service.status = .Ready
+                            service.pushToClipboard( result )
                             result = res
                         }
                     }
@@ -140,9 +154,7 @@ struct OpenAIView : View {
                 .disabled( isEditing  )
                 .padding( .bottom, 10 )
                 
-                Button( action: {
-                    onApply()
-                },
+                Button( action: onApply,
                 label: {
                     Label( "Apply", systemImage: "arrow.up")
                         .labelStyle(.titleAndIcon)
@@ -150,14 +162,12 @@ struct OpenAIView : View {
                 .disabled( isEditing  )
                 .padding( .bottom, 10 )
                 
-                Button( action: {
-                    onUndo()
-                },
+                Button( action: onUndo,
                 label: {
                     Label( "Undo", systemImage: "arrow.uturn.backward")
                         .labelStyle(.titleAndIcon)
                 })
-                .disabled( isEditing  )
+                .disabled( isEditing || service.clipboard.isEmpty )
                 .padding( .bottom, 10 )
             }
             if case .Error( let err ) = service.status {
@@ -182,6 +192,9 @@ struct OpenAIView_Previews: PreviewProvider {
         
     }
     static var previews: some View {
-        OpenAIView( result: Binding.constant(""), onApply: { }, onUndo: { }  )
+        OpenAIView( service: OpenAIService(),
+                    result: Binding.constant(""),
+                    onApply: { },
+                    onUndo: { } )
     }
 }

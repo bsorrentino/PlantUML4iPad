@@ -55,6 +55,7 @@ struct PlantUMLContentView: View {
     
     @State private var openAIResult:String = ""
     
+    @StateObject private var service = OpenAIService()
     
     var PlantUMLDiagramViewFit: some View {
         PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
@@ -78,15 +79,18 @@ struct PlantUMLContentView: View {
     
     var OpenAIView_Fragment: some View {
         
-        OpenAIView( result: $openAIResult, input: document.text,
-                    onApply: {
-            saving = true
-            document.updateRequest.send()
-        },
-                    onUndo: {
-            document.reset()
-            viewState.forceUpdate()
-        })
+        OpenAIView( service: service, result: $openAIResult, input: document.text,
+            onApply: {
+                saving = true
+                document.updateRequest.send()
+            },
+            onUndo: {
+                if let text = service.popFromClipboard() {
+                    document.text = text
+                    viewState.forceUpdate()
+                }
+            }
+        )
         .onChange(of: openAIResult ) { result in
             document.text = result
             viewState.forceUpdate()
