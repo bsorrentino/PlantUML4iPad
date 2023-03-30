@@ -107,8 +107,8 @@ struct OpenAIView : View {
             
             HStack {
                 TextEditor(text: $instruction)
-                    .font(.title2)
-                    .lineSpacing(20)
+                    .font(.title3.monospaced() )
+                    .lineSpacing(15)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .border(.gray, width: 1)
@@ -116,6 +116,7 @@ struct OpenAIView : View {
 
                 ScrollView {
                     Text( input )
+                        .font( .system(size: 10.0, design: .monospaced) )
                 }.padding()
 
             }
@@ -133,7 +134,7 @@ struct OpenAIView : View {
                         ProgressView("AI editing....")
                     }
                     else {
-                        Label( "Submit", systemImage: "brain")
+                        Label( "Submit", systemImage: "arrow.right")
                     }
                 })
                 .disabled( isEditing  )
@@ -143,8 +144,8 @@ struct OpenAIView : View {
                     onApply()
                 },
                 label: {
-                    Label( "Apply", systemImage: "")
-                        .labelStyle(.titleOnly)
+                    Label( "Apply", systemImage: "arrow.up")
+                        .labelStyle(.titleAndIcon)
                 })
                 .disabled( isEditing  )
                 .padding( .bottom, 10 )
@@ -153,8 +154,8 @@ struct OpenAIView : View {
                     onUndo()
                 },
                 label: {
-                    Label( "Undo", systemImage: "")
-                        .labelStyle(.titleOnly)
+                    Label( "Undo", systemImage: "arrow.uturn.backward")
+                        .labelStyle(.titleAndIcon)
                 })
                 .disabled( isEditing  )
                 .padding( .bottom, 10 )

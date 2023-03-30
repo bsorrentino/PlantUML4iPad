@@ -145,25 +145,22 @@ struct PlantUMLContentView: View {
         })
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
-                //                    if isEditorVisible {
-                //                        HStack {
-                //                            EditButton()
-                //                            fontSizeView()
-                //                            toggleLineNumberView()
-                //                        }
-                //                    }
             }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 HStack( spacing: 0 ) {
                     SavingStateView( saving: saving )
                     
+                    HStack(alignment: .center, spacing: 5) {
+                        ToggleOpenAIButton()
+                        Divider().background(Color.blue)
+                    }
+                    .frame(height:20)
                     ToggleEditorButton()
                     if viewState.isEditorVisible {
                         HStack {
                             EditButton()
                             fontSizeView()
                             toggleLineNumberView()
-                            ToggleOpenAIButton()
                         }
                     }
                     
