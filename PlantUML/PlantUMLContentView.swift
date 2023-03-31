@@ -81,9 +81,10 @@ struct PlantUMLContentView: View {
         
         OpenAIView( service: service, result: $openAIResult, input: document.text,
             onUndo: {
-                if let text = service.popFromClipboard() {
+                if let text = service.clipboard.pop() {
                     document.setText( text )
-                    viewState.forceUpdate()
+                    saving = true
+                    document.updateRequest.send()
                 }
             }
         )
@@ -91,7 +92,6 @@ struct PlantUMLContentView: View {
             document.setText( result )
             saving = true
             document.updateRequest.send()
-            viewState.forceUpdate()
         }
         
     }
@@ -120,6 +120,7 @@ struct PlantUMLContentView: View {
             GeometryReader { geometry in
                 if( viewState.isEditorVisible ) {
                     EditorView_Fragment
+                        
                 }
                 if viewState.isDiagramVisible {
                     DiagramView_Fragment( size: geometry.size )
@@ -128,6 +129,8 @@ struct PlantUMLContentView: View {
             if viewState.isOpenAIVisible {
                 Divider()
                 OpenAIView_Fragment
+                    .frame( height: 300 )
+                    
             }
         }
         .id( viewState.id )

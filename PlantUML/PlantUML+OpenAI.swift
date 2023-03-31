@@ -14,14 +14,36 @@ extension PlantUMLContentView {
         Button {
             viewState.isOpenAIVisible.toggle()
         }
-        label: {
-            Label( "OpenAI Editor", systemImage: "brain" )
-                .labelStyle(.iconOnly)
-                .foregroundColor( viewState.isEditorVisible ? .blue : .gray)
+    label: {
+        Label( "OpenAI Editor", systemImage: "brain" )
+            .labelStyle(.iconOnly)
+            .foregroundColor( viewState.isEditorVisible ? .blue : .gray)
         
-        }
     }
+    }
+    
+}
 
+class LILOQueue<T> {
+    
+    fileprivate var elements:Array<T> = []
+    
+    var isEmpty:Bool {
+        elements.isEmpty
+    }
+    
+    func push( _ item: T ) {
+        elements.append( item )
+    }
+    
+    func pop() -> T? {
+        guard  !elements.isEmpty else {
+            return nil
+        }
+        
+        return elements.removeLast()
+    }
+    
 }
 
 class OpenAIService : ObservableObject {
@@ -31,9 +53,10 @@ class OpenAIService : ObservableObject {
         case Error( String )
         case Editing
     }
-
+    
     @Published public var status: Status = .Ready
-    private (set) var clipboard: [String] = []
+    private (set) var clipboard = LILOQueue<String>()
+    fileprivate var prompt = LILOQueue<String>()
     
     lazy var openAI: OpenAI? = {
         
@@ -45,23 +68,11 @@ class OpenAIService : ObservableObject {
             status = .Error("org id not found!")
             return nil
         }
-
+        
         return OpenAI( Configuration(organizationId: orgId, apiKey: apiKey))
-
+        
     }()
     
-    func pushToClipboard( _ item: String ) {
-        clipboard.append( item )
-    }
-
-    func popFromClipboard() -> String? {
-        guard  !clipboard.isEmpty else {
-            return nil
-        }
-        
-        return clipboard.removeLast()
-    }
-
     func generateEdit( input: String, instruction: String ) async -> String? {
         
         guard let openAI, case .Ready = status else {
@@ -82,7 +93,7 @@ class OpenAIService : ObservableObject {
             )
             
             let editResponse = try await openAI.generateEdit(parameters: editParameter)
-      
+            
             let result = editResponse.choices[0].text
             
             return result
@@ -94,16 +105,25 @@ class OpenAIService : ObservableObject {
     }
 }
 
+
 struct OpenAIView : View {
-  
+    
+    enum Tab {
+        case Input
+        case Result
+        case Prompt
+    }
+    
     @ObservedObject var service:OpenAIService
     @Binding var result: String
     @State var input:String = """
                               @startuml
-
+                              
                               @enduml
                               """
     @State var instruction:String = ""
+    @State private var tabs: Tab = .Input
+    
     var onUndo:(() -> Void)
     
     var isEditing:Bool {
@@ -114,30 +134,73 @@ struct OpenAIView : View {
     }
     
     var body: some View {
+        
         VStack {
-            
-            HStack {
-                TextEditor(text: $instruction)
-                    .font(.title3.monospaced() )
-                    .lineSpacing(15)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .border(.gray, width: 1)
-                    .padding()
-
-                ScrollView {
-                    Text( input )
-                        .font( .system(size: 10.0, design: .monospaced) )
-                }.padding()
-            }
-            
             HStack(spacing: 10) {
+                Button( action: { tabs = .Input } ) {
+                    Label( "OpenAI", systemImage: "")
+                }
+                Divider().frame(height: 20 )
+                Button( action: { tabs = .Result } ) {
+                    Label( "Result", systemImage: "")
+                }
+                Divider().frame(height: 20 )
+                Button( action: { tabs = .Prompt } ) {
+                    Label( "Prompt", systemImage: "")
+                }
+            }
+            if case .Input = tabs {
+                Input_Fragment
+                    .frame( minHeight: 100 )
+            }
+            if case .Result = tabs {
+                Result_Fragment
+            }
+            if case .Prompt = tabs {
+                Prompt_Fragment
+            }
+        }
+        .padding()
+
+    }
+}
+
+// MARK: Input Extension
+extension OpenAIView {
+    
+    var Input_Fragment: some View {
+        
+        VStack(spacing:5) {
+            TextEditor(text: $instruction)
+                .font(.title3.monospaced() )
+                .lineSpacing(15)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .border(.gray, width: 1)
+            
+            if case .Error( let err ) = service.status {
+                Text( err )
+                    .foregroundColor(.red)
+            }
+
+            HStack(spacing: 10) {
+                Spacer()
+                
+                Button( action: onUndo,
+                label: {
+                    Label( "Undo", systemImage: "arrow.uturn.backward")
+                        .labelStyle(.titleAndIcon)
+                })
+                .disabled( isEditing || service.clipboard.isEmpty )
+
                 Button( action: {
                     
                     Task {
                         if let res = await service.generateEdit( input: input, instruction: instruction ) {
                             service.status = .Ready
-                            service.pushToClipboard( result )
+                            service.clipboard.push( result )
+                            service.prompt.push( instruction )
+                            
                             result = res
                         }
                     }
@@ -151,25 +214,38 @@ struct OpenAIView : View {
                     }
                 })
                 .disabled( isEditing  )
-                .padding( .bottom, 10 )
-                                
-                Button( action: onUndo,
-                label: {
-                    Label( "Undo", systemImage: "arrow.uturn.backward")
-                        .labelStyle(.titleAndIcon)
-                })
-                .disabled( isEditing || service.clipboard.isEmpty )
-                .padding( .bottom, 10 )
+                
             }
-            if case .Error( let err ) = service.status {
-                Text( err )
-                    .foregroundColor(.red)
-            }
-            
         }
-        .frame( maxHeight: 300 )
-
+        .padding()
     }
+    
+}
+
+// MARK: Prompt Extension
+extension OpenAIView {
+    
+    var Prompt_Fragment: some View {
+        
+        List( service.prompt.elements, id: \.self ) { prompt in
+            Text( prompt )
+        }
+    }
+    
+}
+
+// MARK: Result Extension
+extension OpenAIView {
+    
+    var Result_Fragment: some View {
+        
+        ScrollView {
+            Text( input )
+                .font( .system(size: 14.0, design: .monospaced) )
+        }
+        .padding()
+    }
+    
 }
 
 struct OpenAIView_Previews: PreviewProvider {
