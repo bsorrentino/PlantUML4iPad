@@ -71,28 +71,26 @@ struct PlantUMLContentView: View {
                                   onHide: onHide,
                                   onPressSymbol: onPressSymbol)
         }
-                                .onChange(of: document.items ) { _ in
-                                    saving = true
-                                    document.updateRequest.send()
-                                }
+        .onChange(of: document.items ) { _ in
+            saving = true
+            document.updateRequest.send()
+        }
     }
     
     var OpenAIView_Fragment: some View {
         
         OpenAIView( service: service, result: $openAIResult, input: document.text,
-            onApply: {
-                saving = true
-                document.updateRequest.send()
-            },
             onUndo: {
                 if let text = service.popFromClipboard() {
-                    document.text = text
+                    document.setText( text )
                     viewState.forceUpdate()
                 }
             }
         )
         .onChange(of: openAIResult ) { result in
-            document.text = result
+            document.setText( result )
+            saving = true
+            document.updateRequest.send()
             viewState.forceUpdate()
         }
         
@@ -137,6 +135,7 @@ struct PlantUMLContentView: View {
             withAnimation(.easeInOut(duration: 1.0)) {
                 document.save()
                 saving = false
+                viewState.forceUpdate()
             }
         }
         //.navigationBarTitleDisplayMode(.inline)

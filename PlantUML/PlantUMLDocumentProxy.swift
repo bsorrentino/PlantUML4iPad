@@ -33,7 +33,7 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
     @Binding var object: PlantUMLDocument
     @Published var items:Array<SyntaxStructure>
-    @Published var text:String
+    private(set) var text:String
     
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
     
@@ -49,28 +49,29 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
         let contents = "@startuml\n\(document.wrappedValue.text)\n@enduml"
         self._object = document
         self.text = contents
-        self.items = Self.itemsFromText(contents)
-        
-        self.textCancellable = self.$text.sink {
-            self.items = Self.itemsFromText($0)
-        }
+        self.items = Self.buildSyntaxStructureItems( from: contents)
     }
     
+    func setText( _ text: String ) {
+
+        self.text = text
+        self.items = Self.buildSyntaxStructureItems( from: text )
+    }
+
     func buildURL() -> URL {
         let script = PlantUMLScript( items: items )
                
         return presenter.url( of: script )
     }
     
-    /**
-        set current text with original document text
-     */
     func reset() {
         self.text = self.object.text
     }
+    
     func save() {
         print( "save document")
         self.object.text = self.description
+        self.text = "@startuml\n\(object.text)\n@enduml"
     }
 
     
@@ -79,7 +80,7 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
 
 extension PlantUMLDocumentProxy {
     
-    private static func itemsFromText( _ text: String ) -> Array<SyntaxStructure> {
+    private static func buildSyntaxStructureItems( from text: String ) -> Array<SyntaxStructure> {
         return text
             .split(whereSeparator: \.isNewline)
             .filter { line in

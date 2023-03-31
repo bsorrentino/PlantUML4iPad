@@ -104,7 +104,6 @@ struct OpenAIView : View {
                               @enduml
                               """
     @State var instruction:String = ""
-    var onApply:(() -> Void)
     var onUndo:(() -> Void)
     
     var isEditing:Bool {
@@ -126,10 +125,10 @@ struct OpenAIView : View {
                     .border(.gray, width: 1)
                     .padding()
 
-//                ScrollView {
-//                    Text( input )
-//                        .font( .system(size: 10.0, design: .monospaced) )
-//                }.padding()
+                ScrollView {
+                    Text( input )
+                        .font( .system(size: 10.0, design: .monospaced) )
+                }.padding()
             }
             
             HStack(spacing: 10) {
@@ -153,15 +152,7 @@ struct OpenAIView : View {
                 })
                 .disabled( isEditing  )
                 .padding( .bottom, 10 )
-                
-                Button( action: onApply,
-                label: {
-                    Label( "Apply", systemImage: "arrow.up")
-                        .labelStyle(.titleAndIcon)
-                })
-                .disabled( isEditing  )
-                .padding( .bottom, 10 )
-                
+                                
                 Button( action: onUndo,
                 label: {
                     Label( "Undo", systemImage: "arrow.uturn.backward")
@@ -194,7 +185,6 @@ struct OpenAIView_Previews: PreviewProvider {
     static var previews: some View {
         OpenAIView( service: OpenAIService(),
                     result: Binding.constant(""),
-                    onApply: { },
                     onUndo: { } )
     }
 }
