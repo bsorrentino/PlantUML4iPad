@@ -13,6 +13,8 @@
 		A038DB6029D489BA0032E312 /* PlantUML+OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A038DB5F29D489BA0032E312 /* PlantUML+OpenAI.swift */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
 		A047207029549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
+		A068572C29D88D7300E82C2F /* PROMPT.md in Resources */ = {isa = PBXBuildFile; fileRef = A068572B29D88D7300E82C2F /* PROMPT.md */; };
+		A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A068572D29D8B31100E82C2F /* View+Clipboard.swift */; };
 		A08AA78429561170004DE329 /* View+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08AA78329561170004DE329 /* View+UIImage.swift */; };
 		A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A0943A702944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
@@ -61,6 +63,8 @@
 		A038DB5B29D452880032E312 /* OpenAI.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OpenAI.xcconfig; sourceTree = "<group>"; };
 		A038DB5F29D489BA0032E312 /* PlantUML+OpenAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PlantUML+OpenAI.swift"; sourceTree = "<group>"; };
 		A047206E29549ACC007E061F /* SwiftUI+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Share.swift"; sourceTree = "<group>"; };
+		A068572B29D88D7300E82C2F /* PROMPT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PROMPT.md; sourceTree = "<group>"; };
+		A068572D29D8B31100E82C2F /* View+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Clipboard.swift"; sourceTree = "<group>"; };
 		A08AA78329561170004DE329 /* View+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+UIImage.swift"; sourceTree = "<group>"; };
 		A0943A6D29448A1700342426 /* AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppStore.xcassets; sourceTree = "<group>"; };
 		A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScaleToFit+ToggleStyle.swift"; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 		A0D3C63D28984A0E000838D7 = {
 			isa = PBXGroup;
 			children = (
+				A068572B29D88D7300E82C2F /* PROMPT.md */,
 				A038DB5B29D452880032E312 /* OpenAI.xcconfig */,
 				A01907EF2951CD5C0059CCBE /* privacy_policy.md */,
 				A0943A6D29448A1700342426 /* AppStore.xcassets */,
@@ -151,6 +156,7 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
+				A068572D29D8B31100E82C2F /* View+Clipboard.swift */,
 				A08AA78329561170004DE329 /* View+UIImage.swift */,
 				A047206E29549ACC007E061F /* SwiftUI+Share.swift */,
 				A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */,
@@ -313,6 +319,7 @@
 			files = (
 				A0D3C65328984A10000838D7 /* Preview Assets.xcassets in Resources */,
 				A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */,
+				A068572C29D88D7300E82C2F /* PROMPT.md in Resources */,
 				A038DB5C29D452880032E312 /* OpenAI.xcconfig in Resources */,
 				A0D3C65028984A10000838D7 /* Assets.xcassets in Resources */,
 			);
@@ -349,6 +356,7 @@
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLContentView.swift in Sources */,
 				A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */,
+				A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */,
 				A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 			);

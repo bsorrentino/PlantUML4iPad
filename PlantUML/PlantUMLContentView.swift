@@ -36,46 +36,22 @@ struct PlantUMLContentView: View {
         }
 
     }
-
+    @Environment(\.scenePhase) var scene
+    @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
-    @State var keyboardTab: String = "general"
-    
+
     @StateObject var document: PlantUMLDocumentProxy
-    
     @StateObject var viewState = ViewState()
-        
-    @State private var isScaleToFit     = true
-    @State private var fontSize         = CGFloat(12)
-    @State private var showLine:Bool    = false
-    
-    @State private var diagramImage:UIImage?
-    
-    @State private var saving = false
-    
-    @State private var openAIResult:String = ""
-    
     @StateObject private var service = OpenAIService()
-    
-    var PlantUMLDiagramViewFit: some View {
-        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
-    }
-    
-    
-    var EditorView_Fragment: some View {
-        
-        PlantUMLLineEditorView( items: $document.items,
-                                fontSize: $fontSize,
-                                showLine: $showLine) { onHide, onPressSymbol in
-            PlantUMLKeyboardView( selectedTab: $keyboardTab,
-                                  onHide: onHide,
-                                  onPressSymbol: onPressSymbol)
-        }
-        .onChange(of: document.items ) { _ in
-            saving = true
-            document.updateRequest.send()
-        }
-    }
+
+    @State var keyboardTab: String  = "general"
+    @State private var isScaleToFit = true
+    @State private var fontSize = CGFloat(12)
+    @State private var showLine:Bool = false
+    @State private var saving = false
+    @State private var openAIResult:String = ""
+    @State private var diagramImage:UIImage?
     
     var OpenAIView_Fragment: some View {
         
@@ -96,24 +72,6 @@ struct PlantUMLContentView: View {
         
     }
     
-    func DiagramView_Fragment( size: CGSize ) -> some View {
-        
-        Group {
-            if isScaleToFit {
-                PlantUMLDiagramViewFit
-                    .frame( width: size.width, height: size.height  )
-            }
-            else {
-                ScrollView([.horizontal, .vertical], showsIndicators: true) {
-                    PlantUMLDiagramView( url: document.buildURL(), contentMode: .fill )
-                        .frame( minWidth: size.width)
-                }
-                .frame( minWidth: size.width, minHeight: size.height )
-            }
-        }
-        
-    }
-    
     var body: some View {
         
         VStack {
@@ -126,10 +84,10 @@ struct PlantUMLContentView: View {
                     DiagramView_Fragment( size: geometry.size )
                 }
             }
-            if viewState.isOpenAIVisible {
-                Divider()
+            if viewState.isOpenAIVisible && interfaceOrientation.value.isPortrait {
+//                Divider()
                 OpenAIView_Fragment
-                    .frame( height: 300 )
+                    .frame( height: 200 )
                     
             }
         }
@@ -141,7 +99,6 @@ struct PlantUMLContentView: View {
                 viewState.forceUpdate()
             }
         }
-        //.navigationBarTitleDisplayMode(.inline)
         .onRotate(perform: { orientation in
             if  (orientation.isPortrait && viewState.isDiagramVisible) ||
                     (orientation.isLandscape && viewState.isEditorVisible)
@@ -149,6 +106,7 @@ struct PlantUMLContentView: View {
                 viewState.isEditorVisible.toggle()
             }
         })
+        //.navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) {
             }
@@ -156,11 +114,15 @@ struct PlantUMLContentView: View {
                 HStack( spacing: 0 ) {
                     SavingStateView( saving: saving )
                     
-                    HStack(alignment: .center, spacing: 5) {
-                        ToggleOpenAIButton()
-                        Divider().background(Color.blue)
+                    if interfaceOrientation.value.isPortrait {
+                        HStack(alignment: .center, spacing: 5) {
+                            ToggleOpenAIButton
+                            Divider().background(Color.blue)
+                        }
+                        .frame(height:20)
                     }
-                    .frame(height:20)
+                    
+                    
                     ToggleEditorButton()
                     if viewState.isEditorVisible {
                         HStack {
@@ -182,10 +144,26 @@ struct PlantUMLContentView: View {
 }
 
 //
-// MARK: - Editor actions -
+// MARK: - Editor extension -
 //
 extension PlantUMLContentView {
     
+    var EditorView_Fragment: some View {
+        
+        PlantUMLLineEditorView( items: $document.items,
+                                fontSize: $fontSize,
+                                showLine: $showLine) { onHide, onPressSymbol in
+            PlantUMLKeyboardView( selectedTab: $keyboardTab,
+                                  onHide: onHide,
+                                  onPressSymbol: onPressSymbol)
+        }
+        .onChange(of: document.items ) { _ in
+            saving = true
+            document.updateRequest.send()
+        }
+    }
+    
+
     // [SwiftUI Let View disappear automatically](https://stackoverflow.com/a/60820491/521197)
     struct SavedStateView: View {
         @Binding var visible: Bool
@@ -240,18 +218,14 @@ extension PlantUMLContentView {
             Button( action: { fontSize += 1 } ) {
                 Image( systemName: "textformat.size.larger")
             }
-            .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
-            Divider().background(Color.blue).frame(height:20)
+            Divider()
+                .background(Color.blue)
+                .frame(height:20)
+                .padding( .leading, 5)
             Button( action: { fontSize -= 1} ) {
                 Image( systemName: "textformat.size.smaller")
             }
-            .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
         }
-        //        .overlay {
-        //            RoundedRectangle(cornerRadius: 16)
-        //                .stroke(.blue, lineWidth: 1)
-        //        }
-        //.padding()
     }
     
     func ToggleEditorButton() -> some View {
@@ -278,7 +252,7 @@ extension PlantUMLContentView {
         Button( action: {
             document.save()
         },
-                label:  {
+        label:  {
             Label( "Save", systemImage: "arrow.down.doc.fill" )
                 .labelStyle(.titleOnly)
         })
@@ -290,6 +264,28 @@ extension PlantUMLContentView {
 // MARK: - Diagram actions
 //
 extension PlantUMLContentView {
+    
+    var PlantUMLDiagramViewFit: some View {
+        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
+    }
+
+    func DiagramView_Fragment( size: CGSize ) -> some View {
+        
+        Group {
+            if isScaleToFit {
+                PlantUMLDiagramViewFit
+                    .frame( width: size.width, height: size.height  )
+            }
+            else {
+                ScrollView([.horizontal, .vertical], showsIndicators: true) {
+                    PlantUMLDiagramView( url: document.buildURL(), contentMode: .fill )
+                        .frame( minWidth: size.width)
+                }
+                .frame( minWidth: size.width, minHeight: size.height )
+            }
+        }
+        
+    }
     
     func ShareDiagramButton() -> some View {
         

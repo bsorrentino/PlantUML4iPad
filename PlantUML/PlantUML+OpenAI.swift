@@ -9,17 +9,18 @@ import SwiftUI
 import OpenAIKit
 
 extension PlantUMLContentView {
-    func ToggleOpenAIButton() -> some View {
+    
+    var ToggleOpenAIButton: some View {
         
         Button {
             viewState.isOpenAIVisible.toggle()
         }
-    label: {
-        Label( "OpenAI Editor", systemImage: "brain" )
-            .labelStyle(.iconOnly)
-            .foregroundColor( viewState.isEditorVisible ? .blue : .gray)
-        
-    }
+        label: {
+            Label( "OpenAI Editor", systemImage: "brain" )
+                .environment(\.symbolVariants, .fill)
+                .labelStyle(.iconOnly)
+                .foregroundColor( viewState.isOpenAIVisible ? .blue : .gray)
+        }
     }
     
 }
@@ -73,16 +74,15 @@ class OpenAIService : ObservableObject {
         
     }()
     
+    @MainActor
     func generateEdit( input: String, instruction: String ) async -> String? {
         
         guard let openAI, case .Ready = status else {
             return nil
         }
         
-        Task { @MainActor in
-            self.status = .Editing
-        }
-        
+        self.status = .Editing
+
         do {
             let editParameter = EditParameters(
                 model: "text-davinci-edit-001",
@@ -99,7 +99,9 @@ class OpenAIService : ObservableObject {
             return result
         }
         catch {
+            
             status = .Error( error.localizedDescription )
+
             return nil
         }
     }
@@ -135,18 +137,18 @@ struct OpenAIView : View {
     
     var body: some View {
         
-        VStack {
+        VStack(spacing:0) {
             HStack(spacing: 10) {
                 Button( action: { tabs = .Input } ) {
                     Label( "OpenAI", systemImage: "")
                 }
                 Divider().frame(height: 20 )
-                Button( action: { tabs = .Result } ) {
-                    Label( "Result", systemImage: "")
-                }
-                Divider().frame(height: 20 )
                 Button( action: { tabs = .Prompt } ) {
                     Label( "Prompt", systemImage: "")
+                }
+                Divider().frame(height: 20 )
+                Button( action: { tabs = .Result } ) {
+                    Label( "Result", systemImage: "")
                 }
             }
             if case .Input = tabs {
@@ -160,7 +162,7 @@ struct OpenAIView : View {
                 Prompt_Fragment
             }
         }
-        .padding()
+        .padding( EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 0))
 
     }
 }
@@ -170,7 +172,7 @@ extension OpenAIView {
     
     var Input_Fragment: some View {
         
-        VStack(spacing:5) {
+        ZStack(alignment: .bottomTrailing ) {
             TextEditor(text: $instruction)
                 .font(.title3.monospaced() )
                 .lineSpacing(15)
@@ -207,7 +209,7 @@ extension OpenAIView {
                 },
                 label: {
                     if isEditing {
-                        ProgressView("AI editing....")
+                        ProgressView()
                     }
                     else {
                         Label( "Submit", systemImage: "arrow.right")
@@ -216,6 +218,7 @@ extension OpenAIView {
                 .disabled( isEditing  )
                 
             }
+            .padding()
         }
         .padding()
     }
@@ -228,7 +231,10 @@ extension OpenAIView {
     var Prompt_Fragment: some View {
         
         List( service.prompt.elements, id: \.self ) { prompt in
-            Text( prompt )
+            HStack {
+                Text( prompt )
+                CopyToClipboardButton( value: prompt )
+            }
         }
     }
     
@@ -262,5 +268,6 @@ struct OpenAIView_Previews: PreviewProvider {
         OpenAIView( service: OpenAIService(),
                     result: Binding.constant(""),
                     onUndo: { } )
+        .frame(height: 200)
     }
 }
