@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  PlantUMLContentView.swift
 //  PlantUML
 //
 //  Created by Bartolomeo Sorrentino on 01/08/22.
@@ -43,7 +43,7 @@ struct PlantUMLContentView: View {
 
     @StateObject var document: PlantUMLDocumentProxy
     @StateObject var viewState = ViewState()
-    @StateObject private var service = OpenAIService()
+    @StateObject private var openAIService = OpenAIService()
 
     @State var keyboardTab: String  = "general"
     @State private var isScaleToFit = true
@@ -55,9 +55,9 @@ struct PlantUMLContentView: View {
     
     var OpenAIView_Fragment: some View {
         
-        OpenAIView( service: service, result: $openAIResult, input: document.text,
+        OpenAIView( service: openAIService, result: $openAIResult, input: document.text,
             onUndo: {
-                if let text = service.clipboard.pop() {
+                if let text = openAIService.clipboard.pop() {
                     document.setText( text )
                     saving = true
                     document.updateRequest.send()
@@ -85,7 +85,6 @@ struct PlantUMLContentView: View {
                 }
             }
             if viewState.isOpenAIVisible && interfaceOrientation.value.isPortrait {
-//                Divider()
                 OpenAIView_Fragment
                     .frame( height: 200 )
                     
@@ -261,7 +260,7 @@ extension PlantUMLContentView {
 }
 
 //
-// MARK: - Diagram actions
+// MARK: - Diagram extension -
 //
 extension PlantUMLContentView {
     
