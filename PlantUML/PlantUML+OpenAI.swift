@@ -1,5 +1,5 @@
 //
-//  SwiftUIView.swift
+//  PlantUML+OpenAI.swift
 //  
 //
 //  Created by Bartolomeo Sorrentino on 29/03/23.
@@ -43,6 +43,10 @@ class LILOQueue<T> {
         }
         
         return elements.removeLast()
+    }
+    
+    func clear() {
+        elements.removeAll()
     }
     
 }
@@ -118,16 +122,12 @@ struct OpenAIView : View {
     
     @ObservedObject var service:OpenAIService
     @Binding var result: String
-    @State var input:String = """
-                              @startuml
-                              
-                              @enduml
-                              """
+    @State var input:String
     @State var instruction:String = ""
     @State private var tabs: Tab = .Input
     
     var onUndo:(() -> Void)
-    
+       
     var isEditing:Bool {
         if case .Editing = service.status {
             return true
@@ -165,6 +165,7 @@ struct OpenAIView : View {
         .padding( EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 0))
 
     }
+    
 }
 
 // MARK: Input Extension
@@ -200,7 +201,7 @@ extension OpenAIView {
                     Task {
                         if let res = await service.generateEdit( input: input, instruction: instruction ) {
                             service.status = .Ready
-                            service.clipboard.push( result )
+                            service.clipboard.push( result.isEmpty ? input : result  )
                             service.prompt.push( instruction )
                             
                             result = res
@@ -267,6 +268,7 @@ struct OpenAIView_Previews: PreviewProvider {
     static var previews: some View {
         OpenAIView( service: OpenAIService(),
                     result: Binding.constant(""),
+                    input: "",
                     onUndo: { } )
         .frame(height: 200)
     }
