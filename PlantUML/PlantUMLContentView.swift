@@ -27,15 +27,11 @@ struct PlantUMLContentView: View {
         
         @Published var isOpenAIVisible  = false
         @Published var isEditorVisible  = true
-        @Published var editorId = 1
 
         var isDiagramVisible:Bool { !isEditorVisible }
 
-        func forceEditorUpdate() {
-            editorId += 1
-        }
-
     }
+    
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
     @Environment(\.editMode) private var editMode
@@ -58,7 +54,6 @@ struct PlantUMLContentView: View {
             GeometryReader { geometry in
                 if( viewState.isEditorVisible ) {
                     EditorView_Fragment
-                        .id( viewState.editorId )
                         
                 }
                 if viewState.isDiagramVisible {
@@ -78,7 +73,6 @@ struct PlantUMLContentView: View {
             withAnimation(.easeInOut(duration: 1.0)) {
                 document.save()
                 saving = false
-                viewState.forceEditorUpdate()
             }
         }
         .onRotate(perform: { orientation in
@@ -103,7 +97,6 @@ struct PlantUMLContentView: View {
                         }
                         .frame(height:20)
                     }
-                    
                     
                     ToggleEditorButton()
                     if viewState.isEditorVisible {
@@ -132,8 +125,7 @@ extension PlantUMLContentView {
     
     var OpenAIView_Fragment: some View {
         
-        OpenAIView( service: openAIService, result: $document.text, input: document.text,
-            onUndo: {} )
+        OpenAIView( service: openAIService, result: $document.text )
         
     }
     

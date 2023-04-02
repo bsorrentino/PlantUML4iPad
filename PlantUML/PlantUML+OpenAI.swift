@@ -122,11 +122,8 @@ struct OpenAIView : View {
     
     @ObservedObject var service:OpenAIService
     @Binding var result: String
-    @State var input:String
     @State var instruction:String = ""
     @State private var tabs: Tab = .Input
-    
-    var onUndo:(() -> Void)
        
     var isEditing:Bool {
         if case .Editing = service.status {
@@ -200,19 +197,20 @@ extension OpenAIView {
                 Button( action: {
                     
                     Task {
-                        let inputEx = "@startuml\n\(input)\n@enduml"
+                        let input = "@startuml\n\(result)\n@enduml"
                         
-                        if let res = await service.generateEdit( input: inputEx, instruction: instruction ) {
+                        if let res = await service.generateEdit( input: input, instruction: instruction ) {
                             service.status = .Ready
-                            service.clipboard.push( result.isEmpty ? input : result  )
+                            
+                            service.clipboard.push( result )
+                            
                             service.prompt.push( instruction )
                             
                             result = res
-                                .split(whereSeparator: \.isNewline)
-                                .filter { line in
-                                    line != "@startuml" && line != "@enduml"
-                                }
-                                .joined(separator: "\n")
+                                .split( whereSeparator: \.isNewline )
+                                .filter { $0 != "@startuml" && $0 != "@enduml" }
+                                .joined(separator: "\n" )
+
                         }
                     }
                 },
@@ -255,7 +253,7 @@ extension OpenAIView {
     var Result_Fragment: some View {
         
         ScrollView {
-            Text( input )
+            Text( result )
                 .font( .system(size: 14.0, design: .monospaced) )
         }
         .padding()
@@ -275,9 +273,12 @@ struct OpenAIView_Previews: PreviewProvider {
     }
     static var previews: some View {
         OpenAIView( service: OpenAIService(),
-                    result: Binding.constant(""),
-                    input: "",
-                    onUndo: { } )
+                    result: Binding.constant(
+                            """
+                            @startuml
+
+                            @enduml
+                            """))
         .frame(height: 200)
     }
 }
