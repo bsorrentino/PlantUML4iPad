@@ -19,7 +19,7 @@ let package = Package(
         // .package(url: "https://github.com/siteline/SwiftUI-Introspect.git", branch: "master" ),
         .package(path: "../PlantUMLFramework" ),
         .package(url: "https://github.com/marcodotio/OpenAIKit.git", from: "1.2.0"),
-        .package(url: "https://github.com/bsorrentino/PlantUML4iPad.git", branch: "line_editor"),
+        .package(url: "https://github.com/bsorrentino/SwiftUI-LineEditor.git", branch: "feature/issue1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -27,7 +27,7 @@ let package = Package(
         .target(
             name: "PlantUMLKeyboard",
             dependencies: [
-                .product(name: "LineEditor", package: "PlantUML4iPad"),
+                .product(name: "LineEditor", package: "SwiftUI-LineEditor"),
                 .product(name: "OpenAIKit", package: "OpenAIKit"),
                 "PlantUMLFramework",
             ],

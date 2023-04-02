@@ -21,7 +21,7 @@ import LineEditor
 
 
 struct PlantUMLContentView: View {
-    typealias PlantUMLLineEditorView = StandardLineEditorView<SyntaxStructure,Symbol>
+    typealias PlantUMLLineEditorView = StandardLineEditorView<Symbol>
 
     class ViewState : ObservableObject, Identifiable {
         
@@ -50,27 +50,7 @@ struct PlantUMLContentView: View {
     @State private var fontSize = CGFloat(12)
     @State private var showLine:Bool = false
     @State private var saving = false
-    @State private var openAIResult:String = ""
     @State private var diagramImage:UIImage?
-    
-    var OpenAIView_Fragment: some View {
-        
-        OpenAIView( service: openAIService, result: $openAIResult, input: document.text,
-            onUndo: {
-                if let text = openAIService.clipboard.pop() {
-                    document.setText( text )
-                    saving = true
-                    document.updateRequest.send()
-                }
-            }
-        )
-        .onChange(of: openAIResult ) { result in
-            document.setText( result )
-            saving = true
-            document.updateRequest.send()
-        }
-        
-    }
     
     var body: some View {
         
@@ -91,6 +71,16 @@ struct PlantUMLContentView: View {
             }
         }
         .id( viewState.id )
+        .onChange(of: document.openAIResult ) { result in
+            document.setText( result )
+            document.editorText = PlantUMLDocumentProxy.buildDocumentText(from: result)
+//            saving = true
+//            document.updateRequest.send()
+        }
+        .onChange(of: document.editorText ) { _ in
+            saving = true
+            document.updateRequest.send()
+        }
         .onReceive(document.updateRequest.publisher) { _ in
             withAnimation(.easeInOut(duration: 1.0)) {
                 document.save()
@@ -143,22 +133,40 @@ struct PlantUMLContentView: View {
 }
 
 //
+// MARK: - OpenAI extension -
+//
+extension PlantUMLContentView {
+    
+    var OpenAIView_Fragment: some View {
+        
+        OpenAIView( service: openAIService, result: $document.openAIResult, input: document.text,
+            onUndo: {
+                if let text = openAIService.clipboard.pop() {
+                    document.setText( text )
+                    saving = true
+                    document.updateRequest.send()
+                }
+            }
+        )
+        
+    }
+    
+
+}
+
+//
 // MARK: - Editor extension -
 //
 extension PlantUMLContentView {
     
     var EditorView_Fragment: some View {
         
-        PlantUMLLineEditorView( items: $document.items,
+        PlantUMLLineEditorView( text: $document.editorText,
                                 fontSize: $fontSize,
                                 showLine: $showLine) { onHide, onPressSymbol in
             PlantUMLKeyboardView( selectedTab: $keyboardTab,
                                   onHide: onHide,
                                   onPressSymbol: onPressSymbol)
-        }
-        .onChange(of: document.items ) { _ in
-            saving = true
-            document.updateRequest.send()
         }
     }
     

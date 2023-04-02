@@ -174,6 +174,7 @@ extension OpenAIView {
     var Input_Fragment: some View {
         
         ZStack(alignment: .bottomTrailing ) {
+            
             TextEditor(text: $instruction)
                 .font(.title3.monospaced() )
                 .lineSpacing(15)
@@ -189,12 +190,12 @@ extension OpenAIView {
             HStack(spacing: 10) {
                 Spacer()
                 
-                Button( action: onUndo,
-                label: {
-                    Label( "Undo", systemImage: "arrow.uturn.backward")
-                        .labelStyle(.titleAndIcon)
-                })
-                .disabled( isEditing || service.clipboard.isEmpty )
+//                Button( action: onUndo,
+//                label: {
+//                    Label( "Undo", systemImage: "arrow.uturn.backward")
+//                        .labelStyle(.titleAndIcon)
+//                })
+//                .disabled( isEditing || service.clipboard.isEmpty )
 
                 Button( action: {
                     
@@ -203,7 +204,6 @@ extension OpenAIView {
                             service.status = .Ready
                             service.clipboard.push( result.isEmpty ? input : result  )
                             service.prompt.push( instruction )
-                            
                             result = res
                         }
                     }
