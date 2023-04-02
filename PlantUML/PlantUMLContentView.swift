@@ -27,12 +27,12 @@ struct PlantUMLContentView: View {
         
         @Published var isOpenAIVisible  = false
         @Published var isEditorVisible  = true
-        @Published var id = 1
+        @Published var editorId = 1
 
         var isDiagramVisible:Bool { !isEditorVisible }
 
-        func forceUpdate() {
-            id += 1
+        func forceEditorUpdate() {
+            editorId += 1
         }
 
     }
@@ -58,6 +58,7 @@ struct PlantUMLContentView: View {
             GeometryReader { geometry in
                 if( viewState.isEditorVisible ) {
                     EditorView_Fragment
+                        .id( viewState.editorId )
                         
                 }
                 if viewState.isDiagramVisible {
@@ -67,17 +68,9 @@ struct PlantUMLContentView: View {
             if viewState.isOpenAIVisible && interfaceOrientation.value.isPortrait {
                 OpenAIView_Fragment
                     .frame( height: 200 )
-                    
             }
         }
-        .id( viewState.id )
-        .onChange(of: document.openAIResult ) { result in
-            document.setText( result )
-            document.editorText = PlantUMLDocumentProxy.buildDocumentText(from: result)
-//            saving = true
-//            document.updateRequest.send()
-        }
-        .onChange(of: document.editorText ) { _ in
+        .onChange(of: document.text ) { _ in
             saving = true
             document.updateRequest.send()
         }
@@ -85,7 +78,7 @@ struct PlantUMLContentView: View {
             withAnimation(.easeInOut(duration: 1.0)) {
                 document.save()
                 saving = false
-                viewState.forceUpdate()
+                viewState.forceEditorUpdate()
             }
         }
         .onRotate(perform: { orientation in
@@ -139,19 +132,11 @@ extension PlantUMLContentView {
     
     var OpenAIView_Fragment: some View {
         
-        OpenAIView( service: openAIService, result: $document.openAIResult, input: document.text,
-            onUndo: {
-                if let text = openAIService.clipboard.pop() {
-                    document.setText( text )
-                    saving = true
-                    document.updateRequest.send()
-                }
-            }
-        )
+        OpenAIView( service: openAIService, result: $document.text, input: document.text,
+            onUndo: {} )
         
     }
     
-
 }
 
 //
@@ -161,9 +146,9 @@ extension PlantUMLContentView {
     
     var EditorView_Fragment: some View {
         
-        PlantUMLLineEditorView( text: $document.editorText,
+        PlantUMLLineEditorView( text: $document.text,
                                 fontSize: $fontSize,
-                                showLine: $showLine) { onHide, onPressSymbol in
+                                showLine: $showLine) { (onHide, onPressSymbol) in
             PlantUMLKeyboardView( selectedTab: $keyboardTab,
                                   onHide: onHide,
                                   onPressSymbol: onPressSymbol)

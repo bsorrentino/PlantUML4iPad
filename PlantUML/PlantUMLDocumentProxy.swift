@@ -29,21 +29,12 @@ class DebounceRequest {
     }
 }
 
-class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
+class PlantUMLDocumentProxy : ObservableObject {
     
     @Binding var object: PlantUMLDocument
-//    private var items:Array<SyntaxStructure>
-    @Published var editorText: String
-    @Published  var openAIResult:String = ""
+    @Published var text: String
 
-    private(set) var text:String
-    
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
-    
-    var description: String {
-        self.editorText
-//        self.items.map { $0.rawValue }.joined( separator: "\n" )
-    }
     
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
 
@@ -51,20 +42,9 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
     init( document: Binding<PlantUMLDocument> ) {
         self._object = document
-        self.text = "@startuml\n\(document.wrappedValue.text)\n@enduml"
-        self.editorText = document.wrappedValue.text
-//        self.items = Self.buildSyntaxStructureItems( from: contents)
-        
-        
+        self.text = document.wrappedValue.text
     }
     
-    func setText( _ text: String ) {
-
-        self.text = text
-        
-//        self.items = Self.buildSyntaxStructureItems( from: text )
-    }
-
     func buildURL() -> URL {
         let script = PlantUMLScript( items: Self.buildSyntaxStructureItems( from: self.text ) )
                
@@ -77,8 +57,7 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
     func save() {
         print( "save document")
-        self.object.text = self.description
-        self.text = "@startuml\n\(object.text)\n@enduml"
+        self.object.text = self.text
     }
 
     
@@ -87,15 +66,6 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
 
 extension PlantUMLDocumentProxy {
     
-    public static func buildDocumentText( from text: String ) -> String {
-        return text
-            .split(whereSeparator: \.isNewline)
-            .filter { line in
-                line != "@startuml" && line != "@enduml"
-            }
-            .joined(separator: "\n")
-    }
-
     private static func buildSyntaxStructureItems( from text: String ) -> Array<SyntaxStructure> {
         return text
             .split(whereSeparator: \.isNewline)

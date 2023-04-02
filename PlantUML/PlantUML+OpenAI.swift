@@ -200,11 +200,19 @@ extension OpenAIView {
                 Button( action: {
                     
                     Task {
-                        if let res = await service.generateEdit( input: input, instruction: instruction ) {
+                        let inputEx = "@startuml\n\(input)\n@enduml"
+                        
+                        if let res = await service.generateEdit( input: inputEx, instruction: instruction ) {
                             service.status = .Ready
                             service.clipboard.push( result.isEmpty ? input : result  )
                             service.prompt.push( instruction )
+                            
                             result = res
+                                .split(whereSeparator: \.isNewline)
+                                .filter { line in
+                                    line != "@startuml" && line != "@enduml"
+                                }
+                                .joined(separator: "\n")
                         }
                     }
                 },
