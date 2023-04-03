@@ -228,6 +228,8 @@ extension PlantUMLContentView {
                 .foregroundColor( viewState.isEditorVisible ? .blue : .gray)
         
         }
+        .accessibilityIdentifier("editor")
+
     }
     
     @available(swift, obsoleted: 1.1,message: "from 1.1 auto save has been introduced")
@@ -309,6 +311,8 @@ extension PlantUMLContentView {
                 .labelStyle(.iconOnly)
                 .foregroundColor( viewState.isDiagramVisible ? .blue : .gray)
         }
+        .accessibilityIdentifier("diagram")
+
     }
     
     

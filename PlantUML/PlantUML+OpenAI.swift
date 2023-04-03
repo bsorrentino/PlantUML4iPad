@@ -15,12 +15,13 @@ extension PlantUMLContentView {
         Button {
             viewState.isOpenAIVisible.toggle()
         }
-    label: {
-        Label( "OpenAI Editor", systemImage: "brain" )
-            .environment(\.symbolVariants, .fill)
-            .labelStyle(.iconOnly)
-            .foregroundColor( viewState.isOpenAIVisible ? .blue : .gray)
-    }
+        label: {
+            Label( "OpenAI Editor", systemImage: "brain" )
+                .environment(\.symbolVariants, .fill)
+                .labelStyle(.iconOnly)
+                .foregroundColor( viewState.isOpenAIVisible ? .blue : .gray)
+        }
+        .accessibilityIdentifier("openai")
     }
     
 }
@@ -197,6 +198,7 @@ extension OpenAIView {
                     .disableAutocorrection(true)
                     .padding( .trailing, 25)
                     .padding( .bottom, 35)
+                    .accessibilityIdentifier("openai_instruction")
                 
                 if case .Error( let err ) = service.status {
                     Divider()
@@ -212,9 +214,10 @@ extension OpenAIView {
                     Button( action: {
                         instruction = ""
                     },
-                            label: {
+                    label: {
                         Image( systemName: "x.circle")
                     })
+                    .accessibilityIdentifier("openai_clear")
                 }
                 
                 Spacer()
@@ -225,7 +228,7 @@ extension OpenAIView {
                             result = res
                         }
                     },
-                            label: {
+                    label: {
                         Label( "Undo", systemImage: "arrow.uturn.backward")
                             .labelStyle(.titleAndIcon)
                     })
@@ -251,7 +254,7 @@ extension OpenAIView {
                             }
                         }
                     },
-                            label: {
+                    label: {
                         if isEditing {
                             ProgressView()
                         }
@@ -259,7 +262,8 @@ extension OpenAIView {
                             Label( "Submit", systemImage: "arrow.right")
                         }
                     })
-                    .disabled( isEditing  )
+                    .disabled( isEditing )
+                    .accessibilityIdentifier("openai_submit")
                 }
             }
             .padding(EdgeInsets( top: 10, leading: 0, bottom: 5, trailing: 10))
