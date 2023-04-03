@@ -15,12 +15,12 @@ extension PlantUMLContentView {
         Button {
             viewState.isOpenAIVisible.toggle()
         }
-        label: {
-            Label( "OpenAI Editor", systemImage: "brain" )
-                .environment(\.symbolVariants, .fill)
-                .labelStyle(.iconOnly)
-                .foregroundColor( viewState.isOpenAIVisible ? .blue : .gray)
-        }
+    label: {
+        Label( "OpenAI Editor", systemImage: "brain" )
+            .environment(\.symbolVariants, .fill)
+            .labelStyle(.iconOnly)
+            .foregroundColor( viewState.isOpenAIVisible ? .blue : .gray)
+    }
     }
     
 }
@@ -51,6 +51,23 @@ class LILOQueue<T> {
     
 }
 
+class LILOFixedSizeQueue<T> : LILOQueue<T> {
+    
+    private let size:Int
+    
+    init( maxSize size: Int ) {
+        self.size = size
+    }
+    
+    override func push( _ item: T ) {
+        if elements.count == size {
+            elements.removeFirst()
+        }
+        elements.append( item )
+    }
+    
+}
+
 class OpenAIService : ObservableObject {
     
     enum Status {
@@ -60,8 +77,8 @@ class OpenAIService : ObservableObject {
     }
     
     @Published public var status: Status = .Ready
-    private (set) var clipboard = LILOQueue<String>()
-    fileprivate var prompt = LILOQueue<String>()
+    fileprivate var clipboard = LILOFixedSizeQueue<String>( maxSize: 10 )
+    fileprivate var prompt = LILOFixedSizeQueue<String>( maxSize: 10 )
     
     lazy var openAI: OpenAI? = {
         
@@ -86,7 +103,7 @@ class OpenAIService : ObservableObject {
         }
         
         self.status = .Editing
-
+        
         do {
             let editParameter = EditParameters(
                 model: "text-davinci-edit-001",
@@ -105,7 +122,7 @@ class OpenAIService : ObservableObject {
         catch {
             
             status = .Error( error.localizedDescription )
-
+            
             return nil
         }
     }
@@ -124,7 +141,7 @@ struct OpenAIView : View {
     @Binding var result: String
     @State var instruction:String = ""
     @State private var tabs: Tab = .Input
-       
+    
     var isEditing:Bool {
         if case .Editing = service.status {
             return true
@@ -160,7 +177,7 @@ struct OpenAIView : View {
             }
         }
         .padding( EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 0))
-
+        
     }
     
 }
@@ -170,62 +187,82 @@ extension OpenAIView {
     
     var Input_Fragment: some View {
         
-        ZStack(alignment: .bottomTrailing ) {
+        ZStack(alignment: .topTrailing ) {
             
-            TextEditor(text: $instruction)
-                .font(.title3.monospaced() )
-                .lineSpacing(15)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .border(.gray, width: 1)
-            
-            if case .Error( let err ) = service.status {
-                Text( err )
-                    .foregroundColor(.red)
+            Group {
+                TextEditor(text: $instruction)
+                    .font(.title3.monospaced() )
+                    .lineSpacing(15)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .padding( .trailing, 25)
+                    .padding( .bottom, 35)
+                
+                if case .Error( let err ) = service.status {
+                    Divider()
+                    Text( err )
+                        .foregroundColor(.red)
+                }
             }
-
-            HStack(spacing: 10) {
+            .border(.gray, width: 1)
+            
+            VStack(alignment:.trailing) {
+                
+                if !instruction.isEmpty {
+                    Button( action: {
+                        instruction = ""
+                    },
+                            label: {
+                        Image( systemName: "x.circle")
+                    })
+                }
+                
                 Spacer()
                 
-//                Button( action: onUndo,
-//                label: {
-//                    Label( "Undo", systemImage: "arrow.uturn.backward")
-//                        .labelStyle(.titleAndIcon)
-//                })
-//                .disabled( isEditing || service.clipboard.isEmpty )
-
-                Button( action: {
-                    
-                    Task {
-                        let input = "@startuml\n\(result)\n@enduml"
-                        
-                        if let res = await service.generateEdit( input: input, instruction: instruction ) {
-                            service.status = .Ready
-                            
-                            service.clipboard.push( result )
-                            
-                            service.prompt.push( instruction )
-                            
+                HStack {
+                    Button( action: {
+                        if let res = service.clipboard.pop() {
                             result = res
-                                .split( whereSeparator: \.isNewline )
-                                .filter { $0 != "@startuml" && $0 != "@enduml" }
-                                .joined(separator: "\n" )
-
                         }
-                    }
-                },
-                label: {
-                    if isEditing {
-                        ProgressView()
-                    }
-                    else {
-                        Label( "Submit", systemImage: "arrow.right")
-                    }
-                })
-                .disabled( isEditing  )
-                
+                    },
+                            label: {
+                        Label( "Undo", systemImage: "arrow.uturn.backward")
+                            .labelStyle(.titleAndIcon)
+                    })
+                    .disabled( isEditing || service.clipboard.isEmpty )
+                    
+                    Button( action: {
+                        
+                        Task {
+                            let input = "@startuml\n\(result)\n@enduml"
+                            
+                            if let res = await service.generateEdit( input: input, instruction: instruction ) {
+                                service.status = .Ready
+                                
+                                service.clipboard.push( result )
+                                
+                                service.prompt.push( instruction )
+                                
+                                result = res
+                                    .split( whereSeparator: \.isNewline )
+                                    .filter { $0 != "@startuml" && $0 != "@enduml" }
+                                    .joined(separator: "\n" )
+                                
+                            }
+                        }
+                    },
+                            label: {
+                        if isEditing {
+                            ProgressView()
+                        }
+                        else {
+                            Label( "Submit", systemImage: "arrow.right")
+                        }
+                    })
+                    .disabled( isEditing  )
+                }
             }
-            .padding()
+            .padding(EdgeInsets( top: 10, leading: 0, bottom: 5, trailing: 10))
         }
         .padding()
     }
@@ -276,7 +313,7 @@ struct OpenAIView_Previews: PreviewProvider {
                     result: Binding.constant(
                             """
                             @startuml
-
+                            
                             @enduml
                             """))
         .frame(height: 200)
