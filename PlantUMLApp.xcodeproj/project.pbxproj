@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		A00729B129DB266400D73D1A /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A00729B029DB266400D73D1A /* PlantUMLFramework */; };
 		A00729B329DB266800D73D1A /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A00729B229DB266800D73D1A /* PlantUMLKeyboard */; };
+		A00729BB29DB2A9D00D73D1A /* PlantUMLAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00729BA29DB2A9D00D73D1A /* PlantUMLAppUITests.swift */; };
+		A00729BD29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */; };
+		A00729C429DB2AA600D73D1A /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A00729C329DB2AA600D73D1A /* PlantUMLFramework */; };
+		A00729C629DB2AAA00D73D1A /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A00729C529DB2AAA00D73D1A /* PlantUMLKeyboard */; };
 		A01A6FBC29D3464500C3A1F6 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A01A6FBB29D3464500C3A1F6 /* PlantUMLFramework */; };
 		A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */; };
 		A038DB5C29D452880032E312 /* OpenAI.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A038DB5B29D452880032E312 /* OpenAI.xcconfig */; };
@@ -32,6 +36,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A00729BE29DB2A9D00D73D1A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0D3C63E28984A0E000838D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0D3C64528984A0E000838D7;
+			remoteInfo = PlantUMLApp;
+		};
 		A0D3C65A28984A10000838D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A0D3C63E28984A0E000838D7 /* Project object */;
@@ -42,6 +53,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A00729B829DB2A9D00D73D1A /* PlantUMLAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantUMLAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00729BA29DB2A9D00D73D1A /* PlantUMLAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLAppUITests.swift; sourceTree = "<group>"; };
+		A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A01907EF2951CD5C0059CCBE /* privacy_policy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacy_policy.md; sourceTree = "<group>"; };
 		A038DB5B29D452880032E312 /* OpenAI.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OpenAI.xcconfig; sourceTree = "<group>"; };
@@ -70,6 +84,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A00729B529DB2A9D00D73D1A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00729C629DB2AAA00D73D1A /* PlantUMLKeyboard in Frameworks */,
+				A00729C429DB2AA600D73D1A /* PlantUMLFramework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0D3C64328984A0E000838D7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -91,6 +114,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A00729B929DB2A9D00D73D1A /* PlantUMLAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A00729BA29DB2A9D00D73D1A /* PlantUMLAppUITests.swift */,
+				A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */,
+			);
+			path = PlantUMLAppUITests;
+			sourceTree = "<group>";
+		};
 		A077461228C7EF6A007C5C13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +140,7 @@
 				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
 				A0D3C64828984A0E000838D7 /* PlantUML */,
 				A0D3C65C28984A10000838D7 /* PlantUMLTests */,
+				A00729B929DB2A9D00D73D1A /* PlantUMLAppUITests */,
 				A0D3C64728984A0E000838D7 /* Products */,
 				A077461228C7EF6A007C5C13 /* Frameworks */,
 			);
@@ -118,6 +151,7 @@
 			children = (
 				A0D3C64628984A0E000838D7 /* PlantUMLApp.app */,
 				A0D3C65928984A10000838D7 /* PlantUMLTests.xctest */,
+				A00729B829DB2A9D00D73D1A /* PlantUMLAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -165,6 +199,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A00729B729DB2A9D00D73D1A /* PlantUMLAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00729C029DB2A9D00D73D1A /* Build configuration list for PBXNativeTarget "PlantUMLAppUITests" */;
+			buildPhases = (
+				A00729B429DB2A9D00D73D1A /* Sources */,
+				A00729B529DB2A9D00D73D1A /* Frameworks */,
+				A00729B629DB2A9D00D73D1A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A00729BF29DB2A9D00D73D1A /* PBXTargetDependency */,
+			);
+			name = PlantUMLAppUITests;
+			packageProductDependencies = (
+				A00729C329DB2AA600D73D1A /* PlantUMLFramework */,
+				A00729C529DB2AAA00D73D1A /* PlantUMLKeyboard */,
+			);
+			productName = PlantUMLAppUITests;
+			productReference = A00729B829DB2A9D00D73D1A /* PlantUMLAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		A0D3C64528984A0E000838D7 /* PlantUMLApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A0D3C66D28984A11000838D7 /* Build configuration list for PBXNativeTarget "PlantUMLApp" */;
@@ -215,9 +271,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
+					A00729B729DB2A9D00D73D1A = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = A0D3C64528984A0E000838D7;
+					};
 					A0D3C64528984A0E000838D7 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
@@ -244,11 +304,19 @@
 			targets = (
 				A0D3C64528984A0E000838D7 /* PlantUMLApp */,
 				A0D3C65828984A10000838D7 /* PlantUMLTests */,
+				A00729B729DB2A9D00D73D1A /* PlantUMLAppUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A00729B629DB2A9D00D73D1A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0D3C64428984A0E000838D7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,6 +338,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A00729B429DB2A9D00D73D1A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00729BB29DB2A9D00D73D1A /* PlantUMLAppUITests.swift in Sources */,
+				A00729BD29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0D3C64228984A0E000838D7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -301,6 +378,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A00729BF29DB2A9D00D73D1A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0D3C64528984A0E000838D7 /* PlantUMLApp */;
+			targetProxy = A00729BE29DB2A9D00D73D1A /* PBXContainerItemProxy */;
+		};
 		A0D3C65B28984A10000838D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A0D3C64528984A0E000838D7 /* PlantUMLApp */;
@@ -320,6 +402,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A00729C129DB2A9D00D73D1A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 48J595L9BX;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUMLAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				TEST_TARGET_NAME = PlantUMLApp;
+			};
+			name = Debug;
+		};
+		A00729C229DB2A9D00D73D1A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 48J595L9BX;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUMLAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				TEST_TARGET_NAME = PlantUMLApp;
+			};
+			name = Release;
+		};
 		A0D3C66B28984A11000838D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -555,6 +681,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A00729C029DB2A9D00D73D1A /* Build configuration list for PBXNativeTarget "PlantUMLAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00729C129DB2A9D00D73D1A /* Debug */,
+				A00729C229DB2A9D00D73D1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A0D3C64128984A0E000838D7 /* Build configuration list for PBXProject "PlantUMLApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -590,6 +725,14 @@
 			productName = PlantUMLFramework;
 		};
 		A00729B229DB266800D73D1A /* PlantUMLKeyboard */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PlantUMLKeyboard;
+		};
+		A00729C329DB2AA600D73D1A /* PlantUMLFramework */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PlantUMLFramework;
+		};
+		A00729C529DB2AAA00D73D1A /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
 		};

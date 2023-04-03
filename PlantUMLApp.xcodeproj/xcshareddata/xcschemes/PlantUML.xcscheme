@@ -48,6 +48,17 @@
                ReferencedContainer = "container:PlantUMLApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A00729B729DB2A9D00D73D1A"
+               BuildableName = "PlantUMLAppUITests.xctest"
+               BlueprintName = "PlantUMLAppUITests"
+               ReferencedContainer = "container:PlantUMLApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
