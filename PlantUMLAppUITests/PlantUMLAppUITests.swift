@@ -11,11 +11,6 @@ import XCTest
 // table extension
 extension XCUIElement {
     
-    // [UI Testing swipe-to-delete table view cell](https://stackoverflow.com/a/40199269/521197)
-    func deleteRow() {
-        XCTAssertEqual( self.elementType, XCUIElement.ElementType.cell)
-        self.longSwipeLeft()
-    }
 
     // [Perform a full swipe left action in UI Tests?](https://stackoverflow.com/a/51639973)
     func longSwipeLeft() {
@@ -34,14 +29,6 @@ extension XCUIElement {
 
 extension XCUIElementQuery {
     
-    func deleteRows()  {
-        for _ in 0..<self.count {
-            let e = self.element(boundBy: 0)
-            if e.exists {
-                e.deleteRow()
-            }
-        }
-    }
 }
 
 
@@ -58,16 +45,25 @@ extension XCTestCase {
     func waitUntilEnabled( element: XCUIElement, timeout: TimeInterval ) {
         let predicate = NSPredicate(format: "enabled == TRUE")
 
-        expectation(for: predicate, evaluatedWith: element, handler: nil)
+        let _ = XCTWaiter.wait( for: [ expectation(for: predicate, evaluatedWith: element, handler: nil) ], timeout: timeout )
 
-        waitForExpectations(timeout: timeout, handler: nil)
-
+    }
+    
+    func wait( reason description: String, timeout: TimeInterval ) {
+        let _ = XCTWaiter.wait( for: [ expectation(description: description) ], timeout: timeout )
     }
 
 }
 final class PlantUMLAppUITests: XCTestCase {
+    
 
     override func setUpWithError() throws {
+// [iOS Localization and Internationalization Testing with XCUITest](https://medium.com/xcblog/ios-localization-and-internationalization-testing-with-xcuitest-495747a74775)
+//        let app = XCUIApplication()
+//        app.launchArguments += ["-AppleLanguages", "(en)"]
+//        app.launchArguments += ["-AppleLocale", "en_US"]
+//        app.launch()
+
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
         // In UI tests it is usually best to stop immediately when a failure occurs.
@@ -80,6 +76,28 @@ final class PlantUMLAppUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    func testFindConteMenuDeleteItem() throws {
+        // UI tests must launch the application that they test.
+        let app = XCUIApplication()
+        app.launch()
+
+        XCTAssertTrue(  app.collectionViews.element.waitForExistence(timeout: 10) )
+
+        let predicate = NSPredicate(format: "label beginswith 'Untitled'")
+        let query = app.collectionViews.cells.matching(predicate)
+        
+        XCTAssertTrue(query.element.exists)
+        XCTAssertTrue(query.count > 0)
+
+        let e = query.element(boundBy: 0)
+        XCTAssertEqual( e.elementType, XCUIElement.ElementType.cell)
+        e.press(forDuration: 2.0 )
+                
+        // [iOS UI testing: element descendants](https://pgu.dev/2020/12/20/ios-ui-tests-element-descendants.html)
+        print( "delete: \(app.collectionViews.buttons["Delete"].exists)" )
+        print( "elimina: \(app.collectionViews.buttons["Elimina"].exists)" )
+
+    }
     func testOpenAI() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
@@ -93,6 +111,8 @@ final class PlantUMLAppUITests: XCTestCase {
         
         XCTAssertTrue(cell.exists)
         
+        wait( reason: "wait before open diagram", timeout: 3.0 )
+
         cell.tap()
     
         XCTAssertTrue( app.tables.element.waitForExistence(timeout: 10) )
@@ -119,16 +139,25 @@ final class PlantUMLAppUITests: XCTestCase {
                     
             app.buttons["openai_submit"].tap()
 
-            self.waitUntilEnabled(element:  app.buttons["openai_submit"], timeout: 30.0)
+            self.waitUntilEnabled(element: app.buttons["openai_submit"], timeout: 30.0)
 
         }
         
-        openaiSubmit( "set title UML meets AI" )
+        openaiSubmit( "set title PlantUML meets OpenAI" )
         openaiSubmit( "make simple sequence diagram" )
         openaiSubmit( "sequence representing a microservice invoked using an api key" )
         openaiSubmit( "put in evidence participants" )
         openaiSubmit( "add validation api key" )
         openaiSubmit( "grouping api key validation as security" )
+        openaiSubmit( "remove useless (JWT) comment" )
+
+        app.buttons["openai"].tap()
+
+        wait( reason: "wait before exit", timeout: 5.0 )
+
+        app.buttons["editor"].tap()
+        
+        wait( reason: "wait before exit", timeout: 5.0 )
 
         // [How to access back bar button item in universal way under UITests in Xcode?](https://stackoverflow.com/a/38595332/521197)
         app.navigationBars.buttons.element(boundBy: 0).tap()
@@ -139,8 +168,15 @@ final class PlantUMLAppUITests: XCTestCase {
             
         XCTAssertTrue(query.element.exists)
         
-        query.deleteRows()
-        
+        for _ in 0..<query.count {
+            let e = query.element(boundBy: 0)
+            XCTAssertEqual( e.elementType, XCUIElement.ElementType.cell)
+            e.press(forDuration: 2.0 )
+            
+            XCTAssertTrue( app.collectionViews.buttons["Delete"].exists )
+            app.collectionViews.buttons["Delete"].tap()
+        }
+
         
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
