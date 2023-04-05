@@ -201,13 +201,13 @@ extension PlantUMLContentView {
                 }
             }
         }
-    label: {
-        //            Label( "Toggle Editor", systemImage: "rectangle.lefthalf.inset.filled" )
-        Label( "Toggle Editor", systemImage: "doc.plaintext.fill" )
-            .labelStyle(.iconOnly)
-            .foregroundColor( isEditorVisible ? .blue : .gray)
-        
-    }
+        label: {
+            Label( "Toggle Editor", systemImage: "doc.plaintext.fill" )
+                .labelStyle(.iconOnly)
+                .foregroundColor( isEditorVisible ? .blue : .gray)            
+        }
+        .accessibilityIdentifier("editor")
+
     }
     
     @available(swift, obsoleted: 1.1,message: "from 1.1 auto save has been introduced")
@@ -267,16 +267,15 @@ extension PlantUMLContentView {
                 }
             }
         }
-    label: {
-        //            Label( "Toggle Preview", systemImage: "rectangle.righthalf.inset.filled" )
-        Label( "Toggle Preview", systemImage: "photo.fill" )
+        label: {
+            Label( "Toggle Preview", systemImage: "photo.fill" )
+                .labelStyle(.iconOnly)
+                .foregroundColor( isDiagramVisible ? .blue : .gray)
         
-            .labelStyle(.iconOnly)
-            .foregroundColor( isDiagramVisible ? .blue : .gray)
-        
+        }
+        .accessibilityIdentifier("diagram")
     }
-    }
-    
+
     
     
 }
