@@ -83,20 +83,19 @@ struct PlantUMLContentView: View {
             })
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarLeading) {
-                    if isEditorVisible {
-                        HStack {
-                            // SaveButton()
-                            // Divider().background(Color.blue).padding(10)
-                            EditButton()
-                            fontSizeView()
-                            toggleLineNumberView()
-                        }
-                    }
                 }
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                     HStack( spacing: 0 ) {
                         SavingStateView( saving: saving )
                         ToggleEditorButton()
+                        if isEditorVisible {
+                            HStack {
+                                EditButton()
+                                fontSizeView()
+                                toggleLineNumberView()
+                            }
+                        }
+                        
                         ToggleDiagramButton()
                         if isDiagramVisible {
                             ScaleToFitButton()
@@ -108,10 +107,6 @@ struct PlantUMLContentView: View {
             
         }
         
-    }
-    
-    var PlantUMLDiagramViewFit: some View {
-        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
     }
     
 }
@@ -186,18 +181,14 @@ extension PlantUMLContentView {
             Button( action: { fontSize += 1 } ) {
                 Image( systemName: "textformat.size.larger")
             }
-            .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
-            Divider().background(Color.blue).frame(height:20)
+            Divider()
+                .background(Color.blue)
+                .frame(height:20)
+                .padding( .leading, 5)
             Button( action: { fontSize -= 1} ) {
                 Image( systemName: "textformat.size.smaller")
             }
-            .padding( EdgeInsets(top:0, leading: 5,bottom: 0, trailing: 0))
         }
-        //        .overlay {
-        //            RoundedRectangle(cornerRadius: 16)
-        //                .stroke(.blue, lineWidth: 1)
-        //        }
-        //.padding()
     }
     
     func ToggleEditorButton() -> some View {
@@ -238,6 +229,11 @@ extension PlantUMLContentView {
 //
 extension PlantUMLContentView {
     
+    
+    var PlantUMLDiagramViewFit: some View {
+        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
+    }
+
     func ShareDiagramButton() -> some View {
         
         Button(action: {
