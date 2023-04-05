@@ -30,7 +30,6 @@
 		A0D3C66A28984A11000838D7 /* PlantUMLUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C66928984A11000838D7 /* PlantUMLUITestsLaunchTests.swift */; };
 		A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */; };
 		A0F2B14329353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */; };
-		A0F329202902AC5E00E0C47C /* LineEditor in Frameworks */ = {isa = PBXBuildFile; productRef = A0F3291F2902AC5E00E0C47C /* LineEditor */; };
 		A0FB8F9C295616BF00910896 /* View+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08AA78329561170004DE329 /* View+UIImage.swift */; };
 /* End PBXBuildFile section */
 
@@ -84,7 +83,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0F329202902AC5E00E0C47C /* LineEditor in Frameworks */,
 				A043CE7C28E08C4C005A3AF7 /* PlantUMLKeyboard in Frameworks */,
 				A02F69B228D1E19600090D97 /* PlantUMLFramework in Frameworks */,
 			);
@@ -205,7 +203,6 @@
 			packageProductDependencies = (
 				A02F69B128D1E19600090D97 /* PlantUMLFramework */,
 				A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */,
-				A0F3291F2902AC5E00E0C47C /* LineEditor */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
@@ -280,7 +277,7 @@
 			);
 			mainGroup = A0D3C63D28984A0E000838D7;
 			packageReferences = (
-				A0F3291E2902AC5E00E0C47C /* XCRemoteSwiftPackageReference "PlantUML4iPad" */,
+				A0F4ADE229DDC455003FC055 /* XCRemoteSwiftPackageReference "SwiftUI-LineEditor" */,
 			);
 			productRefGroup = A0D3C64728984A0E000838D7 /* Products */;
 			projectDirPath = "";
@@ -688,11 +685,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A0F3291E2902AC5E00E0C47C /* XCRemoteSwiftPackageReference "PlantUML4iPad" */ = {
+		A0F4ADE229DDC455003FC055 /* XCRemoteSwiftPackageReference "SwiftUI-LineEditor" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bsorrentino/PlantUML4iPad.git";
+			repositoryURL = "https://github.com/bsorrentino/SwiftUI-LineEditor.git";
 			requirement = {
-				branch = line_editor;
+				branch = develop;
 				kind = branch;
 			};
 		};
@@ -706,11 +703,6 @@
 		A043CE7B28E08C4C005A3AF7 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
-		};
-		A0F3291F2902AC5E00E0C47C /* LineEditor */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A0F3291E2902AC5E00E0C47C /* XCRemoteSwiftPackageReference "PlantUML4iPad" */;
-			productName = LineEditor;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

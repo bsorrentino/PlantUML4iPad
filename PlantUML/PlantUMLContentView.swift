@@ -21,7 +21,7 @@ import LineEditor
 
 
 struct PlantUMLContentView: View {
-    typealias PlantUMLLineEditorView = StandardLineEditorView<SyntaxStructure,Symbol>
+    typealias PlantUMLLineEditorView = StandardLineEditorView<Symbol>
     
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
@@ -46,25 +46,8 @@ struct PlantUMLContentView: View {
         GeometryReader { geometry in
             HStack {
                 if( isEditorVisible ) {
-                    PlantUMLLineEditorView( items: $document.items,
-                                            fontSize: $fontSize,
-                                            showLine: $showLine) { onHide, onPressSymbol in
-                        PlantUMLKeyboardView( selectedTab: $keyboardTab,
-                                              onHide: onHide,
-                                              onPressSymbol: onPressSymbol)
-                    }
-                                            .onChange(of: document.items ) { _ in
-                                                saving = true
-                                                document.updateRequest.send()
-                                            }
-                                            .onReceive(document.updateRequest.publisher) { _ in
-                                                withAnimation(.easeInOut(duration: 1.0)) {
-                                                    document.save()
-                                                    saving = false
-                                                }
-                                            }
+                    EditorView_Fragment
                 }
-                //                Divider().background(Color.blue).padding()
                 
                 if isDiagramVisible {
                     if isScaleToFit {
@@ -81,7 +64,16 @@ struct PlantUMLContentView: View {
                 }
                 
             }
-            //.navigationBarTitleDisplayMode(.inline)
+            .onChange(of: document.text ) { _ in
+                saving = true
+                document.updateRequest.send()
+            }
+            .onReceive(document.updateRequest.publisher) { _ in
+                withAnimation(.easeInOut(duration: 1.0)) {
+                    document.save()
+                    saving = false
+                }
+            }
             .onRotate(perform: { orientation in
                 if  (orientation.isPortrait && isDiagramVisible) ||
                         (orientation.isLandscape && isEditorVisible)
@@ -125,10 +117,21 @@ struct PlantUMLContentView: View {
 }
 
 //
-// MARK: - Editor actions -
+// MARK: - Editor extension -
 //
 extension PlantUMLContentView {
     
+    var EditorView_Fragment: some View {
+         
+        PlantUMLLineEditorView( text: $document.text,
+                                fontSize: $fontSize,
+                                showLine: $showLine) { onHide, onPressSymbol in
+            PlantUMLKeyboardView( selectedTab: $keyboardTab,
+                                  onHide: onHide,
+                                  onPressSymbol: onPressSymbol)
+        }
+     }
+     
     // [SwiftUI Let View disappear automatically](https://stackoverflow.com/a/60820491/521197)
     struct SavedStateView: View {
         @Binding var visible: Bool
