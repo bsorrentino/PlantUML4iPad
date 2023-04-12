@@ -26,7 +26,9 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      language = "en"
+      region = "IT">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -45,6 +47,17 @@
                BlueprintIdentifier = "A0D3C66228984A11000838D7"
                BuildableName = "PlantUMLUITests.xctest"
                BlueprintName = "PlantUMLUITests"
+               ReferencedContainer = "container:PlantUMLApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A09F62E529DDD10400650C9A"
+               BuildableName = "PlantUMLAppUITests.xctest"
+               BlueprintName = "PlantUMLAppUITests"
                ReferencedContainer = "container:PlantUMLApp.xcodeproj">
             </BuildableReference>
          </TestableReference>

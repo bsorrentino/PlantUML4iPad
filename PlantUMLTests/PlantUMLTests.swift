@@ -6,7 +6,8 @@
 //
 
 import XCTest
-@testable import PlantUML
+@testable import PlantUMLApp
+import PlantUMLFramework
 
 class PlantUMLTests: XCTestCase {
 
@@ -35,18 +36,7 @@ class PlantUMLTests: XCTestCase {
 
     func testSwiftPlantUML() {
 
-        let clazz = SyntaxStructure(
-            accessibility: .open,
-            attribute: nil,
-            attributes: nil,
-            elements: nil,
-            inheritedTypes: nil,
-            kind: .class,
-            name: "test",
-            runtimename: nil,
-            substructure: nil,
-            typename: nil
-        )
+        let clazz = SyntaxStructure(rawValue: "title test")
 
         let script = PlantUMLScript( items: [clazz] )
 

@@ -1,12 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "plantuml4ipad",
+      "identity" : "swiftui-lineeditor",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bsorrentino/PlantUML4iPad.git",
+      "location" : "https://github.com/bsorrentino/SwiftUI-LineEditor.git",
       "state" : {
-        "branch" : "line_editor",
-        "revision" : "c32ca4eebd381f6030d1b0d3f09bfc7b08bdf0b0"
+        "revision" : "0b06a72166ae0a3a054d7a011f482be27feb9767",
+        "version" : "1.0.0"
       }
     }
   ],

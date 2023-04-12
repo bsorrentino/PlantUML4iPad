@@ -29,30 +29,27 @@ class DebounceRequest {
     }
 }
 
-class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
+class PlantUMLDocumentProxy : ObservableObject {
     
     @Binding var object: PlantUMLDocument
-    @Published var items:Array<SyntaxStructure>
+    @Published var text: String
     
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
-    
-    var description: String {
-        self.items.map { $0.rawValue }.joined( separator: "\n" )
-    }
     
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
 
     init( document: Binding<PlantUMLDocument> ) {
-        print( "PlantUMLDiagramObject.init" )
         self._object = document
-        self.items = document.wrappedValue.text
+        self.text = document.wrappedValue.text
+    }
+    
+    func buildURL() -> URL {
+        
+        let items = text
                         .split(whereSeparator: \.isNewline)
                         .map { line in
                             SyntaxStructure( rawValue: String(line) )
                         }
-    }
-    
-    func buildURL() -> URL {
         let script = PlantUMLScript( items: items )
                
         return presenter.url( of: script )
@@ -60,7 +57,7 @@ class PlantUMLDocumentProxy : ObservableObject, CustomStringConvertible {
     
     func save() {
         print( "save document")
-        self.object.text = self.description
+        self.object.text = self.text
     }
 
     

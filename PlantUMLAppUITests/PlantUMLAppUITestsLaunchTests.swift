@@ -1,13 +1,13 @@
 //
-//  PlantUMLUITestsLaunchTests.swift
-//  PlantUMLUITests
+//  PlantUMLAppUITestsLaunchTests.swift
+//  PlantUMLAppUITests
 //
-//  Created by Bartolomeo Sorrentino on 01/08/22.
+//  Created by Bartolomeo Sorrentino on 05/04/23.
 //
 
 import XCTest
 
-class PlantUMLUITestsLaunchTests: XCTestCase {
+final class PlantUMLAppUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
