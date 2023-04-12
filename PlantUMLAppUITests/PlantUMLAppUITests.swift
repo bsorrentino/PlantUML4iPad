@@ -156,7 +156,12 @@ final class PlantUMLAppUITests: XCTestCase {
         wait( reason: "wait before exit", timeout: 5.0 )
 
         app.buttons["editor"].tap()
-        
+
+        XCTAssertTrue( app.buttons["font+"].exists )
+        app.buttons["font+"].tap()
+        app.buttons["font+"].tap()
+        app.buttons["font+"].tap()
+
         wait( reason: "wait before exit", timeout: 5.0 )
 
         // [How to access back bar button item in universal way under UITests in Xcode?](https://stackoverflow.com/a/38595332/521197)

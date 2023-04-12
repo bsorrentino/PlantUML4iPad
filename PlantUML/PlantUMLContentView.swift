@@ -202,6 +202,7 @@ extension PlantUMLContentView {
             Button( action: { fontSize += 1 } ) {
                 Image( systemName: "textformat.size.larger")
             }
+            .accessibilityIdentifier("font+")
             Divider()
                 .background(Color.blue)
                 .frame(height:20)
@@ -209,6 +210,7 @@ extension PlantUMLContentView {
             Button( action: { fontSize -= 1} ) {
                 Image( systemName: "textformat.size.smaller")
             }
+            .accessibilityIdentifier("font-")
         }
     }
     
