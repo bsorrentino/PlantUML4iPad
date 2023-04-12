@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bsorrentino/SwiftUI-LineEditor.git",
       "state" : {
-        "branch" : "develop",
-        "revision" : "88e7da9346e4b0d17d4bb7b545283f11eb84a6a3"
+        "revision" : "0b06a72166ae0a3a054d7a011f482be27feb9767",
+        "version" : "1.0.0"
       }
     }
   ],
