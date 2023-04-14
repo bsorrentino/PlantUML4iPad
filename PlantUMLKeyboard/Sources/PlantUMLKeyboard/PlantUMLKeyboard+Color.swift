@@ -200,6 +200,7 @@ struct ColorKeyButton: View {
             Label(symbol.id, systemImage: "paintbrush.fill")
                 .font( (colorScheme == .dark) ? .system(size: 16) : .system(size: 16).bold() )
         }
+        .accessibilityIdentifier(symbol.id)
         .buttonStyle( TextKeyButtonStyle() )
         .onReceive(coordinator.$selectedColor ) { color in
             if let color {

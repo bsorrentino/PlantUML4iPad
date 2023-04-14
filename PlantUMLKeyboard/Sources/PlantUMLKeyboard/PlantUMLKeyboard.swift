@@ -33,6 +33,7 @@ public struct PlantUMLKeyboardView: View {
                                 .labelStyle(.titleOnly)
                         }
                         .tag( group.name )
+                        .accessibilityIdentifier(group.name)
                         //.background(Color.gray.opacity(0.7))
 
 
@@ -119,6 +120,7 @@ extension PlantUMLKeyboardView {
             Text(symbol.id)
                 .font( (colorScheme == .dark) ? .system(size: 16) : .system(size: 16).bold() )
         }
+        .accessibilityIdentifier(symbol.id)
         .buttonStyle( TextKeyButtonStyle() )
     }
     
