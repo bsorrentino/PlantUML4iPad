@@ -41,16 +41,6 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A0D3C66228984A11000838D7"
-               BuildableName = "PlantUMLUITests.xctest"
-               BlueprintName = "PlantUMLUITests"
-               ReferencedContainer = "container:PlantUMLApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
             skipped = "NO"
             parallelizable = "YES">
             <BuildableReference

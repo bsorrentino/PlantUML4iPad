@@ -18,9 +18,7 @@ extension XCUIElement {
 
         if let _ = self.value as? String {
             
-            for _ in 1...times {
-                self.typeText( XCUIKeyboardKey.delete.rawValue )
-            }
+            self.typeText( String(repeating: XCUIKeyboardKey.delete.rawValue, count: times))
         }
 
     }

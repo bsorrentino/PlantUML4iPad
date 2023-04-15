@@ -48,6 +48,7 @@ struct ChoiceKeyButton: View {
             Label(symbol.id, systemImage: "list.bullet")
                 .font( (colorScheme == .dark) ? .system(size: 16) : .system(size: 16).bold() )
         }
+        .accessibilityIdentifier(symbol.id)
         .disabled( symbol.additionalValues == nil )
         .buttonStyle( TextKeyButtonStyle() )
         .onChange(of: selection) { _ in
@@ -99,9 +100,12 @@ struct ChoiceView: View {
                         Label(title, systemImage: "xmark")
                             .labelStyle( .iconOnly )
                     }
+                    .accessibilityIdentifier("dismiss")
+                    
                 }
             }
         }
+        .accessibilityIdentifier("choiceview")
     }
 }
 
