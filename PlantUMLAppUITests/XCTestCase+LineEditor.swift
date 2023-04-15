@@ -9,7 +9,7 @@ import XCTest
 
 extension XCTestCase {
     
-    func getCellTextField( table: XCUIElement, atRow row: Int, handler: (( XCUIElement ) -> Void)? = nil ) -> Void {
+    func getCellTextField( table: XCUIElement, atRow row: Int, handler: (( XCUIElement ) -> Void) ) -> Void {
         
         XCTAssertEqual( table.elementType, XCUIElement.ElementType.table)
         XCTAssertTrue( row >= 0 && row < table.cells.count, "index: \(row) is out of bound \(table.cells.count)")
@@ -20,7 +20,7 @@ extension XCTestCase {
         let textField = cell.textFields.element(boundBy: 0 )
         XCTAssertTrue(textField.exists)
         
-        handler?( textField )
+        handler( textField )
         
     }
 

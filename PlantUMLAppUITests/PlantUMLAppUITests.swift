@@ -153,6 +153,20 @@ final class PlantUMLAppUITests: XCTestCase {
 
     }
     
+    func openNewFile( _ app: XCUIApplication ) {
+        
+        let predicate = NSPredicate(format: "label beginswith 'Create Document'")
+        let cell = app.collectionViews.cells.matching(predicate).element
+        
+        XCTAssertTrue(cell.exists)
+        
+        wait( reason: "wait before open diagram", timeout: 1.0 )
+
+        cell.tap()
+        
+        XCTAssertTrue( app.tables.element.waitForExistence(timeout: 10) )
+
+    }
     
     func selectChoice(  _ app: XCUIApplication, ofTab tab: String, forKey key: String, value choice: String  ) {
         
@@ -208,18 +222,10 @@ final class PlantUMLAppUITests: XCTestCase {
 
         XCTAssertTrue(  app.collectionViews.element.waitForExistence(timeout: 10) )
         
-        let predicate = NSPredicate(format: "label beginswith 'Create Document'")
-        let cell = app.collectionViews.cells.matching(predicate).element
-        
-        XCTAssertTrue(cell.exists)
-        
-        wait( reason: "wait before open diagram", timeout: 3.0 )
-
-        cell.tap()
+        openNewFile(app)
     
-        XCTAssertTrue( app.tables.element.waitForExistence(timeout: 10) )
-        XCTAssertTrue( app.buttons["editor"].waitForExistence(timeout: 10) )
-        XCTAssertTrue( app.buttons["diagram"].waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.buttons["editor"].exists )
+        XCTAssertTrue( app.buttons["diagram"].exists )
 
         app.buttons["editor"].tap()
         
@@ -285,11 +291,49 @@ final class PlantUMLAppUITests: XCTestCase {
         
         guard let app else { XCTFail( "error creating XCUIApplication instance") ; return }
 
+
+        UIPasteboard.general.string =
+                """
+                
+                Bob -> Alice : Authentication Request
+                Bob <- Alice : Authentication Response
+                
+                """
+        
+        
         app.launch()
 
         XCTAssertTrue(  app.collectionViews.element.waitForExistence(timeout: 10) )
-
         
+        openNewFile(app)
+    
+        XCTAssertTrue( app.buttons["editor"].exists )
+        XCTAssertTrue( app.buttons["diagram"].exists )
+
+        app.buttons["editor"].tap()
+        
+        XCTAssertEqual( app.tables.cells.count, 1 )
+
+        getCellTextField( table: app.tables.element, atRow: 0 ) { textField in
+            
+            XCTAssertEqual(textField.valueAsString(), "Title untitled" )
+            
+            textField.tap()
+
+            let paste = app.menuItems["Paste"]
+
+            let lastCharCursor = textField.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.0))
+            lastCharCursor.tap()
+
+            XCTAssertTrue(paste.exists)
+
+            paste.tap()
+            
+            XCTAssertEqual(textField.valueAsString(), "Title untitled")
+            
+        }
+
+        XCTAssertEqual( app.tables.cells.count, 4 )
     }
     
     
@@ -303,18 +347,10 @@ final class PlantUMLAppUITests: XCTestCase {
 
         XCTAssertTrue(  app.collectionViews.element.waitForExistence(timeout: 10) )
 
-        let predicate = NSPredicate(format: "label beginswith 'Create Document'")
-        let cell = app.collectionViews.cells.matching(predicate).element
-        
-        XCTAssertTrue(cell.exists)
-        
-        wait( reason: "wait before open diagram", timeout: 3.0 )
-
-        cell.tap()
+        openNewFile(app)
     
-        XCTAssertTrue( app.tables.element.waitForExistence(timeout: 10) )
-        XCTAssertTrue( app.buttons["editor"].waitForExistence(timeout: 10) )
-        XCTAssertTrue( app.buttons["diagram"].waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.buttons["editor"].exists )
+        XCTAssertTrue( app.buttons["diagram"].exists )
 
         app.buttons["editor"].tap()
         
@@ -436,18 +472,10 @@ final class PlantUMLAppUITests: XCTestCase {
 
         XCTAssertTrue(  app.collectionViews.element.waitForExistence(timeout: 10) )
 
-        let predicate = NSPredicate(format: "label beginswith 'Create Document'")
-        let cell = app.collectionViews.cells.matching(predicate).element
-        
-        XCTAssertTrue(cell.exists)
-        
-        wait( reason: "wait before open diagram", timeout: 3.0 )
-
-        cell.tap()
+        openNewFile(app)
     
-        XCTAssertTrue( app.tables.element.waitForExistence(timeout: 10) )
-        XCTAssertTrue( app.buttons["editor"].waitForExistence(timeout: 10) )
-        XCTAssertTrue( app.buttons["diagram"].waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.buttons["editor"].exists )
+        XCTAssertTrue( app.buttons["diagram"].exists )
 
         app.buttons["editor"].tap()
         
