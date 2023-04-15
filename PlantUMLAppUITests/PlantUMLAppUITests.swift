@@ -279,6 +279,20 @@ final class PlantUMLAppUITests: XCTestCase {
         
     }
     
+    func testCopyAndPasteDiagram() {
+        // UI tests must launch the application that they test.
+        self.app = XCUIApplication()
+        
+        guard let app else { XCTFail( "error creating XCUIApplication instance") ; return }
+
+        app.launch()
+
+        XCTAssertTrue(  app.collectionViews.element.waitForExistence(timeout: 10) )
+
+        
+    }
+    
+    
     func testSequenceDiagram() throws {
         // UI tests must launch the application that they test.
         self.app = XCUIApplication()
