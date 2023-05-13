@@ -33,7 +33,7 @@ class PlantUMLDocumentProxy : ObservableObject {
     
     @Binding var object: PlantUMLDocument
     @Published var text: String
-
+    
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
     
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
@@ -46,7 +46,13 @@ class PlantUMLDocumentProxy : ObservableObject {
     }
     
     func buildURL() -> URL {
-        let script = PlantUMLScript( items: Self.buildSyntaxStructureItems( from: self.text ) )
+        
+        let items = text
+                        .split(whereSeparator: \.isNewline)
+                        .map { line in
+                            SyntaxStructure( rawValue: String(line) )
+                        }
+        let script = PlantUMLScript( items: items )
                
         return presenter.url( of: script )
     }

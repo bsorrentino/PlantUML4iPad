@@ -36,7 +36,7 @@ class PlantUMLTests: XCTestCase {
 
     func testSwiftPlantUML() {
 
-        let clazz:SyntaxStructure = SyntaxStructure(rawValue: "class Test" )
+        let clazz = SyntaxStructure(rawValue: "title test")
 
         let script = PlantUMLScript( items: [clazz] )
 

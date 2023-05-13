@@ -13,13 +13,13 @@ extension PlantUMLContentView {
     var ToggleOpenAIButton: some View {
         
         Button {
-            viewState.isOpenAIVisible.toggle()
+            isOpenAIVisible.toggle()
         }
         label: {
             Label( "OpenAI Editor", systemImage: "brain" )
                 .environment(\.symbolVariants, .fill)
                 .labelStyle(.iconOnly)
-                .foregroundColor( viewState.isOpenAIVisible ? .blue : .gray)
+                .foregroundColor( isOpenAIVisible ? .blue : .gray)
         }
         .accessibilityIdentifier("openai")
     }
@@ -190,7 +190,14 @@ extension OpenAIView {
         
         ZStack(alignment: .topTrailing ) {
             
-            Group {
+            VStack(alignment: .leading) {
+                
+                if case .Error( let err ) = service.status {
+                    Divider()
+                    Text( err )
+                        .foregroundColor(.red)
+                }
+
                 TextEditor(text: $instruction)
                     .font(.title3.monospaced() )
                     .lineSpacing(15)
@@ -199,12 +206,6 @@ extension OpenAIView {
                     .padding( .trailing, 25)
                     .padding( .bottom, 35)
                     .accessibilityIdentifier("openai_instruction")
-                
-                if case .Error( let err ) = service.status {
-                    Divider()
-                    Text( err )
-                        .foregroundColor(.red)
-                }
             }
             .border(.gray, width: 1)
             
