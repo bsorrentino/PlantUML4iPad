@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Window+Utils.swift
 //  
 //
 //  Created by Bartolomeo Sorrentino on 13/09/22.
@@ -23,14 +23,21 @@ public func getKeyboardWindow() -> UIWindow? {
 }
 */
 
-public func getWindows() -> [UIWindow]? {
+public func getFirstScene() -> UIWindowScene? {
     
 
     let scenes = UIApplication.shared.connectedScenes
     guard let windowScene = scenes.first as? UIWindowScene else {
         return nil
     }
-    return windowScene.windows
+
+    return windowScene
+
+}
+
+public func getWindows() -> [UIWindow]? {
+    
+    return getFirstScene()?.windows
 
 }
 
