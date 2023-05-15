@@ -72,6 +72,7 @@
 		A0943A6D29448A1700342426 /* AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppStore.xcassets; sourceTree = "<group>"; };
 		A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScaleToFit+ToggleStyle.swift"; sourceTree = "<group>"; };
 		A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncImage+Cache.swift"; sourceTree = "<group>"; };
+		A0A139312A129F5400B69FBC /* AppSecureStorage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppSecureStorage; sourceTree = "<group>"; };
 		A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramView.swift; sourceTree = "<group>"; };
 		A0A42A78289AC37C00E929EB /* PlantUMLDocumentProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDocumentProxy.swift; sourceTree = "<group>"; };
 		A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Conditional.swift"; sourceTree = "<group>"; };
@@ -149,6 +150,7 @@
 				A038DB5B29D452880032E312 /* OpenAI.xcconfig */,
 				A01907EF2951CD5C0059CCBE /* privacy_policy.md */,
 				A0943A6D29448A1700342426 /* AppStore.xcassets */,
+				A0A139312A129F5400B69FBC /* AppSecureStorage */,
 				A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */,
 				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
 				A0D3C64828984A0E000838D7 /* PlantUML */,
