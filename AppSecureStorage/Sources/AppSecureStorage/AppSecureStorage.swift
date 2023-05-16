@@ -7,26 +7,34 @@
 import SwiftUI
 
 @propertyWrapper
-struct AppSecureStorage: DynamicProperty {
-    @State private var value = ""
+public struct AppSecureStorage: DynamicProperty {
+    @State private var value:String?
     private let key: String
     private let accessibility:KeychainItemAccessibility
 
-    var wrappedValue: String? {
+    public var wrappedValue: String? {
         get {
             KeychainWrapper.standard.string(forKey: key, withAccessibility: self.accessibility)
         }
 
         nonmutating set {
-            guard let newValue else {
-                KeychainWrapper.standard.removeObject(forKey: key, withAccessibility: self.accessibility)
-                return
+            if let newValue  {
+                KeychainWrapper.standard.set( newValue, forKey: key, withAccessibility: self.accessibility)
             }
-            KeychainWrapper.standard.set( newValue, forKey: key, withAccessibility: self.accessibility)
+            else {
+                KeychainWrapper.standard.removeObject(forKey: key, withAccessibility: self.accessibility)
+            }
+            value = newValue
         }
     }
 
-    init(_ key: String, accessibility:KeychainItemAccessibility =  .whenUnlocked ) {
+    public var projectedValue: Binding<String> {
+        Binding(
+            get: { wrappedValue ?? "" },
+            set: { wrappedValue = $0 }
+        )
+    }
+    public init(_ key: String, accessibility:KeychainItemAccessibility =  .whenUnlocked ) {
         self.key = key
         self.accessibility = accessibility
     }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import OpenAIKit
+import AppSecureStorage
 
 extension PlantUMLContentView {
     
@@ -78,24 +79,48 @@ class OpenAIService : ObservableObject {
     }
     
     @Published public var status: Status = .Ready
+    @AppSecureStorage("openaikey") var openAIKey:String?
+    @AppSecureStorage("openaiorg") var openAIOrg:String?
+
     fileprivate var clipboard = LILOFixedSizeQueue<String>( maxSize: 10 )
     fileprivate var prompt = LILOFixedSizeQueue<String>( maxSize: 10 )
     
-    lazy var openAI: OpenAI? = {
-        
-        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty else {
+//    lazy var openAI: OpenAI? = {
+//
+//        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty else {
+//            status = .Error("api key not found!")
+//            return nil
+//        }
+//        guard let orgId = Bundle.main.object(forInfoDictionaryKey: "OPENAI_ORG_ID") as? String, !orgId.isEmpty else {
+//            status = .Error("org id not found!")
+//            return nil
+//        }
+//
+//        return OpenAI( Configuration(organizationId: orgId, apiKey: apiKey))
+//
+//    }()
+
+    var openAI: OpenAI? {
+
+        guard let openAIKey  else {
             status = .Error("api key not found!")
             return nil
         }
-        guard let orgId = Bundle.main.object(forInfoDictionaryKey: "OPENAI_ORG_ID") as? String, !orgId.isEmpty else {
+        guard let openAIOrg  else {
             status = .Error("org id not found!")
             return nil
         }
-        
-        return OpenAI( Configuration(organizationId: orgId, apiKey: apiKey))
-        
-    }()
-    
+
+        return OpenAI( Configuration(organizationId: openAIOrg, apiKey: openAIKey))
+
+    }
+
+    var isSettingValid:Bool {
+        guard let openAIKey, !openAIKey.isEmpty else { return false }
+        guard let openAIOrg, !openAIOrg.isEmpty else { return false }
+        return true
+    }
+ 
     @MainActor
     func generateEdit( input: String, instruction: String ) async -> String? {
         
@@ -133,16 +158,18 @@ class OpenAIService : ObservableObject {
 struct OpenAIView : View {
     
     enum Tab {
-        case Input
-        case Result
         case Prompt
+        case Result
+        case PromptHistory
+        case Settings
     }
     
     @ObservedObject var service:OpenAIService
     @Binding var result: String
     @State var instruction:String = ""
-    @State private var tabs: Tab = .Input
-    
+    @State private var tabs: Tab = .Prompt
+    @State private var hideOpenAISecrets = true
+
     var isEditing:Bool {
         if case .Editing = service.status {
             return true
@@ -154,27 +181,42 @@ struct OpenAIView : View {
         
         VStack(spacing:0) {
             HStack(spacing: 10) {
-                Button( action: { tabs = .Input } ) {
-                    Label( "OpenAI", systemImage: "")
-                }
-                Divider().frame(height: 20 )
                 Button( action: { tabs = .Prompt } ) {
                     Label( "Prompt", systemImage: "")
                 }
+                .disabled( !service.isSettingValid )
+
+                Divider().frame(height: 20 )
+                Button( action: { tabs = .PromptHistory } ) {
+                    Label( "History", systemImage: "")
+                }
+                .disabled( !service.isSettingValid )
+                
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .Result } ) {
                     Label( "Result", systemImage: "")
                 }
-            }
-            if case .Input = tabs {
-                Input_Fragment
-                    .frame( minHeight: 100 )
-            }
-            if case .Result = tabs {
-                Result_Fragment
+                .disabled( !service.isSettingValid )
+                
+                Divider().frame(height: 20 )
+                Button( action: { tabs = .Settings } ) {
+                    Label( "Settings", systemImage: "gearshape").labelStyle(.iconOnly)
+                }
             }
             if case .Prompt = tabs {
                 Prompt_Fragment
+                    .frame( minHeight: 100 )
+                    
+            }
+            if case .Result = tabs {
+                Result_Fragment
+                    .disabled( !service.isSettingValid )
+            }
+            if case .PromptHistory = tabs {
+                HistoryPrompts_Fragment
+            }
+            if case .Settings = tabs {
+                Settings_Fragment
             }
         }
         .padding( EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 0))
@@ -183,10 +225,10 @@ struct OpenAIView : View {
     
 }
 
-// MARK: Input Extension
+// MARK: Prompt Extension
 extension OpenAIView {
     
-    var Input_Fragment: some View {
+    var Prompt_Fragment: some View {
         
         ZStack(alignment: .topTrailing ) {
             
@@ -274,17 +316,22 @@ extension OpenAIView {
     
 }
 
-// MARK: Prompt Extension
+// MARK: History Extension
 extension OpenAIView {
     
-    var Prompt_Fragment: some View {
+    var HistoryPrompts_Fragment: some View {
         
-        List( service.prompt.elements, id: \.self ) { prompt in
-            HStack {
-                Text( prompt )
-                CopyToClipboardButton( value: prompt )
+        HStack {
+            List( service.prompt.elements, id: \.self ) { prompt in
+                HStack {
+                    Text( prompt )
+                    CopyToClipboardButton( value: prompt )
+                }
             }
         }
+        .border(.gray)
+        .padding()
+
     }
     
 }
@@ -293,12 +340,45 @@ extension OpenAIView {
 extension OpenAIView {
     
     var Result_Fragment: some View {
-        
-        ScrollView {
-            Text( result )
-                .font( .system(size: 14.0, design: .monospaced) )
+        HStack {
+            Spacer()
+            ScrollView {
+                Text( result )
+                    .font( .system(size: 14.0, design: .monospaced) )
+                    .padding()
+            }
+            Spacer()
         }
+        .border(.gray)
         .padding()
+    }
+    
+}
+
+// MARK: Settings Extension
+extension OpenAIView {
+   
+    var Settings_Fragment: some View {
+        Form {
+            Section {
+                SecureToggleField( "Api Key", value: service.$openAIKey, hidden: hideOpenAISecrets)
+                SecureToggleField( "Org Id", value: service.$openAIOrg, hidden: hideOpenAISecrets)
+                
+            }
+            header: {
+                HStack {
+                    Text("OpenAI Secrets")
+                    HideToggleButton(hidden: $hideOpenAISecrets)
+                }
+            }
+            footer: {
+                HStack {
+                    Spacer()
+                    Text("these data will be stored in onboard secure keychain")
+                }
+            }
+        }
+        
     }
     
 }

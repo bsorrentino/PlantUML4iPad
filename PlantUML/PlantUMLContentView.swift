@@ -10,7 +10,7 @@ import Combine
 import PlantUMLFramework
 import PlantUMLKeyboard
 import LineEditor
-
+import AppSecureStorage
 //
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
 //
@@ -34,6 +34,7 @@ struct PlantUMLContentView: View {
     @State private var isEditorVisible  = true
     //@State private var isPreviewVisible = false
     private var isDiagramVisible:Bool { !isEditorVisible}
+    
     @State var isOpenAIVisible  = false
     
     @State var keyboardTab: String  = "general"

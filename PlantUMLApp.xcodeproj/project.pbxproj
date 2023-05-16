@@ -19,6 +19,9 @@
 		A09F62DD29DDD08600650C9A /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DC29DDD08600650C9A /* PlantUMLFramework */; };
 		A09F62DF29DDD08D00650C9A /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */; };
 		A09F62E129DDD09400650C9A /* LineEditor in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62E029DDD09400650C9A /* LineEditor */; };
+		A0A139332A12AD8700B69FBC /* AppSecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A0A139322A12AD8700B69FBC /* AppSecureStorage */; };
+		A0A139352A13C49A00B69FBC /* View+Secure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A139342A13C49A00B69FBC /* View+Secure.swift */; };
+		A0A139362A13C49A00B69FBC /* View+Secure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A139342A13C49A00B69FBC /* View+Secure.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLDocumentProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLDocumentProxy.swift */; };
 		A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */; };
@@ -73,6 +76,7 @@
 		A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScaleToFit+ToggleStyle.swift"; sourceTree = "<group>"; };
 		A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AsyncImage+Cache.swift"; sourceTree = "<group>"; };
 		A0A139312A129F5400B69FBC /* AppSecureStorage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppSecureStorage; sourceTree = "<group>"; };
+		A0A139342A13C49A00B69FBC /* View+Secure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Secure.swift"; sourceTree = "<group>"; };
 		A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramView.swift; sourceTree = "<group>"; };
 		A0A42A78289AC37C00E929EB /* PlantUMLDocumentProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDocumentProxy.swift; sourceTree = "<group>"; };
 		A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Conditional.swift"; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0BD13F529EB161E0048D9C6 /* LineEditor in Frameworks */,
+				A0A139332A12AD8700B69FBC /* AppSecureStorage in Frameworks */,
 				A0BD13F329EB161E0048D9C6 /* PlantUMLKeyboard in Frameworks */,
 				A0BD13F129EB161E0048D9C6 /* PlantUMLFramework in Frameworks */,
 			);
@@ -175,6 +180,7 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
+				A0A139342A13C49A00B69FBC /* View+Secure.swift */,
 				A068572D29D8B31100E82C2F /* View+Clipboard.swift */,
 				A08AA78329561170004DE329 /* View+UIImage.swift */,
 				A047206E29549ACC007E061F /* SwiftUI+Share.swift */,
@@ -255,6 +261,7 @@
 				A0BD13F029EB161E0048D9C6 /* PlantUMLFramework */,
 				A0BD13F229EB161E0048D9C6 /* PlantUMLKeyboard */,
 				A0BD13F429EB161E0048D9C6 /* LineEditor */,
+				A0A139322A12AD8700B69FBC /* AppSecureStorage */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
@@ -366,6 +373,7 @@
 				A0C5C2E52A0FD12C0038C889 /* XCUIElement+TextField.swift in Sources */,
 				A0C5C2E02A0FD05A0038C889 /* PlantUMLAppUITests.swift in Sources */,
 				A0C5C2E12A0FD05A0038C889 /* PlantUMLAppUITestsLaunchTests.swift in Sources */,
+				A0A139362A13C49A00B69FBC /* View+Secure.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +392,7 @@
 				A0D3C64E28984A0E000838D7 /* PlantUMLContentView.swift in Sources */,
 				A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */,
 				A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */,
+				A0A139352A13C49A00B69FBC /* View+Secure.swift in Sources */,
 				A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 			);
@@ -780,6 +789,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A0F4ADE229DDC455003FC055 /* XCRemoteSwiftPackageReference "SwiftUI-LineEditor" */;
 			productName = LineEditor;
+		};
+		A0A139322A12AD8700B69FBC /* AppSecureStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppSecureStorage;
 		};
 		A0BD13F029EB161E0048D9C6 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;
