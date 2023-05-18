@@ -140,31 +140,47 @@ open class KeychainWrapper {
     // MARK: Public Getters
     
     open func integer(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Int? {
-        guard let numberValue = object(forKey: key, withAccessibility: accessibility) as? NSNumber else {
+        guard let keychainData = data(forKey: key, withAccessibility: accessibility) else {
             return nil
         }
-        
+
+        guard let numberValue = try! NSKeyedUnarchiver.unarchivedObject(ofClass: NSNumber.self, from: keychainData) else {
+            return nil
+        }
+
         return numberValue.intValue
     }
     
     open func float(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Float? {
-        guard let numberValue = object(forKey: key, withAccessibility: accessibility) as? NSNumber else {
+        guard let keychainData = data(forKey: key, withAccessibility: accessibility) else {
             return nil
         }
-        
+
+        guard let numberValue = try! NSKeyedUnarchiver.unarchivedObject(ofClass: NSNumber.self, from: keychainData) else {
+            return nil
+        }
+
         return numberValue.floatValue
     }
     
     open func double(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Double? {
-        guard let numberValue = object(forKey: key, withAccessibility: accessibility) as? NSNumber else {
+        guard let keychainData = data(forKey: key, withAccessibility: accessibility) else {
             return nil
         }
-        
+
+        guard let numberValue = try! NSKeyedUnarchiver.unarchivedObject(ofClass: NSNumber.self, from: keychainData) else {
+            return nil
+        }
+
         return numberValue.doubleValue
     }
     
     open func bool(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> Bool? {
-        guard let numberValue = object(forKey: key, withAccessibility: accessibility) as? NSNumber else {
+        guard let keychainData = data(forKey: key, withAccessibility: accessibility) else {
+            return nil
+        }
+
+        guard let numberValue = try! NSKeyedUnarchiver.unarchivedObject(ofClass: NSNumber.self, from: keychainData) else {
             return nil
         }
         
@@ -183,20 +199,6 @@ open class KeychainWrapper {
         
         return String(data: keychainData, encoding: String.Encoding.utf8) as String?
     }
-    
-    /// Returns an object that conforms to NSCoding for a specified key.
-    ///
-    /// - parameter forKey: The key to lookup data for.
-    /// - parameter withAccessibility: Optional accessibility to use when retrieving the keychain item.
-    /// - returns: The decoded object associated with the key if it exists. If no data exists, or the data found cannot be decoded, returns nil.
-    open func object(forKey key: String, withAccessibility accessibility: KeychainItemAccessibility? = nil) -> NSCoding? {
-        guard let keychainData = data(forKey: key, withAccessibility: accessibility) else {
-            return nil
-        }
-        
-        return try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(keychainData) as? NSCoding
-    }
-
     
     /// Returns a Data object for a specified key.
     ///
