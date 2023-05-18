@@ -85,6 +85,15 @@ class OpenAIService : ObservableObject {
     fileprivate var clipboard = LILOFixedSizeQueue<String>( maxSize: 10 )
     fileprivate var prompt = LILOFixedSizeQueue<String>( maxSize: 10 )
     
+    init() {
+        
+        if let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty {
+            openAIKey = apiKey
+        }
+        if let orgId = Bundle.main.object(forInfoDictionaryKey: "OPENAI_ORG_ID") as? String, !orgId.isEmpty  {
+            openAIOrg = orgId
+        }
+    }
 //    lazy var openAI: OpenAI? = {
 //
 //        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty else {
