@@ -17,10 +17,24 @@ extension PlantUMLContentView {
             isOpenAIVisible.toggle()
         }
         label: {
-            Label( "OpenAI Editor", systemImage: "brain" )
-                .environment(\.symbolVariants, .fill)
-                .labelStyle(.iconOnly)
-                .foregroundColor( isOpenAIVisible ? .blue : .gray)
+            Label {
+                Text("OpenAI Editor")
+            } icon: {
+                #if __OPENAI_LOGO
+                // [How can I set an image tint in SwiftUI?](https://stackoverflow.com/a/73289182/521197)
+                Image("openai")
+                    .resizable()
+                    .colorMultiply(isOpenAIVisible ? .blue : .gray)
+                    .frame( width: 28, height: 28)
+                #else
+                Image( systemName: "brain" )
+                    .resizable()
+                    .foregroundColor( isOpenAIVisible ? .blue : .gray)
+                    .frame( width: 24, height: 20)
+                #endif
+            }
+            .environment(\.symbolVariants, .fill)
+            .labelStyle(.iconOnly)
         }
         .accessibilityIdentifier("openai")
     }
@@ -79,8 +93,9 @@ class OpenAIService : ObservableObject {
     }
     
     @Published public var status: Status = .Ready
-    @AppSecureStorage("openaikey") var openAIKey:String?
-    @AppSecureStorage("openaiorg") var openAIOrg:String?
+    
+    @AppSecureStorage("openaikey") private var openAIKey:String?
+    @AppSecureStorage("openaiorg") private var openAIOrg:String?
 
     fileprivate var clipboard = LILOFixedSizeQueue<String>( maxSize: 10 )
     fileprivate var prompt = LILOFixedSizeQueue<String>( maxSize: 10 )
@@ -93,6 +108,7 @@ class OpenAIService : ObservableObject {
         if let orgId = Bundle.main.object(forInfoDictionaryKey: "OPENAI_ORG_ID") as? String, !orgId.isEmpty  {
             openAIOrg = orgId
         }
+        
     }
 //    lazy var openAI: OpenAI? = {
 //
@@ -124,11 +140,6 @@ class OpenAIService : ObservableObject {
 
     }
 
-    var isSettingValid:Bool {
-        guard let openAIKey, !openAIKey.isEmpty else { return false }
-        guard let openAIOrg, !openAIOrg.isEmpty else { return false }
-        return true
-    }
  
     @MainActor
     func generateEdit( input: String, instruction: String ) async -> String? {
@@ -179,11 +190,21 @@ struct OpenAIView : View {
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
 
+    @AppSecureStorage("openaikey") private var openAIKey:String?
+    @AppSecureStorage("openaiorg") private var openAIOrg:String?
+
     var isEditing:Bool {
         if case .Editing = service.status {
             return true
         }
         return false
+    }
+    
+    var isSettingsValid:Bool {
+        guard let openAIKey, let openAIOrg, !openAIKey.isEmpty, !openAIOrg.isEmpty else {
+            return false
+        }
+        return true
     }
     
     var body: some View {
@@ -193,19 +214,19 @@ struct OpenAIView : View {
                 Button( action: { tabs = .Prompt } ) {
                     Label( "Prompt", systemImage: "")
                 }
-                .disabled( !service.isSettingValid )
+                .disabled( !isSettingsValid )
 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .PromptHistory } ) {
                     Label( "History", systemImage: "")
                 }
-                .disabled( !service.isSettingValid )
+                .disabled( !isSettingsValid )
                 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .Result } ) {
                     Label( "Result", systemImage: "")
                 }
-                .disabled( !service.isSettingValid )
+                .disabled( !isSettingsValid )
                 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .Settings } ) {
@@ -219,7 +240,7 @@ struct OpenAIView : View {
             }
             if case .Result = tabs {
                 Result_Fragment
-                    .disabled( !service.isSettingValid )
+                    .disabled( !isSettingsValid )
             }
             if case .PromptHistory = tabs {
                 HistoryPrompts_Fragment
@@ -229,6 +250,11 @@ struct OpenAIView : View {
             }
         }
         .padding( EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 0))
+        .onAppear {
+            if( !isSettingsValid ) {
+                tabs = .Settings
+            }
+        }
         
     }
     
@@ -370,9 +396,8 @@ extension OpenAIView {
     var Settings_Fragment: some View {
         Form {
             Section {
-                SecureToggleField( "Api Key", value: service.$openAIKey, hidden: hideOpenAISecrets)
-                SecureToggleField( "Org Id", value: service.$openAIOrg, hidden: hideOpenAISecrets)
-                
+                SecureToggleField( "Api Key", value: $openAIKey, hidden: hideOpenAISecrets)
+                SecureToggleField( "Org Id", value: $openAIOrg, hidden: hideOpenAISecrets)
             }
             header: {
                 HStack {
