@@ -6,7 +6,6 @@
 //
 
 import XCTest
-@testable import PlantUMLApp
 import PlantUMLFramework
 
 class PlantUMLTests: XCTestCase {
