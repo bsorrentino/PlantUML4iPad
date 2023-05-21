@@ -553,6 +553,15 @@ final class PlantUMLAppUITests: XCTestCase {
 
         app.buttons["diagram"].tap()
         app.buttons["openai"].tap()
+
+        XCTAssertTrue( app.buttons["openai_settings"].waitForExistence(timeout: 10) )
+        app.buttons["openai_settings"].tap()
+
+        XCTAssertTrue( app.secureTextFields["secure_toggle_field_apikey"].waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.secureTextFields["secure_toggle_field_orgid"].exists )
+        
+        XCTAssertTrue( app.buttons["openai_prompt"].waitForExistence(timeout: 10) )
+        app.buttons["openai_prompt"].tap()
         
         // [Sccess TextEditor from XCUIApplication](https://stackoverflow.com/a/69522578/521197)
         XCTAssertTrue( app.textViews["openai_instruction"].waitForExistence(timeout: 10) )
@@ -574,13 +583,15 @@ final class PlantUMLAppUITests: XCTestCase {
 
         }
             
-        openaiSubmit( "set title PlantUML meets OpenAI" )
-        openaiSubmit( "make simple sequence diagram" )
+//        openaiSubmit( "set title PlantUML meets OpenAI" )
+//        openaiSubmit( "make simple sequence diagram" )
+//        openaiSubmit( "sequence representing a microservice invoked using an api key" )
+        openaiSubmit( "make a simple sequence diagram and then set tile PlantUML meets OpenAI" )
         openaiSubmit( "sequence representing a microservice invoked using an api key" )
         openaiSubmit( "put in evidence participants" )
         openaiSubmit( "add validation api key" )
         openaiSubmit( "grouping api key validation as security" )
-        openaiSubmit( "remove useless (JWT) comment" )
+//        openaiSubmit( "remove useless (JWT) comment" )
 
         app.buttons["openai"].tap()
 
