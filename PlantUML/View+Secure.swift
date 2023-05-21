@@ -6,6 +6,14 @@
 //
 
 import SwiftUI
+import PlantUMLFramework
+
+extension String {
+    // [How to remove all the spaces in a String?](https://stackoverflow.com/a/34940120/521197)
+    func trimAll() -> String {
+        self.filter { !$0.isWhitespace }
+    }
+}
 
 public struct SecureToggleField : View {
     
@@ -23,9 +31,11 @@ public struct SecureToggleField : View {
         Group {
             if( hidden ) {
                 SecureField( title, text:$value)
+                    .accessibilityIdentifier( "secure_toggle_field_\(title.trimAll().lowercased())")
             }
             else {
                 TextField( title, text:$value)
+                    .accessibilityIdentifier( "secure_toggle_field_\(title.trimAll().lowercased())" )
             }
         }
     }

@@ -214,24 +214,28 @@ struct OpenAIView : View {
                 Button( action: { tabs = .Prompt } ) {
                     Label( "Prompt", systemImage: "")
                 }
+                .accessibilityIdentifier("openai_prompt")
                 .disabled( !isSettingsValid )
 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .PromptHistory } ) {
                     Label( "History", systemImage: "")
                 }
+                .accessibilityIdentifier("openai_history")
                 .disabled( !isSettingsValid )
                 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .Result } ) {
                     Label( "Result", systemImage: "")
                 }
+                .accessibilityIdentifier("openai_result")
                 .disabled( !isSettingsValid )
                 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .Settings } ) {
                     Label( "Settings", systemImage: "gearshape").labelStyle(.iconOnly)
                 }
+                .accessibilityIdentifier("openai_settings")
             }
             if case .Prompt = tabs {
                 Prompt_Fragment
