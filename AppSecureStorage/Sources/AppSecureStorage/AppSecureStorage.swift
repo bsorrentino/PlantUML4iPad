@@ -27,13 +27,14 @@ public struct AppSecureStorage: DynamicProperty {
             value = newValue
         }
     }
-
-    public var projectedValue: Binding<String> {
-        Binding(
-            get: { wrappedValue ?? "" },
-            set: { wrappedValue = $0 }
-        )
-    }
+        
+      /// Binding compliant
+//    public var projectedValue: Binding<String> {
+//        Binding(
+//            get: { wrappedValue ?? "" },
+//            set: { wrappedValue = $0 }
+//        )
+//    }
     public init(_ key: String, accessibility:KeychainItemAccessibility =  .whenUnlocked ) {
         self.key = key
         self.accessibility = accessibility
