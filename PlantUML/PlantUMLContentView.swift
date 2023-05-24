@@ -66,7 +66,7 @@ struct PlantUMLContentView: View {
                     }
                 }
             }
-            if isOpenAIVisible && interfaceOrientation.value.isPortrait {
+            if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
                 OpenAIView_Fragment
                     .frame( height: 200 )
             }
@@ -95,13 +95,13 @@ struct PlantUMLContentView: View {
                 HStack( spacing: 0 ) {
                     SavingStateView( saving: saving )
                     
-                    if interfaceOrientation.value.isPortrait {
+//                    if interfaceOrientation.value.isPortrait {
                         HStack(alignment: .center, spacing: 5) {
                             ToggleOpenAIButton
                             Divider().background(Color.blue)
                         }
                         .frame(height:20)
-                    }
+//                    }
 
                     ToggleEditorButton()
                     if isEditorVisible {
