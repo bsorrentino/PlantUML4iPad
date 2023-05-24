@@ -93,9 +93,12 @@ class OpenAIService : ObservableObject {
     }
     
     @Published public var status: Status = .Ready
-    
-    @AppSecureStorage("openaikey") var openAIKey:String?
-    @AppSecureStorage("openaiorg") var openAIOrg:String?
+    @Published public var inputApiKey = ""
+    @Published public var inputOrgId = ""
+
+
+    @AppSecureStorage("openaikey") private var openAIKey:String?
+    @AppSecureStorage("openaiorg") private var openAIOrg:String?
 
     fileprivate var clipboard = LILOFixedSizeQueue<String>( maxSize: 10 )
     fileprivate var prompt = LILOFixedSizeQueue<String>( maxSize: 10 )
@@ -109,7 +112,25 @@ class OpenAIService : ObservableObject {
             openAIOrg = orgId
         }
         
+        inputApiKey = openAIKey ?? ""
+        inputOrgId = openAIOrg ?? ""
     }
+    
+    func commitSettings() {
+        guard !inputApiKey.isEmpty, !inputOrgId.isEmpty else {
+            return
+        }
+        openAIKey = inputApiKey
+        openAIOrg = inputOrgId
+    }
+    
+    func resetSettings() {
+        inputApiKey = ""
+        inputOrgId = ""
+        openAIKey = nil
+        openAIOrg = nil
+    }
+
     
     var isSettingsValid:Bool {
         guard let openAIKey, !openAIKey.isEmpty, let openAIOrg, !openAIOrg.isEmpty else {
@@ -192,14 +213,11 @@ struct OpenAIView : View {
         case Settings
     }
     
-    @ObservedObject var service:OpenAIService
+    @StateObject var service:OpenAIService
     @Binding var result: String
     @State var instruction:String = ""
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
-
-    @State private var openAIKey = ""
-    @State private var openAIOrg = ""
 
     var isEditing:Bool {
         if case .Editing = service.status {
@@ -403,8 +421,8 @@ extension OpenAIView {
         ZStack(alignment: .bottomTrailing ) {
             Form {
                 Section {
-                    SecureToggleField( "Api Key", value: $openAIKey, hidden: hideOpenAISecrets)
-                    SecureToggleField( "Org Id", value: $openAIOrg, hidden: hideOpenAISecrets)
+                    SecureToggleField( "Api Key", value: $service.inputApiKey, hidden: hideOpenAISecrets)
+                    SecureToggleField( "Org Id", value: $service.inputOrgId, hidden: hideOpenAISecrets)
                 }
                 header: {
                     HStack {
@@ -423,22 +441,18 @@ extension OpenAIView {
             
             HStack {
                 Button( action: {
-                    openAIKey = ""
-                    openAIOrg = ""
-                    service.openAIKey = openAIKey
-                    service.openAIOrg = openAIOrg
+                    service.resetSettings()
                 },
                 label: {
                     Label( "Clear", systemImage: "xmark")
                 })
                 Button( action: {
-                    service.openAIKey = openAIKey
-                    service.openAIOrg = openAIOrg
+                    service.commitSettings()
                 },
                 label: {
                     Label( "Submit", systemImage: "arrow.right")
                 })
-                .disabled( openAIKey.isEmpty || openAIOrg.isEmpty )
+                .disabled( service.inputApiKey.isEmpty || service.inputOrgId.isEmpty )
                 
             }
             .padding()
