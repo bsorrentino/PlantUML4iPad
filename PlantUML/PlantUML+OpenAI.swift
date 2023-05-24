@@ -1,6 +1,6 @@
 //
 //  PlantUML+OpenAI.swift
-//  
+//
 //
 //  Created by Bartolomeo Sorrentino on 29/03/23.
 //
@@ -94,8 +94,8 @@ class OpenAIService : ObservableObject {
     
     @Published public var status: Status = .Ready
     
-    @AppSecureStorage("openaikey") private var openAIKey:String?
-    @AppSecureStorage("openaiorg") private var openAIOrg:String?
+    @AppSecureStorage("openaikey") var openAIKey:String?
+    @AppSecureStorage("openaiorg") var openAIOrg:String?
 
     fileprivate var clipboard = LILOFixedSizeQueue<String>( maxSize: 10 )
     fileprivate var prompt = LILOFixedSizeQueue<String>( maxSize: 10 )
@@ -110,6 +110,14 @@ class OpenAIService : ObservableObject {
         }
         
     }
+    
+    var isSettingsValid:Bool {
+        guard let openAIKey, !openAIKey.isEmpty, let openAIOrg, !openAIOrg.isEmpty else {
+            return false
+        }
+        return true
+    }
+
 //    lazy var openAI: OpenAI? = {
 //
 //        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty else {
@@ -190,8 +198,8 @@ struct OpenAIView : View {
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
 
-    @AppSecureStorage("openaikey") private var openAIKey:String?
-    @AppSecureStorage("openaiorg") private var openAIOrg:String?
+    @State private var openAIKey = ""
+    @State private var openAIOrg = ""
 
     var isEditing:Bool {
         if case .Editing = service.status {
@@ -200,12 +208,6 @@ struct OpenAIView : View {
         return false
     }
     
-    var isSettingsValid:Bool {
-        guard let openAIKey, let openAIOrg, !openAIKey.isEmpty, !openAIOrg.isEmpty else {
-            return false
-        }
-        return true
-    }
     
     var body: some View {
         
@@ -215,21 +217,21 @@ struct OpenAIView : View {
                     Label( "Prompt", systemImage: "")
                 }
                 .accessibilityIdentifier("openai_prompt")
-                .disabled( !isSettingsValid )
+                .disabled( !service.isSettingsValid )
 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .PromptHistory } ) {
                     Label( "History", systemImage: "")
                 }
                 .accessibilityIdentifier("openai_history")
-                .disabled( !isSettingsValid )
+                .disabled( !service.isSettingsValid )
                 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .Result } ) {
                     Label( "Result", systemImage: "")
                 }
                 .accessibilityIdentifier("openai_result")
-                .disabled( !isSettingsValid )
+                .disabled( !service.isSettingsValid )
                 
                 Divider().frame(height: 20 )
                 Button( action: { tabs = .Settings } ) {
@@ -244,7 +246,7 @@ struct OpenAIView : View {
             }
             if case .Result = tabs {
                 Result_Fragment
-                    .disabled( !isSettingsValid )
+                    .disabled( !service.isSettingsValid )
             }
             if case .PromptHistory = tabs {
                 HistoryPrompts_Fragment
@@ -255,7 +257,7 @@ struct OpenAIView : View {
         }
         .padding( EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 0))
         .onAppear {
-            if( !isSettingsValid ) {
+            if( !service.isSettingsValid ) {
                 tabs = .Settings
             }
         }
@@ -398,23 +400,48 @@ extension OpenAIView {
 extension OpenAIView {
    
     var Settings_Fragment: some View {
-        Form {
-            Section {
-                SecureToggleField( "Api Key", value: $openAIKey, hidden: hideOpenAISecrets)
-                SecureToggleField( "Org Id", value: $openAIOrg, hidden: hideOpenAISecrets)
-            }
-            header: {
-                HStack {
-                    Text("OpenAI Secrets")
-                    HideToggleButton(hidden: $hideOpenAISecrets)
+        ZStack(alignment: .bottomTrailing ) {
+            Form {
+                Section {
+                    SecureToggleField( "Api Key", value: $openAIKey, hidden: hideOpenAISecrets)
+                    SecureToggleField( "Org Id", value: $openAIOrg, hidden: hideOpenAISecrets)
+                }
+                header: {
+                    HStack {
+                        Text("OpenAI Secrets")
+                        HideToggleButton(hidden: $hideOpenAISecrets)
+                    }
+                }
+                footer: {
+                    HStack {
+                        Spacer()
+                        Text("these data will be stored in onboard secure keychain")
+                        Spacer()
+                    }
                 }
             }
-            footer: {
-                HStack {
-                    Spacer()
-                    Text("these data will be stored in onboard secure keychain")
-                }
+            
+            HStack {
+                Button( action: {
+                    openAIKey = ""
+                    openAIOrg = ""
+                    service.openAIKey = openAIKey
+                    service.openAIOrg = openAIOrg
+                },
+                label: {
+                    Label( "Clear", systemImage: "xmark")
+                })
+                Button( action: {
+                    service.openAIKey = openAIKey
+                    service.openAIOrg = openAIOrg
+                },
+                label: {
+                    Label( "Submit", systemImage: "arrow.right")
+                })
+                .disabled( openAIKey.isEmpty || openAIOrg.isEmpty )
+                
             }
+            .padding()
         }
         
     }
