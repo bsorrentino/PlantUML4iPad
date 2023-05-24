@@ -122,6 +122,7 @@ class OpenAIService : ObservableObject {
         }
         openAIKey = inputApiKey
         openAIOrg = inputOrgId
+//        focobjectWillChange.send()
     }
     
     func resetSettings() {
@@ -219,6 +220,8 @@ struct OpenAIView : View {
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
 
+    @FocusState private var promptInFocus: Bool
+    
     var isEditing:Bool {
         if case .Editing = service.status {
             return true
@@ -307,6 +310,7 @@ extension OpenAIView {
                     .padding( .trailing, 25)
                     .padding( .bottom, 35)
                     .accessibilityIdentifier("openai_instruction")
+                    .focused($promptInFocus)
             }
             .border(.gray, width: 1)
             
@@ -448,6 +452,8 @@ extension OpenAIView {
                 })
                 Button( action: {
                     service.commitSettings()
+                    tabs = .Prompt
+                    promptInFocus = true
                 },
                 label: {
                     Label( "Submit", systemImage: "arrow.right")
