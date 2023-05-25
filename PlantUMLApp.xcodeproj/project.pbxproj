@@ -73,6 +73,7 @@
 		A038DB5B29D452880032E312 /* OpenAI.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OpenAI.xcconfig; sourceTree = "<group>"; };
 		A038DB5F29D489BA0032E312 /* PlantUML+OpenAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PlantUML+OpenAI.swift"; sourceTree = "<group>"; };
 		A047206E29549ACC007E061F /* SwiftUI+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Share.swift"; sourceTree = "<group>"; };
+		A05F2E372A1FFC49007FDF36 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		A068572D29D8B31100E82C2F /* View+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Clipboard.swift"; sourceTree = "<group>"; };
 		A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = OpenAI.prod.xcconfig; sourceTree = "<group>"; };
 		A08AA78329561170004DE329 /* View+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+UIImage.swift"; sourceTree = "<group>"; };
@@ -156,6 +157,7 @@
 		A0D3C63D28984A0E000838D7 = {
 			isa = PBXGroup;
 			children = (
+				A05F2E372A1FFC49007FDF36 /* CHANGELOG.md */,
 				A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */,
 				A038DB5B29D452880032E312 /* OpenAI.xcconfig */,
 				A01907EF2951CD5C0059CCBE /* privacy_policy.md */,
@@ -651,6 +653,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
+				"EXCLUDED_SOURCE_FILE_NAMES[arch=*]" = OpenAI.xcconfig;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PlantUML/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PlantUMLApp;
