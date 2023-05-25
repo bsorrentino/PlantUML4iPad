@@ -6,8 +6,14 @@
 //
 
 import XCTest
-@testable import PlantUMLApp
 import PlantUMLFramework
+
+extension String {
+    // [How to remove all the spaces in a String?](https://stackoverflow.com/a/34940120/521197)
+    func trimAll() -> String {
+        self.filter { !$0.isWhitespace }
+    }
+}
 
 class PlantUMLTests: XCTestCase {
 
@@ -33,7 +39,16 @@ class PlantUMLTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testAccessibilityId() {
+        
+        let msg = { ( title: String ) in "secure_toggle_field_\(title.trimAll().lowercased())"
+        }
+        
+        XCTAssertEqual(msg( "Api Key" ), "secure_toggle_field_apikey")
+        XCTAssertEqual(msg( "Org Id"), "secure_toggle_field_orgid")
 
+    }
     func testSwiftPlantUML() {
 
         let clazz = SyntaxStructure(rawValue: "title test")

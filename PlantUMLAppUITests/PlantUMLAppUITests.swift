@@ -527,6 +527,86 @@ final class PlantUMLAppUITests: XCTestCase {
     }
 
     
+    func testOpenAI() throws {
+        self.app = XCUIApplication()
+        
+        guard let app else { XCTFail( "error creating XCUIApplication instance") ; return }
+
+        app.launch()
+
+            
+        XCTAssertTrue(  app.collectionViews.element.waitForExistence(timeout: 10) )
+
+        let predicate = NSPredicate(format: "label beginswith 'Create Document'")
+        let cell = app.collectionViews.cells.matching(predicate).element
+        
+        XCTAssertTrue(cell.exists)
+        
+        wait( reason: "wait before open diagram", timeout: 3.0 )
+
+        cell.tap()
+    
+        XCTAssertTrue( app.tables.element.waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.buttons["openai"].waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.buttons["editor"].waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.buttons["diagram"].waitForExistence(timeout: 10) )
+
+        app.buttons["diagram"].tap()
+        app.buttons["openai"].tap()
+
+        XCTAssertTrue( app.buttons["openai_settings"].waitForExistence(timeout: 10) )
+        app.buttons["openai_settings"].tap()
+
+        XCTAssertTrue( app.secureTextFields["secure_toggle_field_apikey"].waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.secureTextFields["secure_toggle_field_orgid"].exists )
+        
+        XCTAssertTrue( app.buttons["openai_prompt"].waitForExistence(timeout: 10) )
+        app.buttons["openai_prompt"].tap()
+        
+        // [Sccess TextEditor from XCUIApplication](https://stackoverflow.com/a/69522578/521197)
+        XCTAssertTrue( app.textViews["openai_instruction"].waitForExistence(timeout: 10) )
+        XCTAssertTrue( app.buttons["openai_submit"].exists )
+
+        let openaiSubmit = { (instruction:String) in
+            
+            if let value = app.textViews["openai_instruction"].value as? String, !value.isEmpty {
+                XCTAssertTrue( app.buttons["openai_clear"].exists )
+                app.buttons["openai_clear"].tap()
+            }
+            
+            app.textViews["openai_instruction"].tap()
+            app.textViews["openai_instruction"].typeText( instruction )
+                    
+            app.buttons["openai_submit"].tap()
+
+            self.waitUntilEnabled(element: app.buttons["openai_submit"], timeout: 30.0)
+
+        }
+            
+//        openaiSubmit( "set title PlantUML meets OpenAI" )
+//        openaiSubmit( "make simple sequence diagram" )
+//        openaiSubmit( "sequence representing a microservice invoked using an api key" )
+        openaiSubmit( "make a simple sequence diagram and then set tile PlantUML meets OpenAI" )
+        openaiSubmit( "sequence representing a microservice invoked using an api key" )
+        openaiSubmit( "put in evidence participants" )
+        openaiSubmit( "add validation api key" )
+        openaiSubmit( "grouping api key validation as security" )
+//        openaiSubmit( "remove useless (JWT) comment" )
+
+        app.buttons["openai"].tap()
+
+        wait( reason: "wait before exit", timeout: 5.0 )
+
+        app.buttons["editor"].tap()
+
+        XCTAssertTrue( app.buttons["font+"].exists )
+        app.buttons["font+"].tap()
+        app.buttons["font+"].tap()
+        app.buttons["font+"].tap()
+
+    }
+
+            
 //    func testLaunchPerformance() throws {
 //        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
 //            // This measures how long it takes to launch your application.

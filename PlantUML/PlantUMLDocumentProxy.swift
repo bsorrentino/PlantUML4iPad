@@ -38,6 +38,8 @@ class PlantUMLDocumentProxy : ObservableObject {
     
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
 
+    private var textCancellable:AnyCancellable?
+    
     init( document: Binding<PlantUMLDocument> ) {
         self._object = document
         self.text = document.wrappedValue.text
@@ -55,10 +57,30 @@ class PlantUMLDocumentProxy : ObservableObject {
         return presenter.url( of: script )
     }
     
+    func reset() {
+        self.text = self.object.text
+    }
+    
     func save() {
         print( "save document")
         self.object.text = self.text
     }
 
     
+}
+
+
+extension PlantUMLDocumentProxy {
+    
+    private static func buildSyntaxStructureItems( from text: String ) -> Array<SyntaxStructure> {
+        return text
+            .split(whereSeparator: \.isNewline)
+            .filter { line in
+                line != "@startuml" && line != "@enduml"
+            }
+            .map { line in
+                SyntaxStructure( rawValue: String(line) )
+            }
+    }
+
 }
