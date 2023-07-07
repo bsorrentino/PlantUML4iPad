@@ -219,6 +219,7 @@ struct OpenAIView : View {
     @State var instruction:String = ""
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
+    @State private var extraSettings = false
 
     @FocusState private var promptInFocus: Bool
     
@@ -432,6 +433,8 @@ extension OpenAIView {
                     HStack {
                         Text("OpenAI Secrets")
                         HideToggleButton(hidden: $hideOpenAISecrets)
+                        Divider()
+                        Button( action: { extraSettings.toggle() }, label: { Text("More .....").font(.footnote) } )
                     }
                 }
                 footer: {
@@ -462,6 +465,9 @@ extension OpenAIView {
                 
             }
             .padding()
+        }
+        .if( extraSettings ) {
+            $0.hidden()
         }
         
     }
