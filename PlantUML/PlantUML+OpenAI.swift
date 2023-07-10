@@ -92,11 +92,15 @@ class OpenAIService : ObservableObject {
         case Editing
     }
     
+    let models = ["text-davinci-edit-001", "code-davinci-edit-001"]
+    
     @Published public var status: Status = .Ready
     @Published public var inputApiKey = ""
     @Published public var inputOrgId = ""
+    @Published public var inputModel:String
 
 
+    @AppStorage("openaiModel") private var openAIModel:String?
     @AppSecureStorage("openaikey") private var openAIKey:String?
     @AppSecureStorage("openaiorg") private var openAIOrg:String?
 
@@ -105,6 +109,8 @@ class OpenAIService : ObservableObject {
     
     init() {
         
+        inputModel = models[0]
+        
         if let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty {
             openAIKey = apiKey
         }
@@ -112,9 +118,16 @@ class OpenAIService : ObservableObject {
             openAIOrg = orgId
         }
         
+        
         inputApiKey = openAIKey ?? ""
         inputOrgId = openAIOrg ?? ""
-    }
+        
+        if let openAIModel {
+            inputModel = openAIModel
+        }
+        
+        
+     }
     
     func commitSettings() {
         guard !inputApiKey.isEmpty, !inputOrgId.isEmpty else {
@@ -122,12 +135,14 @@ class OpenAIService : ObservableObject {
         }
         openAIKey = inputApiKey
         openAIOrg = inputOrgId
+        openAIModel = inputModel
 //        focobjectWillChange.send()
     }
     
     func resetSettings() {
         inputApiKey = ""
         inputOrgId = ""
+        inputModel = models[0]
         openAIKey = nil
         openAIOrg = nil
     }
@@ -174,7 +189,7 @@ class OpenAIService : ObservableObject {
     @MainActor
     func generateEdit( input: String, instruction: String ) async -> String? {
         
-        guard let openAI, case .Ready = status else {
+        guard let openAI, let  openAIModel, case .Ready = status else {
             return nil
         }
         
@@ -182,7 +197,7 @@ class OpenAIService : ObservableObject {
         
         do {
             let editParameter = EditParameters(
-                model: "text-davinci-edit-001",
+                model: openAIModel,
                 input: input,
                 instruction: instruction,
                 temperature: 0.0,
@@ -221,6 +236,8 @@ struct OpenAIView : View {
     @State private var hideOpenAISecrets = true
 
     @FocusState private var promptInFocus: Bool
+    
+    
     
     var isEditing:Bool {
         if case .Editing = service.status {
@@ -423,26 +440,53 @@ extension OpenAIView {
    
     var Settings_Fragment: some View {
         ZStack(alignment: .bottomTrailing ) {
-            Form {
-                Section {
-                    SecureToggleField( "Api Key", value: $service.inputApiKey, hidden: hideOpenAISecrets)
-                    SecureToggleField( "Org Id", value: $service.inputOrgId, hidden: hideOpenAISecrets)
-                }
-                header: {
-                    HStack {
-                        Text("OpenAI Secrets")
-                        HideToggleButton(hidden: $hideOpenAISecrets)
+            ScrollViewReader { p in
+                Form {
+                    Section {
+                        SecureToggleField( "Api Key", value: $service.inputApiKey, hidden: hideOpenAISecrets)
+                            
+                        SecureToggleField( "Org Id", value: $service.inputOrgId, hidden: hideOpenAISecrets)
                     }
-                }
-                footer: {
-                    HStack {
-                        Spacer()
-                        Text("these data will be stored in onboard secure keychain")
-                        Spacer()
+                    header: {
+                        HStack {
+                            Text("OpenAI Secrets")
+                            HideToggleButton(hidden: $hideOpenAISecrets)
+                            Divider()
+                            Button( action: { p.scrollTo("openai-settings", anchor: .top) }, label: { Text("More .....").font(.footnote) } )
+                        }
+                        .id( "openai-secret")
+                        
                     }
+                    footer: {
+                        HStack {
+                            Spacer()
+                            Text("these data will be stored in onboard secure keychain")
+                            Spacer()
+                        }
+                    }
+                    
+                    Section {
+                        Picker("Model", selection: $service.inputModel) {
+                            ForEach(service.models, id: \.self) {
+                                Text($0)
+                            }
+                        }
+                    }
+                    header: {
+                        HStack {
+                            Text("OpenAI Extra settings")
+                            Divider()
+                            Button( action: { p.scrollTo("openai-secret", anchor: .bottom) }, label: { Text("Back ...").font(.footnote) } )
+                        }
+                        .id( "openai-settings")
+                    }
+                    footer: {
+                        Rectangle().fill(Color.clear).frame(height: 65)
+                        
+                    }
+                    
                 }
             }
-            
             HStack {
                 Button( action: {
                     service.resetSettings()
