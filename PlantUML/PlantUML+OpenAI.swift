@@ -440,6 +440,7 @@ extension OpenAIView {
    
     var Settings_Fragment: some View {
         ZStack(alignment: .bottomTrailing ) {
+            // [How to scroll a Form to a specific UI element in SwiftUI](https://stackoverflow.com/a/65777080/521197)
             ScrollViewReader { p in
                 Form {
                     Section {
