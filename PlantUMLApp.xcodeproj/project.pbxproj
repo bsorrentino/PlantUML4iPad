@@ -11,6 +11,7 @@
 		A036CC3D2A0FC67C003FDB5E /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A084B53329EB15C50043B853 /* PlantUMLKeyboard */; };
 		A036CC3E2A0FC67C003FDB5E /* LineEditor in Frameworks */ = {isa = PBXBuildFile; productRef = A084B53529EB15C90043B853 /* LineEditor */; };
 		A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F629EB16280048D9C6 /* PlantUMLFramework */; };
+		A036CF992A92C07A007FDEB6 /* CodeViewer in Frameworks */ = {isa = PBXBuildFile; productRef = A036CF982A92C07A007FDEB6 /* CodeViewer */; };
 		A038DB5C29D452880032E312 /* OpenAI.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A038DB5B29D452880032E312 /* OpenAI.xcconfig */; };
 		A038DB6029D489BA0032E312 /* PlantUML+OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A038DB5F29D489BA0032E312 /* PlantUML+OpenAI.swift */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
@@ -121,6 +122,7 @@
 				A0A139332A12AD8700B69FBC /* AppSecureStorage in Frameworks */,
 				A0BD13F329EB161E0048D9C6 /* PlantUMLKeyboard in Frameworks */,
 				A0BD13F129EB161E0048D9C6 /* PlantUMLFramework in Frameworks */,
+				A036CF992A92C07A007FDEB6 /* CodeViewer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,12 +160,12 @@
 		A0D3C63D28984A0E000838D7 = {
 			isa = PBXGroup;
 			children = (
-				A036CF972A92BCFF007FDEB6 /* PlantUMLEditor */,
 				A05F2E372A1FFC49007FDF36 /* CHANGELOG.md */,
 				A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */,
 				A038DB5B29D452880032E312 /* OpenAI.xcconfig */,
 				A01907EF2951CD5C0059CCBE /* privacy_policy.md */,
 				A0943A6D29448A1700342426 /* AppStore.xcassets */,
+				A036CF972A92BCFF007FDEB6 /* PlantUMLEditor */,
 				A0A139312A129F5400B69FBC /* AppSecureStorage */,
 				A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */,
 				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
@@ -271,6 +273,7 @@
 				A0BD13F229EB161E0048D9C6 /* PlantUMLKeyboard */,
 				A0BD13F429EB161E0048D9C6 /* LineEditor */,
 				A0A139322A12AD8700B69FBC /* AppSecureStorage */,
+				A036CF982A92C07A007FDEB6 /* CodeViewer */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
@@ -781,6 +784,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A036CF982A92C07A007FDEB6 /* CodeViewer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CodeViewer;
+		};
 		A084B53329EB15C50043B853 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;

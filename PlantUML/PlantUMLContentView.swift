@@ -10,6 +10,8 @@ import Combine
 import PlantUMLFramework
 import PlantUMLKeyboard
 import LineEditor
+import CodeViewer
+
 import AppSecureStorage
 //
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
