@@ -11,25 +11,36 @@ import CodeViewer
 
 struct ContentView: View {
     
-    @State private var text =  """
-        @startuml
-        
-        participant A
-        
-        @enduml
+    @State private var text =
+        """
+
         """
     
     var body: some View {
-        CodeViewer(
-            content: $text,
-            mode: .dot,
-            darkTheme: .dracula,
-            lightTheme: .chrome,
-            isReadOnly: false,
-            fontSize: 13
-        )
-        
-        
+        NavigationView {
+            
+            CodeViewer(
+                content: $text,
+                mode: .dot,
+                darkTheme: .monokai,
+                lightTheme: .chrome,
+                isReadOnly: false,
+                fontSize: 15
+            )
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        print("Pushed reload!")
+                        NotificationCenter.default.post(name: NSNotification.Name("reload"), object: nil)
+                    }) {
+                        Image(systemName: "arrow.clockwise")
+                        Text("Reload")
+                    }
+                }
+            }
+            
+        }
+        .navigationViewStyle(.stack)
     }
 }
 
