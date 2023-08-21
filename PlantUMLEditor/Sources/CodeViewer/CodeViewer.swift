@@ -20,7 +20,7 @@ public struct CodeViewer: ViewRepresentable {
     private let darkTheme: CodeWebView.Theme
     private let lightTheme: CodeWebView.Theme
     private let isReadOnly: Bool
-    private let fontSize: Int
+    private let fontSize: CGFloat
     
     public init(
         content: Binding<String>,
@@ -28,7 +28,7 @@ public struct CodeViewer: ViewRepresentable {
         darkTheme: CodeWebView.Theme = .solarized_dark,
         lightTheme: CodeWebView.Theme = .solarized_light,
         isReadOnly: Bool = false,
-        fontSize: Int = 12,
+        fontSize: CGFloat = 12,
         textDidChanged: ((String) -> Void)? = nil
     ) {
         self._content = content
@@ -41,12 +41,12 @@ public struct CodeViewer: ViewRepresentable {
     }
     
     public func makeCoordinator() -> Coordinator {
-        Coordinator(content: $content, colorScheme: colorScheme)
+        Coordinator(content: $content, colorScheme: colorScheme, fontSize: fontSize )
     }
     
     private func getWebView(context: Context) -> CodeWebView {
         let codeView = CodeWebView()
-        
+
         codeView.setReadOnly(isReadOnly)
         codeView.setMode(mode)
         codeView.setFontSize(fontSize)
@@ -68,6 +68,13 @@ public struct CodeViewer: ViewRepresentable {
         if context.coordinator.colorScheme != colorScheme {
             colorScheme == .dark ? webview.setTheme(darkTheme) : webview.setTheme(lightTheme)
             context.coordinator.set(colorScheme: colorScheme)
+        }
+        
+        print( "fontSize: \(fontSize)" )
+        
+        if context.coordinator.fontSize != fontSize {
+            context.coordinator.fontSize =  fontSize
+            webview.setFontSize(fontSize)
         }
     }
     
@@ -91,13 +98,17 @@ public struct CodeViewer: ViewRepresentable {
 }
 
 public extension CodeViewer {
+    
     class Coordinator: NSObject {
         @Binding private(set) var content: String
+      
         private(set) var colorScheme: ColorScheme
+        var fontSize: CGFloat
         
-        init(content: Binding<String>, colorScheme: ColorScheme) {
+        init(content: Binding<String>, colorScheme: ColorScheme, fontSize: CGFloat ) {
             _content = content
             self.colorScheme = colorScheme
+            self.fontSize = fontSize
         }
         
         func set(content: String) {
@@ -111,6 +122,7 @@ public extension CodeViewer {
                 self.colorScheme = colorScheme
             }
         }
+        
     }
 }
 
