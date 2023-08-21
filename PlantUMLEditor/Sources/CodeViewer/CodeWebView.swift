@@ -7,6 +7,7 @@
 //
 
 import WebKit
+import Combine
 
 #if os(OSX)
     import AppKit
@@ -63,7 +64,8 @@ public class CodeWebView: CustomView {
     private var pageLoaded = false
     private var pendingFunctions = [JavascriptFunction]()
     
-    
+    private var reloadCancellation:Cancellable?
+
     var navigationDelegate:WKNavigationDelegate? {
         get {
             return webview.navigationDelegate
@@ -145,6 +147,12 @@ public class CodeWebView: CustomView {
 extension CodeWebView {
     
     private func initWebView() {
+        
+        reloadCancellation = NotificationCenter.default.publisher(for: NSNotification.Name("reload"))
+            .sink(receiveValue: { [unowned self] _ in
+                webview.reloadFromOrigin()
+            })
+
         webview.translatesAutoresizingMaskIntoConstraints = false
         addSubview(webview)
         webview.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
