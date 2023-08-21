@@ -19,9 +19,9 @@ import WebKit
 //        webView = CodeWebView(frame: view.bounds)
 //        webView.navigationDelegate = self
 //        view.addSubview(webView)
-//        
+//
 //    }
-//    
+//
 //    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 //        // After the webpage has loaded, use JavaScript to set focus on a specific element
 //        let focusScript = "editor.focus();"
@@ -76,7 +76,7 @@ public struct CodeViewer: ViewRepresentable {
             self.textDidChanged?(text)
         }
         codeView.setTheme( colorScheme == .dark ? darkTheme : lightTheme )
-        codeView.setFocus()
+//        codeView.setFocus()
 
         return codeView
     }
