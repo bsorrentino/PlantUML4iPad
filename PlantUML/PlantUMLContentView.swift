@@ -9,7 +9,6 @@ import SwiftUI
 import Combine
 import PlantUMLFramework
 import PlantUMLKeyboard
-import LineEditor
 import CodeViewer
 
 import AppSecureStorage
@@ -23,7 +22,7 @@ import AppSecureStorage
 
 
 struct PlantUMLContentView: View {
-    typealias PlantUMLLineEditorView = StandardLineEditorView<Symbol>
+    typealias PlantUMLLineEditorView = CodeViewer
     
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
@@ -41,7 +40,7 @@ struct PlantUMLContentView: View {
     
     @State var keyboardTab: String  = "general"
     @State private var isScaleToFit = true
-    @State private var fontSize = CGFloat(12)
+    @State private var fontSize = CGFloat(15)
     @State private var showLine:Bool = false
     @State private var saving = false
     @State private var diagramImage:UIImage?
@@ -145,13 +144,22 @@ extension PlantUMLContentView {
     
     var EditorView_Fragment: some View {
         
-        PlantUMLLineEditorView( text: $document.text,
-                                fontSize: $fontSize,
-                                showLine: $showLine) { onHide, onPressSymbol in
-            PlantUMLKeyboardView( selectedTab: $keyboardTab,
-                                  onHide: onHide,
-                                  onPressSymbol: onPressSymbol)
-        }
+        
+        PlantUMLLineEditorView( content: $document.text,
+                                mode: .plain_text,
+                                darkTheme: .terminal,
+                                lightTheme: .chrome,
+                                isReadOnly: false,
+                                fontSize: fontSize
+        )
+        
+//        PlantUMLLineEditorView( text: $document.text,
+//                                fontSize: $fontSize,
+//                                showLine: $showLine) { onHide, onPressSymbol in
+//            PlantUMLKeyboardView( selectedTab: $keyboardTab,
+//                                  onHide: onHide,
+//                                  onPressSymbol: onPressSymbol)
+//        }
     }
     
     // [SwiftUI Let View disappear automatically](https://stackoverflow.com/a/60820491/521197)
