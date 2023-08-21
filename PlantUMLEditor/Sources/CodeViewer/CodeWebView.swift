@@ -63,6 +63,16 @@ public class CodeWebView: CustomView {
     private var pageLoaded = false
     private var pendingFunctions = [JavascriptFunction]()
     
+    
+    var navigationDelegate:WKNavigationDelegate? {
+        get {
+            return webview.navigationDelegate
+        }
+        set {
+            webview.navigationDelegate = newValue
+        }
+    }
+    
     override init(frame frameRect: CGRect) {
         super.init(frame: frameRect)
         initWebView()
