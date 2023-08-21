@@ -58,7 +58,7 @@ public class CodeWebView: CustomView {
     }()
     
     var textDidChanged: ((String) -> Void)?
-    
+
     private var currentContent: String = ""
     private var pageLoaded = false
     private var pendingFunctions = [JavascriptFunction]()
@@ -109,6 +109,9 @@ public class CodeWebView: CustomView {
         
     }
     
+    func setFocus() {
+        callJavascript(javascriptString: "editor.focus();")
+    }
     func setTheme(_ theme: Theme) {
         callJavascript(javascriptString: "editor.setTheme('ace/theme/\(theme.rawValue)');")
     }
