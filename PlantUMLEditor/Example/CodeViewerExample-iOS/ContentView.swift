@@ -21,7 +21,7 @@ struct ContentView: View {
             
             CodeViewer(
                 content: $text,
-                mode: .dot,
+                mode: .plantuml,
                 darkTheme: .monokai,
                 lightTheme: .chrome,
                 isReadOnly: false,

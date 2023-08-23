@@ -125,6 +125,7 @@ extension CodeWebView {
         case php_laravel_blade = "php_laravel_blade"
         case pig = "pig"
         case plain_text = "plain_text"
+        case plantuml = "plantuml"
         case powershell = "powershell"
         case praat = "praat"
         case prisma = "prisma"
