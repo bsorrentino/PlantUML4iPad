@@ -146,7 +146,7 @@ extension PlantUMLContentView {
         
         
         PlantUMLLineEditorView( content: $document.text,
-                                mode: .plain_text,
+                                mode: .plantuml,
                                 darkTheme: .terminal,
                                 lightTheme: .chrome,
                                 isReadOnly: false,
