@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */; };
 		A036CC3D2A0FC67C003FDB5E /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A084B53329EB15C50043B853 /* PlantUMLKeyboard */; };
-		A036CC3E2A0FC67C003FDB5E /* LineEditor in Frameworks */ = {isa = PBXBuildFile; productRef = A084B53529EB15C90043B853 /* LineEditor */; };
 		A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F629EB16280048D9C6 /* PlantUMLFramework */; };
+		A036CF992A92C07A007FDEB6 /* CodeViewer in Frameworks */ = {isa = PBXBuildFile; productRef = A036CF982A92C07A007FDEB6 /* CodeViewer */; };
 		A038DB5C29D452880032E312 /* OpenAI.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A038DB5B29D452880032E312 /* OpenAI.xcconfig */; };
 		A038DB6029D489BA0032E312 /* PlantUML+OpenAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A038DB5F29D489BA0032E312 /* PlantUML+OpenAI.swift */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
@@ -21,7 +21,6 @@
 		A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A09F62DD29DDD08600650C9A /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DC29DDD08600650C9A /* PlantUMLFramework */; };
 		A09F62DF29DDD08D00650C9A /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */; };
-		A09F62E129DDD09400650C9A /* LineEditor in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62E029DDD09400650C9A /* LineEditor */; };
 		A0A139332A12AD8700B69FBC /* AppSecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A0A139322A12AD8700B69FBC /* AppSecureStorage */; };
 		A0A139352A13C49A00B69FBC /* View+Secure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A139342A13C49A00B69FBC /* View+Secure.swift */; };
 		A0A139362A13C49A00B69FBC /* View+Secure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A139342A13C49A00B69FBC /* View+Secure.swift */; };
@@ -30,7 +29,6 @@
 		A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */; };
 		A0BD13F129EB161E0048D9C6 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F029EB161E0048D9C6 /* PlantUMLFramework */; };
 		A0BD13F329EB161E0048D9C6 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F229EB161E0048D9C6 /* PlantUMLKeyboard */; };
-		A0BD13F529EB161E0048D9C6 /* LineEditor in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F429EB161E0048D9C6 /* LineEditor */; };
 		A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0BFBA9C290D551F008340E3 /* Localizable.strings */; };
 		A0C5C2E02A0FD05A0038C889 /* PlantUMLAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00729BA29DB2A9D00D73D1A /* PlantUMLAppUITests.swift */; };
 		A0C5C2E12A0FD05A0038C889 /* PlantUMLAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */; };
@@ -70,6 +68,7 @@
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A01907EF2951CD5C0059CCBE /* privacy_policy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacy_policy.md; sourceTree = "<group>"; };
 		A036CC402A0FC67C003FDB5E /* PlantUMLAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantUMLAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A036CF972A92BCFF007FDEB6 /* PlantUMLEditor */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLEditor; sourceTree = "<group>"; };
 		A038DB5B29D452880032E312 /* OpenAI.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OpenAI.xcconfig; sourceTree = "<group>"; };
 		A038DB5F29D489BA0032E312 /* PlantUML+OpenAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PlantUML+OpenAI.swift"; sourceTree = "<group>"; };
 		A047206E29549ACC007E061F /* SwiftUI+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Share.swift"; sourceTree = "<group>"; };
@@ -107,7 +106,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */,
-				A036CC3E2A0FC67C003FDB5E /* LineEditor in Frameworks */,
 				A036CC3D2A0FC67C003FDB5E /* PlantUMLKeyboard in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,10 +114,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0BD13F529EB161E0048D9C6 /* LineEditor in Frameworks */,
 				A0A139332A12AD8700B69FBC /* AppSecureStorage in Frameworks */,
 				A0BD13F329EB161E0048D9C6 /* PlantUMLKeyboard in Frameworks */,
 				A0BD13F129EB161E0048D9C6 /* PlantUMLFramework in Frameworks */,
+				A036CF992A92C07A007FDEB6 /* CodeViewer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +125,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A09F62E129DDD09400650C9A /* LineEditor in Frameworks */,
 				A09F62DF29DDD08D00650C9A /* PlantUMLKeyboard in Frameworks */,
 				A09F62DD29DDD08600650C9A /* PlantUMLFramework in Frameworks */,
 			);
@@ -162,6 +159,7 @@
 				A038DB5B29D452880032E312 /* OpenAI.xcconfig */,
 				A01907EF2951CD5C0059CCBE /* privacy_policy.md */,
 				A0943A6D29448A1700342426 /* AppStore.xcassets */,
+				A036CF972A92BCFF007FDEB6 /* PlantUMLEditor */,
 				A0A139312A129F5400B69FBC /* AppSecureStorage */,
 				A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */,
 				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
@@ -244,7 +242,6 @@
 			name = PlantUMLAppUITests;
 			packageProductDependencies = (
 				A084B53329EB15C50043B853 /* PlantUMLKeyboard */,
-				A084B53529EB15C90043B853 /* LineEditor */,
 				A0BD13F629EB16280048D9C6 /* PlantUMLFramework */,
 			);
 			productName = PlantUMLAppUITests;
@@ -267,8 +264,8 @@
 			packageProductDependencies = (
 				A0BD13F029EB161E0048D9C6 /* PlantUMLFramework */,
 				A0BD13F229EB161E0048D9C6 /* PlantUMLKeyboard */,
-				A0BD13F429EB161E0048D9C6 /* LineEditor */,
 				A0A139322A12AD8700B69FBC /* AppSecureStorage */,
+				A036CF982A92C07A007FDEB6 /* CodeViewer */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
@@ -291,7 +288,6 @@
 			packageProductDependencies = (
 				A09F62DC29DDD08600650C9A /* PlantUMLFramework */,
 				A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */,
-				A09F62E029DDD09400650C9A /* LineEditor */,
 			);
 			productName = PlantUMLTests;
 			productReference = A0D3C65928984A10000838D7 /* PlantUMLTests.xctest */;
@@ -330,7 +326,6 @@
 			);
 			mainGroup = A0D3C63D28984A0E000838D7;
 			packageReferences = (
-				A0F4ADE229DDC455003FC055 /* XCRemoteSwiftPackageReference "SwiftUI-LineEditor" */,
 			);
 			productRefGroup = A0D3C64728984A0E000838D7 /* Products */;
 			projectDirPath = "";
@@ -630,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -668,7 +663,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -767,26 +762,14 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		A0F4ADE229DDC455003FC055 /* XCRemoteSwiftPackageReference "SwiftUI-LineEditor" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bsorrentino/SwiftUI-LineEditor.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.1.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
+		A036CF982A92C07A007FDEB6 /* CodeViewer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CodeViewer;
+		};
 		A084B53329EB15C50043B853 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
-		};
-		A084B53529EB15C90043B853 /* LineEditor */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A0F4ADE229DDC455003FC055 /* XCRemoteSwiftPackageReference "SwiftUI-LineEditor" */;
-			productName = LineEditor;
 		};
 		A09F62DC29DDD08600650C9A /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -795,11 +778,6 @@
 		A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
-		};
-		A09F62E029DDD09400650C9A /* LineEditor */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A0F4ADE229DDC455003FC055 /* XCRemoteSwiftPackageReference "SwiftUI-LineEditor" */;
-			productName = LineEditor;
 		};
 		A0A139322A12AD8700B69FBC /* AppSecureStorage */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -812,11 +790,6 @@
 		A0BD13F229EB161E0048D9C6 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
-		};
-		A0BD13F429EB161E0048D9C6 /* LineEditor */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A0F4ADE229DDC455003FC055 /* XCRemoteSwiftPackageReference "SwiftUI-LineEditor" */;
-			productName = LineEditor;
 		};
 		A0BD13F629EB16280048D9C6 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;

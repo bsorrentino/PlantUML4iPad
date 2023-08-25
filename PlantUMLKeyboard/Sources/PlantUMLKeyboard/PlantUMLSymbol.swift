@@ -6,10 +6,9 @@
 //
 
 import UIKit
-import LineEditor
 import PlantUMLFramework
 
-public struct Symbol : Decodable, Identifiable, Equatable, Hashable, CustomStringConvertible, LineEditorKeyboardSymbol {
+public struct Symbol : Decodable, Identifiable, Equatable, Hashable, CustomStringConvertible /*, LineEditorKeyboardSymbol */ {
     
     enum CodingKeys: String, CodingKey {
         case id
