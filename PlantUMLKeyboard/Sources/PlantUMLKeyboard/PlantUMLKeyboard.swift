@@ -5,7 +5,6 @@
 
 import SwiftUI
 import UIKit
-import LineEditor
 
 public struct PlantUMLKeyboardView: View {
     @Environment(\.colorScheme) var colorScheme
