@@ -25,7 +25,7 @@ struct ContentView: View {
                 darkTheme: .monokai,
                 lightTheme: .chrome,
                 isReadOnly: false,
-                fontSize: 15
+                fontSize: 20
             )
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
