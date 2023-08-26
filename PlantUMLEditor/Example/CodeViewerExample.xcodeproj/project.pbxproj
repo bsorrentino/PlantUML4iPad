@@ -7,18 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0866BEF82505E43F00C9C1B0 /* CodeViewer in Frameworks */ = {isa = PBXBuildFile; fileRef = 0866BEF52505E09A00C9C1B0 /* CodeViewer */; };
-		0866BEFA2505E48E00C9C1B0 /* CodeViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 0866BEF92505E48E00C9C1B0 /* CodeViewer */; };
 		0866BF232505F11000C9C1B0 /* CodeViewerExample_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866BF222505F11000C9C1B0 /* CodeViewerExample_iOSApp.swift */; };
 		0866BF252505F11000C9C1B0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0866BF242505F11000C9C1B0 /* ContentView.swift */; };
 		0866BF272505F11100C9C1B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0866BF262505F11100C9C1B0 /* Assets.xcassets */; };
 		0866BF2A2505F11100C9C1B0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0866BF292505F11100C9C1B0 /* Preview Assets.xcassets */; };
-		0866BF302505F15C00C9C1B0 /* CodeViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 0866BF2F2505F15C00C9C1B0 /* CodeViewer */; };
 		08E5C4EC24EE3D2E000E8954 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E5C4EB24EE3D2E000E8954 /* AppDelegate.swift */; };
 		08E5C4EE24EE3D2E000E8954 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E5C4ED24EE3D2E000E8954 /* ContentView.swift */; };
 		08E5C4F024EE3D31000E8954 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E5C4EF24EE3D31000E8954 /* Assets.xcassets */; };
 		08E5C4F324EE3D31000E8954 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E5C4F224EE3D31000E8954 /* Preview Assets.xcassets */; };
 		08E5C4F624EE3D31000E8954 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08E5C4F424EE3D31000E8954 /* Main.storyboard */; };
+		A082CAFE2A9A63630055D6D6 /* CodeViewer in Frameworks */ = {isa = PBXBuildFile; productRef = A082CAFD2A9A63630055D6D6 /* CodeViewer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0866BF302505F15C00C9C1B0 /* CodeViewer in Frameworks */,
+				A082CAFE2A9A63630055D6D6 /* CodeViewer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +50,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0866BEF82505E43F00C9C1B0 /* CodeViewer in Frameworks */,
-				0866BEFA2505E48E00C9C1B0 /* CodeViewer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,7 +142,7 @@
 			);
 			name = "CodeViewerExample-iOS";
 			packageProductDependencies = (
-				0866BF2F2505F15C00C9C1B0 /* CodeViewer */,
+				A082CAFD2A9A63630055D6D6 /* CodeViewer */,
 			);
 			productName = "CodeViewerExample-iOS";
 			productReference = 0866BF202505F11000C9C1B0 /* CodeViewerExample-iOS.app */;
@@ -166,7 +162,6 @@
 			);
 			name = CodeViewerExample;
 			packageProductDependencies = (
-				0866BEF92505E48E00C9C1B0 /* CodeViewer */,
 			);
 			productName = CodeViewer;
 			productReference = 08E5C4E824EE3D2E000E8954 /* CodeViewerExample.app */;
@@ -509,11 +504,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0866BEF92505E48E00C9C1B0 /* CodeViewer */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CodeViewer;
-		};
-		0866BF2F2505F15C00C9C1B0 /* CodeViewer */ = {
+		A082CAFD2A9A63630055D6D6 /* CodeViewer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CodeViewer;
 		};
