@@ -18,6 +18,7 @@
 		A074F6992A16D40500061398 /* OpenAI.prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */; };
 		A074F69A2A16D40500061398 /* OpenAI.prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */; };
 		A074F69B2A16D40500061398 /* OpenAI.prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */; };
+		A082CB002A9A68D80055D6D6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A082CAFF2A9A68D80055D6D6 /* Settings.bundle */; };
 		A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A09F62DD29DDD08600650C9A /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DC29DDD08600650C9A /* PlantUMLFramework */; };
 		A09F62DF29DDD08D00650C9A /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */; };
@@ -75,6 +76,7 @@
 		A05F2E372A1FFC49007FDF36 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		A068572D29D8B31100E82C2F /* View+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Clipboard.swift"; sourceTree = "<group>"; };
 		A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = OpenAI.prod.xcconfig; sourceTree = "<group>"; };
+		A082CAFF2A9A68D80055D6D6 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A08AA78329561170004DE329 /* View+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+UIImage.swift"; sourceTree = "<group>"; };
 		A0943A6D29448A1700342426 /* AppStore.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppStore.xcassets; sourceTree = "<group>"; };
 		A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScaleToFit+ToggleStyle.swift"; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				A038DB5F29D489BA0032E312 /* PlantUML+OpenAI.swift */,
 				A0BFBA9C290D551F008340E3 /* Localizable.strings */,
 				A0D3C64F28984A10000838D7 /* Assets.xcassets */,
+				A082CAFF2A9A68D80055D6D6 /* Settings.bundle */,
 				A0D3C65428984A10000838D7 /* Info.plist */,
 				A0D3C65128984A10000838D7 /* Preview Content */,
 			);
@@ -355,6 +358,7 @@
 				A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */,
 				A038DB5C29D452880032E312 /* OpenAI.xcconfig in Resources */,
 				A074F6992A16D40500061398 /* OpenAI.prod.xcconfig in Resources */,
+				A082CB002A9A68D80055D6D6 /* Settings.bundle in Resources */,
 				A0D3C65028984A10000838D7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,7 +611,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
@@ -644,7 +648,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;

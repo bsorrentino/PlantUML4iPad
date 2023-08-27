@@ -29,6 +29,10 @@ struct PlantUMLContentView: View {
     @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     
+    @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
+    @AppStorage("darkTheme") var darkTheme:String = CodeWebView.Theme.monokai.rawValue
+    @AppStorage("fontSize") var fontSize:Int = 20
+
     @StateObject var document: PlantUMLDocumentProxy
     @StateObject private var openAIService = OpenAIService()
     
@@ -40,7 +44,6 @@ struct PlantUMLContentView: View {
     
     @State var keyboardTab: String  = "general"
     @State private var isScaleToFit = true
-    @State private var fontSize = CGFloat(15)
     @State private var showLine:Bool = false
     @State private var saving = false
     @State private var diagramImage:UIImage?
@@ -147,10 +150,10 @@ extension PlantUMLContentView {
         
         PlantUMLLineEditorView( content: $document.text,
                                 mode: .plantuml,
-                                darkTheme: .terminal,
-                                lightTheme: .chrome,
+                                darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
+                                lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
                                 isReadOnly: false,
-                                fontSize: fontSize
+                                fontSize: CGFloat(fontSize)
         )
         
 //        PlantUMLLineEditorView( text: $document.text,
