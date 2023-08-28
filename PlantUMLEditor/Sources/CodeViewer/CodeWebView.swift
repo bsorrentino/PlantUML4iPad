@@ -130,6 +130,15 @@ public class CodeWebView: CustomView {
         let script = "document.getElementById('editor').style.fontSize='\(fontSize)px';"
         callJavascript(javascriptString: script)
     }
+
+    func setShowGutter(_ show: Bool) {
+        callJavascript(javascriptString: "editor.renderer.setShowGutter(\(show));")
+    }
+
+    func setShowLineNumbers(_ show: Bool) {
+        let jscode = "editor.setOptions({ showLineNumbers: \(show) })";
+        callJavascript(javascriptString: jscode )
+    }
     
     func clearSelection() {
         let script = "editor.clearSelection();"
@@ -142,6 +151,7 @@ public class CodeWebView: CustomView {
            callback(result)
         }
     }
+    
 }
 
 extension CodeWebView {

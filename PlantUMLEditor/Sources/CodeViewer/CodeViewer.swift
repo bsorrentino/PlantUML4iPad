@@ -35,69 +35,76 @@ public struct CodeViewer: ViewRepresentable {
     @Environment(\.colorScheme) var colorScheme
     var textDidChanged: ((String) -> Void)?
 
-    private let mode: CodeWebView.Mode
     private let darkTheme: CodeWebView.Theme
     private let lightTheme: CodeWebView.Theme
     private let isReadOnly: Bool
     private let fontSize: CGFloat
+    private let showGutter: Bool
     
     public init(
         content: Binding<String>,
-        mode: CodeWebView.Mode = .plain_text,
         darkTheme: CodeWebView.Theme = .solarized_dark,
         lightTheme: CodeWebView.Theme = .solarized_light,
         isReadOnly: Bool = false,
         fontSize: CGFloat = 12,
+        showGutter: Bool = true,
         textDidChanged: ((String) -> Void)? = nil
     ) {
         self._content = content
-        self.mode = mode
         self.darkTheme = darkTheme
         self.lightTheme = lightTheme
         self.isReadOnly = isReadOnly
         self.fontSize = fontSize
         self.textDidChanged = textDidChanged
+        self.showGutter = showGutter
     }
     
     public func makeCoordinator() -> Coordinator {
-        Coordinator(content: $content, colorScheme: colorScheme, fontSize: fontSize )
+        Coordinator(content: $content,
+                    colorScheme: colorScheme,
+                    fontSize: fontSize,
+                    showGutter: showGutter )
     }
     
-    private func getWebView(context: Context) -> CodeWebView {
+    private func makeWebView(context: Context) -> CodeWebView {
         let codeView = CodeWebView()
 
+        codeView.setMode(.plantuml)
         codeView.setReadOnly(isReadOnly)
-        codeView.setMode(mode)
         codeView.setFontSize(fontSize)
         codeView.setContent(content)
         codeView.clearSelection()
+        codeView.setShowGutter(showGutter)
         codeView.textDidChanged = { text in
             context.coordinator.set(content: text)
             self.textDidChanged?(text)
         }
         codeView.setTheme( colorScheme == .dark ? darkTheme : lightTheme )
-//        codeView.setFocus()
-
+        
         return codeView
     }
     
     private func updateView(_ webview: CodeWebView, context: Context) {
+        
         if context.coordinator.colorScheme != colorScheme {
             colorScheme == .dark ? webview.setTheme(darkTheme) : webview.setTheme(lightTheme)
-            context.coordinator.set(colorScheme: colorScheme)
+            context.coordinator.colorScheme = colorScheme
         }
-        
-        print( "fontSize: \(fontSize)" )
         
         if context.coordinator.fontSize != fontSize {
             context.coordinator.fontSize =  fontSize
             webview.setFontSize(fontSize)
         }
+        
+        if context.coordinator.showGutter != showGutter {
+            context.coordinator.showGutter =  showGutter
+            webview.setShowGutter(showGutter)
+        }
     }
     
     // MARK: macOS
     public func makeNSView(context: Context) -> CodeWebView {
-        getWebView(context: context)
+        makeWebView(context: context)
     }
     
     public func updateNSView(_ webview: CodeWebView, context: Context) {
@@ -106,7 +113,7 @@ public struct CodeViewer: ViewRepresentable {
     
     // MARK: iOS
     public func makeUIView(context: Context) -> CodeWebView {
-        getWebView(context: context)
+        makeWebView(context: context)
     }
     
     public func updateUIView(_ webview: CodeWebView, context: Context) {
@@ -118,25 +125,20 @@ public extension CodeViewer {
     
     class Coordinator: NSObject {
         @Binding private(set) var content: String
-      
-        private(set) var colorScheme: ColorScheme
+        var colorScheme: ColorScheme
         var fontSize: CGFloat
+        var showGutter: Bool
         
-        init(content: Binding<String>, colorScheme: ColorScheme, fontSize: CGFloat ) {
+        init(content: Binding<String>, colorScheme: ColorScheme, fontSize: CGFloat, showGutter: Bool ) {
             _content = content
             self.colorScheme = colorScheme
             self.fontSize = fontSize
+            self.showGutter = showGutter
         }
         
         func set(content: String) {
             if self.content != content {
                 self.content = content
-            }
-        }
-        
-        func set(colorScheme: ColorScheme) {
-            if self.colorScheme != colorScheme {
-                self.colorScheme = colorScheme
             }
         }
         

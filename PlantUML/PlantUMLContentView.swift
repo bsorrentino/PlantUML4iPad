@@ -22,7 +22,7 @@ import AppSecureStorage
 
 
 struct PlantUMLContentView: View {
-    typealias PlantUMLLineEditorView = CodeViewer
+    typealias PlantUMLEditorView = CodeViewer
     
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
@@ -44,7 +44,7 @@ struct PlantUMLContentView: View {
     
     @State var keyboardTab: String  = "general"
     @State private var isScaleToFit = true
-    @State private var showLine:Bool = false
+    @State private var showLine:Bool = true
     @State private var saving = false
     @State private var diagramImage:UIImage?
     
@@ -148,12 +148,12 @@ extension PlantUMLContentView {
     var EditorView_Fragment: some View {
         
         
-        PlantUMLLineEditorView( content: $document.text,
-                                mode: .plantuml,
+        PlantUMLEditorView( content: $document.text,
                                 darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
                                 lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
                                 isReadOnly: false,
-                                fontSize: CGFloat(fontSize)
+                                fontSize: CGFloat(fontSize),
+                                showGutter: showLine
         )
         
 //        PlantUMLLineEditorView( text: $document.text,
