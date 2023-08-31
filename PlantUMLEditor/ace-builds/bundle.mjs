@@ -18,10 +18,8 @@ const copyModesAndSnippet = async () => {
 
         const fileName = path.basename(src)
 
-        return  fileName === 'mode-plain_text.js'   ||
-                fileName === 'mode-dot.js'          ||
-                fileName === 'plain_text.js'        ||
-                fileName === 'dot.js'
+        return  fileName === 'mode-plantuml.js'   ||
+                fileName === 'plantuml.js'        
             ;
     }
     return fs.copy( srcPath, targetPath, { overwrite: true, filter: filter, recursive: true } )
