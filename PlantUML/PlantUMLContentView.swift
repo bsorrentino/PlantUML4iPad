@@ -31,7 +31,7 @@ struct PlantUMLContentView: View {
     
     @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
     @AppStorage("darkTheme") var darkTheme:String = CodeWebView.Theme.monokai.rawValue
-    @AppStorage("fontSize") var fontSize:Int = 20
+    @AppStorage("fontSize") var fontSize:Int = 15
 
     @StateObject var document: PlantUMLDocumentProxy
     @StateObject private var openAIService = OpenAIService()
@@ -147,22 +147,28 @@ extension PlantUMLContentView {
     
     var EditorView_Fragment: some View {
         
-        
-        PlantUMLEditorView( content: $document.text,
+        VStack {
+            PlantUMLEditorView( content: $document.text,
                                 darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
                                 lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
                                 isReadOnly: false,
                                 fontSize: CGFloat(fontSize),
                                 showGutter: showLine
-        )
-        
-//        PlantUMLLineEditorView( text: $document.text,
-//                                fontSize: $fontSize,
-//                                showLine: $showLine) { onHide, onPressSymbol in
-//            PlantUMLKeyboardView( selectedTab: $keyboardTab,
-//                                  onHide: onHide,
-//                                  onPressSymbol: onPressSymbol)
-//        }
+            )
+            
+            //        PlantUMLLineEditorView( text: $document.text,
+            //                                fontSize: $fontSize,
+            //                                showLine: $showLine) { onHide, onPressSymbol in
+            //            PlantUMLKeyboardView( selectedTab: $keyboardTab,
+            //                                  onHide: onHide,
+            //                                  onPressSymbol: onPressSymbol)
+            //        }
+            
+            if isRunningTests {
+                Text( document.text )
+                    .accessibilityIdentifier("editor-text")
+            }
+        }
     }
     
     // [SwiftUI Let View disappear automatically](https://stackoverflow.com/a/60820491/521197)

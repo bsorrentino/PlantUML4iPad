@@ -1,0 +1,39 @@
+{
+  "configurations" : [
+    {
+      "id" : "2B9EFE04-912E-4BA5-8D86-11058287DD0F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "language" : "en",
+    "region" : "IT",
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PlantUMLApp.xcodeproj",
+      "identifier" : "A0D3C64528984A0E000838D7",
+      "name" : "PlantUMLApp"
+    }
+  },
+  "testTargets" : [
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:PlantUMLApp.xcodeproj",
+        "identifier" : "A0D3C65828984A10000838D7",
+        "name" : "PlantUMLTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:PlantUMLApp.xcodeproj",
+        "identifier" : "A00729B729DB2A9D00D73D1A",
+        "name" : "PlantUMLAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

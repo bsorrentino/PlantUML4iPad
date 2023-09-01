@@ -19,4 +19,7 @@
    <FileRef
       location = "group:privacy_policy.md">
    </FileRef>
+   <FileRef
+      location = "group:PlantUMLApp UITest.xctestplan">
+   </FileRef>
 </Workspace>
