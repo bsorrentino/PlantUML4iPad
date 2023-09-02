@@ -158,8 +158,9 @@ extension PlantUMLContentView {
             
             if isRunningTests {
                 Text( document.text )
-                    .accessibilityIdentifier("editor-text")
                     .frame( height: 0.0)
+                    .foregroundColor(.black)
+                    .accessibilityIdentifier("editor-text")
             }
         }
     }
