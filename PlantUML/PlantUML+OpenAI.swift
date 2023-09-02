@@ -91,16 +91,16 @@ class OpenAIService : ObservableObject {
         case Error( String )
         case Editing
     }
-    
-    let models = ["text-davinci-edit-001", "code-davinci-edit-001"]
+
+//    let models = ["text-davinci-edit-001", "code-davinci-edit-001"]
     
     @Published public var status: Status = .Ready
     @Published public var inputApiKey = ""
     @Published public var inputOrgId = ""
-    @Published public var inputModel:String
+//    @Published public var inputModel:String
 
 
-    @AppStorage("openaiModel") private var openAIModel:String?
+    @AppStorage("openaiModel") private var openAIModel:String = "text-davinci-edit-001"
     @AppSecureStorage("openaikey") private var openAIKey:String?
     @AppSecureStorage("openaiorg") private var openAIOrg:String?
 
@@ -109,8 +109,6 @@ class OpenAIService : ObservableObject {
     
     init() {
         
-        inputModel = models[0]
-        
         if let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty {
             openAIKey = apiKey
         }
@@ -118,14 +116,14 @@ class OpenAIService : ObservableObject {
             openAIOrg = orgId
         }
         
-        
         inputApiKey = openAIKey ?? ""
         inputOrgId = openAIOrg ?? ""
         
-        if let openAIModel {
-            inputModel = openAIModel
-        }
-        
+//        inputModel = models[0]
+                
+//        if let openAIModel {
+//            inputModel = openAIModel
+//        }
         
      }
     
@@ -135,40 +133,23 @@ class OpenAIService : ObservableObject {
         }
         openAIKey = inputApiKey
         openAIOrg = inputOrgId
-        openAIModel = inputModel
-//        focobjectWillChange.send()
+//        openAIModel = inputModel
     }
     
     func resetSettings() {
+//        inputModel = models[0]
         inputApiKey = ""
         inputOrgId = ""
-        inputModel = models[0]
         openAIKey = nil
         openAIOrg = nil
     }
 
-    
     var isSettingsValid:Bool {
         guard let openAIKey, !openAIKey.isEmpty, let openAIOrg, !openAIOrg.isEmpty else {
             return false
         }
         return true
     }
-
-//    lazy var openAI: OpenAI? = {
-//
-//        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty else {
-//            status = .Error("api key not found!")
-//            return nil
-//        }
-//        guard let orgId = Bundle.main.object(forInfoDictionaryKey: "OPENAI_ORG_ID") as? String, !orgId.isEmpty else {
-//            status = .Error("org id not found!")
-//            return nil
-//        }
-//
-//        return OpenAI( Configuration(organizationId: orgId, apiKey: apiKey))
-//
-//    }()
 
     var openAI: OpenAI? {
 
@@ -189,7 +170,7 @@ class OpenAIService : ObservableObject {
     @MainActor
     func generateEdit( input: String, instruction: String ) async -> String? {
         
-        guard let openAI, let  openAIModel, case .Ready = status else {
+        guard let openAI /*, let  openAIModel */, case .Ready = status else {
             return nil
         }
         
@@ -237,15 +218,12 @@ struct OpenAIView : View {
 
     @FocusState private var promptInFocus: Bool
     
-    
-    
     var isEditing:Bool {
         if case .Editing = service.status {
             return true
         }
         return false
     }
-    
     
     var body: some View {
         
@@ -373,7 +351,6 @@ extension OpenAIView {
                                     .split( whereSeparator: \.isNewline )
                                     .filter { $0 != "@startuml" && $0 != "@enduml" }
                                     .joined(separator: "\n" )
-                                
                             }
                         }
                     },
@@ -452,8 +429,8 @@ extension OpenAIView {
                         HStack {
                             Text("OpenAI Secrets")
                             HideToggleButton(hidden: $hideOpenAISecrets)
-                            Divider()
-                            Button( action: { p.scrollTo("openai-settings", anchor: .top) }, label: { Text("More .....").font(.footnote) } )
+//                            Divider()
+//                            Button( action: { p.scrollTo("openai-settings", anchor: .top) }, label: { Text("More .....").font(.footnote) } )
                         }
                         .id( "openai-secret")
                         
@@ -466,25 +443,25 @@ extension OpenAIView {
                         }
                     }
                     
-                    Section {
-                        Picker("Model", selection: $service.inputModel) {
-                            ForEach(service.models, id: \.self) {
-                                Text($0)
-                            }
-                        }
-                    }
-                    header: {
-                        HStack {
-                            Text("OpenAI Extra settings")
-                            Divider()
-                            Button( action: { p.scrollTo("openai-secret", anchor: .bottom) }, label: { Text("Back ...").font(.footnote) } )
-                        }
-                        .id( "openai-settings")
-                    }
-                    footer: {
-                        Rectangle().fill(Color.clear).frame(height: 65)
-                        
-                    }
+//                    Section {
+//                        Picker("Model", selection: $service.inputModel) {
+//                            ForEach(service.models, id: \.self) {
+//                                Text($0)
+//                            }
+//                        }
+//                    }
+//                    header: {
+//                        HStack {
+//                            Text("OpenAI Extra settings")
+//                            Divider()
+//                            Button( action: { p.scrollTo("openai-secret", anchor: .bottom) }, label: { Text("Back ...").font(.footnote) } )
+//                        }
+//                        .id( "openai-settings")
+//                    }
+//                    footer: {
+//                        Rectangle().fill(Color.clear).frame(height: 65)
+//
+//                    }
                     
                 }
             }
