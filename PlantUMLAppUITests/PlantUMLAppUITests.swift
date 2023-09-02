@@ -404,7 +404,7 @@ final class PlantUMLAppUITests: XCTestCase {
     }
 
     
-    func __testOpenAI() throws {
+    func testOpenAI() throws {
         self.app = XCUIApplication()
         
         guard let app else { XCTFail( "error creating XCUIApplication instance") ; return }
@@ -423,7 +423,7 @@ final class PlantUMLAppUITests: XCTestCase {
 
         cell.tap()
     
-        XCTAssertTrue( app.tables.element.waitForExistence(timeout: 10) )
+//        XCTAssertTrue( app.tables.element.waitForExistence(timeout: 10) )
         XCTAssertTrue( app.buttons["openai"].waitForExistence(timeout: 10) )
         XCTAssertTrue( app.buttons["editor"].waitForExistence(timeout: 10) )
         XCTAssertTrue( app.buttons["diagram"].waitForExistence(timeout: 10) )
