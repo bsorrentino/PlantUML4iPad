@@ -156,17 +156,10 @@ extension PlantUMLContentView {
                                 showGutter: showLine
             )
             
-            //        PlantUMLLineEditorView( text: $document.text,
-            //                                fontSize: $fontSize,
-            //                                showLine: $showLine) { onHide, onPressSymbol in
-            //            PlantUMLKeyboardView( selectedTab: $keyboardTab,
-            //                                  onHide: onHide,
-            //                                  onPressSymbol: onPressSymbol)
-            //        }
-            
             if isRunningTests {
                 Text( document.text )
                     .accessibilityIdentifier("editor-text")
+                    .frame( height: 0.0)
             }
         }
     }

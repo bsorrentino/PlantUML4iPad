@@ -78,6 +78,46 @@ extension XCTestCase {
 
 }
 
+
+struct EditorElement {
+    
+    var element:XCUIElement
+    
+    init( app: XCUIApplication ) {
+        
+        if( app.webViews.textViews.element.waitForExistence(timeout: 5.0) ) {
+            
+            XCTAssertEqual( app.webViews.textViews.count, 1 )
+            element = app.webViews.textViews.element(boundBy: 0)
+            
+            return
+        }
+        
+        XCTAssertTrue(app.webViews.textFields.element.waitForExistence(timeout: 5.0))
+        XCTAssertEqual( app.webViews.textFields.count, 1 )
+
+        element = app.webViews.textFields.element(boundBy: 0)
+    }
+    
+    func typeText(_ str:String) {
+        str.forEach { char in
+            element.typeText( "\(char)" )
+        }
+    }
+
+    func typeText( andDismissIntellisense str: String  ) {
+        typeText( str )
+        let coordinate = element.coordinate(withNormalizedOffset: CGVector( dx: 300, dy: 0))
+        coordinate.tap()
+    }
+
+    func typeText( andSelectIntellisense str:String, then: (() -> Void)? = nil ) {
+        typeText( str )
+        typeText("\t")
+        then?()
+    }
+}
+
 final class PlantUMLAppUITests: XCTestCase {
     
     var app: XCUIApplication?
@@ -233,159 +273,69 @@ final class PlantUMLAppUITests: XCTestCase {
 
         app.buttons["editor"].tap()
         
-        XCTAssertTrue(app.webViews.textViews.element.waitForExistence(timeout: 5.0))
-        XCTAssertEqual( app.webViews.textViews.count, 1 )
         
         
-        let editor = app.webViews.textViews.element(boundBy: 0)
+        let editor = EditorElement(app: app)
         
-        editor.tap()
+        editor.element.tap()
         wait( reason: "wait before tap again", timeout: 0.5 )
-        editor.tap()
+        editor.element.tap()
 
         XCTAssertTrue( app.staticTexts["editor-text"].exists )
         XCTAssertEqual( app.staticTexts["editor-text"].label, "Title untitled")
-
-        let typeText = { (str:String) in
-                str.forEach { char in
-                    editor.typeText( "\(char)" )
-                }
-        }
-
-        let typeTextAndDismissIntellisense = { (str:String) in
-            typeText( str )
-            let coordinate = editor.coordinate(withNormalizedOffset: CGVector( dx: 1, dy: 0))
-            coordinate.tap()
-            coordinate.tap()
-
-        }
-
-        let typeTextAndSelectIntellisense = { (str:String) in
-            typeText( str )
-            let coordinate = editor.coordinate(withNormalizedOffset: CGVector( dx: 1, dy: 1))
-            coordinate.tap()
+        
+        editor.element.typeBackspace( times: 8 )
+        editor.typeText( "My Diagram" )
+        
+        editor.typeText( andSelectIntellisense: "\nfootbox" )
+//        typeTextAndDismissIntellisense( "\nautoactivate on" )
+        
+        editor.typeText( andSelectIntellisense: "\n\nacto") {
+            // move cursor to previous line
+            var coordinate = editor.element.coordinate(withNormalizedOffset: CGVector( dx: 20, dy: -1))
+            coordinate.press(forDuration: 0.7) // simulate text selection
             
-            return coordinate
+            editor.typeText( "User") // replace text
+            
+            coordinate = editor.element.coordinate(withNormalizedOffset: CGVector( dx: 30, dy: -1))
+            coordinate.press(forDuration: 0.7) // simulate text selection
+            
+            editor.typeText( "The User") // replace text
+            
+            
+            // move cursor to next line
+            coordinate = editor.element.coordinate(withNormalizedOffset: CGVector( dx: 0, dy: 1))
+            coordinate.tap()
         }
-        
-        typeTextAndDismissIntellisense("\nparticipant P1")
+                
+        editor.typeText( andDismissIntellisense: "\nparticipant P1")
 
-        typeTextAndSelectIntellisense("\npartic").tap()
-
-        typeTextAndDismissIntellisense(" P2")
+        editor.typeText( andSelectIntellisense: "\npartic") {
+            
+            editor.typeText( andDismissIntellisense:" P2")
+        }
     
-        typeTextAndSelectIntellisense("\nacto").tap()
+        editor.typeText( andDismissIntellisense: "\n\nUser --> P1 : call method 1")
         
-        // move cursor to previous line
-        var coordinate = editor.coordinate(withNormalizedOffset: CGVector( dx: 50, dy: -1))
-        coordinate.press(forDuration: 0.7) // simulate text selection
+        editor.typeText( """
         
-        typeText( "User") // replace text
-        
-        // move cursor to next line
-        coordinate = editor.coordinate(withNormalizedOffset: CGVector( dx: 0, dy: 1))
-        coordinate.tap()
-        
-        typeTextAndDismissIntellisense( """
-        
+        activate P1
         
         P1 --> P2
+
+        activate P2
+        
+        P2 --> P2 : do something
+        
         """)
         
-        
-        /*
-        getCellTextField(table: app.tables.element, atRow: 0 ) { textField in
-            textField.tap()
+        editor.typeText( andDismissIntellisense: "\nreturn")
 
-            
-            
-            textField.typeBackspace(times: 8)
-            XCTAssertEqual( textField.valueAsString(), "Title ")
-            
-            textField.typeText( "sequence diagram\n")
-            XCTAssertEqual( textField.valueAsString(), "Title sequence diagram")
-        }
-        
-        XCTAssertEqual( app.tables.cells.count, 2 )
-        
-        getPlantUMLKeyboard( app ) { ( customKeyboard, addBelow, _ ) in
+        editor.typeText( andDismissIntellisense: "\n\nreturn: computation result")
 
-            customKeyboard.tap()
-            if !app.buttons["general"].waitForExistence(timeout: 0.5) { // FIX SHOW KEYBOARD BUG
-                customKeyboard.tap()
-            }
-
-            XCTAssertTrue(app.buttons["general"].waitForExistence(timeout: 3.0))
-            XCTAssertTrue(app.buttons["sequence"].waitForExistence(timeout: 3.0))
-
-            app.buttons["general"].tap()
-
-            selectChoice( app, ofTab: "general", forKey: "skinparam", value: "linetype ortho")
-            
-            addBelow.tap()
-            
-        }
-        
-        """
-        Bob -> Alice : Authentication Request
-        Bob <- Alice : Authentication Response
-        """.split(whereSeparator: \.isNewline).forEach { value in
-
-            let nextText = app.tables.cells.count - 1
-
-            getCellTextField(table: app.tables.element, atRow: nextText ) { textField in
-                textField.tap()
-                textField.typeText( "\(value)\n")
-            }
-
-        }
-        
         app.buttons["diagram"].tap()
 
         wait( reason: "wait before back to diagram", timeout: 5.0 )
-
-        app.buttons["editor"].tap()
-
-        getCellTextField(table: app.tables.element, atRow: 1 ) { textField in
-            textField.tap()
-        }
-
-        getPlantUMLKeyboard( app ) { ( customKeyboard, addBelow, _ ) in
-
-            addBelow.tap()
-            
-            customKeyboard.tap()
-            if !app.buttons["general"].waitForExistence(timeout: 0.5) { // FIX SHOW KEYBOARD BUG
-                customKeyboard.tap()
-            }
-
-            XCTAssertTrue(app.buttons["general"].waitForExistence(timeout: 3.0))
-            XCTAssertTrue(app.buttons["sequence"].waitForExistence(timeout: 3.0))
-
-            app.buttons["sequence"].tap()
-            
-            XCTAssertTrue(app.buttons["hide footbox"].exists)
-            
-            app.buttons["hide footbox"].tap()
-
-            addBelow.tap()
-
-            customKeyboard.tap()
-            if !app.buttons["sequence"].waitForExistence(timeout: 0.5) { // FIX SHOW KEYBOARD BUG
-                customKeyboard.tap()
-            }
-
-            XCTAssertTrue(app.buttons["autonumber"].exists)
-            
-            app.buttons["autonumber"].tap()
-
-            customKeyboard.tap()
-        }
-
-        XCTAssertEqual( app.tables.cells.count, 6 )
-        
-        app.buttons["diagram"].tap()
-         */
 
     }
 
