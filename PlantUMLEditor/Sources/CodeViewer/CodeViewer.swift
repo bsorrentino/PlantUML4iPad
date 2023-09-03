@@ -62,6 +62,8 @@ public struct CodeViewer: ViewRepresentable {
     public func makeCoordinator() -> Coordinator {
         Coordinator(content: $content,
                     colorScheme: colorScheme,
+                    lightTheme: lightTheme,
+                    darkTheme: darkTheme,
                     fontSize: fontSize,
                     showGutter: showGutter )
     }
@@ -86,11 +88,6 @@ public struct CodeViewer: ViewRepresentable {
     
     private func updateView(_ webview: CodeWebView, context: Context) {
         
-        if context.coordinator.colorScheme != colorScheme {
-            colorScheme == .dark ? webview.setTheme(darkTheme) : webview.setTheme(lightTheme)
-            context.coordinator.colorScheme = colorScheme
-        }
-        
         if context.coordinator.fontSize != fontSize {
             context.coordinator.fontSize =  fontSize
             webview.setFontSize(fontSize)
@@ -100,6 +97,30 @@ public struct CodeViewer: ViewRepresentable {
             context.coordinator.showGutter =  showGutter
             webview.setShowGutter(showGutter)
         }
+
+        /// Theme update
+        let isLightThemeChanged     = context.coordinator.lightTheme != lightTheme
+        let isDarkThemeChanged      = context.coordinator.darkTheme != darkTheme
+        let isColorSchemeChanged    = context.coordinator.colorScheme != colorScheme
+        
+        if isColorSchemeChanged || isLightThemeChanged || isDarkThemeChanged {
+            
+            if isColorSchemeChanged {
+                context.coordinator.colorScheme = colorScheme
+            }
+            if isLightThemeChanged {
+                context.coordinator.lightTheme = lightTheme
+            }
+            if isDarkThemeChanged {
+                context.coordinator.darkTheme = darkTheme
+            }
+            
+            if isColorSchemeChanged || (colorScheme == .dark && isDarkThemeChanged) || (colorScheme == .light && isLightThemeChanged) {
+                colorScheme == .dark ? webview.setTheme(darkTheme) : webview.setTheme(lightTheme)
+                webview.clearSelection() // force ace.js editor to re-render itself
+            }
+        }
+        
     }
     
     // MARK: macOS
@@ -128,10 +149,20 @@ public extension CodeViewer {
         var colorScheme: ColorScheme
         var fontSize: CGFloat
         var showGutter: Bool
-        
-        init(content: Binding<String>, colorScheme: ColorScheme, fontSize: CGFloat, showGutter: Bool ) {
+        var darkTheme:CodeWebView.Theme
+        var lightTheme:CodeWebView.Theme
+
+        init(content: Binding<String>,
+             colorScheme: ColorScheme,
+             lightTheme:CodeWebView.Theme,
+             darkTheme:CodeWebView.Theme,
+             fontSize: CGFloat,
+             showGutter: Bool ) {
+            
             _content = content
             self.colorScheme = colorScheme
+            self.darkTheme = darkTheme
+            self.lightTheme = lightTheme
             self.fontSize = fontSize
             self.showGutter = showGutter
         }

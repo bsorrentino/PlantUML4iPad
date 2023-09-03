@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+/// [How to let the app know if it's running Unit tests in a pure Swift project](https://stackoverflow.com/a/63447524/521197))
+var isRunningTests: Bool {
+    ProcessInfo.processInfo.environment["NO_TEST_RUNNING"] == nil
+}
+
 @main
 struct PlantUMLApp: App {
    

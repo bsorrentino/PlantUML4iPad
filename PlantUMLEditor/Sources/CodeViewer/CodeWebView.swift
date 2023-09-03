@@ -152,6 +152,10 @@ public class CodeWebView: CustomView {
         }
     }
     
+    func reload() {
+        webview.reloadFromOrigin()
+    }
+    
 }
 
 extension CodeWebView {

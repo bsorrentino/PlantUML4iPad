@@ -20,6 +20,20 @@
                ReferencedContainer = "container:PlantUMLApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A00729B729DB2A9D00D73D1A"
+               BuildableName = "PlantUMLAppUITests.xctest"
+               BlueprintName = "PlantUMLAppUITests"
+               ReferencedContainer = "container:PlantUMLApp.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -29,9 +43,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       language = "en"
       region = "IT">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:PlantUML.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0D3C65828984A10000838D7"
@@ -76,6 +96,13 @@
             ReferencedContainer = "container:PlantUMLApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "NO_TEST_RUNNING"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
