@@ -155,12 +155,13 @@ extension PlantUMLContentView {
                                 fontSize: CGFloat(fontSize),
                                 showGutter: showLine
             )
-            
-            if isRunningTests {
-                Text( document.text )
-                    .frame( height: 0.0)
-                    .foregroundColor(.black)
-                    .accessibilityIdentifier("editor-text")
+            .if( isRunningTests ) { /// this need for catching current editor data from UI test
+                $0.overlay(alignment: .bottom) {
+                    Text( document.text )
+                        .frame( width: 0, height: 0)
+                        .opacity(0)
+                        .accessibilityIdentifier("editor-text")
+                }
             }
         }
     }
