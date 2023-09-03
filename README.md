@@ -4,11 +4,11 @@
 
 > Native PlantUML Editor thought for iPad providing a improved user experience to use this popular "diagram-as-code" tool 
 
-This is a native PlantUML editor app for iPad. It allows using iPad to draw diagrams in effective way minimising use of typing on the keyboard providing a custom one with useful shortcuts. **From release 1.4.0, an AI for diagram authoring (through OpenAI) is available**.
+This is a native PlantUML editor app for iPad. It allows using iPad to draw diagrams in effective way with a customised editor. **From release 1.4.0, an AI for diagram authoring (through OpenAI) is available**.
 
 _Promotional Text_ 🤞
 
-> This is (first?) native Plantuml editor App for iPad with AI capabilities. Developed by a Plantuml lover to enjoy the writing of diagrams on this excellent device
+> This is a (first  🤔) native Plantuml Editor App for iPad with AI capabilities. Developed by a Plantuml lover to enjoy the writing of diagrams on this excellent device
 
 ## Features 🦾
 
@@ -22,7 +22,7 @@ _Promotional Text_ 🤞
     * Built in cache management
     * Scale to fit
     * Share Image (AirDrop, iCloud, Other App, ...)
-6. OpenAI integration
+5. OpenAI integration
     > You must have a valid [OpenAI] api key to use this feature. Such secrets will be stored in device's keychain
     * Prompt your diagram request in natural language
     * Undo Prompt
