@@ -14,20 +14,10 @@ _Promotional Text_ 🤞
 
 1. Create,Update,Delete plantUML Documents
 2. Share Documents with iCLoud
-3. Line Text Editor
-    * Support pasting content from Clipboard
-    * Provides add below / add above keyboard buttons
+3. Text Editor
     * Auto save over modification
-    * Allows customise the editing behaviours
-4. PlantUML Custom Keyboard 
-    * Common symbols
-    * Sequence symbols
-    * Deployment symbols
-    * Color key
-      > Open a color picker for choosing the color to apply 
-    * Choice key
-      > Open a choices picker for choosing the command to write 
-5. Diagram Preview 
+    * Provide **syntax highlighting** and auto completion **diagram snippets** through [ace] editor
+4. Diagram Preview 
     > Preview relies on [PlantUML online server](https://plantuml.com/server) so it requires internet connection
     * Built in cache management
     * Scale to fit
@@ -38,6 +28,10 @@ _Promotional Text_ 🤞
     * Undo Prompt
     * Prompt's History 
     * choose AI Model
+
+**Take a Note:**
+
+> From release 2.0 the PlantUML Custom Keyboard has been disabled because not compatible with the new editor based on [ace]
 
 ## App Store
 
@@ -76,3 +70,4 @@ Below all references that helped to develop such App
 * [Sccess TextEditor from XCUIApplication](https://stackoverflow.com/a/69522578/521197)
 
 [openai]: https://openai.com
+[ace]: https://ace.c9.io
