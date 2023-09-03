@@ -1,6 +1,104 @@
 # Changelog
 
 
+
+## [Unreleased](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/Unreleased) ()
+
+### Features
+
+ -  manage the UI refresh on theme changing ([52f6f6d8befd82e](https://github.com/bsorrentino/PlantUML4iPad/commit/52f6f6d8befd82eeb6edf08df0573900bec313bb))
+ -  update plantuml snippet ([5826ddd10d6586d](https://github.com/bsorrentino/PlantUML4iPad/commit/5826ddd10d6586d9bcc1eb6f18dedb6219020fae))
+
+### Bug Fixes
+
+ -  restore index.html ([f818cc9ee700a64](https://github.com/bsorrentino/PlantUML4iPad/commit/f818cc9ee700a640b501cf69dff023d120dba445))
+
+### Documentation
+
+ -  update readme ([7c55f763aaace72](https://github.com/bsorrentino/PlantUML4iPad/commit/7c55f763aaace7264d1234673b60a1cac9230562))
+ -  update readme ([a1d98e5a59e09e5](https://github.com/bsorrentino/PlantUML4iPad/commit/a1d98e5a59e09e514d257361ec180a3351aacb1d))
+
+### Refactor
+
+ -  remove update model ([ee3a9ed0edbfd8a](https://github.com/bsorrentino/PlantUML4iPad/commit/ee3a9ed0edbfd8ac29a76be4d85918245536f85d))
+
+### ALM 
+
+ -  update app preview video ([c85cbac5e79e8e3](https://github.com/bsorrentino/PlantUML4iPad/commit/c85cbac5e79e8e3a25036b653aec564af949832f))
+ -  add settings screenshot ([6b61521e268a597](https://github.com/bsorrentino/PlantUML4iPad/commit/6b61521e268a5977998637b7fd0f10adc1d8a849))
+ -  add App Preview Video ([42edb914de37efd](https://github.com/bsorrentino/PlantUML4iPad/commit/42edb914de37efd823bd5929a7acf6533ea0ce17))
+ -  update secrets ([09a2e368c01140d](https://github.com/bsorrentino/PlantUML4iPad/commit/09a2e368c01140ddcab133e4510ee292544efd91))
+ -  update distribution ([0cece77e18f0180](https://github.com/bsorrentino/PlantUML4iPad/commit/0cece77e18f01806b69c88e772b3c047b6eba53b))
+ -  **bundle**  update script ([d142475dd4f7e87](https://github.com/bsorrentino/PlantUML4iPad/commit/d142475dd4f7e87a0133ab401e3064a7e111ee42))
+
+
+"name: v2.0.0_4" is a release tag
+
+## [v2.0.0_4](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v2.0.0_4) (2023-08-28)
+
+### Features
+
+ -  add gutter toggle support ([de21dcc519b8ec7](https://github.com/bsorrentino/PlantUML4iPad/commit/de21dcc519b8ec791805b62bb1e7d9797bd7a7ea))
+
+
+
+
+### ALM 
+
+ -  update build number ([0579f3d28fdb9ed](https://github.com/bsorrentino/PlantUML4iPad/commit/0579f3d28fdb9eda392687e0f33314d066700418))
+
+
+"name: v2.0.0_3" is a release tag
+
+## [v2.0.0_3](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v2.0.0_3) (2023-08-27)
+
+### Features
+
+ -  add setting bundle ([d3912daf79b253c](https://github.com/bsorrentino/PlantUML4iPad/commit/d3912daf79b253cb1967e54b56ad3aada702ea89))
+ -  add settings.bundle ([a35e8fa7491bfce](https://github.com/bsorrentino/PlantUML4iPad/commit/a35e8fa7491bfcee613019d798e671f972ddc078))
+
+
+
+
+### ALM 
+
+ -  move to next version ([bb3cdd729bef6d7](https://github.com/bsorrentino/PlantUML4iPad/commit/bb3cdd729bef6d70859477173af67aaf3078f216))
+
+
+"name: v2.0.0_2" is a release tag
+
+## [v2.0.0_2](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v2.0.0_2) (2023-08-26)
+
+### Features
+
+ -  add sequence snippets ([c3ffc74af18b6a2](https://github.com/bsorrentino/PlantUML4iPad/commit/c3ffc74af18b6a24a5b874ddaec48cd2c59e4acd))
+ -  switch ace to plantuml syntax ([71b151d17d6bb4f](https://github.com/bsorrentino/PlantUML4iPad/commit/71b151d17d6bb4f427425ef4e704508f995a5b0d))
+ -  update ace dist with plantuml syntax support ([fa7a015f5e7e619](https://github.com/bsorrentino/PlantUML4iPad/commit/fa7a015f5e7e61923328391e0f25b0f4e42c0b7c))
+ -  update sample ([3ba1429f0c174ed](https://github.com/bsorrentino/PlantUML4iPad/commit/3ba1429f0c174ed7c59be6e15a8de0a429b15985))
+ -  add reload event ([10dd331251de6cc](https://github.com/bsorrentino/PlantUML4iPad/commit/10dd331251de6cc947c5ccc22b9daa089cbb2485))
+ -  use dot as alias of PlantUML ([4c08becfda0fda8](https://github.com/bsorrentino/PlantUML4iPad/commit/4c08becfda0fda84562960a6bcf1604b454c2566))
+ -  add navigationDelegate support ([bebfcbbe9f3ef15](https://github.com/bsorrentino/PlantUML4iPad/commit/bebfcbbe9f3ef15efce51b6fc182cd3b09fdef92))
+ -  add support for dynamic fontSize management ([bdb9205f9b8fcdd](https://github.com/bsorrentino/PlantUML4iPad/commit/bdb9205f9b8fcddf670f2a898ebcc6695fb88719))
+ -  substitute LineEditor with CodeViewer ([cfc66afcb542a5a](https://github.com/bsorrentino/PlantUML4iPad/commit/cfc66afcb542a5a0f313059c4d0702b8d7426841))
+
+
+### Documentation
+
+ -  **CHANGELOG.md**  update ([a58e94ff0e77100](https://github.com/bsorrentino/PlantUML4iPad/commit/a58e94ff0e7710087a5fd1e4b0112555b9d1ec7e))
+
+### Refactor
+
+ -  remove LineEditor dependency ([db9914393dcf879](https://github.com/bsorrentino/PlantUML4iPad/commit/db9914393dcf8794155a058d171065d7dedef8f6))
+ -  remove focus on ready ([d84024b27ab015a](https://github.com/bsorrentino/PlantUML4iPad/commit/d84024b27ab015ac1a70d560d5375d5674ce853d))
+
+### ALM 
+
+ -  update distribution ([7524d92badb24cc](https://github.com/bsorrentino/PlantUML4iPad/commit/7524d92badb24cc1a93d47bf603f4ece08c27f80))
+ -  move to next developer version ([caece40a52bed90](https://github.com/bsorrentino/PlantUML4iPad/commit/caece40a52bed909e4a3e928170f62df3ea4c6a6))
+ -  merge CodeViewer project in internal package PlantUMLEditor ([e8123a21c29ab2d](https://github.com/bsorrentino/PlantUML4iPad/commit/e8123a21c29ab2d338afa03c47558196cccafb6b))
+ -  add new Package PlantUMLEditor ([57c4543589074bd](https://github.com/bsorrentino/PlantUML4iPad/commit/57c4543589074bd13e902f098bb4fbc5e9050f56))
+
+
 "name: v1.4.1_1" is a release tag
 
 ## [v1.4.1_1](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v1.4.1_1) (2023-07-11)

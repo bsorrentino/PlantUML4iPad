@@ -4,40 +4,34 @@
 
 > Native PlantUML Editor thought for iPad providing a improved user experience to use this popular "diagram-as-code" tool 
 
-This is a native PlantUML editor app for iPad. It allows using iPad to draw diagrams in effective way minimising use of typing on the keyboard providing a custom one with useful shortcuts. **From release 1.4.0, an AI for diagram authoring (through OpenAI) is available**.
+This is a native PlantUML editor app for iPad. It allows using iPad to draw diagrams in effective way with a customised editor. **From release 1.4.0, an AI for diagram authoring (through OpenAI) is available**.
 
 _Promotional Text_ 🤞
 
-> This is (first?) native Plantuml editor App for iPad with AI capabilities. Developed by a Plantuml lover to enjoy the writing of diagrams on this excellent device
+> This is a (first  🤔) native Plantuml Editor App for iPad with AI capabilities. Developed by a Plantuml lover to enjoy the writing of diagrams on this excellent device
 
 ## Features 🦾
 
 1. Create,Update,Delete plantUML Documents
 2. Share Documents with iCLoud
-3. Line Text Editor
-    * Support pasting content from Clipboard
-    * Provides add below / add above keyboard buttons
+3. Text Editor
     * Auto save over modification
-    * Allows customise the editing behaviours
-4. PlantUML Custom Keyboard 
-    * Common symbols
-    * Sequence symbols
-    * Deployment symbols
-    * Color key
-      > Open a color picker for choosing the color to apply 
-    * Choice key
-      > Open a choices picker for choosing the command to write 
-5. Diagram Preview 
+    * Provide **syntax highlighting** and auto completion **diagram snippets** through [ace] editor
+4. Diagram Preview 
     > Preview relies on [PlantUML online server](https://plantuml.com/server) so it requires internet connection
     * Built in cache management
     * Scale to fit
     * Share Image (AirDrop, iCloud, Other App, ...)
-6. OpenAI integration
+5. OpenAI integration
     > You must have a valid [OpenAI] api key to use this feature. Such secrets will be stored in device's keychain
     * Prompt your diagram request in natural language
     * Undo Prompt
     * Prompt's History 
     * choose AI Model
+
+**Take a Note:**
+
+> From release 2.0 the PlantUML Custom Keyboard has been disabled because not compatible with the new editor based on [ace]
 
 ## App Store
 
@@ -76,3 +70,4 @@ Below all references that helped to develop such App
 * [Sccess TextEditor from XCUIApplication](https://stackoverflow.com/a/69522578/521197)
 
 [openai]: https://openai.com
+[ace]: https://ace.c9.io
