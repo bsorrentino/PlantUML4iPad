@@ -232,22 +232,22 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>text-davinci-edit-001</string>
+			<string>gpt-3.5-turbo</string>
 			<key>Key</key>
 			<string>openaiModel</string>
 			<key>Title</key>
 			<string>Model</string>
 			<key>Titles</key>
 			<array>
-				<string>code-davinci-edit-001</string>
-				<string>text-davinci-edit-001</string>
+				<string>gpt-3.5-turbo</string>
+				<string>gpt-4</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Values</key>
 			<array>
-				<string>code-davinci-edit-001</string>
-				<string>text-davinci-edit-001</string>
+				<string>gpt-3.5-turbo</string>
+				<string>gpt-4</string>
 			</array>
 		</dict>
 	</array>

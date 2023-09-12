@@ -99,7 +99,7 @@ public class CodeWebView: CustomView {
         // And use String.raw to prevent escape some special string -> String will show exactly how it's
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
         //
-        let first = "var content = String.raw`"
+        let first = "const content = String.raw`"
         let content = """
         \(value)
         """
