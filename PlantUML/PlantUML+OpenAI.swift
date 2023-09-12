@@ -100,7 +100,7 @@ class OpenAIService : ObservableObject {
 //    @Published public var inputModel:String
 
 
-    @AppStorage("openaiModel") private var openAIModel:String = "text-davinci-edit-001"
+    @AppStorage("openaiModel") private var openAIModel:String = "gpt-3.5-turbo"
     @AppSecureStorage("openaikey") private var openAIKey:String?
     @AppSecureStorage("openaiorg") private var openAIOrg:String?
 
@@ -166,9 +166,8 @@ class OpenAIService : ObservableObject {
 
     }
 
- 
     @MainActor
-    func generateEdit( input: String, instruction: String ) async -> String? {
+    func generateChatCompletion( input: String, instruction: String ) async -> String? {
         
         guard let openAI /*, let  openAIModel */, case .Ready = status else {
             return nil
@@ -177,17 +176,28 @@ class OpenAIService : ObservableObject {
         self.status = .Editing
         
         do {
-            let editParameter = EditParameters(
+            
+            let chat: [ChatMessage] = [
+                ChatMessage(role: .system, content:
+                                    """
+                                    You are my plantUML assistant.
+                                    Please respond exclusively with diagram code.
+                                    """),
+                ChatMessage(role: .assistant, content: input),
+                ChatMessage(role: .user, content: instruction),
+            ]
+
+            let chatParameters = ChatParameters(
                 model: openAIModel,
-                input: input,
-                instruction: instruction,
+                messages: chat,
                 temperature: 0.0,
-                topP: 1.0
-            )
+                topP: 1.0)
             
-            let editResponse = try await openAI.generateEdit(parameters: editParameter)
-            
-            let result = editResponse.choices[0].text
+            let chatCompletion = try await openAI.generateChatCompletion(
+                                                parameters: chatParameters
+                                            )
+
+            let result = chatCompletion.choices[0].message.content
             
             return result
         }
@@ -340,7 +350,7 @@ extension OpenAIView {
                         Task {
                             let input = "@startuml\n\(result)\n@enduml"
                             
-                            if let res = await service.generateEdit( input: input, instruction: instruction ) {
+                            if let res = await service.generateChatCompletion( input: input, instruction: instruction ) {
                                 service.status = .Ready
                                 
                                 service.clipboard.push( result )

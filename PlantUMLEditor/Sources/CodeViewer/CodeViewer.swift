@@ -87,6 +87,8 @@ public struct CodeViewer: ViewRepresentable {
     }
     
     private func updateView(_ webview: CodeWebView, context: Context) {
+        webview.setContent(content)
+        webview.clearSelection()
         
         if context.coordinator.fontSize != fontSize {
             context.coordinator.fontSize =  fontSize
