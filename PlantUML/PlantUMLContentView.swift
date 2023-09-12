@@ -26,7 +26,7 @@ struct PlantUMLContentView: View {
     
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
-    @Environment(\.editMode) private var editMode
+//    @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     
     @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
@@ -48,12 +48,31 @@ struct PlantUMLContentView: View {
     @State private var saving = false
     @State private var diagramImage:UIImage?
     
+    @State private var editorViewId  = 1
     var body: some View {
         
         VStack {
             GeometryReader { geometry in
+                
                 if( isEditorVisible ) {
-                    EditorView_Fragment
+                    VStack {
+                        PlantUMLEditorView( content: $document.text,
+                                            darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
+                                            lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
+                                            isReadOnly: false,
+                                            fontSize: CGFloat(fontSize),
+                                            showGutter: showLine
+                        )
+                        .id( editorViewId )
+                        .if( isRunningTests ) { /// this need for catching current editor data from UI test
+                            $0.overlay(alignment: .bottom) {
+                                Text( document.text )
+                                    .frame( width: 0, height: 0)
+                                    .opacity(0)
+                                    .accessibilityIdentifier("editor-text")
+                            }
+                        }
+                    }
                 }
                 
                 if isDiagramVisible {
@@ -71,8 +90,16 @@ struct PlantUMLContentView: View {
                 }
             }
             if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
-                OpenAIView_Fragment
+                OpenAIView( service: openAIService, result: $document.text )
                     .frame( height: 200 )
+                    .onChange(of: openAIService.status ) { newStatus in
+                        if( .Ready == newStatus ) {
+                            // Force rendering editor view
+//                            print( "FORCE RENDERING OF EDITOR VIEW")
+                            editorViewId += 1
+                        }
+                    }
+
             }
         }
         .onChange(of: document.text ) { _ in
@@ -110,7 +137,7 @@ struct PlantUMLContentView: View {
                     ToggleEditorButton()
                     if isEditorVisible {
                         HStack {
-                            EditButton()
+//                            EditButton()
                             fontSizeView()
                             toggleLineNumberView()
                         }
@@ -128,43 +155,9 @@ struct PlantUMLContentView: View {
 }
 
 //
-// MARK: - OpenAI extension -
-//
-extension PlantUMLContentView {
-    
-    var OpenAIView_Fragment: some View {
-        
-        OpenAIView( service: openAIService, result: $document.text )
-        
-    }
-    
-}
-
-//
 // MARK: - Editor extension -
 //
 extension PlantUMLContentView {
-    
-    var EditorView_Fragment: some View {
-        
-        VStack {
-            PlantUMLEditorView( content: $document.text,
-                                darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
-                                lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
-                                isReadOnly: false,
-                                fontSize: CGFloat(fontSize),
-                                showGutter: showLine
-            )
-            .if( isRunningTests ) { /// this need for catching current editor data from UI test
-                $0.overlay(alignment: .bottom) {
-                    Text( document.text )
-                        .frame( width: 0, height: 0)
-                        .opacity(0)
-                        .accessibilityIdentifier("editor-text")
-                }
-            }
-        }
-    }
     
     // [SwiftUI Let View disappear automatically](https://stackoverflow.com/a/60820491/521197)
     struct SavedStateView: View {
@@ -342,7 +335,7 @@ myactor -> participant1
                 NavigationView {
                     PlantUMLContentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
                         .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-                        .environment(\.editMode, Binding.constant(EditMode.inactive))
+//                        .environment(\.editMode, Binding.constant(EditMode.inactive))
                 }
                 .navigationViewStyle(.stack)
                 .previewInterfaceOrientation(.landscapeRight)
@@ -350,7 +343,7 @@ myactor -> participant1
                 NavigationView {
                     PlantUMLContentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
                         .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-                        .environment(\.editMode, Binding.constant(EditMode.inactive))
+//                        .environment(\.editMode, Binding.constant(EditMode.inactive))
                 }
                 .navigationViewStyle(.stack)
                 .previewInterfaceOrientation(.portrait)

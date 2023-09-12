@@ -1,6 +1,32 @@
 # Changelog
 
 
+
+## [Unreleased](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/Unreleased) ()
+
+### Features
+
+ -  replace deprecated OpenAI model ([a3b169074f1baf2](https://github.com/bsorrentino/PlantUML4iPad/commit/a3b169074f1baf2a79dba221654fb8584c96c25a))
+ -  update ai model ([0d2426236a28275](https://github.com/bsorrentino/PlantUML4iPad/commit/0d2426236a2827569e590af1806e2aa35cb6826d))
+
+### Bug Fixes
+
+ -  manage update editor content ([9e736ecd9c16e39](https://github.com/bsorrentino/PlantUML4iPad/commit/9e736ecd9c16e399fa12556b5ea6b3e1217a5db7))
+
+### Documentation
+
+ -  update readme ([370bb5ed08a755d](https://github.com/bsorrentino/PlantUML4iPad/commit/370bb5ed08a755d2748218812f465dfe423b9e58))
+ -  update changelog ([b6e1cd72612d9fa](https://github.com/bsorrentino/PlantUML4iPad/commit/b6e1cd72612d9fa4d05cd1bff87feb90f684287c))
+
+### Refactor
+
+ -  remove edit mode ([39606d56976cd16](https://github.com/bsorrentino/PlantUML4iPad/commit/39606d56976cd165b7c82588f0ee9a2b6c558cde))
+
+### ALM 
+
+ -  update release ([43020dca9c8969c](https://github.com/bsorrentino/PlantUML4iPad/commit/43020dca9c8969c9588a01da95cd27e692d3094b))
+
+
 "name: v2.0.0_5" is a release tag
 
 ## [v2.0.0_5](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v2.0.0_5) (2023-09-03)
