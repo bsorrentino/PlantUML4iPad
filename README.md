@@ -27,7 +27,7 @@ _Promotional Text_ 🤞
     * Prompt your diagram request in natural language
     * Undo Prompt
     * Prompt's History 
-    * choose AI Model
+    * choose AI Model (gpt-3.5-turbo | gpt-4)
 
 **Take a Note:**
 

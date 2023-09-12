@@ -134,6 +134,7 @@ class OpenAIService : ObservableObject {
         openAIKey = inputApiKey
         openAIOrg = inputOrgId
 //        openAIModel = inputModel
+        status = .Ready
     }
     
     func resetSettings() {
@@ -486,6 +487,7 @@ extension OpenAIView {
                     service.commitSettings()
                     tabs = .Prompt
                     promptInFocus = true
+                    
                 },
                 label: {
                     Label( "Submit", systemImage: "arrow.right")
