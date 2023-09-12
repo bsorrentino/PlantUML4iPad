@@ -86,7 +86,7 @@ class LILOFixedSizeQueue<T> : LILOQueue<T> {
 
 class OpenAIService : ObservableObject {
     
-    enum Status {
+    enum Status : Equatable {
         case Ready
         case Error( String )
         case Editing
@@ -181,7 +181,7 @@ class OpenAIService : ObservableObject {
                 ChatMessage(role: .system, content:
                                     """
                                     You are my plantUML assistant.
-                                    Please respond exclusively with diagram code.
+                                    You must answer exclusively with diagram syntax.
                                     """),
                 ChatMessage(role: .assistant, content: input),
                 ChatMessage(role: .user, content: instruction),
