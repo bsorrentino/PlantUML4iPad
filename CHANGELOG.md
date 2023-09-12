@@ -1,8 +1,9 @@
 # Changelog
 
 
+"name: v2.1.0_1" is a release tag
 
-## [Unreleased](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/Unreleased) ()
+## [v2.1.0_1](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v2.1.0_1) (2023-09-12)
 
 ### Features
 
@@ -11,10 +12,12 @@
 
 ### Bug Fixes
 
+ -  resume after OpenAI error ([acf56ab58c66097](https://github.com/bsorrentino/PlantUML4iPad/commit/acf56ab58c66097ec114aafb8630e87885185e57))
  -  manage update editor content ([9e736ecd9c16e39](https://github.com/bsorrentino/PlantUML4iPad/commit/9e736ecd9c16e399fa12556b5ea6b3e1217a5db7))
 
 ### Documentation
 
+ -  update changelog ([1aa414a61957828](https://github.com/bsorrentino/PlantUML4iPad/commit/1aa414a6195782815978eab222d9a3146eb6c469))
  -  update readme ([370bb5ed08a755d](https://github.com/bsorrentino/PlantUML4iPad/commit/370bb5ed08a755d2748218812f465dfe423b9e58))
  -  update changelog ([b6e1cd72612d9fa](https://github.com/bsorrentino/PlantUML4iPad/commit/b6e1cd72612d9fa4d05cd1bff87feb90f684287c))
 
