@@ -26,7 +26,7 @@ struct PlantUMLContentView: View {
     
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
-    @Environment(\.editMode) private var editMode
+//    @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     
     @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
@@ -137,7 +137,7 @@ struct PlantUMLContentView: View {
                     ToggleEditorButton()
                     if isEditorVisible {
                         HStack {
-                            EditButton()
+//                            EditButton()
                             fontSizeView()
                             toggleLineNumberView()
                         }
@@ -335,7 +335,7 @@ myactor -> participant1
                 NavigationView {
                     PlantUMLContentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
                         .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-                        .environment(\.editMode, Binding.constant(EditMode.inactive))
+//                        .environment(\.editMode, Binding.constant(EditMode.inactive))
                 }
                 .navigationViewStyle(.stack)
                 .previewInterfaceOrientation(.landscapeRight)
@@ -343,7 +343,7 @@ myactor -> participant1
                 NavigationView {
                     PlantUMLContentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
                         .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-                        .environment(\.editMode, Binding.constant(EditMode.inactive))
+//                        .environment(\.editMode, Binding.constant(EditMode.inactive))
                 }
                 .navigationViewStyle(.stack)
                 .previewInterfaceOrientation(.portrait)
