@@ -39,10 +39,12 @@ extension UIImage {
 }
 
 struct Home: View {
+    @Environment(\.colorScheme) var colorScheme
     
     @State var canvas = PKCanvasView()
     @State var isdraw = false
-    
+    @State var showPopup = false
+    @State var apiKey = ""
     // default is pen
     
     var body: some View {
@@ -67,9 +69,24 @@ struct Home: View {
                             Image(systemName: "eye.square")
                                 .font(.title)
                                 .foregroundColor(Color.orange)
-                        }).padding( .top, 10)
+                        })
+                        .padding( .top, 10)
+                        .disabled( apiKey.isEmpty )
                 }, trailing: HStack(spacing: 15) {
                     
+                    Button(action: {
+                        showPopup.toggle()
+                    }) {
+                        Image(systemName: "key.horizontal")
+                            .font(.title)
+                            .foregroundColor(Color.orange)
+                    }
+                    .alert("Important message", isPresented: $showPopup) {
+                        VStack {
+                            TextField("Enter Api Key", text: $apiKey)
+                            Button("OK", role: .cancel) {}
+                        }
+                    }
                     Button(action: {
                         isdraw.toggle()
                     }) {
@@ -77,6 +94,7 @@ struct Home: View {
                             .font(.title)
                             .foregroundColor(Color.orange)
                     }
+                    
                     
                 })
             
@@ -117,9 +135,9 @@ extension Home {
         result must only be the plantuml script whitout any other comment
         """
         
-        let apiKey = ProcessInfo.processInfo.environment["OPENAI_KEY"]
+//        let apiKey = ProcessInfo.processInfo.environment["OPENAI_KEY"]
         
-        let openai = OpenAI(apiToken: apiKey!)
+        let openai = OpenAI(apiToken: apiKey)
             
         let query = ChatQuery(
             model: .gpt4_vision_preview,
@@ -146,7 +164,7 @@ extension Home {
         
         // getting image from Canvas
         
-        let image = image().withBackground(color: .white)
+        let image = image().withBackground(color: colorScheme == .dark ? .black : .white )
 
         if let imageData = image.pngData() {
 

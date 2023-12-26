@@ -70,13 +70,6 @@
             ReferencedContainer = "container:Pencil.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "OPENAI_KEY"
-            value = "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"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
