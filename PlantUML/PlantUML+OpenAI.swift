@@ -9,7 +9,7 @@ import SwiftUI
 import OpenAIKit
 import AppSecureStorage
 
-extension PlantUMLContentView {
+extension PlantUMLDocumentView {
     
     var ToggleOpenAIButton: some View {
         

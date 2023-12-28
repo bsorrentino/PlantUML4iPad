@@ -21,12 +21,11 @@ import AppSecureStorage
 //  }
 
 
-struct PlantUMLContentView: View {
+struct PlantUMLDocumentView: View {
     typealias PlantUMLEditorView = CodeViewer
     
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
-//    @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     
     @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
@@ -157,7 +156,7 @@ struct PlantUMLContentView: View {
 //
 // MARK: - Editor extension -
 //
-extension PlantUMLContentView {
+extension PlantUMLDocumentView {
     
     // [SwiftUI Let View disappear automatically](https://stackoverflow.com/a/60820491/521197)
     struct SavedStateView: View {
@@ -191,7 +190,7 @@ extension PlantUMLContentView {
                 }
                 else {
                     if visible {
-                        PlantUMLContentView.SavedStateView( visible: $visible )
+                        PlantUMLDocumentView.SavedStateView( visible: $visible )
                     }
                 }
             }
@@ -261,7 +260,7 @@ extension PlantUMLContentView {
 //
 // MARK: - Diagram extension -
 //
-extension PlantUMLContentView {
+extension PlantUMLDocumentView {
     
     
     var PlantUMLDiagramViewFit: some View {
@@ -333,7 +332,7 @@ myactor -> participant1
         ForEach(ColorScheme.allCases, id: \.self) {
             Group {
                 NavigationView {
-                    PlantUMLContentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
+                    PlantUMLDocumentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
                         .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
 //                        .environment(\.editMode, Binding.constant(EditMode.inactive))
                 }
@@ -341,7 +340,7 @@ myactor -> participant1
                 .previewInterfaceOrientation(.landscapeRight)
                 
                 NavigationView {
-                    PlantUMLContentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
+                    PlantUMLDocumentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
                         .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
 //                        .environment(\.editMode, Binding.constant(EditMode.inactive))
                 }

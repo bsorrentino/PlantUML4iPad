@@ -21,15 +21,8 @@ struct PlantUMLApp: App {
     }
     
     var body: some Scene {
-        DocumentGroup(newDocument: PlantUMLDocument()) { file in
-            if #available(iOS 16, *) {
-                PlantUMLContentView( document: PlantUMLDocumentProxy( document: file.$document) )
-                    // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
-                    .toolbarRole(.navigationStack)
-            }
-            else {
-                PlantUMLContentView( document: PlantUMLDocumentProxy( document: file.$document))
-            }
+        DocumentGroup(newDocument: PlantUMLDocument()) { file in                
+            PlantUMLDocumentMenu( doc: file.$document )
         }
     }
 }

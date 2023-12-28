@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "CodeViewer",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v14),
         .macOS(.v10_15)
     ],
     products: [

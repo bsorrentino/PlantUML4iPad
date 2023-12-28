@@ -17,9 +17,11 @@ extension UTType {
 
 struct PlantUMLDocument: FileDocument {
     var text: String
+    var isNew = false
     
-    init(text: String = "Title untitled") {
-        self.text = text
+    init() {
+        self.text = "Title untitled"
+        self.isNew = true
     }
 
     static var readableContentTypes: [UTType] { [.umldiagram] }
