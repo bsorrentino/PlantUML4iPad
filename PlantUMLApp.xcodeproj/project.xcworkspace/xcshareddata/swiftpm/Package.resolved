@@ -9,6 +9,15 @@
           "revision": "9e718bc33f10bc0c0524ae140be6a89651c4ea3d",
           "version": "1.2.0"
         }
+      },
+      {
+        "package": "OpenAI",
+        "repositoryURL": "https://github.com/bsorrentino/Swift-OpenAI.git",
+        "state": {
+          "branch": "develop",
+          "revision": "b616cb913c84d264fc33f1509ff3c7fe37e29e60",
+          "version": null
+        }
       }
     ]
   },

@@ -17,6 +17,8 @@
 		A04512ED2B3DA5EE00CD1158 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A04512EC2B3DA5EE00CD1158 /* PlantUMLFramework */; };
 		A04512EF2B3DA63900CD1158 /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A04512EE2B3DA63900CD1158 /* PlantUMLKeyboard */; };
 		A04512F12B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04512F02B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift */; };
+		A04512F32B3E2D8E00CD1158 /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04512F22B3E2D8E00CD1158 /* DrawingView.swift */; };
+		A04512F62B3E2FA700CD1158 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = A04512F52B3E2FA700CD1158 /* OpenAI */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
 		A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A068572D29D8B31100E82C2F /* View+Clipboard.swift */; };
 		A074F6992A16D40500061398 /* OpenAI.prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */; };
@@ -74,6 +76,7 @@
 		A038DB5B29D452880032E312 /* OpenAI.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OpenAI.xcconfig; sourceTree = "<group>"; };
 		A038DB5F29D489BA0032E312 /* PlantUML+OpenAI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PlantUML+OpenAI.swift"; sourceTree = "<group>"; };
 		A04512F02B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramMenu.swift; sourceTree = "<group>"; };
+		A04512F22B3E2D8E00CD1158 /* DrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		A047206E29549ACC007E061F /* SwiftUI+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Share.swift"; sourceTree = "<group>"; };
 		A04FE0482AA26B8000210EFC /* PlantUML.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PlantUML.xctestplan; sourceTree = SOURCE_ROOT; };
 		A05F2E372A1FFC49007FDF36 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
@@ -119,6 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A04512F62B3E2FA700CD1158 /* OpenAI in Frameworks */,
 				A04512E92B3DA5EE00CD1158 /* AppSecureStorage in Frameworks */,
 				A04512ED2B3DA5EE00CD1158 /* PlantUMLFramework in Frameworks */,
 				A04512EF2B3DA63900CD1158 /* PlantUMLKeyboard in Frameworks */,
@@ -199,6 +203,7 @@
 				A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */,
 				A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */,
 				A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */,
+				A04512F22B3E2D8E00CD1158 /* DrawingView.swift */,
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
 				A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */,
 				A04512F02B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift */,
@@ -274,6 +279,7 @@
 				A04512EA2B3DA5EE00CD1158 /* CodeViewer */,
 				A04512EC2B3DA5EE00CD1158 /* PlantUMLFramework */,
 				A04512EE2B3DA63900CD1158 /* PlantUMLKeyboard */,
+				A04512F52B3E2FA700CD1158 /* OpenAI */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
@@ -334,6 +340,7 @@
 			);
 			mainGroup = A0D3C63D28984A0E000838D7;
 			packageReferences = (
+				A04512F42B3E2FA700CD1158 /* XCRemoteSwiftPackageReference "Swift-OpenAI" */,
 			);
 			productRefGroup = A0D3C64728984A0E000838D7 /* Products */;
 			projectDirPath = "";
@@ -398,6 +405,7 @@
 				A0FB8F9C295616BF00910896 /* View+UIImage.swift in Sources */,
 				A038DB6029D489BA0032E312 /* PlantUML+OpenAI.swift in Sources */,
 				A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */,
+				A04512F32B3E2D8E00CD1158 /* DrawingView.swift in Sources */,
 				A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */,
 				A0A42A79289AC37C00E929EB /* PlantUMLDocumentProxy.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
@@ -772,6 +780,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A04512F42B3E2FA700CD1158 /* XCRemoteSwiftPackageReference "Swift-OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bsorrentino/Swift-OpenAI.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		A04512E82B3DA5EE00CD1158 /* AppSecureStorage */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -788,6 +807,11 @@
 		A04512EE2B3DA63900CD1158 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLKeyboard;
+		};
+		A04512F52B3E2FA700CD1158 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A04512F42B3E2FA700CD1158 /* XCRemoteSwiftPackageReference "Swift-OpenAI" */;
+			productName = OpenAI;
 		};
 		A084B53329EB15C50043B853 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
