@@ -22,7 +22,7 @@ struct PlantUMLApp: App {
     
     var body: some Scene {
         DocumentGroup(newDocument: PlantUMLDocument()) { file in                
-            PlantUMLDocumentMenu( doc: file.$document )
+            PlantUMLDiagramMenu( doc: file.$document )
         }
     }
 }

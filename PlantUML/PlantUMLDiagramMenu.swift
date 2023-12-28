@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlantUMLDocumentMenu: View {
+struct PlantUMLDiagramMenu: View {
     
     enum MenuItem {
         case Menu
@@ -34,7 +34,7 @@ struct PlantUMLDocumentMenu: View {
     }
 }
 
-extension PlantUMLDocumentMenu {
+extension PlantUMLDiagramMenu {
 
     var Menu:some View {
         HStack(alignment:.center ) {
@@ -72,7 +72,7 @@ extension PlantUMLDocumentMenu {
 
 #Preview {
     
-    PlantUMLDocumentMenu(
+    PlantUMLDiagramMenu(
         doc: .constant(PlantUMLDocument())
     )
 }
