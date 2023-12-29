@@ -9,37 +9,26 @@ import SwiftUI
 import PencilKit
 import OpenAI
 
-
-///
-/// [how to set a background color in UIimage in swift programming](https://stackoverflow.com/a/53500161/521197)
-///
-extension UIImage {
-    func withBackground(color: UIColor, opaque: Bool = true) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
-        guard let ctx = UIGraphicsGetCurrentContext(), let image = cgImage else { return self }
-        defer { UIGraphicsEndImageContext() }
-        let rect = CGRect(origin: .zero, size: size)
-        ctx.setFillColor(color.cgColor)
-        ctx.fill(rect)
-        ctx.concatenate(CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: size.height))
-        ctx.draw(image, in: rect)
-        return UIGraphicsGetImageFromCurrentImageContext() ?? self
+#Preview( "PlantUMLDrawingView") {
+    NavigationStack {
+        PlantUMLDrawingView( name: "Diagram name")
+            .preferredColorScheme(.dark)
     }
 }
 
-struct DrawingView: View {
-    
+struct PlantUMLDrawingView: View {
+    @Environment( \.colorScheme) var colorScheme
     @State var canvas = PKCanvasView()
     @State var isdraw = false
-    
+    var name:String
     // default is pen
     
     var body: some View {
         
-        NavigationStack {
+//        NavigationStack {
             
-            CanvasView(canvas: $canvas, isdraw: $isdraw )
-                .navigationTitle("Canvas")
+            DrawingView(canvas: $canvas, isdraw: $isdraw )
+                .navigationTitle(name)
                 .font(.system(size: 35))
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.purple)
@@ -68,7 +57,7 @@ struct DrawingView: View {
                 })
             
             
-        }
+//        }
     }
     
     private func image() -> UIImage {
@@ -89,7 +78,7 @@ struct DrawingView: View {
 ///
 //MARK: - Vision extension
 ///
-extension DrawingView {
+extension PlantUMLDrawingView {
     
     func vision( imageUrl: String ) async throws {
         
@@ -133,7 +122,8 @@ extension DrawingView {
         
         // getting image from Canvas
         
-        let image = image().withBackground(color: .white)
+        let backgroundColor:UIColor = (colorScheme == .dark ) ? .black : .white
+        let image = image().withBackground(color: backgroundColor)
 
         if let imageData = image.pngData() {
 
@@ -167,31 +157,3 @@ extension DrawingView {
     
 }
 
-struct CanvasView: UIViewRepresentable {
-    // to capture drawings for saving into albums
-    @Binding var canvas: PKCanvasView
-    @Binding var isdraw: Bool
-    
-    var type: PKInkingTool.InkType = .pencil
-    var color: Color = .black
-    let picker = PKToolPicker()
-    
-//    let eraser = PKEraserTool(.bitmap)
-    
-    func makeUIView(context: Context) -> PKCanvasView {
-        
-        canvas.drawingPolicy = .anyInput
-        canvas.tool = PKInkingTool(type, color: UIColor(color))
-        
-        self.canvas.becomeFirstResponder()
-        return canvas
-    }
-    
-    func updateUIView(_ uiView: PKCanvasView, context: Context) {
-        // updating the tool whenever the view updates
-        picker.addObserver(canvas)
-        picker.setVisible(isdraw, forFirstResponder: uiView)
-    
-        
-    }
-}

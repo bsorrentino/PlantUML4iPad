@@ -24,7 +24,7 @@ struct PlantUMLDiagramMenu: View {
         case .Menu:
             Menu
         case .HandDrawn:
-            Text( "Hand Drawn" )
+            PlantUMLDrawingView( name: "Diagram" )
         case .HandWritten:
             PlantUMLDocumentView( document: PlantUMLDocumentProxy( document: $doc  ))
             // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
@@ -70,7 +70,7 @@ extension PlantUMLDiagramMenu {
 }
 
 
-#Preview {
+#Preview( "PlantUMLDiagramMenu") {
     
     PlantUMLDiagramMenu(
         doc: .constant(PlantUMLDocument())
