@@ -11,7 +11,7 @@ import OpenAI
 
 #Preview( "PlantUMLDrawingView") {
     NavigationStack {
-        PlantUMLDrawingView( name: "Diagram name")
+        PlantUMLDrawingView( onGeneratedScript: { _ in } )
             .preferredColorScheme(.dark)
     }
 }
@@ -20,15 +20,15 @@ struct PlantUMLDrawingView: View {
     @Environment( \.colorScheme) var colorScheme
     @State var canvas = PKCanvasView()
     @State var isdraw = false
-    var name:String
-    // default is pen
+    @StateObject private var openAIService = OpenAIService()
+    
+    var onGeneratedScript: ( String ) -> Void
     
     var body: some View {
         
 //        NavigationStack {
             
             DrawingView(canvas: $canvas, isdraw: $isdraw )
-                .navigationTitle(name)
                 .font(.system(size: 35))
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.purple)
@@ -82,6 +82,10 @@ extension PlantUMLDrawingView {
     
     func vision( imageUrl: String ) async throws {
         
+        guard let openai = openAIService.openAI else {
+                return
+        }
+        
         let prompt =
         """
         Translate diagram within image in a plantUML script following rules below:
@@ -93,10 +97,6 @@ extension PlantUMLDrawingView {
         result must only be the plantuml script whitout any other comment
         """
         
-        let apiKey = ProcessInfo.processInfo.environment["OPENAI_KEY"]
-        
-        let openai = OpenAI(apiToken: apiKey!)
-            
         let query = ChatQuery(
             model: .gpt4_vision_preview,
             messages: [
@@ -113,7 +113,7 @@ extension PlantUMLDrawingView {
         let e = result.choices[0].message.content
             
         if case .string(let content) = e {
-            print( "\(content)" )
+            self.onGeneratedScript( content )
         }
         
     }
