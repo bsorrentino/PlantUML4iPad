@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import OpenAIKit
+import OpenAI
 import AppSecureStorage
 
 extension PlantUMLDocumentView {
@@ -163,12 +163,13 @@ class OpenAIService : ObservableObject {
             return nil
         }
 
-        return OpenAI( Configuration(organizationId: openAIOrg, apiKey: openAIKey))
+        let config = OpenAI.Configuration( token: openAIKey, organizationIdentifier: openAIOrg)
+        return OpenAI( configuration: config )
 
     }
 
     @MainActor
-    func generateChatCompletion( input: String, instruction: String ) async -> String? {
+    func query( input: String, instruction: String ) async -> String? {
         
         guard let openAI /*, let  openAIModel */, case .Ready = status else {
             return nil
@@ -178,29 +179,33 @@ class OpenAIService : ObservableObject {
         
         do {
             
-            let chat: [ChatMessage] = [
-                ChatMessage(role: .system, content:
+            let query = ChatQuery(
+                model: openAIModel,
+                messages: [
+                    .init(role: .system, content:
                                     """
                                     You are my plantUML assistant.
                                     You must answer exclusively with diagram syntax.
                                     """),
-                ChatMessage(role: .assistant, content: input),
-                ChatMessage(role: .user, content: instruction),
-            ]
-
-            let chatParameters = ChatParameters(
-                model: openAIModel,
-                messages: chat,
+                    .init( role: .assistant, content: input ),
+                    .init( role: .user, content: instruction )
+                ],
                 temperature: 0.0,
-                topP: 1.0)
-            
-            let chatCompletion = try await openAI.generateChatCompletion(
-                                                parameters: chatParameters
-                                            )
+                topP: 1.0
+            )
 
-            let result = chatCompletion.choices[0].message.content
+            let chat = try await openAI.chats(query: query)
+
+            let result = chat.choices[0].message.content
+
+            if case .string(let content) = result {
+                return content
+            }
             
-            return result
+            status = .Error( "invalid result!" )
+            
+            return nil
+
         }
         catch {
             
@@ -221,7 +226,7 @@ struct OpenAIView : View {
         case Settings
     }
     
-    @StateObject var service:OpenAIService
+    @ObservedObject var service:OpenAIService
     @Binding var result: String
     @State var instruction:String = ""
     @State private var tabs: Tab = .Prompt
@@ -351,7 +356,7 @@ extension OpenAIView {
                         Task {
                             let input = "@startuml\n\(result)\n@enduml"
                             
-                            if let res = await service.generateChatCompletion( input: input, instruction: instruction ) {
+                            if let res = await service.query( input: input, instruction: instruction ) {
                                 service.status = .Ready
                                 
                                 service.clipboard.push( result )
