@@ -19,18 +19,21 @@ struct PlantUMLDiagramMenu: View {
     @State var activeScreen:MenuItem = .Menu
     
     var body: some View {
-        
-        switch( activeScreen ) {
-        case .Menu:
+        if case .Menu = activeScreen, doc.isNew {
             Menu
-        case .HandDrawn:
-            PlantUMLDrawingView( name: "Diagram" )
-        case .HandWritten:
+        }
+        else if case .HandDrawn = activeScreen, doc.isNew {
+            PlantUMLDrawingView( onGeneratedScript: { script in
+                doc.text = script
+                activeScreen =  .HandWritten
+            })
+        }
+        else {
             PlantUMLDocumentView( document: PlantUMLDocumentProxy( document: $doc  ))
             // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
                 .toolbarRole(.navigationStack)
-
         }
+        
     }
 }
 
