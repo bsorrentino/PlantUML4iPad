@@ -42,7 +42,7 @@ class PlantUMLDocumentProxy : ObservableObject {
     
     init( document: Binding<PlantUMLDocument> ) {
         self._object = document
-        self.text = document.wrappedValue.text
+        self.text = document.wrappedValue.isNew ? "title Untitled" : document.wrappedValue.text
     }
     
     func buildURL() -> URL {
