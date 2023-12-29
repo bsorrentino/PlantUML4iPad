@@ -16,15 +16,18 @@ extension UTType {
 }
 
 struct PlantUMLDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.umldiagram] }
+
     var text: String
-    var isNew = false
+
+    var isNew:Bool {
+        text.isEmpty
+    }
     
     init() {
-        self.text = "Title untitled"
-        self.isNew = true
+        self.text = ""
     }
 
-    static var readableContentTypes: [UTType] { [.umldiagram] }
 
     init(configuration: ReadConfiguration) throws {
         guard let data = configuration.file.regularFileContents,
