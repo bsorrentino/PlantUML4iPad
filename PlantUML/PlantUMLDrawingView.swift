@@ -11,18 +11,22 @@ import OpenAI
 
 #Preview( "PlantUMLDrawingView") {
     NavigationStack {
-        PlantUMLDrawingView( onGeneratedScript: { _ in } )
-            .preferredColorScheme(.dark)
+        PlantUMLDrawingView( 
+            canvas: .constant(PKCanvasView()),
+            service: OpenAIService(),
+            document: PlantUMLDocumentProxy(document:.constant(PlantUMLDocument()), fileName:"Untitled")
+        )
+            
     }
 }
 
 struct PlantUMLDrawingView: View {
     @Environment( \.colorScheme) var colorScheme
-    @State var canvas = PKCanvasView()
+    @Environment(\.dismiss) var dismiss
+    @Binding var canvas:PKCanvasView
     @State var isdraw = false
-    @StateObject private var openAIService = OpenAIService()
-    
-    var onGeneratedScript: ( String ) -> Void
+    @ObservedObject var service:OpenAIService
+    @ObservedObject var document: PlantUMLDocumentProxy
     
     var body: some View {
         
@@ -32,6 +36,7 @@ struct PlantUMLDrawingView: View {
                 .font(.system(size: 35))
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.purple)
+                .navigationTitle( document.fileName )
                 .navigationBarItems(leading:
                     HStack {
                         Button( action: saveImage, label: {
@@ -80,44 +85,6 @@ struct PlantUMLDrawingView: View {
 ///
 extension PlantUMLDrawingView {
     
-    func vision( imageUrl: String ) async throws {
-        
-        guard let openai = openAIService.openAI else {
-                return
-        }
-        
-        let prompt =
-        """
-        Translate diagram within image in a plantUML script following rules below:
-
-        1. every rectangle or icon must be translate in plantuml rectangle element with related label if any
-        2. every rectangle that contains other rectangles must be translated in plantuml rectangle {}  element
-        3. every label (word or phrase) outside rectangles: if close to arrow must be considered its label else it must be translated in plantuml note
-        
-        result must only be the plantuml script whitout any other comment
-        """
-        
-        let query = ChatQuery(
-            model: .gpt4_vision_preview,
-            messages: [
-                Chat(role: .user, content: [
-                    ChatContent(text: prompt),
-                    ChatContent(imageUrl: imageUrl)
-                ])
-            ],
-            maxTokens: 2000
-        )
-        
-        let result = try await openai.chats(query: query)
-        
-        let e = result.choices[0].message.content
-            
-        if case .string(let content) = e {
-            self.onGeneratedScript( content )
-        }
-        
-    }
-    
     func processImage() {
         
         // getting image from Canvas
@@ -142,12 +109,13 @@ extension PlantUMLDrawingView {
             
             Task {
                 
-                do {
-                    try await vision( imageUrl: "data:image/png;base64,\(base64Image)" )
+                if let content = await service.vision( imageUrl: "data:image/png;base64,\(base64Image)" ) {
+                    
+                    document.text = content
+
+                    dismiss()
                 }
-                catch {
-                    print( "error invoking vision api \(error.localizedDescription)" )
-                }
+
             }
             
         }

@@ -199,7 +199,13 @@ class OpenAIService : ObservableObject {
             let result = chat.choices[0].message.content
 
             if case .string(let content) = result {
+                
+                status = .Ready
+                
                 return content
+                    .split( whereSeparator: \.isNewline )
+                    .filter { $0 != "@startuml" && $0 != "@enduml" }
+                    .joined(separator: "\n" )
             }
             
             status = .Error( "invalid result!" )
@@ -214,10 +220,73 @@ class OpenAIService : ObservableObject {
             return nil
         }
     }
+    
+    @MainActor
+    func vision( imageUrl: String ) async -> String? {
+        
+        guard let openAI /*, let  openAIModel */, case .Ready = status else {
+            return nil
+        }
+
+        let prompt =
+        """
+        Translate diagram within image in a plantUML script following rules below:
+
+        1. if detect rectangle it must be translate in plantuml rectangle element with related label if any
+        2. if detect rectangle that contains other rectangles must be translated in plantuml rectangle {}  element
+        3. for any other shapes translate it in the most opportune plantuml element
+        4. every label (word or phrase) outside shapes: if close to arrow must be considered its label else it must be translated in plantuml note
+        
+        result must be:
+            1. in plain text format no markdown allowed
+            2. contain only the plantuml script without any other comment
+        """
+        
+        let query = ChatQuery(
+            model: .gpt4_vision_preview,
+            messages: [
+                Chat(role: .user, content: [
+                    ChatContent(text: prompt),
+                    ChatContent(imageUrl: imageUrl)
+                ])
+            ],
+            maxTokens: 2000
+        )
+        
+        status = .Editing
+        
+        do {
+            let chatResult = try await openAI.chats(query: query)
+            
+            print( "=> FINISH REASON: \(chatResult.choices[0].finishReason ?? "UNKNOWN")")
+            
+            let result = chatResult.choices[0].message.content
+           
+            if case .string(let content) = result {
+                status = .Ready
+                
+                return content
+                    .split( whereSeparator: \.isNewline )
+                    .filter { $0 != "@startuml" && $0 != "@enduml" }
+                    .joined(separator: "\n" )
+            }
+            
+            status = .Error( "invalid result!" )
+            
+            return nil
+        }
+        catch {
+            
+            status = .Error( error.localizedDescription )
+            
+            return nil
+        }
+    }
+
 }
 
 
-struct OpenAIView : View {
+struct OpenAIView<DrawingView :View> : View {
     
     enum Tab {
         case Prompt
@@ -227,12 +296,15 @@ struct OpenAIView : View {
     }
     
     @ObservedObject var service:OpenAIService
-    @Binding var result: String
+    @ObservedObject var document: PlantUMLDocumentProxy
     @State var instruction:String = ""
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
-
+    @State private var isDrawingPresented = false
+    
     @FocusState private var promptInFocus: Bool
+    
+    var drawingView: () -> DrawingView
     
     var isEditing:Bool {
         if case .Editing = service.status {
@@ -244,30 +316,42 @@ struct OpenAIView : View {
     var body: some View {
         
         VStack(spacing:0) {
-            HStack(spacing: 10) {
+            HStack(spacing: 15) {
+                
+                Button( action: {
+                    isDrawingPresented.toggle()
+                }) {
+                    Label( "Drawing", systemImage: "pencil.circle")
+                }
+                .accessibilityIdentifier("openai_prompt")
+                .disabled( !service.isSettingsValid )
+                
                 Button( action: { tabs = .Prompt } ) {
-                    Label( "Prompt", systemImage: "")
+                    Label( "Prompt", systemImage: "keyboard.onehanded.right")
                 }
                 .accessibilityIdentifier("openai_prompt")
                 .disabled( !service.isSettingsValid )
 
-                Divider().frame(height: 20 )
+//                Divider().frame(height: 20 )
                 Button( action: { tabs = .PromptHistory } ) {
-                    Label( "History", systemImage: "")
+                    Label( "History", systemImage: "clock")
                 }
                 .accessibilityIdentifier("openai_history")
                 .disabled( !service.isSettingsValid )
                 
-                Divider().frame(height: 20 )
+//                Divider().frame(height: 20 )
                 Button( action: { tabs = .Result } ) {
-                    Label( "Result", systemImage: "")
+                    Label( "Result", systemImage: "doc.plaintext")
                 }
                 .accessibilityIdentifier("openai_result")
                 .disabled( !service.isSettingsValid )
                 
-                Divider().frame(height: 20 )
+                Divider()
+                    .background( .blue)
+                    .frame(height: 20 )
                 Button( action: { tabs = .Settings } ) {
-                    Label( "Settings", systemImage: "gearshape").labelStyle(.iconOnly)
+                    Label( "Settings", systemImage: "gearshape")
+                        //.labelStyle(.iconOnly)
                 }
                 .accessibilityIdentifier("openai_settings")
             }
@@ -292,6 +376,9 @@ struct OpenAIView : View {
             if( !service.isSettingsValid ) {
                 tabs = .Settings
             }
+        }
+        .fullScreenCover(isPresented: $isDrawingPresented ) {
+            drawingView()
         }
         
     }
@@ -342,7 +429,7 @@ extension OpenAIView {
                 HStack {
                     Button( action: {
                         if let res = service.clipboard.pop() {
-                            result = res
+                            document.text = res
                         }
                     },
                     label: {
@@ -354,19 +441,16 @@ extension OpenAIView {
                     Button( action: {
                         
                         Task {
-                            let input = "@startuml\n\(result)\n@enduml"
+                            let input = "@startuml\n\(document.text)\n@enduml"
                             
-                            if let res = await service.query( input: input, instruction: instruction ) {
-                                service.status = .Ready
+                            if let queryReult = await service.query( input: input, instruction: instruction ) {
                                 
-                                service.clipboard.push( result )
+                                service.clipboard.push( document.text )
                                 
                                 service.prompt.push( instruction )
                                 
-                                result = res
-                                    .split( whereSeparator: \.isNewline )
-                                    .filter { $0 != "@startuml" && $0 != "@enduml" }
-                                    .joined(separator: "\n" )
+                                document.text = queryReult
+                                    
                             }
                         }
                     },
@@ -416,7 +500,7 @@ extension OpenAIView {
         HStack {
             Spacer()
             ScrollView {
-                Text( result )
+                Text( document.text )
                     .font( .system(size: 14.0, design: .monospaced) )
                     .padding()
             }
@@ -507,8 +591,22 @@ extension OpenAIView {
     
 }
 
-struct OpenAIView_Previews: PreviewProvider {
-    
+
+
+#Preview {
+    struct FullScreenModalView: View {
+        @Environment(\.dismiss) var dismiss
+
+        var body: some View {
+            ZStack {
+                Color.primary.edgesIgnoringSafeArea(.all)
+                Button("Dismiss Modal") {
+                    dismiss()
+                }
+            }
+        }
+    }
+
     struct Item : RawRepresentable {
         
         var rawValue: String
@@ -517,14 +615,16 @@ struct OpenAIView_Previews: PreviewProvider {
         
         
     }
-    static var previews: some View {
-        OpenAIView( service: OpenAIService(),
-                    result: Binding.constant(
-                            """
-                            @startuml
-                            
-                            @enduml
-                            """))
-        .frame(height: 200)
-    }
+    
+    return OpenAIView( service: OpenAIService(),
+                       document: PlantUMLDocumentProxy(
+                            document:.constant(PlantUMLDocument(text: """
+                        @startuml
+                        
+                        @enduml
+                        """)), fileName:"Untitled"),
+                       drawingView: {
+                            FullScreenModalView()
+                        })
+            .frame(height: 200)
 }
