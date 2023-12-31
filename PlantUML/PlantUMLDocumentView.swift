@@ -10,8 +10,9 @@ import Combine
 import PlantUMLFramework
 import PlantUMLKeyboard
 import CodeViewer
-
 import AppSecureStorage
+import PencilKit
+
 //
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
 //
@@ -21,20 +22,19 @@ import AppSecureStorage
 //  }
 
 
-struct PlantUMLContentView: View {
+struct PlantUMLDocumentView: View {
     typealias PlantUMLEditorView = CodeViewer
     
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
-//    @Environment(\.editMode) private var editMode
     @Environment(\.openURL) private var openURL
     
     @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
     @AppStorage("darkTheme") var darkTheme:String = CodeWebView.Theme.monokai.rawValue
     @AppStorage("fontSize") var fontSize:Int = 15
 
-    @StateObject var document: PlantUMLDocumentProxy
-    @StateObject private var openAIService = OpenAIService()
+    @StateObject var document: PlantUMLObservableDocument
+    @StateObject private var openAIService = OpenAIObservableService()
     
     @State private var isEditorVisible  = true
     //@State private var isPreviewVisible = false
@@ -49,6 +49,9 @@ struct PlantUMLContentView: View {
     @State private var diagramImage:UIImage?
     
     @State private var editorViewId  = 1
+    
+    @State private var canvas = PKCanvasView()
+    
     var body: some View {
         
         VStack {
@@ -90,7 +93,9 @@ struct PlantUMLContentView: View {
                 }
             }
             if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
-                OpenAIView( service: openAIService, result: $document.text )
+                OpenAIView( service: openAIService, 
+                            document: document,
+                            drawingView:  { DiagramDrawingView } )
                     .frame( height: 200 )
                     .onChange(of: openAIService.status ) { newStatus in
                         if( .Ready == newStatus ) {
@@ -155,9 +160,26 @@ struct PlantUMLContentView: View {
 }
 
 //
+// MARK: - Drawing extension -
+//
+extension PlantUMLDocumentView {
+    
+    var DiagramDrawingView: some View {
+        
+        NavigationStack {
+            PlantUMLDrawingView( canvas: $canvas,
+                                 service: openAIService,
+                                 document: document )
+                
+        }
+
+    }
+}
+
+//
 // MARK: - Editor extension -
 //
-extension PlantUMLContentView {
+extension PlantUMLDocumentView {
     
     // [SwiftUI Let View disappear automatically](https://stackoverflow.com/a/60820491/521197)
     struct SavedStateView: View {
@@ -191,7 +213,7 @@ extension PlantUMLContentView {
                 }
                 else {
                     if visible {
-                        PlantUMLContentView.SavedStateView( visible: $visible )
+                        PlantUMLDocumentView.SavedStateView( visible: $visible )
                     }
                 }
             }
@@ -261,7 +283,7 @@ extension PlantUMLContentView {
 //
 // MARK: - Diagram extension -
 //
-extension PlantUMLContentView {
+extension PlantUMLDocumentView {
     
     
     var PlantUMLDiagramViewFit: some View {
@@ -309,16 +331,13 @@ extension PlantUMLContentView {
     }
     .accessibilityIdentifier("diagram")
     }
-    
-    
-    
+
 }
 
 
 // MARK: - Preview -
-struct ContentView_Previews: PreviewProvider {
-    
-    static var text = """
+
+let preview_text = """
 
 title test
 
@@ -329,28 +348,16 @@ myactor -> participant1
 
 
 """
-    static var previews: some View {
-        ForEach(ColorScheme.allCases, id: \.self) {
-            Group {
-                NavigationView {
-                    PlantUMLContentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
-                        .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-//                        .environment(\.editMode, Binding.constant(EditMode.inactive))
-                }
-                .navigationViewStyle(.stack)
-                .previewInterfaceOrientation(.landscapeRight)
-                
-                NavigationView {
-                    PlantUMLContentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
-                        .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-//                        .environment(\.editMode, Binding.constant(EditMode.inactive))
-                }
-                .navigationViewStyle(.stack)
-                .previewInterfaceOrientation(.portrait)
-                
-            }
-            .preferredColorScheme($0)
-        }
+
+#Preview {
+    
+    
+    NavigationStack {
+        PlantUMLDocumentView( document: PlantUMLObservableDocument( 
+            document: .constant(PlantUMLDocument( text: preview_text)), fileName:"Untitled" ))
+            .navigationViewStyle(.stack)
     }
+    
+
 }
 

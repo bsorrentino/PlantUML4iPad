@@ -29,9 +29,10 @@ class DebounceRequest {
     }
 }
 
-class PlantUMLDocumentProxy : ObservableObject {
+class PlantUMLObservableDocument : ObservableObject {
     
     @Binding var object: PlantUMLDocument
+    var fileName:String
     @Published var text: String
     
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
@@ -40,9 +41,10 @@ class PlantUMLDocumentProxy : ObservableObject {
 
     private var textCancellable:AnyCancellable?
     
-    init( document: Binding<PlantUMLDocument> ) {
+    init( document: Binding<PlantUMLDocument>, fileName:String ) {
         self._object = document
-        self.text = document.wrappedValue.text
+        self.text = document.wrappedValue.isNew ? "title Untitled" : document.wrappedValue.text
+        self.fileName = fileName
     }
     
     func buildURL() -> URL {
@@ -70,7 +72,7 @@ class PlantUMLDocumentProxy : ObservableObject {
 }
 
 
-extension PlantUMLDocumentProxy {
+extension PlantUMLObservableDocument {
     
     private static func buildSyntaxStructureItems( from text: String ) -> Array<SyntaxStructure> {
         return text

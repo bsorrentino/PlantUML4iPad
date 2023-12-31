@@ -6,213 +6,9 @@
 //
 
 import SwiftUI
-import OpenAIKit
-import AppSecureStorage
+import OpenAI
 
-extension PlantUMLContentView {
-    
-    var ToggleOpenAIButton: some View {
-        
-        Button {
-            isOpenAIVisible.toggle()
-        }
-        label: {
-            Label {
-                Text("OpenAI Editor")
-            } icon: {
-                #if __OPENAI_LOGO
-                // [How can I set an image tint in SwiftUI?](https://stackoverflow.com/a/73289182/521197)
-                Image("openai")
-                    .resizable()
-                    .colorMultiply(isOpenAIVisible ? .blue : .gray)
-                    .frame( width: 28, height: 28)
-                #else
-                Image( systemName: "brain" )
-                    .resizable()
-                    .foregroundColor( isOpenAIVisible ? .blue : .gray)
-                    .frame( width: 24, height: 20)
-                #endif
-            }
-            .environment(\.symbolVariants, .fill)
-            .labelStyle(.iconOnly)
-        }
-        .accessibilityIdentifier("openai")
-    }
-    
-}
-
-class LILOQueue<T> {
-    
-    fileprivate var elements:Array<T> = []
-    
-    var isEmpty:Bool {
-        elements.isEmpty
-    }
-    
-    func push( _ item: T ) {
-        elements.append( item )
-    }
-    
-    func pop() -> T? {
-        guard  !elements.isEmpty else {
-            return nil
-        }
-        
-        return elements.removeLast()
-    }
-    
-    func clear() {
-        elements.removeAll()
-    }
-    
-}
-
-class LILOFixedSizeQueue<T> : LILOQueue<T> {
-    
-    private let size:Int
-    
-    init( maxSize size: Int ) {
-        self.size = size
-    }
-    
-    override func push( _ item: T ) {
-        if elements.count == size {
-            elements.removeFirst()
-        }
-        elements.append( item )
-    }
-    
-}
-
-class OpenAIService : ObservableObject {
-    
-    enum Status : Equatable {
-        case Ready
-        case Error( String )
-        case Editing
-    }
-
-//    let models = ["text-davinci-edit-001", "code-davinci-edit-001"]
-    
-    @Published public var status: Status = .Ready
-    @Published public var inputApiKey = ""
-    @Published public var inputOrgId = ""
-//    @Published public var inputModel:String
-
-
-    @AppStorage("openaiModel") private var openAIModel:String = "gpt-3.5-turbo"
-    @AppSecureStorage("openaikey") private var openAIKey:String?
-    @AppSecureStorage("openaiorg") private var openAIOrg:String?
-
-    fileprivate var clipboard = LILOFixedSizeQueue<String>( maxSize: 10 )
-    fileprivate var prompt = LILOFixedSizeQueue<String>( maxSize: 10 )
-    
-    init() {
-        
-        if let apiKey = Bundle.main.object(forInfoDictionaryKey: "OPENAI_API_KEY") as? String, !apiKey.isEmpty {
-            openAIKey = apiKey
-        }
-        if let orgId = Bundle.main.object(forInfoDictionaryKey: "OPENAI_ORG_ID") as? String, !orgId.isEmpty  {
-            openAIOrg = orgId
-        }
-        
-        inputApiKey = openAIKey ?? ""
-        inputOrgId = openAIOrg ?? ""
-        
-//        inputModel = models[0]
-                
-//        if let openAIModel {
-//            inputModel = openAIModel
-//        }
-        
-     }
-    
-    func commitSettings() {
-        guard !inputApiKey.isEmpty, !inputOrgId.isEmpty else {
-            return
-        }
-        openAIKey = inputApiKey
-        openAIOrg = inputOrgId
-//        openAIModel = inputModel
-        status = .Ready
-    }
-    
-    func resetSettings() {
-//        inputModel = models[0]
-        inputApiKey = ""
-        inputOrgId = ""
-        openAIKey = nil
-        openAIOrg = nil
-    }
-
-    var isSettingsValid:Bool {
-        guard let openAIKey, !openAIKey.isEmpty, let openAIOrg, !openAIOrg.isEmpty else {
-            return false
-        }
-        return true
-    }
-
-    var openAI: OpenAI? {
-
-        guard let openAIKey  else {
-            status = .Error("api key not found!")
-            return nil
-        }
-        guard let openAIOrg  else {
-            status = .Error("org id not found!")
-            return nil
-        }
-
-        return OpenAI( Configuration(organizationId: openAIOrg, apiKey: openAIKey))
-
-    }
-
-    @MainActor
-    func generateChatCompletion( input: String, instruction: String ) async -> String? {
-        
-        guard let openAI /*, let  openAIModel */, case .Ready = status else {
-            return nil
-        }
-        
-        self.status = .Editing
-        
-        do {
-            
-            let chat: [ChatMessage] = [
-                ChatMessage(role: .system, content:
-                                    """
-                                    You are my plantUML assistant.
-                                    You must answer exclusively with diagram syntax.
-                                    """),
-                ChatMessage(role: .assistant, content: input),
-                ChatMessage(role: .user, content: instruction),
-            ]
-
-            let chatParameters = ChatParameters(
-                model: openAIModel,
-                messages: chat,
-                temperature: 0.0,
-                topP: 1.0)
-            
-            let chatCompletion = try await openAI.generateChatCompletion(
-                                                parameters: chatParameters
-                                            )
-
-            let result = chatCompletion.choices[0].message.content
-            
-            return result
-        }
-        catch {
-            
-            status = .Error( error.localizedDescription )
-            
-            return nil
-        }
-    }
-}
-
-
-struct OpenAIView : View {
+struct OpenAIView<DrawingView :View> : View {
     
     enum Tab {
         case Prompt
@@ -221,13 +17,16 @@ struct OpenAIView : View {
         case Settings
     }
     
-    @StateObject var service:OpenAIService
-    @Binding var result: String
+    @ObservedObject var service:OpenAIObservableService
+    @ObservedObject var document: PlantUMLObservableDocument
     @State var instruction:String = ""
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
-
+    @State private var isDrawingPresented = false
+    
     @FocusState private var promptInFocus: Bool
+    
+    var drawingView: () -> DrawingView
     
     var isEditing:Bool {
         if case .Editing = service.status {
@@ -239,30 +38,42 @@ struct OpenAIView : View {
     var body: some View {
         
         VStack(spacing:0) {
-            HStack(spacing: 10) {
+            HStack(spacing: 15) {
+                
+                Button( action: {
+                    isDrawingPresented.toggle()
+                }) {
+                    Label( "Drawing", systemImage: "pencil.circle")
+                }
+                .accessibilityIdentifier("openai_prompt")
+                .disabled( !service.isSettingsValid )
+                
                 Button( action: { tabs = .Prompt } ) {
-                    Label( "Prompt", systemImage: "")
+                    Label( "Prompt", systemImage: "keyboard.onehanded.right")
                 }
                 .accessibilityIdentifier("openai_prompt")
                 .disabled( !service.isSettingsValid )
 
-                Divider().frame(height: 20 )
+//                Divider().frame(height: 20 )
                 Button( action: { tabs = .PromptHistory } ) {
-                    Label( "History", systemImage: "")
+                    Label( "History", systemImage: "clock")
                 }
                 .accessibilityIdentifier("openai_history")
                 .disabled( !service.isSettingsValid )
                 
-                Divider().frame(height: 20 )
+//                Divider().frame(height: 20 )
                 Button( action: { tabs = .Result } ) {
-                    Label( "Result", systemImage: "")
+                    Label( "Result", systemImage: "doc.plaintext")
                 }
                 .accessibilityIdentifier("openai_result")
                 .disabled( !service.isSettingsValid )
                 
-                Divider().frame(height: 20 )
+                Divider()
+                    .background( .blue)
+                    .frame(height: 20 )
                 Button( action: { tabs = .Settings } ) {
-                    Label( "Settings", systemImage: "gearshape").labelStyle(.iconOnly)
+                    Label( "Settings", systemImage: "gearshape")
+                        //.labelStyle(.iconOnly)
                 }
                 .accessibilityIdentifier("openai_settings")
             }
@@ -287,6 +98,9 @@ struct OpenAIView : View {
             if( !service.isSettingsValid ) {
                 tabs = .Settings
             }
+        }
+        .fullScreenCover(isPresented: $isDrawingPresented ) {
+            drawingView()
         }
         
     }
@@ -337,7 +151,7 @@ extension OpenAIView {
                 HStack {
                     Button( action: {
                         if let res = service.clipboard.pop() {
-                            result = res
+                            document.text = res
                         }
                     },
                     label: {
@@ -349,19 +163,16 @@ extension OpenAIView {
                     Button( action: {
                         
                         Task {
-                            let input = "@startuml\n\(result)\n@enduml"
+                            let input = "@startuml\n\(document.text)\n@enduml"
                             
-                            if let res = await service.generateChatCompletion( input: input, instruction: instruction ) {
-                                service.status = .Ready
+                            if let queryReult = await service.query( input: input, instruction: instruction ) {
                                 
-                                service.clipboard.push( result )
+                                service.clipboard.push( document.text )
                                 
                                 service.prompt.push( instruction )
                                 
-                                result = res
-                                    .split( whereSeparator: \.isNewline )
-                                    .filter { $0 != "@startuml" && $0 != "@enduml" }
-                                    .joined(separator: "\n" )
+                                document.text = queryReult
+                                    
                             }
                         }
                     },
@@ -411,7 +222,7 @@ extension OpenAIView {
         HStack {
             Spacer()
             ScrollView {
-                Text( result )
+                Text( document.text )
                     .font( .system(size: 14.0, design: .monospaced) )
                     .padding()
             }
@@ -502,8 +313,56 @@ extension OpenAIView {
     
 }
 
-struct OpenAIView_Previews: PreviewProvider {
+extension PlantUMLDocumentView {
     
+    var ToggleOpenAIButton: some View {
+        
+        Button {
+            isOpenAIVisible.toggle()
+        }
+        label: {
+            Label {
+                Text("OpenAI Editor")
+            } icon: {
+                #if __OPENAI_LOGO
+                // [How can I set an image tint in SwiftUI?](https://stackoverflow.com/a/73289182/521197)
+                Image("openai")
+                    .resizable()
+                    .colorMultiply(isOpenAIVisible ? .blue : .gray)
+                    .frame( width: 28, height: 28)
+                #else
+                Image( systemName: "brain" )
+                    .resizable()
+                    .foregroundColor( isOpenAIVisible ? .blue : .gray)
+                    .frame( width: 24, height: 20)
+                #endif
+            }
+            .environment(\.symbolVariants, .fill)
+            .labelStyle(.iconOnly)
+        }
+        .accessibilityIdentifier("openai")
+    }
+    
+}
+
+
+
+
+
+#Preview {
+    struct FullScreenModalView: View {
+        @Environment(\.dismiss) var dismiss
+
+        var body: some View {
+            ZStack {
+                Color.primary.edgesIgnoringSafeArea(.all)
+                Button("Dismiss Modal") {
+                    dismiss()
+                }
+            }
+        }
+    }
+
     struct Item : RawRepresentable {
         
         var rawValue: String
@@ -512,14 +371,16 @@ struct OpenAIView_Previews: PreviewProvider {
         
         
     }
-    static var previews: some View {
-        OpenAIView( service: OpenAIService(),
-                    result: Binding.constant(
-                            """
-                            @startuml
-                            
-                            @enduml
-                            """))
-        .frame(height: 200)
-    }
+    
+    return OpenAIView( service: OpenAIObservableService(),
+                       document: PlantUMLObservableDocument(
+                            document:.constant(PlantUMLDocument(text: """
+                        @startuml
+                        
+                        @enduml
+                        """)), fileName:"Untitled"),
+                       drawingView: {
+                            FullScreenModalView()
+                        })
+            .frame(height: 200)
 }

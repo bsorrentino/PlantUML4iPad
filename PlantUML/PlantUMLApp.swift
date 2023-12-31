@@ -12,6 +12,11 @@ var isRunningTests: Bool {
     ProcessInfo.processInfo.environment["NO_TEST_RUNNING"] == nil
 }
 
+
+func getFileName( _ file: FileDocumentConfiguration<PlantUMLDocument>, default def: String ) -> String {
+    file.fileURL?.deletingPathExtension().lastPathComponent ?? def
+}
+
 @main
 struct PlantUMLApp: App {
    
@@ -21,15 +26,14 @@ struct PlantUMLApp: App {
     }
     
     var body: some Scene {
-        DocumentGroup(newDocument: PlantUMLDocument()) { file in
-            if #available(iOS 16, *) {
-                PlantUMLContentView( document: PlantUMLDocumentProxy( document: file.$document) )
-                    // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
-                    .toolbarRole(.navigationStack)
-            }
-            else {
-                PlantUMLContentView( document: PlantUMLDocumentProxy( document: file.$document))
-            }
+        DocumentGroup(newDocument: PlantUMLDocument()) { file in                
+//            PlantUMLDiagramMenu( doc: file.$document )
+            
+            PlantUMLDocumentView( document: PlantUMLObservableDocument( document: file.$document,
+                                                                   fileName: getFileName(file, default: "Untitled" )))
+            // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
+                .toolbarRole(.navigationStack)
+
         }
     }
 }

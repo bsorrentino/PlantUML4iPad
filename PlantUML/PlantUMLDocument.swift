@@ -10,19 +10,23 @@ import UniformTypeIdentifiers
 
 extension UTType {
     static var umldiagram: UTType {
-        // UTType(importedAs: "com.example.plain-text")
         UTType(importedAs: "org.bsc.plantuml-text")
     }
 }
 
 struct PlantUMLDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.umldiagram] }
+
     var text: String
+
+    var isNew:Bool {
+        text.isEmpty
+    }
     
-    init(text: String = "Title untitled") {
-        self.text = text
+    init( text:String = "") {
+        self.text = text 
     }
 
-    static var readableContentTypes: [UTType] { [.umldiagram] }
 
     init(configuration: ReadConfiguration) throws {
         guard let data = configuration.file.regularFileContents,
