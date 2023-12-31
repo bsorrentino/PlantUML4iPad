@@ -33,8 +33,8 @@ struct PlantUMLDocumentView: View {
     @AppStorage("darkTheme") var darkTheme:String = CodeWebView.Theme.monokai.rawValue
     @AppStorage("fontSize") var fontSize:Int = 15
 
-    @StateObject var document: PlantUMLDocumentProxy
-    @StateObject private var openAIService = OpenAIService()
+    @StateObject var document: PlantUMLObservableDocument
+    @StateObject private var openAIService = OpenAIObservableService()
     
     @State private var isEditorVisible  = true
     //@State private var isPreviewVisible = false
@@ -94,7 +94,7 @@ struct PlantUMLDocumentView: View {
             }
             if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
                 OpenAIView( service: openAIService, 
-                            document: document, 
+                            document: document,
                             drawingView:  { DiagramDrawingView } )
                     .frame( height: 200 )
                     .onChange(of: openAIService.status ) { newStatus in
@@ -353,7 +353,7 @@ myactor -> participant1
     
     
     NavigationStack {
-        PlantUMLDocumentView( document: PlantUMLDocumentProxy( 
+        PlantUMLDocumentView( document: PlantUMLObservableDocument( 
             document: .constant(PlantUMLDocument( text: preview_text)), fileName:"Untitled" ))
             .navigationViewStyle(.stack)
     }

@@ -26,11 +26,11 @@ struct PlantUMLDiagramMenu: View {
         }
         else if case .HandDrawn = activeScreen, doc.isNew {
             PlantUMLDrawingView( canvas: $canvas,
-                                 service:OpenAIService(),
-                                 document: PlantUMLDocumentProxy( document: $doc, fileName:"Untitled"  ) )
+                                 service:OpenAIObservableService(),
+                                 document: PlantUMLObservableDocument( document: $doc, fileName:"Untitled"  ) )
         }
         else {
-            PlantUMLDocumentView( document: PlantUMLDocumentProxy( document: $doc, fileName:"Untitled"  ))
+            PlantUMLDocumentView( document: PlantUMLObservableDocument( document: $doc, fileName:"Untitled"  ))
             // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
                 .toolbarRole(.navigationStack)
         }

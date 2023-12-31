@@ -13,8 +13,8 @@ import OpenAI
     NavigationStack {
         PlantUMLDrawingView( 
             canvas: .constant(PKCanvasView()),
-            service: OpenAIService(),
-            document: PlantUMLDocumentProxy(document:.constant(PlantUMLDocument()), fileName:"Untitled")
+            service: OpenAIObservableService(),
+            document: PlantUMLObservableDocument(document:.constant(PlantUMLDocument()), fileName:"Untitled")
         )
             
     }
@@ -25,8 +25,8 @@ struct PlantUMLDrawingView: View {
     @Environment(\.dismiss) var dismiss
     @Binding var canvas:PKCanvasView
     @State var isdraw = false
-    @ObservedObject var service:OpenAIService
-    @ObservedObject var document: PlantUMLDocumentProxy
+    @ObservedObject var service:OpenAIObservableService
+    @ObservedObject var document: PlantUMLObservableDocument
     
     var body: some View {
         

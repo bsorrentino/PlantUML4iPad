@@ -29,7 +29,7 @@ class DebounceRequest {
     }
 }
 
-class PlantUMLDocumentProxy : ObservableObject {
+class PlantUMLObservableDocument : ObservableObject {
     
     @Binding var object: PlantUMLDocument
     var fileName:String
@@ -72,7 +72,7 @@ class PlantUMLDocumentProxy : ObservableObject {
 }
 
 
-extension PlantUMLDocumentProxy {
+extension PlantUMLObservableDocument {
     
     private static func buildSyntaxStructureItems( from text: String ) -> Array<SyntaxStructure> {
         return text
