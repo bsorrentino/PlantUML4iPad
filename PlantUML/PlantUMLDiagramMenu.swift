@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PencilKit
 
 struct PlantUMLDiagramMenu: View {
     
@@ -17,19 +18,19 @@ struct PlantUMLDiagramMenu: View {
     
     @Binding var doc: PlantUMLDocument
     @State var activeScreen:MenuItem = .Menu
+    @State var canvas = PKCanvasView()
     
     var body: some View {
         if case .Menu = activeScreen, doc.isNew {
             Menu
         }
         else if case .HandDrawn = activeScreen, doc.isNew {
-            PlantUMLDrawingView( onGeneratedScript: { script in
-                doc.text = script
-                activeScreen =  .HandWritten
-            })
+            PlantUMLDrawingView( canvas: $canvas,
+                                 service:OpenAIService(),
+                                 document: PlantUMLDocumentProxy( document: $doc, fileName:"Untitled"  ) )
         }
         else {
-            PlantUMLDocumentView( document: PlantUMLDocumentProxy( document: $doc  ))
+            PlantUMLDocumentView( document: PlantUMLDocumentProxy( document: $doc, fileName:"Untitled"  ))
             // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
                 .toolbarRole(.navigationStack)
         }
