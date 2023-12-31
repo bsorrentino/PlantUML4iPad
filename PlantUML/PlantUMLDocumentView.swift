@@ -10,8 +10,9 @@ import Combine
 import PlantUMLFramework
 import PlantUMLKeyboard
 import CodeViewer
-
 import AppSecureStorage
+import PencilKit
+
 //
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
 //
@@ -48,6 +49,9 @@ struct PlantUMLDocumentView: View {
     @State private var diagramImage:UIImage?
     
     @State private var editorViewId  = 1
+    
+    @State private var canvas = PKCanvasView()
+    
     var body: some View {
         
         VStack {
@@ -89,7 +93,9 @@ struct PlantUMLDocumentView: View {
                 }
             }
             if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
-                OpenAIView( service: openAIService, result: $document.text )
+                OpenAIView( service: openAIService, 
+                            document: document, 
+                            drawingView:  { DiagramDrawingView } )
                     .frame( height: 200 )
                     .onChange(of: openAIService.status ) { newStatus in
                         if( .Ready == newStatus ) {
@@ -150,6 +156,23 @@ struct PlantUMLDocumentView: View {
                 }
             }
         }
+    }
+}
+
+//
+// MARK: - Drawing extension -
+//
+extension PlantUMLDocumentView {
+    
+    var DiagramDrawingView: some View {
+        
+        NavigationStack {
+            PlantUMLDrawingView( canvas: $canvas,
+                                 service: openAIService,
+                                 document: document )
+                
+        }
+
     }
 }
 
@@ -308,16 +331,13 @@ extension PlantUMLDocumentView {
     }
     .accessibilityIdentifier("diagram")
     }
-    
-    
-    
+
 }
 
 
 // MARK: - Preview -
-struct ContentView_Previews: PreviewProvider {
-    
-    static var text = """
+
+let preview_text = """
 
 title test
 
@@ -328,28 +348,16 @@ myactor -> participant1
 
 
 """
-    static var previews: some View {
-        ForEach(ColorScheme.allCases, id: \.self) {
-            Group {
-                NavigationView {
-                    PlantUMLDocumentView( document: PlantUMLDocumentProxy( document: .constant(PlantUMLDocument())))
-                        .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-//                        .environment(\.editMode, Binding.constant(EditMode.inactive))
-                }
-                .navigationViewStyle(.stack)
-                .previewInterfaceOrientation(.landscapeRight)
-                
-                NavigationView {
-                    PlantUMLDocumentView( document: PlantUMLDocumentProxy( document:  .constant(PlantUMLDocument())))
-                        .previewDevice(PreviewDevice(rawValue: "iPad mini (6th generation)"))
-//                        .environment(\.editMode, Binding.constant(EditMode.inactive))
-                }
-                .navigationViewStyle(.stack)
-                .previewInterfaceOrientation(.portrait)
-                
-            }
-            .preferredColorScheme($0)
-        }
+
+#Preview {
+    
+    
+    NavigationStack {
+        PlantUMLDocumentView( document: PlantUMLDocumentProxy( 
+            document: .constant(PlantUMLDocument( text: preview_text)), fileName:"Untitled" ))
+            .navigationViewStyle(.stack)
     }
+    
+
 }
 
