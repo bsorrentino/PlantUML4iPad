@@ -10,7 +10,6 @@ import UniformTypeIdentifiers
 
 extension UTType {
     static var umldiagram: UTType {
-        // UTType(importedAs: "com.example.plain-text")
         UTType(importedAs: "org.bsc.plantuml-text")
     }
 }
@@ -24,8 +23,8 @@ struct PlantUMLDocument: FileDocument {
         text.isEmpty
     }
     
-    init() {
-        self.text = ""
+    init( text:String = "") {
+        self.text = text 
     }
 
 
