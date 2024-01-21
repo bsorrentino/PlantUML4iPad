@@ -10,7 +10,6 @@
 		A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */; };
 		A02BB3E82B41C9430073D432 /* OpenAIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */; };
 		A02BB3E92B41C9430073D432 /* OpenAIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */; };
-		A02BB3EA2B41C9430073D432 /* OpenAIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */; };
 		A036CC3D2A0FC67C003FDB5E /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A084B53329EB15C50043B853 /* PlantUMLKeyboard */; };
 		A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F629EB16280048D9C6 /* PlantUMLFramework */; };
 		A038DB6029D489BA0032E312 /* PlantUMLOpenAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */; };
@@ -28,16 +27,26 @@
 		A09F62DD29DDD08600650C9A /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DC29DDD08600650C9A /* PlantUMLFramework */; };
 		A09F62DF29DDD08D00650C9A /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */; };
 		A0A139352A13C49A00B69FBC /* View+Secure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A139342A13C49A00B69FBC /* View+Secure.swift */; };
-		A0A139362A13C49A00B69FBC /* View+Secure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A139342A13C49A00B69FBC /* View+Secure.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLObservableDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */; };
 		A0A80A762B3ED90A00CB08CA /* SwiftUI+PencilKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A80A752B3ED90A00CB08CA /* SwiftUI+PencilKit.swift */; };
 		A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */; };
 		A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0BFBA9C290D551F008340E3 /* Localizable.strings */; };
+		A0C0C3262B5D93B100CE66A2 /* vision_prompt.txt in Resources */ = {isa = PBXBuildFile; fileRef = A0C0C3252B5D93B100CE66A2 /* vision_prompt.txt */; };
+		A0C0C3282B5D95DD00CE66A2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0C3272B5D95DD00CE66A2 /* Errors.swift */; };
+		A0C0C3292B5D95DD00CE66A2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0C3272B5D95DD00CE66A2 /* Errors.swift */; };
+		A0C0C33C2B5D9C7700CE66A2 /* AppSecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A0C0C33B2B5D9C7700CE66A2 /* AppSecureStorage */; };
+		A0C0C33E2B5D9C9F00CE66A2 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = A0C0C33D2B5D9C9F00CE66A2 /* OpenAI */; };
+		A0C0C33F2B5D9D1900CE66A2 /* XCTestCase+LineEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5C2E22A0FD12C0038C889 /* XCTestCase+LineEditor.swift */; };
+		A0C0C3402B5D9D1900CE66A2 /* XCUIElement+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5C2E32A0FD12C0038C889 /* XCUIElement+TextField.swift */; };
+		A0C0C3422B5D9F4E00CE66A2 /* vision_prompt_bak in Resources */ = {isa = PBXBuildFile; fileRef = A0C0C3412B5D9F4E00CE66A2 /* vision_prompt_bak */; };
+		A0C0C3432B5D9F4E00CE66A2 /* vision_prompt_bak in Resources */ = {isa = PBXBuildFile; fileRef = A0C0C3412B5D9F4E00CE66A2 /* vision_prompt_bak */; };
+		A0C0C3442B5D9F4E00CE66A2 /* vision_prompt_bak in Resources */ = {isa = PBXBuildFile; fileRef = A0C0C3412B5D9F4E00CE66A2 /* vision_prompt_bak */; };
+		A0C0C34A2B5DA7A200CE66A2 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */; };
+		A0C0C34B2B5DA7A200CE66A2 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */; };
+		A0C0C34C2B5DA7A200CE66A2 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */; };
 		A0C5C2E02A0FD05A0038C889 /* PlantUMLAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00729BA29DB2A9D00D73D1A /* PlantUMLAppUITests.swift */; };
 		A0C5C2E12A0FD05A0038C889 /* PlantUMLAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */; };
-		A0C5C2E42A0FD12C0038C889 /* XCTestCase+LineEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5C2E22A0FD12C0038C889 /* XCTestCase+LineEditor.swift */; };
-		A0C5C2E52A0FD12C0038C889 /* XCUIElement+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C5C2E32A0FD12C0038C889 /* XCUIElement+TextField.swift */; };
 		A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */; };
 		A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */; };
 		A0D3C64E28984A0E000838D7 /* PlantUMLDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C64D28984A0E000838D7 /* PlantUMLDocumentView.swift */; };
@@ -95,6 +104,10 @@
 		A0A80A752B3ED90A00CB08CA /* SwiftUI+PencilKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+PencilKit.swift"; sourceTree = "<group>"; };
 		A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Conditional.swift"; sourceTree = "<group>"; };
 		A0BFBA9B290D551F008340E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A0C0C3252B5D93B100CE66A2 /* vision_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = vision_prompt.txt; sourceTree = "<group>"; };
+		A0C0C3272B5D95DD00CE66A2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		A0C0C3412B5D9F4E00CE66A2 /* vision_prompt_bak */ = {isa = PBXFileReference; lastKnownFileType = text; path = vision_prompt_bak; sourceTree = "<group>"; };
+		A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		A0C5C2E22A0FD12C0038C889 /* XCTestCase+LineEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+LineEditor.swift"; sourceTree = "<group>"; };
 		A0C5C2E32A0FD12C0038C889 /* XCUIElement+TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+TextField.swift"; sourceTree = "<group>"; };
 		A0D3C64628984A0E000838D7 /* PlantUMLApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlantUMLApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +130,8 @@
 			files = (
 				A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */,
 				A036CC3D2A0FC67C003FDB5E /* PlantUMLKeyboard in Frameworks */,
+				A0C0C33E2B5D9C9F00CE66A2 /* OpenAI in Frameworks */,
+				A0C0C33C2B5D9C7700CE66A2 /* AppSecureStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +212,8 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
+				A0C0C3272B5D95DD00CE66A2 /* Errors.swift */,
+				A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */,
 				A0A139342A13C49A00B69FBC /* View+Secure.swift */,
 				A068572D29D8B31100E82C2F /* View+Clipboard.swift */,
 				A08AA78329561170004DE329 /* View+UIImage.swift */,
@@ -220,6 +237,8 @@
 				A082CAFF2A9A68D80055D6D6 /* Settings.bundle */,
 				A0D3C65428984A10000838D7 /* Info.plist */,
 				A0D3C65128984A10000838D7 /* Preview Content */,
+				A0C0C3252B5D93B100CE66A2 /* vision_prompt.txt */,
+				A0C0C3412B5D9F4E00CE66A2 /* vision_prompt_bak */,
 			);
 			path = PlantUML;
 			sourceTree = "<group>";
@@ -260,6 +279,8 @@
 			packageProductDependencies = (
 				A084B53329EB15C50043B853 /* PlantUMLKeyboard */,
 				A0BD13F629EB16280048D9C6 /* PlantUMLFramework */,
+				A0C0C33B2B5D9C7700CE66A2 /* AppSecureStorage */,
+				A0C0C33D2B5D9C9F00CE66A2 /* OpenAI */,
 			);
 			productName = PlantUMLAppUITests;
 			productReference = A036CC402A0FC67C003FDB5E /* PlantUMLAppUITests.xctest */;
@@ -362,6 +383,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0C0C3442B5D9F4E00CE66A2 /* vision_prompt_bak in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +394,9 @@
 				A0D3C65328984A10000838D7 /* Preview Assets.xcassets in Resources */,
 				A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */,
 				A082CB002A9A68D80055D6D6 /* Settings.bundle in Resources */,
+				A0C0C3262B5D93B100CE66A2 /* vision_prompt.txt in Resources */,
 				A0D3C65028984A10000838D7 /* Assets.xcassets in Resources */,
+				A0C0C3422B5D9F4E00CE66A2 /* vision_prompt_bak in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +404,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0C0C3432B5D9F4E00CE66A2 /* vision_prompt_bak in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,12 +415,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0C5C2E42A0FD12C0038C889 /* XCTestCase+LineEditor.swift in Sources */,
-				A0C5C2E52A0FD12C0038C889 /* XCUIElement+TextField.swift in Sources */,
+				A0C0C33F2B5D9D1900CE66A2 /* XCTestCase+LineEditor.swift in Sources */,
+				A0C0C3402B5D9D1900CE66A2 /* XCUIElement+TextField.swift in Sources */,
 				A0C5C2E02A0FD05A0038C889 /* PlantUMLAppUITests.swift in Sources */,
+				A0C0C34C2B5DA7A200CE66A2 /* ActivityView.swift in Sources */,
 				A0C5C2E12A0FD05A0038C889 /* PlantUMLAppUITestsLaunchTests.swift in Sources */,
-				A0A139362A13C49A00B69FBC /* View+Secure.swift in Sources */,
-				A02BB3EA2B41C9430073D432 /* OpenAIObservableService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,10 +440,12 @@
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLDocumentView.swift in Sources */,
 				A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */,
+				A0C0C34A2B5DA7A200CE66A2 /* ActivityView.swift in Sources */,
 				A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */,
 				A0A139352A13C49A00B69FBC /* View+Secure.swift in Sources */,
 				A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
 				A04512F12B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift in Sources */,
+				A0C0C3282B5D95DD00CE66A2 /* Errors.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +455,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0D3C65E28984A10000838D7 /* PlantUMLTests.swift in Sources */,
+				A0C0C34B2B5DA7A200CE66A2 /* ActivityView.swift in Sources */,
+				A0C0C3292B5D95DD00CE66A2 /* Errors.swift in Sources */,
 				A02BB3E92B41C9430073D432 /* OpenAIObservableService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,7 +497,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUMLAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -493,7 +521,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUMLAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -708,7 +736,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUMLTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -731,7 +759,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUMLTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -834,6 +862,15 @@
 		A0BD13F629EB16280048D9C6 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLFramework;
+		};
+		A0C0C33B2B5D9C7700CE66A2 /* AppSecureStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppSecureStorage;
+		};
+		A0C0C33D2B5D9C9F00CE66A2 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A04512F42B3E2FA700CD1158 /* XCRemoteSwiftPackageReference "Swift-OpenAI" */;
+			productName = OpenAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
