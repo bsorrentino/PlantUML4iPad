@@ -8,6 +8,7 @@
 import SwiftUI
 import AppSecureStorage
 import OpenAI
+import PlantUMLFramework
 
 class OpenAIObservableService : ObservableObject {
     
@@ -24,13 +25,27 @@ class OpenAIObservableService : ObservableObject {
     @Published public var inputOrgId = ""
 //    @Published public var inputModel:String
 
-
     @AppStorage("openaiModel") private var openAIModel:String = "gpt-3.5-turbo"
     @AppSecureStorage("openaikey") private var openAIKey:String?
     @AppSecureStorage("openaiorg") private var openAIOrg:String?
 
-    var clipboard = LILOFixedSizeQueue<String>( maxSize: 10 )
-    var prompt = LILOFixedSizeQueue<String>( maxSize: 10 )
+    var clipboardQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
+    var promptQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
+    
+    lazy var visionPrompt: Result<String,Errors> = {
+            guard let filepath = Bundle.main.path(forResource: "vision_prompt", ofType: "txt") else {
+                logger.error("prompt file 'vision_prompt' not found!")
+                return Result.failure(Errors.readingPromptError("vision prompt not found!"))
+            }
+
+            do {
+                let contents = try String(contentsOfFile: filepath, encoding: .utf8)
+                return Result.success( contents )
+            } catch {
+                logger.error("Error reading the file: \(error)")
+                return Result.failure( Errors.readingPromptError( "Error reading vision prompt" ) )
+            }
+        }()
     
     init() {
         
@@ -153,19 +168,16 @@ class OpenAIObservableService : ObservableObject {
             return nil
         }
 
-        let prompt =
-        """
-        Translate diagram within image in a plantUML script following rules below:
-
-        1. if detect rectangle it must be translate in plantuml rectangle element with related label if any
-        2. if detect rectangle that contains other rectangles must be translated in plantuml rectangle {}  element
-        3. for any other shapes translate it in the most opportune plantuml element
-        4. every label (word or phrase) outside shapes: if close to arrow must be considered its label else it must be translated in plantuml note
+        let prompt:String
         
-        result must be:
-            1. in plain text format no markdown allowed
-            2. contain only the plantuml script without any other comment
-        """
+        switch( self.visionPrompt ) {
+            case .failure( let error ):
+                status = .Error( error.localizedDescription )
+                return nil
+            case .success( let text ):
+                prompt = text
+        }
+        
         
         let query = ChatQuery(
             model: .gpt4_vision_preview,

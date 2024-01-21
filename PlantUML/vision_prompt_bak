@@ -1,0 +1,12 @@
+
+Translate diagram within image in a plantUML script following rules below:
+
+- if detect a stick fgure it must be translated in plantuml actor element.
+- if detect rectangle it must be translate in plantuml rectangle element with related label (if any).
+- if detect rectangle that contains other rectangles must be translated in plantuml rectangle {} element.
+- for any other shapes translate it in the most opportune plantuml element
+- every label (word or phrase) outside shapes: if close to arrow must be considered its label else it must be translated in plantuml note
+
+result must be:
+    1. in plain text format no markdown allowed
+    2. contain only the plantuml script without any other comment
