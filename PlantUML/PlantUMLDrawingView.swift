@@ -24,14 +24,15 @@ struct PlantUMLDrawingView: View {
     @Environment( \.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @Binding var canvas:PKCanvasView
-    @State var isdraw = false
     @ObservedObject var service:OpenAIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
+    @State var isdraw = false
+    @State var processing = false
     
     var body: some View {
         
-//        NavigationStack {
-            
+        ActivityView(isShowing: $processing, label: "Processing ..." )  {
+           
             DrawingView(canvas: $canvas, isdraw: $isdraw )
                 .font(.system(size: 35))
                 .navigationBarTitleDisplayMode(.inline)
@@ -60,9 +61,7 @@ struct PlantUMLDrawingView: View {
                     }
                     
                 })
-            
-            
-//        }
+        }
     }
     
     private func image() -> UIImage {
@@ -107,6 +106,7 @@ extension PlantUMLDrawingView {
             
             let base64Image = imageData.base64EncodedString()
             
+            processing.toggle()
             Task {
                 
                 if let content = await service.vision( imageUrl: "data:image/png;base64,\(base64Image)" ) {
