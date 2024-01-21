@@ -150,7 +150,7 @@ extension OpenAIView {
                 
                 HStack {
                     Button( action: {
-                        if let res = service.clipboard.pop() {
+                        if let res = service.clipboardQueue.pop() {
                             document.text = res
                         }
                     },
@@ -158,7 +158,7 @@ extension OpenAIView {
                         Label( "Undo", systemImage: "arrow.uturn.backward")
                             .labelStyle(.titleAndIcon)
                     })
-                    .disabled( isEditing || service.clipboard.isEmpty )
+                    .disabled( isEditing || service.clipboardQueue.isEmpty )
                     
                     Button( action: {
                         
@@ -167,9 +167,9 @@ extension OpenAIView {
                             
                             if let queryReult = await service.query( input: input, instruction: instruction ) {
                                 
-                                service.clipboard.push( document.text )
+                                service.clipboardQueue.push( document.text )
                                 
-                                service.prompt.push( instruction )
+                                service.promptQueue.push( instruction )
                                 
                                 document.text = queryReult
                                     
@@ -201,7 +201,7 @@ extension OpenAIView {
     var HistoryPrompts_Fragment: some View {
         
         HStack {
-            List( service.prompt.elements, id: \.self ) { prompt in
+            List( service.promptQueue.elements, id: \.self ) { prompt in
                 HStack {
                     Text( prompt )
                     CopyToClipboardButton( value: prompt )
