@@ -34,8 +34,8 @@ struct ActivityView<Content>: View where Content: View {
                         
                         RoundedRectangle(cornerRadius: 10)
                             .stroke( borderColor, lineWidth: 1)
-                            .frame( width: geometry.size.width * 0.6,
-                                    height: geometry.size.height * 0.2)
+                            .frame( width: geometry.size.width * 0.4,
+                                    height: geometry.size.height * 0.1)
                             .background()
                             .overlay {
                                 ProgressView {

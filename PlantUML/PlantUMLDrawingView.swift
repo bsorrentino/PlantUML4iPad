@@ -31,7 +31,7 @@ struct PlantUMLDrawingView: View {
     
     var body: some View {
         
-        ActivityView(isShowing: $processing, label: "Processing ..." )  {
+        ActivityView(isShowing: $processing, label: "👀 Processing ..." )  {
            
             DrawingView(canvas: $canvas, isdraw: $isdraw )
                 .font(.system(size: 35))
