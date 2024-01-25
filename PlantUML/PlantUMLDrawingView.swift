@@ -26,14 +26,14 @@ struct PlantUMLDrawingView: View {
     @Binding var canvas:PKCanvasView
     @ObservedObject var service:OpenAIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
-    @State var isdraw = false
+    @State var isUseDrawingTool = false
     @State var processing = false
     
     var body: some View {
         
         ActivityView(isShowing: $processing, label: "👀 Processing ..." )  {
            
-            DrawingView(canvas: $canvas, isdraw: $isdraw )
+            DrawingView(canvas: $canvas, isUsePickerTool: $isUseDrawingTool )
                 .font(.system(size: 35))
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.purple)
@@ -53,7 +53,7 @@ struct PlantUMLDrawingView: View {
                 }, trailing: HStack(spacing: 15) {
                     
                     Button(action: {
-                        isdraw.toggle()
+                        isUseDrawingTool.toggle()
                     }) {
                         Image(systemName: "rectangle.and.pencil.and.ellipsis")
                             .font(.title)
@@ -114,6 +114,7 @@ extension PlantUMLDrawingView {
                     document.text = content
 
                     dismiss()
+                    
                 }
 
             }

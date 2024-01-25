@@ -29,7 +29,7 @@ extension UIImage {
 struct DrawingView: UIViewRepresentable {
     // to capture drawings for saving into albums
     @Binding var canvas: PKCanvasView
-    @Binding var isdraw: Bool
+    @Binding var isUsePickerTool: Bool
     
     var type: PKInkingTool.InkType = .pencil
     var color: Color = .black
@@ -42,15 +42,23 @@ struct DrawingView: UIViewRepresentable {
         canvas.drawingPolicy = .anyInput
         canvas.tool = PKInkingTool(type, color: UIColor(color))
         
-        self.canvas.becomeFirstResponder()
+        canvas.becomeFirstResponder()
+        
         return canvas
     }
     
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
         // updating the tool whenever the view updates
-        picker.addObserver(canvas)
-        picker.setVisible(isdraw, forFirstResponder: uiView)
-    
+        if( isUsePickerTool ) {
+            picker.addObserver(canvas)
+            picker.setVisible(true, forFirstResponder: uiView)
+        }
+        else {
+            picker.setVisible(false, forFirstResponder: uiView)
+            picker.removeObserver(canvas)
+        }
+        
+
         
     }
 }
@@ -58,7 +66,7 @@ struct DrawingView: UIViewRepresentable {
 #Preview {
     
     DrawingView( canvas: .constant(PKCanvasView()),
-                 isdraw: .constant(true))
+                 isUsePickerTool: .constant(true))
         
 
 }
