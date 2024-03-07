@@ -32,9 +32,10 @@ class DebounceRequest {
 class PlantUMLObservableDocument : ObservableObject {
     
     @Binding var object: PlantUMLDocument
-    var fileName:String
     @Published var text: String
-    
+    var drawing: Data?
+    var fileName:String
+
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
     
     let presenter = PlantUMLBrowserPresenter( format: .imagePng )
@@ -44,6 +45,7 @@ class PlantUMLObservableDocument : ObservableObject {
     init( document: Binding<PlantUMLDocument>, fileName:String ) {
         self._object = document
         self.text = document.wrappedValue.isNew ? "title Untitled" : document.wrappedValue.text
+        self.drawing = document.wrappedValue.drawing
         self.fileName = fileName
     }
     
@@ -61,11 +63,13 @@ class PlantUMLObservableDocument : ObservableObject {
     
     func reset() {
         self.text = self.object.text
+        self.drawing = self.object.drawing
     }
     
     func save() {
         print( "save document")
         self.object.text = self.text
+        self.object.drawing = self.drawing
     }
 
     
