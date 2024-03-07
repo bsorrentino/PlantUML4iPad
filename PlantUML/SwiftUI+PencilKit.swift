@@ -34,7 +34,7 @@ struct DrawingView: UIViewRepresentable {
     
     var type: PKInkingTool.InkType = .pencil
     var color: Color = .black
-    let picker = PKToolPicker()
+    @State var picker = PKToolPicker()
     
 //    let eraser = PKEraserTool(.bitmap)
     
