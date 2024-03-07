@@ -30,6 +30,7 @@ struct DrawingView: UIViewRepresentable {
     // to capture drawings for saving into albums
     @Binding var canvas: PKCanvasView
     @Binding var isUsePickerTool: Bool
+    var data: Data?
     
     var type: PKInkingTool.InkType = .pencil
     var color: Color = .black
@@ -38,7 +39,15 @@ struct DrawingView: UIViewRepresentable {
 //    let eraser = PKEraserTool(.bitmap)
     
     func makeUIView(context: Context) -> PKCanvasView {
-        
+        if let data {
+            do {
+                canvas.drawing = try PKDrawing(data: data)
+            }
+            catch {
+                fatalError( "failed to load drawing")
+            }
+        }
+
         canvas.drawingPolicy = .anyInput
         canvas.tool = PKInkingTool(type, color: UIColor(color))
         

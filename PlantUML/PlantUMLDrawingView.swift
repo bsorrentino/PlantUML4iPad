@@ -33,34 +33,38 @@ struct PlantUMLDrawingView: View {
         
         ActivityView(isShowing: $processing, label: "👀 Processing ..." )  {
            
-            DrawingView(canvas: $canvas, isUsePickerTool: $isUseDrawingTool )
+            DrawingView(canvas: $canvas, isUsePickerTool: $isUseDrawingTool, data: document.drawing )
                 .font(.system(size: 35))
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.purple)
                 .navigationTitle( document.fileName )
                 .navigationBarItems(leading:
                     HStack {
-                        Button( action: saveImage, label: {
-                            Image(systemName: "square.and.arrow.down.fill")
-                                .font(.title)
-                                .foregroundColor(Color.orange)
-                        })
+//                        Button( action: saveImage, label: {
+//                            Label( "save in photo", systemImage: "square.and.arrow.down.fill")
+//                                .font(.title)
+//                                .foregroundColor(Color.orange)
+//                                .labelStyle(.titleOnly)
+//                            
+//                        })
                         Button( action: processImage, label: {
-                            Image(systemName: "eye.square")
-                                .font(.title)
+                            Label( "process", systemImage: "eye")
                                 .foregroundColor(Color.orange)
-                        }).padding( .top, 10)
-                }, trailing: HStack(spacing: 15) {
+                                .labelStyle(.iconOnly)
+                            
+                        })
+                    },trailing:
+                        HStack(spacing: 15) {
                     
-                    Button(action: {
-                        isUseDrawingTool.toggle()
-                    }) {
-                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                            .font(.title)
-                            .foregroundColor(Color.orange)
-                    }
+                        Button(action: {
+                            isUseDrawingTool.toggle()
+                        }) {
+                            Label( "tools", systemImage: "rectangle.and.pencil.and.ellipsis")
+                                .foregroundColor(Color.orange)
+                                .labelStyle(.titleOnly)
+                        }
                     
-                })
+                    })
         }
     }
     
@@ -69,9 +73,7 @@ struct PlantUMLDrawingView: View {
     }
     
     func saveImage() {
-        
         // saving to album
-        
         UIImageWriteToSavedPhotosAlbum(image(), nil, nil, nil)
                 
     }
@@ -107,12 +109,13 @@ extension PlantUMLDrawingView {
             let base64Image = imageData.base64EncodedString()
             
             processing.toggle()
+            isUseDrawingTool = false
             Task {
                 
                 if let content = await service.vision( imageUrl: "data:image/png;base64,\(base64Image)" ) {
                     
                     document.text = content
-
+                    document.drawing = canvas.drawing.dataRepresentation()
                     dismiss()
                     
                 }

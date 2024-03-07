@@ -9,11 +9,19 @@ import Foundation
 
 enum Errors: Error {
     case readingPromptError(String)
+    case documentDecodeError(String)
+    case documentEncodeError(String)
     
     public var localizedDescription: String {
-        if case .readingPromptError(let message) = self {
-            return message
+        switch(self) {
+        case .readingPromptError(let message):
+            message
+        case .documentDecodeError(let message):
+            message
+        case .documentEncodeError(let message):
+            message
+//        default:
+//            "generic error"
         }
-        return "generic error"
     }
 }
