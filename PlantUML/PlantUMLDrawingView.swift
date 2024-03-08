@@ -50,7 +50,7 @@ struct PlantUMLDrawingView: View {
                         Button( action: processImage, label: {
                             Label( "process", systemImage: "eye")
                                 .foregroundColor(Color.orange)
-                                .labelStyle(.iconOnly)
+                                .labelStyle(.titleAndIcon)
                             
                         })
                     },trailing:
