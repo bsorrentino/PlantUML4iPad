@@ -101,6 +101,7 @@
 		A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramView.swift; sourceTree = "<group>"; };
 		A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLObservableDocument.swift; sourceTree = "<group>"; };
 		A0A80A752B3ED90A00CB08CA /* SwiftUI+PencilKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+PencilKit.swift"; sourceTree = "<group>"; };
+		A0A8DAC72B9E313100B45B33 /* LangGraph */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LangGraph; sourceTree = "<group>"; };
 		A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Conditional.swift"; sourceTree = "<group>"; };
 		A0BFBA9B290D551F008340E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A0C0C3252B5D93B100CE66A2 /* vision_prompt.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = vision_prompt.txt; sourceTree = "<group>"; };
@@ -181,6 +182,7 @@
 		A0D3C63D28984A0E000838D7 = {
 			isa = PBXGroup;
 			children = (
+				A0A8DAC72B9E313100B45B33 /* LangGraph */,
 				A05F2E372A1FFC49007FDF36 /* CHANGELOG.md */,
 				A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */,
 				A038DB5B29D452880032E312 /* OpenAI.xcconfig */,
