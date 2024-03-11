@@ -21,6 +21,8 @@
 		A04512F32B3E2D8E00CD1158 /* PlantUMLDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */; };
 		A04512F62B3E2FA700CD1158 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = A04512F52B3E2FA700CD1158 /* OpenAI */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
+		A04A20D22B9F84B800319828 /* LangGraph in Frameworks */ = {isa = PBXBuildFile; productRef = A04A20D12B9F84B800319828 /* LangGraph */; };
+		A04A20D42B9F943900319828 /* vision_prompt_v3.txt in Resources */ = {isa = PBXBuildFile; fileRef = A04A20D32B9F943900319828 /* vision_prompt_v3.txt */; };
 		A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A068572D29D8B31100E82C2F /* View+Clipboard.swift */; };
 		A082CB002A9A68D80055D6D6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A082CAFF2A9A68D80055D6D6 /* Settings.bundle */; };
 		A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
@@ -87,6 +89,7 @@
 		A04512F02B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramMenu.swift; sourceTree = "<group>"; };
 		A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDrawingView.swift; sourceTree = "<group>"; };
 		A047206E29549ACC007E061F /* SwiftUI+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Share.swift"; sourceTree = "<group>"; };
+		A04A20D32B9F943900319828 /* vision_prompt_v3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = vision_prompt_v3.txt; sourceTree = "<group>"; };
 		A04FE0482AA26B8000210EFC /* PlantUML.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PlantUML.xctestplan; sourceTree = SOURCE_ROOT; };
 		A05F2E372A1FFC49007FDF36 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		A068572D29D8B31100E82C2F /* View+Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Clipboard.swift"; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 				A04512F62B3E2FA700CD1158 /* OpenAI in Frameworks */,
 				A04512E92B3DA5EE00CD1158 /* AppSecureStorage in Frameworks */,
 				A04512ED2B3DA5EE00CD1158 /* PlantUMLFramework in Frameworks */,
+				A04A20D22B9F84B800319828 /* LangGraph in Frameworks */,
 				A04512EF2B3DA63900CD1158 /* PlantUMLKeyboard in Frameworks */,
 				A04512EB2B3DA5EE00CD1158 /* CodeViewer in Frameworks */,
 			);
@@ -216,6 +220,7 @@
 			children = (
 				A0EAF4692B9A4A35000A0D76 /* vision_prompt_v1.txt */,
 				A0EAF4682B9A4A35000A0D76 /* vision_prompt_v2.txt */,
+				A04A20D32B9F943900319828 /* vision_prompt_v3.txt */,
 				A0C0C3252B5D93B100CE66A2 /* vision_prompt.txt */,
 				A0C0C3272B5D95DD00CE66A2 /* Errors.swift */,
 				A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */,
@@ -308,6 +313,7 @@
 				A04512EC2B3DA5EE00CD1158 /* PlantUMLFramework */,
 				A04512EE2B3DA63900CD1158 /* PlantUMLKeyboard */,
 				A04512F52B3E2FA700CD1158 /* OpenAI */,
+				A04A20D12B9F84B800319828 /* LangGraph */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
@@ -396,6 +402,7 @@
 				A0EAF46B2B9A4A35000A0D76 /* vision_prompt_v1.txt in Resources */,
 				A0D3C65328984A10000838D7 /* Preview Assets.xcassets in Resources */,
 				A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */,
+				A04A20D42B9F943900319828 /* vision_prompt_v3.txt in Resources */,
 				A082CB002A9A68D80055D6D6 /* Settings.bundle in Resources */,
 				A0C0C3262B5D93B100CE66A2 /* vision_prompt.txt in Resources */,
 				A0EAF46A2B9A4A35000A0D76 /* vision_prompt_v2.txt in Resources */,
@@ -850,6 +857,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A04512F42B3E2FA700CD1158 /* XCRemoteSwiftPackageReference "Swift-OpenAI" */;
 			productName = OpenAI;
+		};
+		A04A20D12B9F84B800319828 /* LangGraph */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LangGraph;
 		};
 		A084B53329EB15C50043B853 /* PlantUMLKeyboard */ = {
 			isa = XCSwiftPackageProductDependency;
