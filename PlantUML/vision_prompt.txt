@@ -1,4 +1,3 @@
-
 translate diagram in image in a plantUML script following rules below:
 
 - if detect a stick fgure it must be translated in plantuml actor element.

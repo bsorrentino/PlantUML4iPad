@@ -1,11 +1,11 @@
 import OSLog
 
-typealias PartialAgentState = [String: Any]
+public typealias PartialAgentState = [String: Any]
 
-typealias NodeAction<Action: AgentState> = ( Action ) async throws -> PartialAgentState
-typealias EdgeCondition<Action: AgentState> = ( Action ) async throws -> String
+public typealias NodeAction<Action: AgentState> = ( Action ) async throws -> PartialAgentState
+public typealias EdgeCondition<Action: AgentState> = ( Action ) async throws -> String
 
-protocol AgentState {
+public protocol AgentState {
     
     var data: [String: Any] { get }
     
@@ -16,58 +16,98 @@ protocol AgentState {
     
 }
 
-struct BaseAgentState : AgentState {
+public struct BaseAgentState : AgentState {
     
     subscript(key: String) -> Any? {
         data[key]
     }
     
-    var data: [String : Any]
+    public var data: [String : Any]
     
-    init() {
+    public init() {
         data = [:]
     }
     
-    init(_ initState: [String : Any]) {
+    public init(_ initState: [String : Any]) {
         data = initState
     }
     
     
 }
-enum GraphStateError : Error {
+public enum GraphStateError : Error {
     case duplicateNodeError( String )
     case duplicateEdgeError( String )
     case missingEntryPoint
-    case missingNodeReferencedByEdge( String )
     case entryPointNotExist( String )
     case finishPointNotExist( String )
     case missingNodeInEdgeMapping( String )
     case edgeMappingIsEmpty
     case invalidNodeIdentifier( String )
+    case missingNodeReferencedByEdge( String )
+    
+    public var localizedDescription: String {
+        switch(self) {
+        case .duplicateNodeError(let message):
+            message
+        case .duplicateEdgeError(let message):
+            message
+        case .missingEntryPoint:
+            "missing entry point!"
+        case .entryPointNotExist(let message):
+            message
+        case .finishPointNotExist(let message):
+            message
+        case .missingNodeInEdgeMapping(let message):
+            message
+        case .edgeMappingIsEmpty:
+            "edge mapping is empty!"
+        case .invalidNodeIdentifier(let message):
+            message
+        case .missingNodeReferencedByEdge(let message):
+            message
+        }
+    }
+
 }
 
-enum GraphRunnerError : Error {
+public enum GraphRunnerError : Error {
     case missingEdge( String )
     case missingNode( String )
     case missingNodeInEdgeMapping( String )
     case executionError( String )
+    
+    public var localizedDescription: String {
+        switch(self) {
+        case .missingEdge(let message):
+            message
+        case .missingNode(let message):
+            message
+        case .missingNodeInEdgeMapping(let message):
+            message
+        case .executionError(let message):
+            message
+        }
+    }
 }
 
-let END = "__END__" // id of the edge ending workflow
+public let END = "__END__" // id of the edge ending workflow
 
 //enum Either<Left, Right> {
 //    case left(Left)
 //    case right(Right)
 //}
 
+let log = Logger( subsystem: Bundle.module.bundleIdentifier ?? "langgraph", category: "main")
 
-class GraphState<State: AgentState>  {
+public class GraphState<State: AgentState>  {
+    
     enum EdgeValue /* Either */ {
         case id(String)
         case condition( ( EdgeCondition<State>, [String:String] ) )
     }
     
-    class Runner {
+    public class Runner {
+        
         
         var stateType: State.Type
         var nodes:Dictionary<String, NodeAction<State>>
@@ -92,7 +132,10 @@ class GraphState<State: AgentState>  {
             }
         }
         
-        func mergeState( currentState: State, partialState: PartialAgentState ) -> State {
+        private func mergeState( currentState: State, partialState: PartialAgentState ) -> State {
+            if partialState.isEmpty {
+                return currentState
+            }
             let newState = currentState.data.merging(partialState, uniquingKeysWith: { (current, _) in
                 return current
             })
@@ -100,7 +143,7 @@ class GraphState<State: AgentState>  {
         }
         
         
-        func nextNodeId( nodeId: String, agentState: State ) async throws -> String {
+        private func nextNodeId( nodeId: String, agentState: State ) async throws -> String {
             
             guard let route = edges[nodeId] else {
                 throw GraphRunnerError.missingEdge("edge with node: \(nodeId) not found!")
@@ -119,7 +162,7 @@ class GraphState<State: AgentState>  {
             }
         }
         
-        func invoke( inputs: PartialAgentState ) async throws -> State {
+        public func invoke( inputs: PartialAgentState, verbose:Bool = false ) async throws -> State {
             
             var currentState = self.stateType.init( inputs )
             var currentNodeId = entryPoint
@@ -130,6 +173,9 @@ class GraphState<State: AgentState>  {
                     throw GraphRunnerError.missingNode("node: \(currentNodeId) not found!")
                 }
 
+                if( verbose ) {
+                    log.debug("start processing node \(currentNodeId)")
+                }
                 let partialState = try await action( currentState )
                 
                 currentState = mergeState( currentState: currentState, partialState: partialState)
@@ -186,11 +232,12 @@ class GraphState<State: AgentState>  {
 
     private var stateType: State.Type
     
-    init( stateType: State.Type ) {
+    public init( stateType: State.Type ) {
         self.stateType = stateType
+        
     }
     
-    func addNode( _ id: String, action: @escaping NodeAction<State> ) throws {
+    public func addNode( _ id: String, action: @escaping NodeAction<State> ) throws {
         let node = Node(id: id,action: action)
         if nodes.contains(node) {
             throw GraphStateError.duplicateNodeError("node with id:\(id) already exist!")
@@ -198,7 +245,7 @@ class GraphState<State: AgentState>  {
         nodes.insert( node )
         
     }
-    func addEdge( sourceId: String, targetId: String ) throws {
+    public func addEdge( sourceId: String, targetId: String ) throws {
         guard sourceId != END else {
             throw GraphStateError.invalidNodeIdentifier( "END is not a valid edge sourceId!")
         }
@@ -209,8 +256,7 @@ class GraphState<State: AgentState>  {
         }
         edges.insert( edge )
     }
-    
-    func addConditionalEdge( sourceId: String, condition: @escaping EdgeCondition<State>, edgeMapping: [String:String] ) throws {
+    public func addConditionalEdge( sourceId: String, condition: @escaping EdgeCondition<State>, edgeMapping: [String:String] ) throws {
         guard sourceId != END else {
             throw GraphStateError.invalidNodeIdentifier( "END is not a valid edge sourceId!")
         }
@@ -224,11 +270,10 @@ class GraphState<State: AgentState>  {
         }
         edges.insert( edge)
     }
-    func setEntryPoint( _ nodeId: String ) {
+    public func setEntryPoint( _ nodeId: String ) {
         entryPoint = nodeId
     }
-    
-    func setFinishPoint( _ nodeId: String ) {
+    public func setFinishPoint( _ nodeId: String ) {
         finishPoint = nodeId
     }
     
@@ -238,7 +283,7 @@ class GraphState<State: AgentState>  {
         Node(id: id, action: fakeAction)
     }
     
-    func compile() throws -> Runner {
+    public func compile() throws -> Runner {
         guard let entryPoint else {
             throw GraphStateError.missingEntryPoint
         }

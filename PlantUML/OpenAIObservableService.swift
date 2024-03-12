@@ -9,6 +9,8 @@ import SwiftUI
 import AppSecureStorage
 import OpenAI
 import PlantUMLFramework
+import LangGraph
+
 
 class OpenAIObservableService : ObservableObject {
     
@@ -32,20 +34,6 @@ class OpenAIObservableService : ObservableObject {
     var clipboardQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
     var promptQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
     
-    lazy var visionPrompt: Result<String,Errors> = {
-            guard let filepath = Bundle.main.path(forResource: "vision_prompt", ofType: "txt") else {
-                logger.error("prompt file 'vision_prompt' not found!")
-                return Result.failure(Errors.readingPromptError("vision prompt not found!"))
-            }
-
-            do {
-                let contents = try String(contentsOfFile: filepath, encoding: .utf8)
-                return Result.success( contents )
-            } catch {
-                logger.error("Error reading the file: \(error)")
-                return Result.failure( Errors.readingPromptError( "Error reading vision prompt" ) )
-            }
-        }()
     
     init() {
         
@@ -168,38 +156,12 @@ class OpenAIObservableService : ObservableObject {
             return nil
         }
 
-        let prompt:String
-        
-        switch( self.visionPrompt ) {
-            case .failure( let error ):
-                status = .Error( error.localizedDescription )
-                return nil
-            case .success( let text ):
-                prompt = text
-        }
-        
-        
-        let query = ChatQuery(
-            model: .gpt4_vision_preview,
-            messages: [
-                Chat(role: .user, content: [
-                    ChatContent(text: prompt),
-                    ChatContent(imageUrl: imageUrl)
-                ])
-            ],
-            maxTokens: 2000
-        )
-        
         status = .Editing
         
         do {
-            let chatResult = try await openAI.chats(query: query)
             
-            print( "=> FINISH REASON: \(chatResult.choices[0].finishReason ?? "UNKNOWN")")
-            
-            let result = chatResult.choices[0].message.content
-           
-            if case .string(let content) = result {
+            if let content = try await agentExecutor( openAI: openAI, imageUrl: imageUrl) {
+                
                 status = .Ready
                 
                 return content
@@ -209,16 +171,23 @@ class OpenAIObservableService : ObservableObject {
             }
             
             status = .Error( "invalid result!" )
-            
-            return nil
         }
         catch {
             
             status = .Error( error.localizedDescription )
-            
-            return nil
         }
+
+        return nil
     }
+
+}
+
+
+extension OpenAIObservableService { // LangGraph extension
+    
+    
+
+        
 
 }
 
