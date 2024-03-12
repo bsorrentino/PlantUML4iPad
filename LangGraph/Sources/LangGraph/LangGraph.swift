@@ -38,12 +38,36 @@ public enum GraphStateError : Error {
     case duplicateNodeError( String )
     case duplicateEdgeError( String )
     case missingEntryPoint
-    case missingNodeReferencedByEdge( String )
     case entryPointNotExist( String )
     case finishPointNotExist( String )
     case missingNodeInEdgeMapping( String )
     case edgeMappingIsEmpty
     case invalidNodeIdentifier( String )
+    case missingNodeReferencedByEdge( String )
+    
+    public var localizedDescription: String {
+        switch(self) {
+        case .duplicateNodeError(let message):
+            message
+        case .duplicateEdgeError(let message):
+            message
+        case .missingEntryPoint:
+            "missing entry point!"
+        case .entryPointNotExist(let message):
+            message
+        case .finishPointNotExist(let message):
+            message
+        case .missingNodeInEdgeMapping(let message):
+            message
+        case .edgeMappingIsEmpty:
+            "edge mapping is empty!"
+        case .invalidNodeIdentifier(let message):
+            message
+        case .missingNodeReferencedByEdge(let message):
+            message
+        }
+    }
+
 }
 
 public enum GraphRunnerError : Error {
@@ -51,6 +75,19 @@ public enum GraphRunnerError : Error {
     case missingNode( String )
     case missingNodeInEdgeMapping( String )
     case executionError( String )
+    
+    public var localizedDescription: String {
+        switch(self) {
+        case .missingEdge(let message):
+            message
+        case .missingNode(let message):
+            message
+        case .missingNodeInEdgeMapping(let message):
+            message
+        case .executionError(let message):
+            message
+        }
+    }
 }
 
 public let END = "__END__" // id of the edge ending workflow
@@ -60,14 +97,17 @@ public let END = "__END__" // id of the edge ending workflow
 //    case right(Right)
 //}
 
+let log = Logger( subsystem: Bundle.module.bundleIdentifier ?? "langgraph", category: "main")
 
 public class GraphState<State: AgentState>  {
+    
     enum EdgeValue /* Either */ {
         case id(String)
         case condition( ( EdgeCondition<State>, [String:String] ) )
     }
     
     public class Runner {
+        
         
         var stateType: State.Type
         var nodes:Dictionary<String, NodeAction<State>>
@@ -93,6 +133,9 @@ public class GraphState<State: AgentState>  {
         }
         
         private func mergeState( currentState: State, partialState: PartialAgentState ) -> State {
+            if partialState.isEmpty {
+                return currentState
+            }
             let newState = currentState.data.merging(partialState, uniquingKeysWith: { (current, _) in
                 return current
             })
@@ -130,6 +173,9 @@ public class GraphState<State: AgentState>  {
                     throw GraphRunnerError.missingNode("node: \(currentNodeId) not found!")
                 }
 
+                if( verbose ) {
+                    log.debug("start processing node \(currentNodeId)")
+                }
                 let partialState = try await action( currentState )
                 
                 currentState = mergeState( currentState: currentState, partialState: partialState)

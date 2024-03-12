@@ -156,39 +156,12 @@ class OpenAIObservableService : ObservableObject {
             return nil
         }
 
-        let prompt:String
-        
-        let result = loadPromptFromBundle(fileName: "vision_prompt_v3")
-        switch( result ) {
-            case .failure( let error ):
-                status = .Error( error.localizedDescription )
-                return nil
-            case .success( let text ):
-                prompt = text
-        }
-        
-        
-        let query = ChatQuery(
-            model: .gpt4_vision_preview,
-            messages: [
-                Chat(role: .user, content: [
-                    ChatContent(text: prompt),
-                    ChatContent(imageUrl: imageUrl)
-                ])
-            ],
-            maxTokens: 2000
-        )
-        
         status = .Editing
         
         do {
-            let chatResult = try await openAI.chats(query: query)
             
-            print( "=> FINISH REASON: \(chatResult.choices[0].finishReason ?? "UNKNOWN")")
-            
-            let result = chatResult.choices[0].message.content
-           
-            if case .string(let content) = result {
+            if let content = try await agentExecutor( openAI: openAI, imageUrl: imageUrl) {
+                
                 status = .Ready
                 
                 return content
@@ -198,178 +171,22 @@ class OpenAIObservableService : ObservableObject {
             }
             
             status = .Error( "invalid result!" )
-            
-            return nil
         }
         catch {
             
             status = .Error( error.localizedDescription )
-            
-            return nil
         }
+
+        return nil
     }
 
 }
 
-struct DiagramDescription : Codable {
-    var type: String
-}
-struct AgentExecutorState : AgentState {
-    var data: [String : Any]
 
-    init() {
-        data = [:]
-    }
-    
-    init(_ initState: [String : Any]) {
-        data = initState
-    }
-    var diagramImageUrlOrData:String? {
-        data["diagram_image_url_or_data"] as? String
-    }
-
-    var diagramCode:String? {
-        data["diagram_code"] as? String
-    }
-
-    var diagram:DiagramDescription? {
-        data["diagram"] as? DiagramDescription
-    }
-}
 extension OpenAIObservableService { // LangGraph extension
     
-    func structuredOutpuParser( _ content: String ) -> DiagramDescription {
-        return DiagramDescription(type: "generic")
-    }
     
-    func loadPromptFromBundle( fileName: String ) -> Result<String,Errors> {
-        guard let filepath = Bundle.main.path(forResource: fileName, ofType: "txt") else {
-            logger.error("prompt file \(fileName) not found!")
-            return Result.failure(Errors.readingPromptError("prompt file \(fileName) not found!"))
-        }
 
-        do {
-            let contents = try String(contentsOfFile: filepath, encoding: .utf8)
-            return Result.success( contents )
-        } catch {
-            logger.error("Error reading the file: \(error)")
-            return Result.failure( Errors.readingPromptError( "Error reading vision prompt" ) )
-        }
-    }
-
-    func describeDiagramImage( state: AgentExecutorState ) async throws -> PartialAgentState {
-        guard let openAI, case .Ready = status else {
-            throw GraphRunnerError.executionError("OpenAI not initialized!")
-        }
-        guard let imageUrl = state.diagramImageUrlOrData else {
-            throw GraphRunnerError.executionError("diagramImageUrlOrData not initialized!")
-        }
-        
-        let prompt:String
-        
-        let result = loadPromptFromBundle(fileName: "vision_prompt")
-        switch( result ) {
-            case .failure( let error ):
-                status = .Error( error.localizedDescription )
-                throw GraphRunnerError.executionError(error.localizedDescription)
-            case .success( let text ):
-                prompt = text
-                break
-        }
-        
-        let query = ChatQuery(
-            model: .gpt4_vision_preview,
-            messages: [
-                Chat(role: .user, content: [
-                    ChatContent(text: prompt),
-                    ChatContent(imageUrl: imageUrl )
-                ])
-            ],
-            maxTokens: 2000
-        )
-        
-        status = .Editing
-        
-        do {
-            let chatResult = try await openAI.chats(query: query)
-            
-            let result = chatResult.choices[0].message.content
-           
-            if case .string(let content) = result {
-                status = .Ready
-                
-                return [ "diagram": structuredOutpuParser( content ) ]
-            }
-            
-            status = .Error( "invalid result!" )
-            
-        }
-        catch {
-            
-            status = .Error( error.localizedDescription )
-        }
-        
-        if case .Error( let msg ) = status  {
-            throw GraphRunnerError.executionError(msg)
-        }
-        return [:]
-        
-        
-    }
-    func translateSequenceDiagramDescriptionToPlantUML( state: AgentExecutorState ) async throws -> PartialAgentState {
-        
-        return [:]
-    }
-    func translateGenericDiagramDescriptionToPlantUML( state: AgentExecutorState ) async throws -> PartialAgentState {
-        
-        return [:]
-    }
-    func routeDiagramTranslation( state: AgentExecutorState ) async throws -> String {
-        
-        guard let diagram = state.diagram else {
-            throw GraphRunnerError.executionError("diagram is nil!")
-        }
-        if diagram.type == "sequence" {
-            return "sequence"
-        } else {
-            return "generic"
-        }
-    }
-
-    @MainActor
-    func agentExecutor( imageUrl: String ) async throws -> String? {
-        
-        let workflow = GraphState( stateType: AgentExecutorState.self )
-        
-        try workflow.addNode("agent_describer", action: describeDiagramImage )
-        try workflow.addNode("agent_sequence_plantuml", action: translateSequenceDiagramDescriptionToPlantUML)
-        try workflow.addNode("agent_gemeric_plantuml", action: translateGenericDiagramDescriptionToPlantUML)
-
-        try workflow.addEdge(sourceId: "agent_sequence_plantuml", targetId: END)
-        try workflow.addEdge(sourceId: "agent_gemeric_plantuml", targetId: END)
-        
-        try workflow.addConditionalEdge(
-            sourceId: "agent_describer",
-            condition: routeDiagramTranslation,
-            edgeMapping: [
-                "sequence": "agent_sequence_plantuml",
-                "generic": "agent_gemeric_plantuml",
-            ]
-        )
-        workflow.setEntryPoint( "agent_describer")
-
-        let app = try workflow.compile()
-
-        let imageToProcess = "" // getImageData( path.join( "assets", "diagram1.png" ))
-
-        let inputs = [ "diagram_image_url_or_data": imageToProcess ]
-
-        let response = try await app.invoke( inputs: inputs)
-
-        print( response.diagramCode ?? "NONE")
-        
-        return response.diagramCode
-    }
         
 
 }

@@ -1,14 +1,12 @@
-describe the diagram in the image step by step so we can translate it into diagram-as-code syntax.
+translate diagram in image in a plantUML script following rules below:
 
-The output should be a markdown code snippet formatted in the following schema, including the leading and trailing "```json" and "```":
+- if detect a stick fgure it must be translated in plantuml actor element.
+- every rectangle or icon must be translate in plantuml rectangle element with related label if any
+- every rectangle that contains other elements must be translated in plantuml rectangle {{}}  element
 
-```json
-{
-        "type": string  // Diagram tipology (one word). Eg. "sequence", "class", "process", etc."),
-        "title": string  // Diagram summary (max one line) or title (if any)
-        "participants": array  // list of participants in the diagram in the form { name:"<name>", shape:"<shape>", description:"<participant description>" }
-        "relations": array  // list of relations in the diagram in the form { source:"<source participant>", target:"<target participant>", description:"<relation description>" }
-        "containers": array  // list of participants that contain other ones in the diagram in the form { name:"<name>", children:[ list of elements name contained separated by comma ], description:"<container description>" }
-        "description": array  // Step by step description of the diagram with clear indication of participants and actions between them.
-}
-```
+result must be:
+
+- in plain text format no markdown allowed
+- contain only the plantuml script without any other comment
+
+
