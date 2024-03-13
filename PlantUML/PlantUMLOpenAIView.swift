@@ -251,8 +251,6 @@ extension OpenAIView {
                         HStack {
                             Text("OpenAI Secrets")
                             HideToggleButton(hidden: $hideOpenAISecrets)
-//                            Divider()
-//                            Button( action: { p.scrollTo("openai-settings", anchor: .top) }, label: { Text("More .....").font(.footnote) } )
                         }
                         .id( "openai-secret")
                         
@@ -264,27 +262,7 @@ extension OpenAIView {
                             Spacer()
                         }
                     }
-                    
-//                    Section {
-//                        Picker("Model", selection: $service.inputModel) {
-//                            ForEach(service.models, id: \.self) {
-//                                Text($0)
-//                            }
-//                        }
-//                    }
-//                    header: {
-//                        HStack {
-//                            Text("OpenAI Extra settings")
-//                            Divider()
-//                            Button( action: { p.scrollTo("openai-secret", anchor: .bottom) }, label: { Text("Back ...").font(.footnote) } )
-//                        }
-//                        .id( "openai-settings")
-//                    }
-//                    footer: {
-//                        Rectangle().fill(Color.clear).frame(height: 65)
-//
-//                    }
-                    
+                                        
                 }
             }
             HStack {

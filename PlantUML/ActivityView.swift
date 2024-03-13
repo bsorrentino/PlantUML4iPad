@@ -10,7 +10,7 @@ import SwiftUI
 struct ActivityView<Content>: View where Content: View {
     @Environment( \.colorScheme) var colorScheme
     
-    @Binding var isShowing: Bool
+    var isShowing: Bool
     var label: String = "Loading ..."
     var content: () -> Content
     
@@ -35,7 +35,7 @@ struct ActivityView<Content>: View where Content: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke( borderColor, lineWidth: 1)
                             .frame( width: geometry.size.width * 0.4,
-                                    height: geometry.size.height * 0.1)
+                                    height: geometry.size.height * 0.2)
                             .background()
                             .overlay {
                                 ProgressView {
@@ -59,7 +59,7 @@ struct ActivityView<Content>: View where Content: View {
 
 
 #Preview {
-    ActivityView(isShowing: .constant(true)) {
+    ActivityView(isShowing: true, label: "Loading\nprocess\nand\nother" ) {
         
         Text( "DRAWING" )
     }

@@ -32,8 +32,6 @@ struct DrawingView: UIViewRepresentable {
     @Binding var isUsePickerTool: Bool
     var data: Data?
     
-    var type: PKInkingTool.InkType = .pencil
-    var color: Color = .black
     @State var picker = PKToolPicker()
     
 //    let eraser = PKEraserTool(.bitmap)
@@ -49,7 +47,7 @@ struct DrawingView: UIViewRepresentable {
         }
 
         canvas.drawingPolicy = .anyInput
-        canvas.tool = PKInkingTool(type, color: UIColor(color))
+        canvas.tool = PKInkingTool(.pen, color: UIColor(.black))
         
         canvas.becomeFirstResponder()
         

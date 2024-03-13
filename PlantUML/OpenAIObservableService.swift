@@ -149,10 +149,17 @@ class OpenAIObservableService : ObservableObject {
         }
     }
     
+
+}
+
+// LangGraph Exstension
+extension OpenAIObservableService {
+    
     @MainActor
-    func vision( imageUrl: String ) async -> String? {
+    func processImageWithAgents<T:AgentExecutorDelegate>( imageUrl: String, delegate:T ) async -> String? {
         
-        guard let openAI /*, let  openAIModel */, case .Ready = status else {
+        guard let openAI, case .Ready = status else {
+            delegate.progress("WARNING: OpenAI API not initialized")
             return nil
         }
 
@@ -160,7 +167,7 @@ class OpenAIObservableService : ObservableObject {
         
         do {
             
-            if let content = try await agentExecutor( openAI: openAI, imageUrl: imageUrl) {
+            if let content = try await agentExecutor( openAI: openAI, imageUrl: imageUrl, delegate:delegate) {
                 
                 status = .Ready
                 
@@ -170,10 +177,12 @@ class OpenAIObservableService : ObservableObject {
                     .joined(separator: "\n" )
             }
             
+            delegate.progress("ERROR: invalid result!")
             status = .Error( "invalid result!" )
         }
         catch {
             
+            delegate.progress("ERROR: \(error.localizedDescription)")
             status = .Error( error.localizedDescription )
         }
 
@@ -181,16 +190,6 @@ class OpenAIObservableService : ObservableObject {
     }
 
 }
-
-
-extension OpenAIObservableService { // LangGraph extension
-    
-    
-
-        
-
-}
-
 class LILOQueue<T> {
     
     var elements:Array<T> = []

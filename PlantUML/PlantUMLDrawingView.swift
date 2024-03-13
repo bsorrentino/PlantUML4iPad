@@ -8,6 +8,7 @@
 import SwiftUI
 import PencilKit
 import OpenAI
+import LangGraph
 
 #Preview( "PlantUMLDrawingView") {
     NavigationStack {
@@ -28,10 +29,10 @@ struct PlantUMLDrawingView: View {
     @ObservedObject var document: PlantUMLObservableDocument
     @State var isUseDrawingTool = false
     @State var processing = false
-    
+    @State var processingLabel: String = "👀 Processing ..."
     var body: some View {
         
-        ActivityView(isShowing: $processing, label: "👀 Processing ..." )  {
+        ActivityView(isShowing: processing, label: processingLabel )  {
            
             DrawingView(canvas: $canvas, isUsePickerTool: $isUseDrawingTool, data: document.drawing )
                 .font(.system(size: 35))
@@ -84,8 +85,12 @@ struct PlantUMLDrawingView: View {
 ///
 //MARK: - Vision extension
 ///
-extension PlantUMLDrawingView {
+extension PlantUMLDrawingView : AgentExecutorDelegate {
     
+    func progress(_ message: String) {
+        processingLabel = message
+    }
+        
     func processImage() {
         
         // getting image from Canvas
@@ -110,14 +115,20 @@ extension PlantUMLDrawingView {
             
             processing.toggle()
             isUseDrawingTool = false
+            service.status = .Ready
             Task {
                 
-                if let content = await service.vision( imageUrl: "data:image/png;base64,\(base64Image)" ) {
-                    
-                    document.text = content
-                    document.drawing = canvas.drawing.dataRepresentation()
-                    dismiss()
-                    
+                do {
+                    defer {
+                        document.drawing = canvas.drawing.dataRepresentation()
+                        dismiss()
+                    }
+
+                    if let content = await service.processImageWithAgents( imageUrl: "data:image/png;base64,\(base64Image)", delegate: self ) {
+                        
+                        document.text = content
+                        
+                    }
                 }
 
             }
