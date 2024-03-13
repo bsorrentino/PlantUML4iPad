@@ -42,6 +42,7 @@ public enum GraphStateError : Error {
     case finishPointNotExist( String )
     case missingNodeInEdgeMapping( String )
     case edgeMappingIsEmpty
+    case invalidEdgeIdentifier( String )
     case invalidNodeIdentifier( String )
     case missingNodeReferencedByEdge( String )
     
@@ -64,6 +65,8 @@ public enum GraphStateError : Error {
         case .invalidNodeIdentifier(let message):
             message
         case .missingNodeReferencedByEdge(let message):
+            message
+        case .invalidEdgeIdentifier(let message):
             message
         }
     }
@@ -238,6 +241,9 @@ public class GraphState<State: AgentState>  {
     }
     
     public func addNode( _ id: String, action: @escaping NodeAction<State> ) throws {
+        guard id != END else {
+            throw GraphStateError.invalidNodeIdentifier( "END is not a valid node id!")
+        }
         let node = Node(id: id,action: action)
         if nodes.contains(node) {
             throw GraphStateError.duplicateNodeError("node with id:\(id) already exist!")
@@ -247,7 +253,7 @@ public class GraphState<State: AgentState>  {
     }
     public func addEdge( sourceId: String, targetId: String ) throws {
         guard sourceId != END else {
-            throw GraphStateError.invalidNodeIdentifier( "END is not a valid edge sourceId!")
+            throw GraphStateError.invalidEdgeIdentifier( "END is not a valid edge sourceId!")
         }
 
         let edge = Edge(sourceId: sourceId, target: .id(targetId) )
@@ -258,7 +264,7 @@ public class GraphState<State: AgentState>  {
     }
     public func addConditionalEdge( sourceId: String, condition: @escaping EdgeCondition<State>, edgeMapping: [String:String] ) throws {
         guard sourceId != END else {
-            throw GraphStateError.invalidNodeIdentifier( "END is not a valid edge sourceId!")
+            throw GraphStateError.invalidEdgeIdentifier( "END is not a valid edge sourceId!")
         }
         if edgeMapping.isEmpty {
             throw GraphStateError.edgeMappingIsEmpty
@@ -270,7 +276,10 @@ public class GraphState<State: AgentState>  {
         }
         edges.insert( edge)
     }
-    public func setEntryPoint( _ nodeId: String ) {
+    public func setEntryPoint( _ nodeId: String ) throws {
+        guard nodeId != END else {
+            throw GraphStateError.invalidNodeIdentifier( "END is not a valid node entry point!")
+        }
         entryPoint = nodeId
     }
     public func setFinishPoint( _ nodeId: String ) {
