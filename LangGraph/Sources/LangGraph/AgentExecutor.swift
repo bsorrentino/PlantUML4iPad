@@ -288,7 +288,7 @@ public func agentExecutor<T:AgentExecutorDelegate>( openAI: OpenAI, imageUrl: St
             "generic": "agent_generic_plantuml",
         ]
     )
-    workflow.setEntryPoint( "agent_describer")
+    try workflow.setEntryPoint( "agent_describer")
     
     let app = try workflow.compile()
     
