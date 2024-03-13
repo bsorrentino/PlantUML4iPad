@@ -293,9 +293,8 @@ public func agentExecutor<T:AgentExecutorDelegate>( openAI: OpenAI, imageUrl: St
     let app = try workflow.compile()
     
     let inputs:[String : Any] = [
-        "openai": openAI,
-        "diagram_image_url_or_data": imageUrl
-    ]
+         "diagram_image_url_or_data": imageUrl
+     ]
     
     let response = try await app.invoke( inputs: inputs)
     
