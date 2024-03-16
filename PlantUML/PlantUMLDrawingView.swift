@@ -7,8 +7,7 @@
 
 import SwiftUI
 import PencilKit
-import OpenAI
-import LangGraph
+import AIAgent
 
 #Preview( "PlantUMLDrawingView") {
     NavigationStack {

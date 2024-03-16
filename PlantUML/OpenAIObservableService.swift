@@ -9,7 +9,7 @@ import SwiftUI
 import AppSecureStorage
 import OpenAI
 import PlantUMLFramework
-import LangGraph
+import AIAgent
 
 
 class OpenAIObservableService : ObservableObject {

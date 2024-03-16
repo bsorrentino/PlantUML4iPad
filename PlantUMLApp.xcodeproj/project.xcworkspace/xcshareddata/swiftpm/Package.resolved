@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "LangGraph",
+        "repositoryURL": "https://github.com/bsorrentino/LangGraph-Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "610cc794fe2c1045651f1f67a722d6897e25dd44",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "OpenAI",
         "repositoryURL": "https://github.com/bsorrentino/Swift-OpenAI.git",
         "state": {

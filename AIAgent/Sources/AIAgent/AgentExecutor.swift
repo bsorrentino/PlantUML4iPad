@@ -8,7 +8,7 @@
 import Foundation
 import OSLog
 import OpenAI
-
+import LangGraph
 
 @inline(__always) func _EX( _ msg: String ) -> GraphRunnerError {
     GraphRunnerError.executionError(msg)
@@ -265,7 +265,7 @@ func routeDiagramTranslation( state: AgentExecutorState ) async throws -> String
 
 public func agentExecutor<T:AgentExecutorDelegate>( openAI: OpenAI, imageUrl: String, delegate:T ) async throws -> String? {
     
-    let workflow = GraphState( stateType: AgentExecutorState.self )
+    let workflow = GraphState { AgentExecutorState() }
     
     try workflow.addNode("agent_describer", action: { state in
         try await describeDiagramImage(state: state, openAI: openAI, delegate: delegate)
