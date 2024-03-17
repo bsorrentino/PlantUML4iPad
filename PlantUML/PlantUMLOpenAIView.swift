@@ -165,7 +165,7 @@ extension OpenAIView {
                         Task {
                             let input = "@startuml\n\(document.text)\n@enduml"
                             
-                            if let queryReult = await service.query( input: input, instruction: instruction ) {
+                            if let queryReult = await service.updatePlantUMLDiagram( input: input, instruction: instruction ) {
                                 
                                 service.clipboardQueue.push( document.text )
                                 
