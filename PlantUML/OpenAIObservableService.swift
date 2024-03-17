@@ -97,7 +97,7 @@ class OpenAIObservableService : ObservableObject {
     }
 
     @MainActor
-    func query( input: String, instruction: String ) async -> String? {
+    func updatePlantUMLDiagram( input: String, instruction: String ) async -> String? {
         
         guard let openAI /*, let  openAIModel */, case .Ready = status else {
             return nil
@@ -107,26 +107,10 @@ class OpenAIObservableService : ObservableObject {
         
         do {
             
-            let query = ChatQuery(
-                model: openAIModel,
-                messages: [
-                    .init(role: .system, content:
-                                    """
-                                    You are my plantUML assistant.
-                                    You must answer exclusively with diagram syntax.
-                                    """),
-                    .init( role: .assistant, content: input ),
-                    .init( role: .user, content: instruction )
-                ],
-                temperature: 0.0,
-                topP: 1.0
-            )
-
-            let chat = try await openAI.chats(query: query)
-
-            let result = chat.choices[0].message.content
-
-            if case .string(let content) = result {
+            if let content = try await updatePlantUML(openAI: openAI,
+                                                      withModel: openAIModel,
+                                                      input: input,
+                                                      withInstruction: instruction) {
                 
                 status = .Ready
                 
@@ -167,7 +151,7 @@ extension OpenAIObservableService {
         
         do {
             
-            if let content = try await agentExecutor( openAI: openAI, imageUrl: imageUrl, delegate:delegate) {
+            if let content = try await runTranslateDrawingToPlantUML( openAI: openAI, imageUrl: imageUrl, delegate:delegate) {
                 
                 status = .Ready
                 

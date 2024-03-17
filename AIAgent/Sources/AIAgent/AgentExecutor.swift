@@ -263,7 +263,9 @@ func routeDiagramTranslation( state: AgentExecutorState ) async throws -> String
     /* @objc optional */ func progress(_ message: String) -> Void
 }
 
-public func agentExecutor<T:AgentExecutorDelegate>( openAI: OpenAI, imageUrl: String, delegate:T ) async throws -> String? {
+public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: OpenAI, 
+                                                                    imageUrl: String,
+                                                                    delegate:T ) async throws -> String? {
     
     let workflow = GraphState { AgentExecutorState() }
     
@@ -302,3 +304,34 @@ public func agentExecutor<T:AgentExecutorDelegate>( openAI: OpenAI, imageUrl: St
 }
 
 
+public func updatePlantUML( openAI: OpenAI, 
+                            withModel model: Model,
+                            input: String,
+                            withInstruction instruction: String ) async throws -> String? {
+    let query = ChatQuery(
+        model: model,
+        messages: [
+            .init(role: .system, content:
+                            """
+                            You are my plantUML assistant.
+                            You must answer exclusively with diagram syntax.
+                            """),
+            .init( role: .assistant, content: input ),
+            .init( role: .user, content: instruction )
+        ],
+        temperature: 0.0,
+        topP: 1.0
+    )
+
+    let chat = try await openAI.chats(query: query)
+
+    let result = chat.choices[0].message.content
+
+    if case .string(let content) = result {
+        
+        return content
+    }
+    
+    return nil
+
+}
