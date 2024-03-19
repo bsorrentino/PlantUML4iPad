@@ -164,7 +164,7 @@ func translateSequenceDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( sta
         throw _EX("diagram not initialized!")
     }
     
-    await delegate.progress("starting translate diagram into sequence Diagram")
+    await delegate.progress("translating diagram to\nSequence Diagram")
 
     var prompt = try loadPromptFromBundle(fileName: "sequence_diagram_prompt")
     
@@ -209,7 +209,7 @@ func translateGenericDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( stat
         throw _EX("diagram not initialized!")
     }
     
-    await delegate.progress("starting translate diagram into generic Diagram")
+    await delegate.progress("translating diagram to\nGeneric Diagram")
     
     var prompt = try loadPromptFromBundle(fileName: "generic_diagram_prompt")
     
