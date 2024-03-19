@@ -29,6 +29,8 @@ struct PlantUMLDrawingView: View {
     @State var isUseDrawingTool = false
     @State var processing = false
     @State var processingLabel: String = "👀 Processing ..."
+    @State private var processImageTask:Task<(),Never>? = nil
+    
     var body: some View {
         
         ActivityView(isShowing: processing, label: processingLabel )  {
@@ -40,13 +42,6 @@ struct PlantUMLDrawingView: View {
                 .navigationTitle( document.fileName )
                 .navigationBarItems(leading:
                     HStack {
-//                        Button( action: saveImage, label: {
-//                            Label( "save in photo", systemImage: "square.and.arrow.down.fill")
-//                                .font(.title)
-//                                .foregroundColor(Color.orange)
-//                                .labelStyle(.titleOnly)
-//                            
-//                        })
                         Button( action: processImage, label: {
                             Label( "process", systemImage: "eye")
                                 .foregroundColor(Color.orange)
@@ -66,6 +61,10 @@ struct PlantUMLDrawingView: View {
                     
                     })
         }
+        .onCancel {
+            processImageTask?.cancel()
+        }
+        
     }
     
     private func image() -> UIImage {
@@ -115,7 +114,7 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
             processing.toggle()
             isUseDrawingTool = false
             service.status = .Ready
-            Task {
+            processImageTask = Task {
                 
                 do {
                     defer {

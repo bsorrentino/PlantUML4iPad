@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+extension Notification.Name {
+    static let activityCancelled = Notification.Name("activityCancelled")
+}
+
 struct ActivityView<Content>: View where Content: View {
     @Environment( \.colorScheme) var colorScheme
     
@@ -17,10 +21,13 @@ struct ActivityView<Content>: View where Content: View {
     private var borderColor: Color {
         colorScheme == .light ? Color.black : Color.white
     }
-    private var color: Color {
-        colorScheme == .light ? Color.black : Color.white
+    private var textColor: Color {
+        colorScheme == .light ? Color.white : Color.black
     }
-    
+    private var rectangleBackgroundColor: Color {
+        colorScheme == .light ? Color.black.opacity(0.75) : Color.white
+    }
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
@@ -30,26 +37,42 @@ struct ActivityView<Content>: View where Content: View {
                     .blur(radius: self.isShowing ? 3 : 0)
                 
                 if isShowing {
-                    VStack {
-                        
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke( borderColor, lineWidth: 1)
-                            .frame( width: geometry.size.width * 0.4,
-                                    height: geometry.size.height * 0.2)
-                            .background()
-                            .overlay {
+                    
+                    let h = geometry.size.height * 0.25
+                    rectangleBackgroundColor
+                        .border(Color.black)
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                        .overlay {
+                            VStack {
+                                Spacer()
                                 ProgressView {
                                     VStack{
                                         Text(label)
                                             .font(.title)
-                                            .foregroundColor(color)
+                                            .foregroundColor(textColor)
                                     }
                                 }
                                 .controlSize(.large)
-                                .tint(color)
+                                .tint(textColor)
+                                
+                                Spacer()
+                                
+                                Button( action: {
+                                    NotificationCenter.default.post(name: .activityCancelled, object: nil)
+                                }) {
+                                    Text("Cancel")
+                                        .font(.title)
+                                        .tint(.red)
+                                }
+                                .padding()
+                                
                             }
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .frame( height: h)
+                            //                            .border(Color.red)
+                        }
+                        .frame( width: geometry.size.width * 0.4,
+                                height: h )
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     //.opacity(self.isShowing ? 1 : 0)
                 }
             }
@@ -57,10 +80,47 @@ struct ActivityView<Content>: View where Content: View {
     }
 }
 
+fileprivate struct onCancelModifier: ViewModifier {
+    var onCancel: () -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .onReceive(NotificationCenter.default.publisher(for: .activityCancelled) ) { _ in onCancel() }
+    }
+}
+
+
+extension ActivityView {
+    
+    func onCancel( _ cancel: @escaping  () -> Void) -> some View {
+        self.modifier( onCancelModifier(onCancel: cancel))
+    }
+    
+}
+
 
 #Preview {
-    ActivityView(isShowing: true, label: "Loading\nprocess\nand\nother" ) {
+    
+    struct MyPreview : View {
+        @Environment( \.colorScheme) var colorScheme
         
-        Text( "DRAWING" )
+        private var foreColor: Color {
+            colorScheme == .light ? Color.white : Color.black
+        }
+        var body: some View {
+            ActivityView(isShowing: true, label: "Loading process\nand other" ) {
+                
+                Rectangle()
+                    .foregroundColor(foreColor)
+                    
+            }
+            .onCancel {
+                print( "on cancel")
+            }        }
+        
     }
+
+    return MyPreview()
+    
+    
 }
