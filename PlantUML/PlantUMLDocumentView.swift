@@ -32,21 +32,15 @@ struct PlantUMLDocumentView: View {
     @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
     @AppStorage("darkTheme") var darkTheme:String = CodeWebView.Theme.monokai.rawValue
     @AppStorage("fontSize") var fontSize:Int = 15
-
+    
     @StateObject var document: PlantUMLObservableDocument
     @StateObject private var openAIService = OpenAIObservableService()
-    
-    @State private var isEditorVisible  = true
-    //@State private var isPreviewVisible = false
-    private var isDiagramVisible:Bool { !isEditorVisible}
     
     @State var isOpenAIVisible  = false
     
     @State var keyboardTab: String  = "general"
-    @State private var isScaleToFit = true
     @State private var showLine:Bool = true
     @State private var saving = false
-    @State private var diagramImage:UIImage?
     
     @State private var editorViewId  = 1
     
@@ -57,54 +51,41 @@ struct PlantUMLDocumentView: View {
         VStack {
             GeometryReader { geometry in
                 
-                if( isEditorVisible ) {
-                    VStack {
-                        PlantUMLEditorView( content: $document.text,
-                                            darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
-                                            lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
-                                            isReadOnly: false,
-                                            fontSize: CGFloat(fontSize),
-                                            showGutter: showLine
-                        )
-                        .id( editorViewId )
-                        .if( isRunningTests ) { /// this need for catching current editor data from UI test
-                            $0.overlay(alignment: .bottom) {
-                                Text( document.text )
-                                    .frame( width: 0, height: 0)
-                                    .opacity(0)
-                                    .accessibilityIdentifier("editor-text")
-                            }
+                
+                VStack {
+                    PlantUMLEditorView( content: $document.text,
+                                        darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
+                                        lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
+                                        isReadOnly: false,
+                                        fontSize: CGFloat(fontSize),
+                                        showGutter: showLine
+                    )
+                    .id( editorViewId )
+                    .if( isRunningTests ) { /// this need for catching current editor data from UI test
+                        $0.overlay(alignment: .bottom) {
+                            Text( document.text )
+                                .frame( width: 0, height: 0)
+                                .opacity(0)
+                                .accessibilityIdentifier("editor-text")
                         }
                     }
                 }
                 
-                if isDiagramVisible {
-                    if isScaleToFit {
-                        PlantUMLDiagramViewFit
-                            .frame( width: geometry.size.width, height: geometry.size.height )
-                    }
-                    else {
-                        ScrollView([.horizontal, .vertical], showsIndicators: true) {
-                            PlantUMLDiagramView( url: document.buildURL(), contentMode: .fill )
-                                .frame( minWidth: geometry.size.width)
-                        }
-                        .frame( minWidth: geometry.size.width, minHeight: geometry.size.height )
-                    }
-                }
+                
             }
             if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
-                OpenAIView( service: openAIService, 
+                OpenAIView( service: openAIService,
                             document: document,
                             drawingView:  { DiagramDrawingView } )
-                    .frame( height: 200 )
-                    .onChange(of: openAIService.status ) { newStatus in
-                        if( .Ready == newStatus ) {
-                            // Force rendering editor view
-//                            print( "FORCE RENDERING OF EDITOR VIEW")
-                            editorViewId += 1
-                        }
+                .frame( height: 200 )
+                .onChange(of: openAIService.status ) { newStatus in
+                    if( .Ready == newStatus ) {
+                        // Force rendering editor view
+                        //                            print( "FORCE RENDERING OF EDITOR VIEW")
+                        editorViewId += 1
                     }
-
+                }
+                
             }
         }
         .onChange(of: document.text ) { _ in
@@ -118,41 +99,33 @@ struct PlantUMLDocumentView: View {
             }
         }
         .onRotate(perform: { orientation in
-            if  (orientation.isPortrait && isDiagramVisible) ||
-                    (orientation.isLandscape && isEditorVisible)
-            {
-                isEditorVisible.toggle()
-            }
+            //            if  (orientation.isPortrait && isDiagramVisible) ||
+            //                    (orientation.isLandscape && isEditorVisible)
+            //            {
+            //                isEditorVisible.toggle()
+            //            }
         })
+//        .navigationBarTitle(Text( "📝 Diagram Editor" ), displayMode: .inline)
+        
         .toolbar {
-            ToolbarItemGroup(placement: .navigationBarLeading) {
-            }
+            ToolbarItemGroup(placement: .navigationBarLeading) { }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 HStack( spacing: 0 ) {
                     SavingStateView( saving: saving )
                     
-//                    if interfaceOrientation.value.isPortrait {
-                        HStack(alignment: .center, spacing: 5) {
-                            ToggleOpenAIButton
-                            Divider().background(Color.blue)
-                        }
-                        .frame(height:20)
-//                    }
+                    HStack(alignment: .center, spacing: 5) {
+                        ToggleOpenAIButton
+                        Divider().background(Color.blue)
+                    }
+                    .frame(height:20)
 
-                    ToggleEditorButton()
-                    if isEditorVisible {
-                        HStack {
-//                            EditButton()
-                            fontSizeView()
-                            toggleLineNumberView()
-                        }
+                    HStack {
+                        updateEditorFontSizeView()
+                        toggleEditorLineNumberView()
+                        shareDiagramTextView()
                     }
                     
                     ToggleDiagramButton()
-                    if isDiagramVisible {
-                        ScaleToFitButton()
-                        ShareDiagramButton()
-                    }
                 }
             }
         }
@@ -170,9 +143,9 @@ extension PlantUMLDocumentView {
             PlantUMLDrawingView( canvas: $canvas,
                                  service: openAIService,
                                  document: document )
-                
+            
         }
-
+        
     }
 }
 
@@ -223,14 +196,14 @@ extension PlantUMLDocumentView {
         
     }
     
-    func toggleLineNumberView() -> some View {
+    func toggleEditorLineNumberView() -> some View {
         Button( action: { showLine.toggle() } ) {
             Image( systemName: "list.number")
         }
         
     }
     
-    func fontSizeView() -> some View {
+    func updateEditorFontSizeView() -> some View {
         HStack( spacing: 0 ) {
             Button( action: { fontSize += 1 } ) {
                 Image( systemName: "textformat.size.larger")
@@ -247,23 +220,9 @@ extension PlantUMLDocumentView {
         }
     }
     
-    func ToggleEditorButton() -> some View {
-        
-        Button {
-            if !isEditorVisible {
-                withAnimation {
-                    diagramImage = nil // avoid popup of share image UIActivityViewController
-                    isEditorVisible.toggle()
-                }
-            }
-        }
-    label: {
-        Label( "Toggle Editor", systemImage: "doc.plaintext.fill" )
-            .labelStyle(.iconOnly)
-            .foregroundColor( isEditorVisible ? .blue : .gray)
-    }
-    .accessibilityIdentifier("editor")
-        
+    func shareDiagramTextView() -> some View {
+        ShareLink( item: document.text, 
+                   subject: Text("PlantUML Script"))
     }
     
     @available(swift, obsoleted: 1.1,message: "from 1.1 auto save has been introduced")
@@ -285,53 +244,20 @@ extension PlantUMLDocumentView {
 //
 extension PlantUMLDocumentView {
     
-    
-    var PlantUMLDiagramViewFit: some View {
-        PlantUMLDiagramView( url: document.buildURL(), contentMode: .fit )
-    }
-    
-    func ShareDiagramButton() -> some View {
-        
-        Button(action: {
-            if let image = PlantUMLDiagramViewFit.asUIImage() {
-                diagramImage = image
-            }
-        }) {
-            ZStack {
-                Image(systemName:"square.and.arrow.up")
-                SwiftUIActivityViewController( uiImage: $diagramImage )
-            }
-            
-        }
-        
-    }
-    
-    func ScaleToFitButton() -> some View {
-        
-        Toggle("fit image", isOn: $isScaleToFit)
-            .toggleStyle(ScaleToFitToggleStyle())
-        
-    }
-    
     func ToggleDiagramButton() -> some View {
         
-        Button {
-            if isEditorVisible {
-                withAnimation {
-                    // isPreviewVisible.toggle()
-                    isEditorVisible.toggle()
-                }
-            }
+        NavigationLink(  destination: {
+            PlantUMLDiagramView( url: document.buildURL())
+                .toolbarRole(.navigationStack)
+        }) {
+            Label( "Preview >", systemImage: "photo.fill" )
+                .labelStyle(.titleOnly)
+                .foregroundColor( .blue )
         }
-    label: {
-        Label( "Toggle Preview", systemImage: "photo.fill" )
-            .labelStyle(.iconOnly)
-            .foregroundColor( isDiagramVisible ? .blue : .gray)
+        .padding(.leading, 15)
         
     }
-    .accessibilityIdentifier("diagram")
-    }
-
+    
 }
 
 
@@ -353,11 +279,11 @@ myactor -> participant1
     
     
     NavigationStack {
-        PlantUMLDocumentView( document: PlantUMLObservableDocument( 
+        PlantUMLDocumentView( document: PlantUMLObservableDocument(
             document: .constant(PlantUMLDocument( text: preview_text)), fileName:"Untitled" ))
-            .navigationViewStyle(.stack)
+        .navigationViewStyle(.stack)
     }
     
-
+    
 }
 
