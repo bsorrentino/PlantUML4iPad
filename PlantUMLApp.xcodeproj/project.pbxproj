@@ -181,6 +181,14 @@
 			name = Representable;
 			sourceTree = "<group>";
 		};
+		A07493852BAB74590025B3C9 /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				A04512F02B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift */,
+			);
+			name = Deprecated;
+			sourceTree = "<group>";
+		};
 		A077461228C7EF6A007C5C13 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,6 +231,7 @@
 		A0D3C64828984A0E000838D7 /* PlantUML */ = {
 			isa = PBXGroup;
 			children = (
+				A07493852BAB74590025B3C9 /* Deprecated */,
 				A07493832BAB04A00025B3C9 /* Representable */,
 				A07493822BAB04280025B3C9 /* Observable */,
 				A0C0C3272B5D95DD00CE66A2 /* Errors.swift */,
@@ -237,7 +246,6 @@
 				A0D3C64B28984A0E000838D7 /* PlantUMLDocument.swift */,
 				A0D3C64928984A0E000838D7 /* PlantUMLApp.swift */,
 				A0D3C64D28984A0E000838D7 /* PlantUMLDocumentView.swift */,
-				A04512F02B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift */,
 				A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */,
 				A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */,
 				A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */,

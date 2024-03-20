@@ -74,7 +74,7 @@ struct PlantUMLDiagramView : View {
                 }
             }
         }
-        .border(Color.red)
+//        .border(Color.red)
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 ScaleToFitButton()
