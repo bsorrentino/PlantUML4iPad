@@ -27,13 +27,13 @@ struct PlantUMLApp: App {
     
     var body: some Scene {
         DocumentGroup(newDocument: PlantUMLDocument()) { file in                
-//            PlantUMLDiagramMenu( doc: file.$document )
             
             PlantUMLDocumentView( document: PlantUMLObservableDocument( document: file.$document,
-                                                                   fileName: getFileName(file, default: "Untitled" )))
+                                                                        fileName: getFileName(file, default: "Untitled" )))
             // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
-                .toolbarRole(.navigationStack)
-
+            .toolbarRole(.navigationStack)
+            .navigationBarTitleDisplayMode(.inline)
         }
+        
     }
 }

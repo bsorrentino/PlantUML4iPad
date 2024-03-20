@@ -12,43 +12,111 @@ import SwiftUI
 import WebKit
 import Combine
 
-
 struct PlantUMLDiagramView : View {
-    var url: URL?
-    var contentMode:ContentMode
+    @State private var isScaleToFit = true
+    @State private var diagramImage:UIImage?
     
-    var body: some View {
+    var url: URL?
+    var contentMode:ContentMode {
+        if isScaleToFit { .fit } else { .fill }
+    }
+    //    if isScaleToFit {
+    //        PlantUMLDiagramViewFit
+    //            .frame( width: geometry.size.width, height: geometry.size.height )
+    //    }
+    //    else {
+    //        ScrollView([.horizontal, .vertical], showsIndicators: true) {
+    //            PlantUMLDiagramView( url: document.buildURL(), contentMode: .fill )
+    //                .frame( minWidth: geometry.size.width)
+    //        }
+    //        .frame( minWidth: geometry.size.width, minHeight: geometry.size.height )
+    //    }
+    
+    var diagramView:some View {
         CachedAsyncImage(url: url, scale: 1 ) { phase in
             
-            if let image = phase.image {
-                // if the image is valid
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: contentMode)
-            }
-            else if let _ = phase.error {
-                EmptyView()
+                if let image = phase.image {
+                    
+                    // if the image is valid
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: contentMode)
+                    
+                }
+                else if let _ = phase.error {
+                    EmptyView()
+                }
+                else {
+                    // showing progress view as placeholder
+                    VStack(alignment: .center ) {
+                        Image("uml")
+                            .resizable()
+                            .frame( width: 200, height: 150)
+                        ProgressView()
+                            .font(.largeTitle)
+                    }
+                }
+            
+        }
+
+        
+    }
+    
+    var body: some View {
+        
+        VStack {
+            if isScaleToFit {
+                diagramView
             }
             else {
-                // showing progress view as placeholder
-                VStack(alignment: .center ) {
-                    Image("uml")
-                        .resizable()
-                        .frame( width: 200, height: 150)
-                    ProgressView()
-                        .font(.largeTitle)
+                ScrollView([.horizontal, .vertical], showsIndicators: true) {
+                    diagramView
                 }
             }
         }
+        .border(Color.red)
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                ScaleToFitButton()
+                ShareDiagramButton()
+            }
+        }
+        .navigationBarTitle(Text( "📈 Diagram Preview" ), displayMode: .inline)
 
     }
     
 }
 
-
-struct PlantUMLDiagramView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlantUMLDiagramView( url: URL( string: "https://picsum.photos/id/870/100/150" ), contentMode: .fill )
+extension PlantUMLDiagramView {
+    
+    
+    func ScaleToFitButton() -> some View {
+        
+        Toggle("fit image", isOn: $isScaleToFit)
+            .toggleStyle(ScaleToFitToggleStyle())
+        
+    }
+    
+    func ShareDiagramButton() -> some View {
+        Button(action: {
+            if let image = self.asUIImage() {
+                diagramImage = image
+            }
+        }) {
+            ZStack {
+                Image(systemName:"square.and.arrow.up")
+                SwiftUIActivityViewController( uiImage: $diagramImage )
+            }
+            
+        }
+//        .disabled( diagramImage == nil )
+        
+    }
+    
+}
+#Preview {
+    NavigationStack {
+        PlantUMLDiagramView( url: URL( string: "https://picsum.photos/id/870/100/150" ) )
     }
 }
 
@@ -58,7 +126,7 @@ struct PlantUMLDiagramView_Previews: PreviewProvider {
 ///
 ///
 private class PlantUMLDiagramState: ObservableObject {
-
+    
     private var updateSubject = PassthroughSubject<URL, Never>()
     
     private var cancellabe:Cancellable?
@@ -73,9 +141,9 @@ private class PlantUMLDiagramState: ObservableObject {
                 .print()
                 .map { URLRequest(url: $0 ) }
                 .sink( receiveValue: update )
-
+            
         }
-
+        
     }
     
     func requestUpdate( forURL url:URL ) {
@@ -96,11 +164,11 @@ private struct PlantUMLScrollableDiagramView : View {
 }
 
 private struct PlantUMLDiagramView_old: UIViewRepresentable {
- 
+    
     @StateObject private var state = PlantUMLDiagramState()
     
     var url: URL?
- 
+    
     func makeUIView(context: Context) -> WKWebView {
         
         let webView = WKWebView()
@@ -108,10 +176,10 @@ private struct PlantUMLDiagramView_old: UIViewRepresentable {
         state.subscribe( onUpdate: { request in
             webView.load(request)
         })
-                
+        
         return webView
     }
- 
+    
     func updateUIView(_ webView: WKWebView, context: Context) {
         guard let url = url else {
             return
