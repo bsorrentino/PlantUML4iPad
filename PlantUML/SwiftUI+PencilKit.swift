@@ -39,7 +39,16 @@ struct DrawingView: UIViewRepresentable {
     func makeUIView(context: Context) -> PKCanvasView {
         if let data {
             do {
-                canvas.drawing = try PKDrawing(data: data)
+                
+                let drawing = try PKDrawing(data: data)
+                
+                if __DEMO {
+                    slowDrawingForDemo(drawing, timeInterval: 0.4)
+                }
+                else {
+                    canvas.drawing = drawing
+                }
+                
             }
             catch {
                 fatalError( "failed to load drawing")
@@ -69,6 +78,34 @@ struct DrawingView: UIViewRepresentable {
         
     }
 }
+
+// MARK: DEMO
+extension DrawingView {
+    
+    fileprivate func slowDrawingForDemo( _ drawing: PKDrawing, timeInterval: TimeInterval  )  {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            
+            canvas.drawing = PKDrawing()
+            
+            let strokes = drawing.strokes
+            var current:Int = 0
+            
+            Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
+                
+                guard current < strokes.count else {
+                    timer.invalidate()
+                    return
+                }
+                let newDrawing = PKDrawing(strokes: [strokes[current]] )
+                canvas.drawing.append(newDrawing  )
+                current += 1
+            }
+        }
+    }
+    
+
+}
+
 
 #Preview {
     

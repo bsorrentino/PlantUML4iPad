@@ -71,7 +71,7 @@ struct PlantUMLDrawingView: View {
         canvas.drawing.image(from: canvas.drawing.bounds, scale: 1)
     }
     
-    func saveImage() {
+    func saveImageToPhotos() {
         // saving to album
         UIImageWriteToSavedPhotosAlbum(image(), nil, nil, nil)
                 
@@ -89,6 +89,21 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
         processingLabel = message
     }
         
+    fileprivate func saveData( _ data: Data, toFile fileName: String, inDirectory directory: FileManager.SearchPathDirectory ) {
+        do {
+            let dir = try FileManager.default.url(for: directory,
+                                                  in: .userDomainMask,
+                                                  appropriateFor: nil,
+                                                  create: true)
+            let fileURL = dir.appendingPathComponent(fileName)
+            print( "fileURL\n\(fileURL)")
+            try data.write(to: fileURL)
+        }
+        catch {
+            print( "error saving file \(error.localizedDescription)" )
+        }
+    }
+    
     func processImage() {
         
         // getting image from Canvas
@@ -98,16 +113,9 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
 
         if let imageData = image.pngData() {
 
-            #if __SAVE_IMAGE
-            do {
-                let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("image.png")
-                print( "fileURL\n\(fileURL)")
-                try imageData.write(to: fileURL)
+            if __SAVE_DRAWING_IMAGE {
+                saveData(imageData, toFile: "image.png", inDirectory: .picturesDirectory)
             }
-            catch {
-                print( "error saving file \(error.localizedDescription)" )
-            }
-            #endif
             
             let base64Image = imageData.base64EncodedString()
             
