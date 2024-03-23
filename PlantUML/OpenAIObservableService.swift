@@ -151,16 +151,28 @@ extension OpenAIObservableService {
         
         do {
             
-            if let content = try await runTranslateDrawingToPlantUML( openAI: openAI, imageUrl: imageUrl, delegate:delegate) {
-                
-                status = .Ready
-                
-                return content
-                    .split( whereSeparator: \.isNewline )
-                    .filter { $0 != "@startuml" && $0 != "@enduml" }
-                    .joined(separator: "\n" )
+            if DEMO_MODE {
+                if let content = try await runTranslateDrawingToPlantUMLDemo( openAI: openAI, imageUrl: imageUrl, delegate:delegate) {
+                    
+                    status = .Ready
+                    
+                    return content
+                        .split( whereSeparator: \.isNewline )
+                        .filter { $0 != "@startuml" && $0 != "@enduml" }
+                        .joined(separator: "\n" )
+                }
             }
-            
+            else {
+                if let content = try await runTranslateDrawingToPlantUML( openAI: openAI, imageUrl: imageUrl, delegate:delegate) {
+                    
+                    status = .Ready
+                    
+                    return content
+                        .split( whereSeparator: \.isNewline )
+                        .filter { $0 != "@startuml" && $0 != "@enduml" }
+                        .joined(separator: "\n" )
+                }
+            }
             delegate.progress("ERROR: invalid result!")
             status = .Error( "invalid result!" )
         }

@@ -27,6 +27,11 @@ struct PlantUMLApp: App {
         // Config Settings
         print( "DEMO_MODE: \(DEMO_MODE)" )
         print( "SAVE_DRAWING_IMAGE: \(SAVE_DRAWING_IMAGE)" )
+        let documentDir = try? FileManager.default.url(for: .documentDirectory,
+                                                  in: .userDomainMask,
+                                                  appropriateFor: nil,
+                                                  create: false)
+        print( "DOCUMENT DIRECTORY\n\(String(describing: documentDir))")
     }
     
     var body: some Scene {

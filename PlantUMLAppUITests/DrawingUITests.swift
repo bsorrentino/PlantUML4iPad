@@ -36,7 +36,7 @@ final class DrawingUITests: XCTestCase {
 
     }
     
-    func testDrawDiagram() throws {
+    func testDrawDiagramForDemo() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         
@@ -59,14 +59,19 @@ final class DrawingUITests: XCTestCase {
 
         app.buttons["drawing_tools"].tap()
 
-        wait(reason: "Wait for drawing graph", timeout: 20 )
+        wait(reason: "Wait for drawing graph", timeout: 38 )
         
         app.buttons["drawing_process"].tap()
         
-        wait(reason: "Wait for process drawing", timeout: 30 )
-        XCTAssertTrue( app.buttons["diagram_preview"].waitForExistence(timeout: 60) )
+        XCTAssertTrue( app.buttons["cancel_processing"].waitForExistence(timeout: 10) )
         
-        app.buttons["diagram_preview"].tap()
+        wait(reason: "Wait until show preview", timeout: 10 )
+        
+        XCTAssertTrue( app.buttons["diagram_preview"].waitForExistence(timeout: 10) )
+        
+        app.buttons["diagram_preview"].forceTap()
+        
+        wait(reason: "preview time", timeout: 20 )
     }
 
     func testLaunchPerformance() throws {
