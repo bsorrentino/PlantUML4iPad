@@ -31,5 +31,16 @@ extension XCUIElement {
     }
     
 
-
+    ///
+    ///  Tip to avoid [Failed to scroll to visible (by AX action)](https://stackoverflow.com/a/33534187/521197
+    ///
+    func forceTap() {
+        if self.isHittable {
+            self.tap()
+        }
+        else {
+            let coordinate = self.coordinate(withNormalizedOffset: CGVector(dx:0.0, dy:0.0))
+            coordinate.tap()
+        }
+    }
 }
