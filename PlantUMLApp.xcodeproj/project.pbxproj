@@ -47,6 +47,11 @@
 		A0D3C65028984A10000838D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0D3C64F28984A10000838D7 /* Assets.xcassets */; };
 		A0D3C65328984A10000838D7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0D3C65228984A10000838D7 /* Preview Assets.xcassets */; };
 		A0D3C65E28984A10000838D7 /* PlantUMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D3C65D28984A10000838D7 /* PlantUMLTests.swift */; };
+		A0EA855F2BADDB3800800522 /* XCUIElement+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA855E2BADDB3800800522 /* XCUIElement+Gesture.swift */; };
+		A0EA85612BADDB9500800522 /* XCUIApplication+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85602BADDB9500800522 /* XCUIApplication+Tap.swift */; };
+		A0EA85632BADDBFA00800522 /* XCTestCase+Wait.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85622BADDBFA00800522 /* XCTestCase+Wait.swift */; };
+		A0EA85652BADDC5B00800522 /* EditorElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85642BADDC5B00800522 /* EditorElement.swift */; };
+		A0EA85672BADF6F200800522 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85662BADF6F200800522 /* Constants.swift */; };
 		A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */; };
 		A0FB8F9C295616BF00910896 /* View+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08AA78329561170004DE329 /* View+UIImage.swift */; };
 /* End PBXBuildFile section */
@@ -112,6 +117,11 @@
 		A0D3C65428984A10000838D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0D3C65928984A10000838D7 /* PlantUMLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantUMLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D3C65D28984A10000838D7 /* PlantUMLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLTests.swift; sourceTree = "<group>"; };
+		A0EA855E2BADDB3800800522 /* XCUIElement+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Gesture.swift"; sourceTree = "<group>"; };
+		A0EA85602BADDB9500800522 /* XCUIApplication+Tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Tap.swift"; sourceTree = "<group>"; };
+		A0EA85622BADDBFA00800522 /* XCTestCase+Wait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Wait.swift"; sourceTree = "<group>"; };
+		A0EA85642BADDC5B00800522 /* EditorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorElement.swift; sourceTree = "<group>"; };
+		A0EA85662BADF6F200800522 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Rotate.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,8 +164,12 @@
 		A00729B929DB2A9D00D73D1A /* PlantUMLAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				A0C5C2E22A0FD12C0038C889 /* XCTestCase+LineEditor.swift */,
+				A0EA855E2BADDB3800800522 /* XCUIElement+Gesture.swift */,
 				A0C5C2E32A0FD12C0038C889 /* XCUIElement+TextField.swift */,
+				A0C5C2E22A0FD12C0038C889 /* XCTestCase+LineEditor.swift */,
+				A0EA85602BADDB9500800522 /* XCUIApplication+Tap.swift */,
+				A0EA85622BADDBFA00800522 /* XCTestCase+Wait.swift */,
+				A0EA85642BADDC5B00800522 /* EditorElement.swift */,
 				A00729BA29DB2A9D00D73D1A /* PlantUMLAppUITests.swift */,
 				A04FE0482AA26B8000210EFC /* PlantUML.xctestplan */,
 				A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */,
@@ -234,6 +248,7 @@
 				A07493852BAB74590025B3C9 /* Deprecated */,
 				A07493832BAB04A00025B3C9 /* Representable */,
 				A07493822BAB04280025B3C9 /* Observable */,
+				A0EA85662BADF6F200800522 /* Constants.swift */,
 				A0C0C3272B5D95DD00CE66A2 /* Errors.swift */,
 				A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */,
 				A0A139342A13C49A00B69FBC /* View+Secure.swift */,
@@ -434,6 +449,10 @@
 				A0C5C2E02A0FD05A0038C889 /* PlantUMLAppUITests.swift in Sources */,
 				A0C0C34C2B5DA7A200CE66A2 /* ActivityView.swift in Sources */,
 				A0C5C2E12A0FD05A0038C889 /* PlantUMLAppUITestsLaunchTests.swift in Sources */,
+				A0EA85652BADDC5B00800522 /* EditorElement.swift in Sources */,
+				A0EA855F2BADDB3800800522 /* XCUIElement+Gesture.swift in Sources */,
+				A0EA85612BADDB9500800522 /* XCUIApplication+Tap.swift in Sources */,
+				A0EA85632BADDBFA00800522 /* XCTestCase+Wait.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +471,7 @@
 				A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
 				A0A80A762B3ED90A00CB08CA /* SwiftUI+PencilKit.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
+				A0EA85672BADF6F200800522 /* Constants.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLDocumentView.swift in Sources */,
 				A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */,
 				A0C0C34A2B5DA7A200CE66A2 /* ActivityView.swift in Sources */,
