@@ -35,13 +35,14 @@ class PlantUMLObservableDocument : ObservableObject {
     
     @Binding var object: PlantUMLDocument
     @Published var text: String
-    var drawing: Data? {
-        didSet {
-            if __DEMO {
-                saveDrawingForDemo()
-            }
-        }
-    }
+    var drawing: Data? 
+//    {
+//        didSet {
+//            if DEMO_MODE {
+//                saveDrawingForDemo()
+//            }
+//        }
+//    }
     var fileName:String
 
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
@@ -54,12 +55,13 @@ class PlantUMLObservableDocument : ObservableObject {
         self._object = document
         self.text = document.wrappedValue.isNew ? "title Untitled" : document.wrappedValue.text
         self.fileName = fileName
-        if __DEMO {
-            self.drawing = loadDrawingForDemo(fromDocument: document.wrappedValue )
-        }
-        else {
-            self.drawing = document.wrappedValue.drawing
-        }
+        self.drawing = document.wrappedValue.drawing
+//        if DEMO_MODE {
+//            self.drawing = loadDrawingForDemo(fromDocument: document.wrappedValue )
+//        }
+//        else {
+//            self.drawing = document.wrappedValue.drawing
+//        }
     }
     
     func buildURL() -> URL {

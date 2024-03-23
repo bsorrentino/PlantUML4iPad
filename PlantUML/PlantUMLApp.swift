@@ -23,6 +23,10 @@ struct PlantUMLApp: App {
     init() {
         URLCache.shared.memoryCapacity = 10_000_000 // ~10 MB memory space
         URLCache.shared.diskCapacity = 100_000_000 // ~1GB disk cache space
+        
+        // Config Settings
+        print( "DEMO_MODE: \(DEMO_MODE)" )
+        print( "SAVE_DRAWING_IMAGE: \(SAVE_DRAWING_IMAGE)" )
     }
     
     var body: some Scene {

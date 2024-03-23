@@ -48,6 +48,7 @@ struct PlantUMLDrawingView: View {
                                 .labelStyle(.titleAndIcon)
                             
                         })
+                        .accessibilityIdentifier("drawing_process")
                     },trailing:
                         HStack(spacing: 15) {
                     
@@ -58,7 +59,7 @@ struct PlantUMLDrawingView: View {
                                 .foregroundColor(Color.orange)
                                 .labelStyle(.titleOnly)
                         }
-                    
+                        .accessibilityIdentifier("drawing_tools")
                     })
         }
         .onCancel {
@@ -113,7 +114,7 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
 
         if let imageData = image.pngData() {
 
-            if __SAVE_DRAWING_IMAGE {
+            if SAVE_DRAWING_IMAGE {
                 saveData(imageData, toFile: "image.png", inDirectory: .picturesDirectory)
             }
             

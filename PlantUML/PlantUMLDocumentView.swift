@@ -254,6 +254,7 @@ extension PlantUMLDocumentView {
                 .labelStyle(.titleOnly)
                 .foregroundColor( .blue )
         }
+        .accessibilityIdentifier("diagram_preview")
         .padding(.leading, 15)
         
     }
@@ -262,23 +263,21 @@ extension PlantUMLDocumentView {
 
 
 // MARK: - Preview -
-
-let preview_text = """
-
-title test
-
-actor myactor
-participant participant1
-
-myactor -> participant1
-
-
-"""
-
 #Preview {
     
-    
-    NavigationStack {
+    let preview_text = """
+
+    title test
+
+    actor myactor
+    participant participant1
+
+    myactor -> participant1
+
+
+    """
+
+    return NavigationStack {
         PlantUMLDocumentView( document: PlantUMLObservableDocument(
             document: .constant(PlantUMLDocument( text: preview_text)), fileName:"Untitled" ))
         .navigationViewStyle(.stack)

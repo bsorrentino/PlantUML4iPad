@@ -42,7 +42,7 @@ struct DrawingView: UIViewRepresentable {
                 
                 let drawing = try PKDrawing(data: data)
                 
-                if __DEMO {
+                if DEMO_MODE {
                     slowDrawingForDemo(drawing, timeInterval: 0.4)
                 }
                 else {
