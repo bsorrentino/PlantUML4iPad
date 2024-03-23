@@ -39,19 +39,10 @@ struct PlantUMLDrawingView: View {
                 .font(.system(size: 35))
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.purple)
-                .navigationTitle( document.fileName )
-                .navigationBarItems(leading:
-                    HStack {
-                        Button( action: processImage, label: {
-                            Label( "process", systemImage: "eye")
-                                .foregroundColor(Color.orange)
-                                .labelStyle(.titleAndIcon)
-                            
-                        })
-                        .accessibilityIdentifier("drawing_process")
-                    },trailing:
-                        HStack(spacing: 15) {
-                    
+                .navigationTitle( "\(document.fileName)   -   📝 Draw Diagram" )
+                .navigationBarItems(trailing:
+                    HStack(spacing: 10) {
+                        
                         Button(action: {
                             isUseDrawingTool.toggle()
                         }) {
@@ -60,7 +51,18 @@ struct PlantUMLDrawingView: View {
                                 .labelStyle(.titleOnly)
                         }
                         .accessibilityIdentifier("drawing_tools")
-                    })
+    
+                        Divider()
+                    
+                        Button( action: processImage, label: {
+                            Label( "process", systemImage: "eye")
+                                .foregroundColor(Color.orange)
+                                .labelStyle(.titleOnly)
+                            
+                        })
+                        .accessibilityIdentifier("drawing_process")
+                    }
+                )
         }
         .onCancel {
             processImageTask?.cancel()
@@ -132,8 +134,8 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
                     }
 
                     if let content = await service.processImageWithAgents( imageUrl: "data:image/png;base64,\(base64Image)", delegate: self ) {
-                        
-                        document.text = content
+
+                            document.text = content
                         
                     }
                 }
