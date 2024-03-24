@@ -31,7 +31,7 @@ struct PlantUMLApp: App {
                                                   in: .userDomainMask,
                                                   appropriateFor: nil,
                                                   create: false)
-        print( "DOCUMENT DIRECTORY\n\(String(describing: documentDir))")
+        print( "DOCUMENT DIRECTORY\n\(documentDir?.absoluteString ?? "undefined")")
     }
     
     var body: some Scene {

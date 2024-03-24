@@ -42,7 +42,7 @@ final class DrawingUITests: XCTestCase {
         
         app.launch()
 
-        let document = findDocument( app, withTitle: "TEST")
+        let document = findDocument( app, withTitle: "DEMO")
         
         document.tap()
         
