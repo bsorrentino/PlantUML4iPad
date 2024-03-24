@@ -65,6 +65,7 @@ struct ActivityView<Content>: View where Content: View {
                                         .tint(.red)
                                 }
                                 .padding()
+                                .accessibilityIdentifier("cancel_processing")
                                 
                             }
                             .frame( height: h)

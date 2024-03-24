@@ -51,9 +51,11 @@
 		A0EA85612BADDB9500800522 /* XCUIApplication+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85602BADDB9500800522 /* XCUIApplication+Tap.swift */; };
 		A0EA85632BADDBFA00800522 /* XCTestCase+Wait.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85622BADDBFA00800522 /* XCTestCase+Wait.swift */; };
 		A0EA85652BADDC5B00800522 /* EditorElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85642BADDC5B00800522 /* EditorElement.swift */; };
-		A0EA85672BADF6F200800522 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85662BADF6F200800522 /* Constants.swift */; };
+		A0EA85672BADF6F200800522 /* ConfigSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EA85662BADF6F200800522 /* ConfigSettings.swift */; };
 		A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */; };
 		A0FB8F9C295616BF00910896 /* View+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A08AA78329561170004DE329 /* View+UIImage.swift */; };
+		A0FED5D42BAEFA55003F1769 /* PlantUMLAppUITests+Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FED5D32BAEFA55003F1769 /* PlantUMLAppUITests+Deprecated.swift */; };
+		A0FED5D82BAEFAFE003F1769 /* DrawingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0FED5D72BAEFAFE003F1769 /* DrawingUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,9 +123,11 @@
 		A0EA85602BADDB9500800522 /* XCUIApplication+Tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Tap.swift"; sourceTree = "<group>"; };
 		A0EA85622BADDBFA00800522 /* XCTestCase+Wait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Wait.swift"; sourceTree = "<group>"; };
 		A0EA85642BADDC5B00800522 /* EditorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorElement.swift; sourceTree = "<group>"; };
-		A0EA85662BADF6F200800522 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A0EA85662BADF6F200800522 /* ConfigSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigSettings.swift; sourceTree = "<group>"; };
 		A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Rotate.swift"; sourceTree = "<group>"; };
+		A0FED5D32BAEFA55003F1769 /* PlantUMLAppUITests+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlantUMLAppUITests+Deprecated.swift"; sourceTree = "<group>"; };
+		A0FED5D72BAEFAFE003F1769 /* DrawingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingUITests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,7 @@
 		A00729B929DB2A9D00D73D1A /* PlantUMLAppUITests */ = {
 			isa = PBXGroup;
 			children = (
+				A0FED5D32BAEFA55003F1769 /* PlantUMLAppUITests+Deprecated.swift */,
 				A0EA855E2BADDB3800800522 /* XCUIElement+Gesture.swift */,
 				A0C5C2E32A0FD12C0038C889 /* XCUIElement+TextField.swift */,
 				A0C5C2E22A0FD12C0038C889 /* XCTestCase+LineEditor.swift */,
@@ -171,6 +176,7 @@
 				A0EA85622BADDBFA00800522 /* XCTestCase+Wait.swift */,
 				A0EA85642BADDC5B00800522 /* EditorElement.swift */,
 				A00729BA29DB2A9D00D73D1A /* PlantUMLAppUITests.swift */,
+				A0FED5D72BAEFAFE003F1769 /* DrawingUITests.swift */,
 				A04FE0482AA26B8000210EFC /* PlantUML.xctestplan */,
 				A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */,
 			);
@@ -248,7 +254,7 @@
 				A07493852BAB74590025B3C9 /* Deprecated */,
 				A07493832BAB04A00025B3C9 /* Representable */,
 				A07493822BAB04280025B3C9 /* Observable */,
-				A0EA85662BADF6F200800522 /* Constants.swift */,
+				A0EA85662BADF6F200800522 /* ConfigSettings.swift */,
 				A0C0C3272B5D95DD00CE66A2 /* Errors.swift */,
 				A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */,
 				A0A139342A13C49A00B69FBC /* View+Secure.swift */,
@@ -447,9 +453,11 @@
 				A0C0C33F2B5D9D1900CE66A2 /* XCTestCase+LineEditor.swift in Sources */,
 				A0C0C3402B5D9D1900CE66A2 /* XCUIElement+TextField.swift in Sources */,
 				A0C5C2E02A0FD05A0038C889 /* PlantUMLAppUITests.swift in Sources */,
+				A0FED5D42BAEFA55003F1769 /* PlantUMLAppUITests+Deprecated.swift in Sources */,
 				A0C0C34C2B5DA7A200CE66A2 /* ActivityView.swift in Sources */,
 				A0C5C2E12A0FD05A0038C889 /* PlantUMLAppUITestsLaunchTests.swift in Sources */,
 				A0EA85652BADDC5B00800522 /* EditorElement.swift in Sources */,
+				A0FED5D82BAEFAFE003F1769 /* DrawingUITests.swift in Sources */,
 				A0EA855F2BADDB3800800522 /* XCUIElement+Gesture.swift in Sources */,
 				A0EA85612BADDB9500800522 /* XCUIApplication+Tap.swift in Sources */,
 				A0EA85632BADDBFA00800522 /* XCTestCase+Wait.swift in Sources */,
@@ -471,7 +479,7 @@
 				A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
 				A0A80A762B3ED90A00CB08CA /* SwiftUI+PencilKit.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
-				A0EA85672BADF6F200800522 /* Constants.swift in Sources */,
+				A0EA85672BADF6F200800522 /* ConfigSettings.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLDocumentView.swift in Sources */,
 				A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */,
 				A0C0C34A2B5DA7A200CE66A2 /* ActivityView.swift in Sources */,
@@ -702,6 +710,8 @@
 				INFOPLIST_FILE = PlantUML/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PlantUMLApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to the photo library to let you pick diagram picture for your gallery.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to let you pick diagram picture for your gallery.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -740,6 +750,8 @@
 				INFOPLIST_FILE = PlantUML/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PlantUMLApp;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app requires access to the photo library to let you pick diagram picture for your gallery.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app requires access to the photo library to let you pick diagram picture for your gallery.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

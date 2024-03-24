@@ -45,7 +45,7 @@ struct OpenAIView<DrawingView :View> : View {
                 }) {
                     Label( "Drawing", systemImage: "pencil.circle")
                 }
-                .accessibilityIdentifier("openai_prompt")
+                .accessibilityIdentifier("openai_drawing")
                 .disabled( !service.isSettingsValid )
                 
                 Button( action: { tabs = .Prompt } ) {
