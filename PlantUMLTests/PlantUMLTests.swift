@@ -62,4 +62,14 @@ class PlantUMLTests: XCTestCase {
         print( url )
 
     }
+    
+    func testGetErrorMessage() {
+
+        let result = Errors.readingPromptError("vision prompt not found!")
+        
+        XCTAssertEqual( "vision prompt not found!", result.localizedDescription )
+
+    }
+
+    
 }

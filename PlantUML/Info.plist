@@ -2,10 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>OPENAI_API_KEY</key>
+	<key>OPENAI_API_KEY</key>
 	<string>$(API_KEY)</string>
-    <key>OPENAI_ORG_ID</key>
-    <string>$(ORG_ID)</string>
+	<key>OPENAI_ORG_ID</key>
+	<string>$(ORG_ID)</string>
+	<key>DEMO_MODE</key>
+	<string>$(DEMO_MODE)</string>
+	<key>SAVE_DRAWING_DATA</key>
+	<string>$(SAVE_DRAWING_DATA)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library to let you pick diagram picture for your gallery.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app requires access to the photo library to let you pick diagram picture for your gallery.</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>

@@ -12,24 +12,37 @@ var isRunningTests: Bool {
     ProcessInfo.processInfo.environment["NO_TEST_RUNNING"] == nil
 }
 
+
+func getFileName( _ file: FileDocumentConfiguration<PlantUMLDocument>, default def: String ) -> String {
+    file.fileURL?.deletingPathExtension().lastPathComponent ?? def
+}
+
 @main
 struct PlantUMLApp: App {
    
     init() {
         URLCache.shared.memoryCapacity = 10_000_000 // ~10 MB memory space
         URLCache.shared.diskCapacity = 100_000_000 // ~1GB disk cache space
+        
+        // Config Settings
+        print( "DEMO_MODE: \(DEMO_MODE)" )
+        print( "SAVE_DRAWING_IMAGE: \(SAVE_DRAWING_IMAGE)" )
+        let documentDir = try? FileManager.default.url(for: .documentDirectory,
+                                                  in: .userDomainMask,
+                                                  appropriateFor: nil,
+                                                  create: false)
+        print( "DOCUMENT DIRECTORY\n\(documentDir?.absoluteString ?? "undefined")")
     }
     
     var body: some Scene {
-        DocumentGroup(newDocument: PlantUMLDocument()) { file in
-            if #available(iOS 16, *) {
-                PlantUMLContentView( document: PlantUMLDocumentProxy( document: file.$document) )
-                    // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
-                    .toolbarRole(.navigationStack)
-            }
-            else {
-                PlantUMLContentView( document: PlantUMLDocumentProxy( document: file.$document))
-            }
+        DocumentGroup(newDocument: PlantUMLDocument()) { file in                
+            
+            PlantUMLDocumentView( document: PlantUMLObservableDocument( document: file.$document,
+                                                                        fileName: getFileName(file, default: "Untitled" )))
+            // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
+            .toolbarRole(.navigationStack)
+            .navigationBarTitleDisplayMode(.inline)
         }
+        
     }
 }

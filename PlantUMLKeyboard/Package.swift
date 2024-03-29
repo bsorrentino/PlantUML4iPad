@@ -18,7 +18,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         // .package(url: "https://github.com/siteline/SwiftUI-Introspect.git", branch: "master" ),
         .package(path: "../PlantUMLFramework" ),
-        .package(url: "https://github.com/marcodotio/OpenAIKit.git", from: "1.2.0"),
+//        .package(url: "https://github.com/marcodotio/OpenAIKit.git", from: "1.2.0"),
 //        .package(url: "https://github.com/bsorrentino/SwiftUI-LineEditor.git", branch: "develop"),
     ],
     targets: [
@@ -28,7 +28,7 @@ let package = Package(
             name: "PlantUMLKeyboard",
             dependencies: [
 //                .product(name: "LineEditor", package: "SwiftUI-LineEditor"),
-                .product(name: "OpenAIKit", package: "OpenAIKit"),
+//                .product(name: "OpenAIKit", package: "OpenAIKit"),
                 "PlantUMLFramework",
             ],
             resources: [.copy("plantuml_keyboard_data.json")]

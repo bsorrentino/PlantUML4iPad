@@ -45,8 +45,6 @@ struct CopyToClipboardButton : View {
     }
 }
 
-struct View_Clipboard_Previews: PreviewProvider {
-    static var previews: some View {
-        CopyToClipboardButton(value: "")
-    }
+#Preview {
+    CopyToClipboardButton(value: "")
 }

@@ -4,7 +4,7 @@
 
 > Native PlantUML Editor thought for iPad providing a improved user experience to use this popular "diagram-as-code" tool 
 
-This is a native PlantUML editor app for iPad. It allows using iPad to draw diagrams in effective way with a customised editor. **From release 1.4.0, an AI for diagram authoring (through OpenAI) is available**.
+This is a native PlantUML editor app for iPad. It allows using iPad to draw diagrams in effective way. It includes use of AI to helping drawing process. take note that to enable AI features you **MUST HAVE** a valid "OpenAI API key" i.e. OpenAI Paid Account
 
 _Promotional Text_ 🤞
 
@@ -14,24 +14,33 @@ _Promotional Text_ 🤞
 
 1. Create,Update,Delete plantUML Documents
 2. Share Documents with iCLoud
-3. Text Editor
+3. OpenAI integration
+    > **You MUST HAVE a valid [OpenAI] API KEY (i.e. Paid Account)** to use this feature. Such secrets will be stored in device's keychain
+    * Drawing
+        * Draw Diagram using either Pencil or Fingers.
+        * Processing hand drawn diagram through [OpenAI Vision API] (_gpt-4-vision-preview_) to automatically genearte plantUML script.
+        * PlantUML script will include alse a legend with detailed description of drawing.
+    * Prompt     
+        * Prompt your diagram request in natural language
+        * Undo Prompt
+        * Prompt's History 
+        * choose AI Model (_gpt-3.5-turbo or gpt-4_)
+4. Text Editor
     * Auto save over modification
     * Provide **syntax highlighting** and auto completion **diagram snippets** through [ace] editor
-4. Diagram Preview 
-    > Preview relies on [PlantUML online server](https://plantuml.com/server) so it requires internet connection
+5. Diagram Preview 
+    > Preview relies on [PlantUML online server] so it requires internet connection
     * Built in cache management
     * Scale to fit
     * Share Image (AirDrop, iCloud, Other App, ...)
-5. OpenAI integration
-    > You must have a valid [OpenAI] api key to use this feature. Such secrets will be stored in device's keychain
-    * Prompt your diagram request in natural language
-    * Undo Prompt
-    * Prompt's History 
-    * choose AI Model (gpt-3.5-turbo | gpt-4)
 
 **Take a Note:**
 
-> From release 2.0 the PlantUML Custom Keyboard has been disabled because not compatible with the new editor based on [ace]
+* **Release 3.0**
+    > From release `3.0` it is possible also hand drawn diagram using either Pencil or Fingers.
+
+* **Release 2.0**
+    > From release `2.0` the PlantUML Custom Keyboard has been disabled because not compatible with the new editor based on [ace]
 
 ## App Store
 
@@ -71,3 +80,5 @@ Below all references that helped to develop such App
 
 [openai]: https://openai.com
 [ace]: https://ace.c9.io
+[OpenAI Vision API]: https://platform.openai.com/docs/guides/vision
+[PlantUML online server]: https://plantuml.com/server

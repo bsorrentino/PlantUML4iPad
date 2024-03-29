@@ -1,14 +1,25 @@
 {
-  "pins" : [
-    {
-      "identity" : "plantuml4ipad",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bsorrentino/PlantUML4iPad.git",
-      "state" : {
-        "branch" : "line_editor",
-        "revision" : "223b6f403621940322b3bbc475d67f49e4cf56b1"
+  "object": {
+    "pins": [
+      {
+        "package": "LangGraph",
+        "repositoryURL": "https://github.com/bsorrentino/LangGraph-Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "d52ea15791dca5c9f093ef3a735070fd5e3ab833",
+          "version": "1.2.1"
+        }
+      },
+      {
+        "package": "OpenAI",
+        "repositoryURL": "https://github.com/bsorrentino/Swift-OpenAI.git",
+        "state": {
+          "branch": "develop",
+          "revision": "b616cb913c84d264fc33f1509ff3c7fe37e29e60",
+          "version": null
+        }
       }
-    }
-  ],
-  "version" : 2
+    ]
+  },
+  "version": 1
 }
