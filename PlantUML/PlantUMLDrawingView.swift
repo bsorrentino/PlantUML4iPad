@@ -26,6 +26,7 @@ struct PlantUMLDrawingView: View {
     @Binding var canvas:PKCanvasView
     @ObservedObject var service:OpenAIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
+    @State var isDrawingGestureRecognizerEnabled = true
     @State var isUseDrawingTool = false
     @State var processing = false
     @State var processingLabel: String = "👀 Processing ..."
@@ -43,6 +44,16 @@ struct PlantUMLDrawingView: View {
                 .navigationBarItems(trailing:
                     HStack(spacing: 10) {
                         
+                        Button(action: {
+                            
+                            isDrawingGestureRecognizerEnabled.toggle()
+                            self.canvas.drawingGestureRecognizer.isEnabled = isDrawingGestureRecognizerEnabled
+                        }) {
+                            Label( "tools", systemImage:  isDrawingGestureRecognizerEnabled ? "lock.open.fill" : "lock.fill" )
+                                .foregroundColor(Color.orange)
+                                .labelStyle(.iconOnly)
+                        }
+                        .accessibilityIdentifier("drawing_lock")
                         Button(action: {
                             isUseDrawingTool.toggle()
                         }) {
