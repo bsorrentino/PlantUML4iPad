@@ -12,7 +12,7 @@ import AIAgent
 #Preview( "PlantUMLDrawingView") {
     NavigationStack {
         PlantUMLDrawingView( 
-            canvas: .constant(PKCanvasView()),
+            canvas: .constant(PKCanvasView(frame: CGRect(x: 0, y: 0, width: 2000, height: 2000))),
             service: OpenAIObservableService(),
             document: PlantUMLObservableDocument(document:.constant(PlantUMLDocument()), fileName:"Untitled")
         )
@@ -26,7 +26,7 @@ struct PlantUMLDrawingView: View {
     @Binding var canvas:PKCanvasView
     @ObservedObject var service:OpenAIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
-    @State var isDrawingGestureRecognizerEnabled = true
+    @State var isScrollEnabled = true
     @State var isUseDrawingTool = false
     @State var processing = false
     @State var processingLabel: String = "👀 Processing ..."
@@ -36,7 +36,10 @@ struct PlantUMLDrawingView: View {
         
         ActivityView(isShowing: processing, label: processingLabel )  {
            
-            DrawingView(canvas: $canvas, isUsePickerTool: $isUseDrawingTool, data: document.drawing )
+            DrawingView(canvas: $canvas, 
+                         isUsePickerTool: isUseDrawingTool,
+                         isScrollEnabled: isScrollEnabled,
+                         data: document.drawing )
                 .font(.system(size: 35))
                 .navigationBarTitleDisplayMode(.inline)
                 .foregroundColor(Color.purple)
@@ -46,10 +49,10 @@ struct PlantUMLDrawingView: View {
                         
                         Button(action: {
                             
-                            isDrawingGestureRecognizerEnabled.toggle()
-                            self.canvas.drawingGestureRecognizer.isEnabled = isDrawingGestureRecognizerEnabled
+                            isScrollEnabled.toggle()
+//                            self.canvas.drawingGestureRecognizer.isEnabled = isScrollEnabled
                         }) {
-                            Label( "tools", systemImage:  isDrawingGestureRecognizerEnabled ? "lock.open.fill" : "lock.fill" )
+                            Label( "tools", systemImage:  isScrollEnabled ? "lock.open.fill" : "lock.fill" )
                                 .foregroundColor(Color.orange)
                                 .labelStyle(.iconOnly)
                         }
