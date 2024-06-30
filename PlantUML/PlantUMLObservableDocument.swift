@@ -38,6 +38,7 @@ class PlantUMLObservableDocument : ObservableObject {
     var drawing: Data? 
 //    {
 //        didSet {
+//            print( "update drawing!" )
 //            if DEMO_MODE {
 //                saveDrawingForDemo()
 //            }

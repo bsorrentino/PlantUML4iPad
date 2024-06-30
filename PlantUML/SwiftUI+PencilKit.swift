@@ -31,11 +31,9 @@ class DrawingUIViewController : UIViewController, UIScrollViewDelegate, PKCanvas
     var canvas: PKCanvasView
     let scrollView = UIScrollView()
     var picker = PKToolPicker()
-    var data: Data?
     
-    init(_ canvas: PKCanvasView, drawingData data: Data?) {
+    init(_ canvas: PKCanvasView) {
         self.canvas = canvas
-        self.data = data
         super.init(nibName: nil, bundle: nil );
     }
     
@@ -69,29 +67,6 @@ class DrawingUIViewController : UIViewController, UIScrollViewDelegate, PKCanvas
         scrollView.contentSize = canvas.frame.size
     }
     
-    private func setupDrawing() {
-        
-        guard let data else {
-            return
-        }
-        
-        do {
-            
-            let drawing = try PKDrawing(data: data)
-            
-            if DEMO_MODE {
-                slowDrawingForDemo( canvas, drawing: drawing, timeInterval: 0.2)
-            }
-            else {
-                canvas.drawing = drawing
-            }
-            
-        }
-        catch {
-            fatalError( "failed to load drawing")
-        }
-    }
-    
     // UIScrollViewDelegate method to enable zooming
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return canvas
@@ -107,7 +82,6 @@ class DrawingUIViewController : UIViewController, UIScrollViewDelegate, PKCanvas
         //             toolPicker.setVisible(true, forFirstResponder: canvas)
         //             toolPicker.addObserver(canvas)
         canvas.becomeFirstResponder()
-        setupDrawing()
     }
     
     func update( isUsePickerTool: Bool ) {
@@ -137,10 +111,9 @@ struct DrawingView: UIViewControllerRepresentable {
     @Binding var canvas: PKCanvasView
     var isUsePickerTool: Bool
     var isScrollEnabled: Bool
-    var data: Data?
     
     func makeUIViewController(context: Context) -> DrawingUIViewController {
-        return DrawingUIViewController( canvas, drawingData: data )
+        return DrawingUIViewController( canvas )
         
     }
     
@@ -154,83 +127,6 @@ struct DrawingView: UIViewControllerRepresentable {
     
     
 }
-
-struct DrawingViewDeprecated: UIViewRepresentable {
-    // to capture drawings for saving into albums
-    @Binding var canvas: PKCanvasView
-    @Binding var isUsePickerTool: Bool
-    var data: Data?
-    
-    @State var picker = PKToolPicker()
-    
-    //    let eraser = PKEraserTool(.bitmap)
-    
-    func makeUIView(context: Context) -> PKCanvasView {
-        if let data {
-            do {
-                
-                let drawing = try PKDrawing(data: data)
-                
-                if DEMO_MODE {
-                    slowDrawingForDemo( canvas, drawing: drawing, timeInterval: 0.2)
-                }
-                else {
-                    canvas.drawing = drawing
-                }
-                
-            }
-            catch {
-                fatalError( "failed to load drawing")
-            }
-        }
-        
-        canvas.isOpaque = false
-        canvas.drawingPolicy = .anyInput
-        canvas.tool = PKInkingTool(.pen, color: UIColor(.black))
-        canvas.becomeFirstResponder()
-        
-        return canvas
-    }
-    
-    func updateUIView(_ uiView: PKCanvasView, context: Context) {
-        // updating the tool whenever the view updates
-        if( isUsePickerTool ) {
-            picker.addObserver(canvas)
-            picker.setVisible(true, forFirstResponder: uiView)
-        }
-        else {
-            picker.setVisible(false, forFirstResponder: uiView)
-            picker.removeObserver(canvas)
-        }
-        
-        
-        
-    }
-}
-
-// MARK: DEMO
-
-fileprivate func slowDrawingForDemo( _ canvas: PKCanvasView, drawing: PKDrawing, timeInterval: TimeInterval  )  {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-        
-        canvas.drawing = PKDrawing()
-        
-        let strokes = drawing.strokes
-        var current:Int = 0
-        
-        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
-            
-            guard current < strokes.count else {
-                timer.invalidate()
-                return
-            }
-            let newDrawing = PKDrawing(strokes: [strokes[current]] )
-            canvas.drawing.append(newDrawing  )
-            current += 1
-        }
-    }
-}
-
 
 #Preview {
     
