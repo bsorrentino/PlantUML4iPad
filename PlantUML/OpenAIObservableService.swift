@@ -17,7 +17,7 @@ class OpenAIObservableService : ObservableObject {
     enum Status : Equatable {
         case Ready
         case Error( String )
-        case Editing
+        case Processing
     }
 
 //    let models = ["text-davinci-edit-001", "code-davinci-edit-001"]
@@ -103,7 +103,7 @@ class OpenAIObservableService : ObservableObject {
             return nil
         }
         
-        self.status = .Editing
+        self.status = .Processing
         
         do {
             
@@ -147,7 +147,7 @@ extension OpenAIObservableService {
             return nil
         }
 
-        status = .Editing
+        status = .Processing
         
         do {
             
