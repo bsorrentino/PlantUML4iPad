@@ -29,7 +29,7 @@ struct OpenAIView<DrawingView :View> : View {
     var drawingView: () -> DrawingView
     
     var isEditing:Bool {
-        if case .Editing = service.status {
+        if case .Processing = service.status {
             return true
         }
         return false
@@ -110,6 +110,7 @@ struct OpenAIView<DrawingView :View> : View {
 // MARK: Prompt Extension
 extension OpenAIView {
     
+    
     var Prompt_Fragment: some View {
         
         ZStack(alignment: .topTrailing ) {
@@ -131,6 +132,11 @@ extension OpenAIView {
                     .padding( .bottom, 35)
                     .accessibilityIdentifier("openai_instruction")
                     .focused($promptInFocus)
+                    .onChange(of: instruction) { _ in
+                        if service.status != .Ready {
+                            service.status = .Ready
+                        }
+                    }
             }
             .border(.gray, width: 1)
             
@@ -279,7 +285,7 @@ extension OpenAIView {
                     
                 },
                 label: {
-                    Label( "Submit", systemImage: "arrow.right")
+                    Label( "Save", systemImage: "arrow.right")
                 })
                 .disabled( service.inputApiKey.isEmpty || service.inputOrgId.isEmpty )
                 
