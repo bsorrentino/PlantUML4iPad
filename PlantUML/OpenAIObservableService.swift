@@ -28,6 +28,7 @@ class OpenAIObservableService : ObservableObject {
 //    @Published public var inputModel:String
 
     @AppStorage("openaiModel") private var openAIModel:String = "gpt-3.5-turbo"
+    @AppStorage("visionModel") private var visionModel:String = "gpt-4o"
     @AppSecureStorage("openaikey") private var openAIKey:String?
     @AppSecureStorage("openaiorg") private var openAIOrg:String?
 
@@ -140,7 +141,7 @@ class OpenAIObservableService : ObservableObject {
 extension OpenAIObservableService {
     
     @MainActor
-    func processImageWithAgents<T:AgentExecutorDelegate>( imageUrl: String, delegate:T ) async -> String? {
+    func processImageWithAgents<T:AgentExecutorDelegate>( imageData: Data, delegate:T ) async -> String? {
         
         guard let openAI, case .Ready = status else {
             delegate.progress("WARNING: OpenAI API not initialized")
@@ -152,8 +153,8 @@ extension OpenAIObservableService {
         do {
             
             async let runTranslation = DEMO_MODE ?
-                try runTranslateDrawingToPlantUMLDemo( openAI: openAI, imageUrl: imageUrl, delegate:delegate) :
-                try runTranslateDrawingToPlantUML( openAI: openAI, imageUrl: imageUrl, delegate:delegate);
+                try runTranslateDrawingToPlantUMLDemo( openAI: openAI, imageValue: DiagramImageValue.data(imageData), delegate:delegate) :
+            try runTranslateDrawingToPlantUML( openAI: openAI, imageValue: DiagramImageValue.data(imageData), delegate:delegate);
 
             
             if let content = try await runTranslation {

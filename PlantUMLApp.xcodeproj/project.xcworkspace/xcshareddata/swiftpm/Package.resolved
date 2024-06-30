@@ -12,10 +12,10 @@
       },
       {
         "package": "OpenAI",
-        "repositoryURL": "https://github.com/bsorrentino/Swift-OpenAI.git",
+        "repositoryURL": "https://github.com/MacPaw/OpenAI.git",
         "state": {
-          "branch": "develop",
-          "revision": "b616cb913c84d264fc33f1509ff3c7fe37e29e60",
+          "branch": "main",
+          "revision": "fd13a41e987004d14f1793c570721953a2767b03",
           "version": null
         }
       }

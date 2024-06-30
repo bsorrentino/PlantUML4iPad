@@ -129,12 +129,11 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
         let image = image().withBackground(color: backgroundColor)
 
         if let imageData = image.pngData() {
-
+            
             if SAVE_DRAWING_IMAGE {
                 saveData(imageData, toFile: "image.png", inDirectory: .picturesDirectory)
             }
             
-            let base64Image = imageData.base64EncodedString()
             
             processing.toggle()
             isUseDrawingTool = false
@@ -146,16 +145,24 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
                         document.drawing = canvas.drawing.dataRepresentation()
                         dismiss()
                     }
-
-                    if let content = await service.processImageWithAgents( imageUrl: "data:image/png;base64,\(base64Image)", delegate: self ) {
-
-                            document.text = content
+                    
+                    if let content = await service.processImageWithAgents( imageData: imageData, delegate: self ) {
+                        
+                        document.text = content
                         
                     }
+                    
+//                    let base64Image = imageData.base64EncodedString()
+//                    
+//                    if let content = await service.processImageWithAgents( imageUrl: "data:image/png;base64,\(base64Image)", delegate: self ) {
+//                        
+//                        document.text = content
+//                        
+//                    }
+                    
                 }
-
+                
             }
-            
         }
         
     }

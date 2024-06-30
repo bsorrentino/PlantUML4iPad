@@ -18,15 +18,17 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/bsorrentino/LangGraph-Swift.git", exact: "1.2.2"),
 //        .package(path: "/Users/bsorrentino/WORKSPACES/GITHUB.me/AppleOS/LangGraph-Swift"),
-        .package(url: "https://github.com/bsorrentino/Swift-OpenAI.git", branch: "develop"), // Add the dependency here
-        ],
+//        .package(url: "https://github.com/bsorrentino/Swift-OpenAI.git", branch: "develop"), // Add the dependency here
+        .package(url: "https://github.com/MacPaw/OpenAI.git", branch: "main")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "AIAgent", 
             dependencies: [
-                .product(name: "OpenAI", package: "Swift-OpenAI"),
+//                .product(name: "OpenAI", package: "Swift-OpenAI"),
+                .product(name: "OpenAI", package: "OpenAI"),
                 .product(name: "LangGraph", package: "LangGraph-Swift")
             ], resources: [ .process("Resources")]),
         .testTarget(
