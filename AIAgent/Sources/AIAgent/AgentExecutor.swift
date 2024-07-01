@@ -340,11 +340,10 @@ public func updatePlantUML( openAI: OpenAI,
                             input: String,
                             withInstruction instruction: String ) async throws -> String? {
     
+    let system_prompt = try loadPromptFromBundle(fileName: "update_diagram_prompt")
+    
     let query = ChatQuery(messages: [
-        .system(.init(content: """
-                You are my plantUML assistant.
-                You must answer exclusively with diagram syntax no markdown allowed.
-                """)),
+        .system(.init(content: system_prompt)),
         .assistant(.init( content: input)),
         .user(.init(content: .string(instruction)))
     ], model: model, temperature: 0.0, topP: 1.0)
