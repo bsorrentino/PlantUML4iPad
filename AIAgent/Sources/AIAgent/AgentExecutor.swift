@@ -343,7 +343,7 @@ public func updatePlantUML( openAI: OpenAI,
     let query = ChatQuery(messages: [
         .system(.init(content: """
                 You are my plantUML assistant.
-                You must answer exclusively with diagram syntax.
+                You must answer exclusively with diagram syntax no markdown allowed.
                 """)),
         .assistant(.init( content: input)),
         .user(.init(content: .string(instruction)))
