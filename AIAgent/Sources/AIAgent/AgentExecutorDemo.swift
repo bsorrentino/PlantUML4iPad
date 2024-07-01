@@ -30,7 +30,7 @@ struct AgentExecutorDemoState : AgentState {
 }
 
 public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( openAI: OpenAI,
-                                                                        imageUrl: String,
+                                                                        imageValue: DiagramImageValue,
                                                                         delegate:T ) async throws -> String? {
     
     let workflow = GraphState { AgentExecutorState() }

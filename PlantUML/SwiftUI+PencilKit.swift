@@ -26,91 +26,113 @@ extension UIImage {
 }
 
 
-struct DrawingView: UIViewRepresentable {
-    // to capture drawings for saving into albums
-    @Binding var canvas: PKCanvasView
-    @Binding var isUsePickerTool: Bool
-    var data: Data?
+class DrawingUIViewController : UIViewController, UIScrollViewDelegate, PKCanvasViewDelegate {
     
-    @State var picker = PKToolPicker()
+    var canvas: PKCanvasView
+    let scrollView = UIScrollView()
+    var picker = PKToolPicker()
     
-//    let eraser = PKEraserTool(.bitmap)
+    init(_ canvas: PKCanvasView) {
+        self.canvas = canvas
+        super.init(nibName: nil, bundle: nil );
+    }
     
-    func makeUIView(context: Context) -> PKCanvasView {
-        if let data {
-            do {
-                
-                let drawing = try PKDrawing(data: data)
-                
-                if DEMO_MODE {
-                    slowDrawingForDemo(drawing, timeInterval: 0.2)
-                }
-                else {
-                    canvas.drawing = drawing
-                }
-                
-            }
-            catch {
-                fatalError( "failed to load drawing")
-            }
-        }
-
-        canvas.drawingPolicy = .anyInput
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupScrollView()
+        setupCanvasView()
+    }
+    
+    private func setupScrollView() {
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 5.0
+        scrollView.frame = view.bounds
+        scrollView.backgroundColor = .gray
+        view.addSubview(scrollView)
+    }
+    
+    private func setupCanvasView() {
+        picker.showsDrawingPolicyControls = false
+        canvas.isOpaque = false
+        canvas.drawingPolicy = .pencilOnly
         canvas.tool = PKInkingTool(.pen, color: UIColor(.black))
-        
-        canvas.becomeFirstResponder()
-        
+        canvas.delegate = self
+        canvas.backgroundColor = .white
+        scrollView.addSubview(canvas)
+        scrollView.contentSize = canvas.frame.size
+    }
+    
+    // UIScrollViewDelegate method to enable zooming
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return canvas
     }
     
-    func updateUIView(_ uiView: PKCanvasView, context: Context) {
-        // updating the tool whenever the view updates
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        scrollView.frame = view.bounds
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //             toolPicker.setVisible(true, forFirstResponder: canvas)
+        //             toolPicker.addObserver(canvas)
+        canvas.becomeFirstResponder()
+    }
+    
+    func update( isUsePickerTool: Bool ) {
         if( isUsePickerTool ) {
             picker.addObserver(canvas)
-            picker.setVisible(true, forFirstResponder: uiView)
+            picker.setVisible(true, forFirstResponder: canvas)
         }
         else {
-            picker.setVisible(false, forFirstResponder: uiView)
+            picker.setVisible(false, forFirstResponder: canvas)
             picker.removeObserver(canvas)
         }
-        
-
-        
     }
-}
-
-// MARK: DEMO
-extension DrawingView {
     
-    fileprivate func slowDrawingForDemo( _ drawing: PKDrawing, timeInterval: TimeInterval  )  {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            
-            canvas.drawing = PKDrawing()
-            
-            let strokes = drawing.strokes
-            var current:Int = 0
-            
-            Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
-                
-                guard current < strokes.count else {
-                    timer.invalidate()
-                    return
-                }
-                let newDrawing = PKDrawing(strokes: [strokes[current]] )
-                canvas.drawing.append(newDrawing  )
-                current += 1
-            }
+    var isScrollEnabled:Bool {
+        get {
+            scrollView.isScrollEnabled
+        }
+        set {
+            scrollView.isScrollEnabled = newValue
+            canvas.drawingPolicy = (newValue) ? .pencilOnly : .anyInput ;
         }
     }
     
-
 }
-
+struct DrawingView: UIViewControllerRepresentable {
+    
+    @Binding var canvas: PKCanvasView
+    var isUsePickerTool: Bool
+    var isScrollEnabled: Bool
+    
+    func makeUIViewController(context: Context) -> DrawingUIViewController {
+        return DrawingUIViewController( canvas )
+        
+    }
+    
+    func updateUIViewController(_ uiViewController: DrawingUIViewController, context: Context) {
+        // updating the tool whenever the view updates
+        uiViewController.update(isUsePickerTool: isUsePickerTool)
+        uiViewController.isScrollEnabled = isScrollEnabled
+        
+    }
+    
+    
+    
+}
 
 #Preview {
     
-    DrawingView( canvas: .constant(PKCanvasView()),
-                 isUsePickerTool: .constant(true))
-        
-
+    DrawingView( canvas: .constant(PKCanvasView(frame: CGRect(x: 0, y: 0, width: 2000, height: 2000))),
+                 isUsePickerTool: true,
+                 isScrollEnabled: true)
+    
+    
 }

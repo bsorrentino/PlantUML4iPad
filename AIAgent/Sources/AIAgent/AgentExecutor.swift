@@ -65,6 +65,11 @@ struct DiagramDescription : Codable {
     var description: DiagramNLPDescription // NLP description
 }
 
+public enum DiagramImageValue {
+    case data( Data )
+    case url( String )
+}
+
 struct AgentExecutorState : AgentState {
     
     var data: [String : Any]
@@ -77,8 +82,8 @@ struct AgentExecutorState : AgentState {
         data = initState
     }
     
-    var diagramImageUrlOrData:String? {
-        data["diagram_image_url_or_data"] as? String
+    var diagramImageUrlOrData:DiagramImageValue? {
+        data["diagram_image_url_or_data"] as? DiagramImageValue
     }
     
     var diagramCode:String? {
@@ -120,24 +125,42 @@ func describeDiagramImage<T:AgentExecutorDelegate>( state: AgentExecutorState,
                                                     openAI:OpenAI,
                                                     delegate:T ) async throws -> PartialAgentState {
     
-    guard let imageUrl = state.diagramImageUrlOrData else {
+    guard let imageUrlValue = state.diagramImageUrlOrData else {
         throw _EX("diagramImageUrlOrData not initialized!")
     }
     
     await delegate.progress("starting analyze\ndiagram 👀")
 
     let prompt = try loadPromptFromBundle(fileName: "describe_diagram_prompt")
+  
+    let query = switch( imageUrlValue ) {
+        case .url( let url):
+            ChatQuery(messages: [
+                .user(.init(content: .vision([
+                    .chatCompletionContentPartTextParam(.init(text: prompt)),
+                    .chatCompletionContentPartImageParam(.init(imageUrl: .init(url: url, detail: .auto)))
+                ])))
+            ], model: Model.gpt4_vision_preview, maxTokens: 2000)
+        case .data(let data):
+            ChatQuery(messages: [
+                .user(.init(content: .vision([
+                    .chatCompletionContentPartTextParam(.init(text: prompt)),
+                    .chatCompletionContentPartImageParam(.init(imageUrl: .init(url: data, detail: .auto)))
+                ])))
+            ], model: Model.gpt4_o, maxTokens: 2000)
+
+        }
     
-    let query = ChatQuery(
-        model: .gpt4_vision_preview,
-        messages: [
-            Chat(role: .user, content: [
-                ChatContent(text: prompt),
-                ChatContent(imageUrl: imageUrl )
-            ])
-        ],
-        maxTokens: 2000
-    )
+//    let query = ChatQuery(
+//        model: .gpt4_vision_preview,
+//        messages: [
+//            Chat(role: .user, content: [
+//                ChatContent(text: prompt),
+//                ChatContent(imageUrl: imageUrl )
+//            ])
+//        ],
+//        maxTokens: 2000
+//    )
         
     let chatResult = try await openAI.chats(query: query)
     
@@ -179,15 +202,19 @@ func translateSequenceDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( sta
         .replacingOccurrences(of: "{diagram_title}", with: diagram.title)
         .replacingOccurrences(of: "{diagram_description}", with: description)
     
-    let query = ChatQuery(
-        model: .gpt3_5Turbo,
-        messages: [
-            Chat(role: .user, content: [
-                ChatContent(text: prompt),
-            ])
-        ],
-        maxTokens: 2000
-    )
+    let query = ChatQuery(messages: [
+        .user(.init(content: .string(prompt)))
+    ], model: Model.gpt3_5Turbo, maxTokens: 2000)
+    
+//    let query = ChatQuery(
+//        model: .gpt3_5Turbo,
+//        messages: [
+//            Chat(role: .user, content: [
+//                ChatContent(text: prompt),
+//            ])
+//        ],
+//        maxTokens: 2000
+//    )
     
     let chatResult = try await openAI.chats(query: query)
     
@@ -224,15 +251,19 @@ func translateGenericDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( stat
     prompt = prompt
             .replacingOccurrences(of: "{diagram_description}", with: content)
    
-    let query = ChatQuery(
-        model: .gpt3_5Turbo,
-        messages: [
-            Chat(role: .user, content: [
-                ChatContent(text: prompt),
-            ])
-        ],
-        maxTokens: 2000
-    )
+    let query = ChatQuery(messages: [
+        .user(.init(content: .string(prompt)))
+    ], model: Model.gpt3_5Turbo, maxTokens: 2000)
+
+//    let query = ChatQuery(
+//        model: .gpt3_5Turbo,
+//        messages: [
+//            Chat(role: .user, content: [
+//                ChatContent(text: prompt),
+//            ])
+//        ],
+//        maxTokens: 2000
+//    )
     
     let chatResult = try await openAI.chats(query: query)
     
@@ -264,7 +295,7 @@ func routeDiagramTranslation( state: AgentExecutorState ) async throws -> String
 }
 
 public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: OpenAI, 
-                                                                    imageUrl: String,
+                                                                    imageValue: DiagramImageValue,
                                                                     delegate:T ) async throws -> String? {
     
     let workflow = GraphState { AgentExecutorState() }
@@ -295,7 +326,7 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: Open
     let app = try workflow.compile()
     
     let inputs:[String : Any] = [
-         "diagram_image_url_or_data": imageUrl
+         "diagram_image_url_or_data": imageValue
      ]
     
     let response = try await app.invoke( inputs: inputs)
@@ -308,20 +339,30 @@ public func updatePlantUML( openAI: OpenAI,
                             withModel model: Model,
                             input: String,
                             withInstruction instruction: String ) async throws -> String? {
-    let query = ChatQuery(
-        model: model,
-        messages: [
-            .init(role: .system, content:
-                            """
-                            You are my plantUML assistant.
-                            You must answer exclusively with diagram syntax.
-                            """),
-            .init( role: .assistant, content: input ),
-            .init( role: .user, content: instruction )
-        ],
-        temperature: 0.0,
-        topP: 1.0
-    )
+    
+    let query = ChatQuery(messages: [
+        .system(.init(content: """
+                You are my plantUML assistant.
+                You must answer exclusively with diagram syntax.
+                """)),
+        .assistant(.init( content: input)),
+        .user(.init(content: .string(instruction)))
+    ], model: model, temperature: 0.0, topP: 1.0)
+
+//    let query = ChatQuery(
+//        model: model,
+//        messages: [
+//            .init(role: .system, content:
+//                            """
+//                            You are my plantUML assistant.
+//                            You must answer exclusively with diagram syntax.
+//                            """),
+//            .init( role: .assistant, content: input ),
+//            .init( role: .user, content: instruction )
+//        ],
+//        temperature: 0.0,
+//        topP: 1.0
+//    )
 
     let chat = try await openAI.chats(query: query)
 

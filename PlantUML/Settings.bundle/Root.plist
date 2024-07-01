@@ -10,36 +10,6 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>
-		<!--
-		<dict>
-			<key>Type</key>
-			<string>PSTitleValueSpecifier</string>
-			<key>Title</key>
-			<string>Font Size</string>
-			<key>Key</key>
-			<string>fontSize</string>
-			<key>DefaultValue</key>
-			<string>20</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSSliderSpecifier</string>
-			<key>Key</key>
-			<string>fontSize</string>
-			<key>DefaultValue</key>
-			<integer>20</integer>
-			<key>Title</key>
-			<string></string>
-			<key>MaximumValue</key>
-			<integer>30</integer>
-			<key>MaximumValueImage</key>
-			<string>textformat_size_larger.png</string>
-			<key>MinimumValue</key>
-			<integer>10</integer>
-			<key>MinimumValueImage</key>
-			<string>textformat_size_smaller.png</string>
-		</dict>
-		-->
 		<dict>
 			<key>DefaultValue</key>
 			<string>chrome</string>
@@ -236,11 +206,11 @@
 			<key>Key</key>
 			<string>openaiModel</string>
 			<key>Title</key>
-			<string>Model</string>
+			<string>Prompt Model</string>
 			<key>Titles</key>
 			<array>
 				<string>gpt-3.5-turbo</string>
-				<string>gpt-4</string>
+				<string>gpt-4o</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
@@ -248,6 +218,24 @@
 			<array>
 				<string>gpt-3.5-turbo</string>
 				<string>gpt-4</string>
+			</array>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>gpt-4o</string>
+			<key>Key</key>
+			<string>visionModel</string>
+			<key>Title</key>
+			<string>Vision Model</string>
+			<key>Titles</key>
+			<array>
+				<string>gpt-4o</string>
+			</array>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Values</key>
+			<array>
+				<string>gpt-4o</string>
 			</array>
 		</dict>
 	</array>
