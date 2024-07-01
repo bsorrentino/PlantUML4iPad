@@ -5,30 +5,22 @@ public enum BrowserPresentationFormat {
     /// image only (as .png)
     case imagePng
     /// editable script and corresponding diagram
-    case `default`
+    case ASCIIArt
 }
 
-/// compress  diagram into an URL and launch in browser (PlantText server).
-public struct PlantUMLBrowserPresenter   {
-    /// format in which to present the script in the browser (default: editable script and corresponding diagram)
-    public private(set) var format: BrowserPresentationFormat
+let planttext_baseurl = "https://www.planttext.com/api/plantuml"
+let plantuml_baseurl = "https://www.plantuml.com/plantuml"
 
-    /// default initializer
-    /// - Parameter format: in which to present the script in the browser
-    public init(format: BrowserPresentationFormat = .default) {
-        self.format = format
+public func plantUMLUrl( of script: PlantUMLScript, format: BrowserPresentationFormat ) -> URL {
+    
+    let encodedText = script.encodeText()
+    let url: URL!
+    switch format {
+    case .imagePng:
+        url = URL(string: "\(plantuml_baseurl)/png/\(encodedText)")
+    case .ASCIIArt:
+        url = URL(string: "\(plantuml_baseurl)/txt/\(encodedText)")!
     }
+    return url
 
-    public func url( of script: PlantUMLScript ) -> URL {
-        let encodedText = script.encodeText()
-        let url: URL!
-        switch format {
-        case .imagePng:
-            url = URL(string: "https://www.planttext.com/api/plantuml/png/\(encodedText)")
-        default:
-            url = URL(string: "https://www.planttext.com/?text=\(encodedText)")!
-        }
-        return url
-
-    }
 }
