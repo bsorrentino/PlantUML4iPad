@@ -48,8 +48,6 @@ class PlantUMLObservableDocument : ObservableObject {
 
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
     
-    let presenter = PlantUMLBrowserPresenter( format: .imagePng )
-
     private var textCancellable:AnyCancellable?
     
     init( document: Binding<PlantUMLDocument>, fileName:String ) {
@@ -74,7 +72,7 @@ class PlantUMLObservableDocument : ObservableObject {
                         }
         let script = PlantUMLScript( items: items )
                
-        return presenter.url( of: script )
+        return plantUMLUrl( of: script, format: .imagePng )
     }
     
     func reset() {
