@@ -18,7 +18,7 @@ _Promotional Text_ 🤞
     > **You MUST HAVE a valid [OpenAI] API KEY (i.e. Paid Account)** to use this feature. Such secrets will be stored in device's keychain
     * Drawing
         * Draw Diagram using either Pencil or Fingers.
-        * Processing hand drawn diagram through [OpenAI Vision API] (_gpt-4-vision-preview_) to automatically genearte plantUML script.
+        * Processing hand drawn diagram through [OpenAI Vision API] (_gpt-4o_) to automatically genearte plantUML script.
         * PlantUML script will include alse a legend with detailed description of drawing.
     * Prompt     
         * Prompt your diagram request in natural language
@@ -35,6 +35,9 @@ _Promotional Text_ 🤞
     * Share Image (AirDrop, iCloud, Other App, ...)
 
 **Take a Note:**
+
+* **Release 3.1**
+    > From release `3.1` the deprecated model `gpt-4-vision-preview` has been replaced by `gpt-4o`.
 
 * **Release 3.0**
     > From release `3.0` it is possible also hand drawn diagram using either Pencil or Fingers.

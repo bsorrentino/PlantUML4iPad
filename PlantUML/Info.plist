@@ -8,8 +8,8 @@
 	<string>$(ORG_ID)</string>
 	<key>DEMO_MODE</key>
 	<string>$(DEMO_MODE)</string>
-	<key>SAVE_DRAWING_DATA</key>
-	<string>$(SAVE_DRAWING_DATA)</string>
+	<key>SAVE_DRAWING_IMAGE</key>
+	<string>$(SAVE_DRAWING_IMAGE)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to the photo library to let you pick diagram picture for your gallery.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

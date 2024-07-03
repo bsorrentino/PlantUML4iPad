@@ -10,6 +10,7 @@ import Foundation
 import PlantUMLFramework
 import Combine
 import SwiftUI
+import PencilKit
 
 
 class DebounceRequest {
@@ -35,34 +36,31 @@ class PlantUMLObservableDocument : ObservableObject {
     
     @Binding var object: PlantUMLDocument
     @Published var text: String
-    var drawing: Data? 
-//    {
-//        didSet {
-//            print( "update drawing!" )
-//            if DEMO_MODE {
-//                saveDrawingForDemo()
-//            }
-//        }
-//    }
+    @Published var drawing: PKDrawing
+
     var fileName:String
 
     let updateRequest = DebounceRequest( debounceInSeconds: 0.5)
     
-    let presenter = PlantUMLBrowserPresenter( format: .imagePng )
-
     private var textCancellable:AnyCancellable?
     
     init( document: Binding<PlantUMLDocument>, fileName:String ) {
         self._object = document
         self.text = document.wrappedValue.isNew ? "title Untitled" : document.wrappedValue.text
         self.fileName = fileName
-        self.drawing = document.wrappedValue.drawing
-//        if DEMO_MODE {
-//            self.drawing = loadDrawingForDemo(fromDocument: document.wrappedValue )
-//        }
-//        else {
-//            self.drawing = document.wrappedValue.drawing
-//        }
+        
+        do {
+            if let drawingData = document.wrappedValue.drawing  {
+                self.drawing = try PKDrawing( data: drawingData )
+            }
+            else {
+                self.drawing = PKDrawing()
+            }
+        }
+        catch {
+            fatalError( "failed to load drawing")
+        }
+        
     }
     
     func buildURL() -> URL {
@@ -74,18 +72,29 @@ class PlantUMLObservableDocument : ObservableObject {
                         }
         let script = PlantUMLScript( items: items )
                
-        return presenter.url( of: script )
+        return plantUMLUrl( of: script, format: .imagePng )
     }
     
     func reset() {
         self.text = self.object.text
-        self.drawing = self.object.drawing
+        
+        do {
+            if let drawingData = self.object.drawing {
+                self.drawing = try PKDrawing( data: drawingData )
+            }
+            else {
+                self.drawing = PKDrawing()
+            }
+        }
+        catch {
+            fatalError( "failed to load drawing")
+        }
     }
     
     func save() {
         print( "save document")
         self.object.text = self.text
-        self.object.drawing = self.drawing
+        self.object.drawing = self.drawing.dataRepresentation()
     }
 
     
@@ -111,9 +120,6 @@ extension PlantUMLObservableDocument {
 extension PlantUMLObservableDocument {
     
     fileprivate func saveDrawingForDemo() {
-        guard let data = self.drawing else {
-            return
-        }
         
         do {
             let dir = try FileManager.default.url(for: .documentDirectory,
@@ -121,6 +127,7 @@ extension PlantUMLObservableDocument {
                                                   appropriateFor: nil,
                                                   create: true)
             let fileURL = dir.appendingPathComponent("drawing.bin")
+            let data = self.drawing.dataRepresentation()
             try data.write(to: fileURL)
             print( "saved drawing file\n\(fileURL)")
         }

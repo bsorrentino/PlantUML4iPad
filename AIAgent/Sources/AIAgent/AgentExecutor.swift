@@ -140,7 +140,7 @@ func describeDiagramImage<T:AgentExecutorDelegate>( state: AgentExecutorState,
                     .chatCompletionContentPartTextParam(.init(text: prompt)),
                     .chatCompletionContentPartImageParam(.init(imageUrl: .init(url: url, detail: .auto)))
                 ])))
-            ], model: Model.gpt4_vision_preview, maxTokens: 2000)
+            ], model: Model.gpt4_o, maxTokens: 2000)
         case .data(let data):
             ChatQuery(messages: [
                 .user(.init(content: .vision([
@@ -340,11 +340,10 @@ public func updatePlantUML( openAI: OpenAI,
                             input: String,
                             withInstruction instruction: String ) async throws -> String? {
     
+    let system_prompt = try loadPromptFromBundle(fileName: "update_diagram_prompt")
+    
     let query = ChatQuery(messages: [
-        .system(.init(content: """
-                You are my plantUML assistant.
-                You must answer exclusively with diagram syntax.
-                """)),
+        .system(.init(content: system_prompt)),
         .assistant(.init( content: input)),
         .user(.init(content: .string(instruction)))
     ], model: model, temperature: 0.0, topP: 1.0)
