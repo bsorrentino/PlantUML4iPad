@@ -1,6 +1,138 @@
 # Changelog
 
 
+"name: v3.1.0_2" is a release tag
+
+## [v3.1.0_2](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.1.0_2) (2024-07-03)
+
+
+### Bug Fixes
+
+ -  **AgentExecutor**  force usage of gpt4o ([a3df861c22d39ea](https://github.com/bsorrentino/PlantUML4iPad/commit/a3df861c22d39eaae216900cac5d5fd37b341dd1))
+ -  **AgentExecutor**  prompt refinement ([b15cc89d669efba](https://github.com/bsorrentino/PlantUML4iPad/commit/b15cc89d669efba5a53fbdfa647a60be442748bd))
+
+### Documentation
+
+ -  update readme ([6f864d40ea8a0d0](https://github.com/bsorrentino/PlantUML4iPad/commit/6f864d40ea8a0d0516ead6ba5eb141955e76ba1e))
+
+### Refactor
+
+ -  avoid share PKCanvasView and use PKDrawing instead ([b3e89075b227f60](https://github.com/bsorrentino/PlantUML4iPad/commit/b3e89075b227f60dc0da17480f35bb06e862be2b))
+ -  **agentexecutor**  read update diagram prompt from bundled resource ([ec652b1b2bdd824](https://github.com/bsorrentino/PlantUML4iPad/commit/ec652b1b2bdd824f709ab861d8cc87b3bff623d9))
+ -  **PlantUMLObservableDocument**  remove PlantUMLBrowserPresenter ([a2737aee4c62a99](https://github.com/bsorrentino/PlantUML4iPad/commit/a2737aee4c62a991c4455eb614195f1f45898569))
+ -  **PlantUMLBrowserPresenter**  replace struct with func ([67be5a008cf94ce](https://github.com/bsorrentino/PlantUML4iPad/commit/67be5a008cf94cee9513c41db8a740e6f6cab5bf))
+
+### ALM 
+
+ -  update projectt settings ([45c95960187474e](https://github.com/bsorrentino/PlantUML4iPad/commit/45c95960187474e89d82fdc901f6d756a3b0e819))
+
+
+"name: v3.1.0_1" is a release tag
+
+## [v3.1.0_1](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.1.0_1) (2024-07-01)
+
+### Features
+
+ -  save drawing on dismiss ([5b79a290163709c](https://github.com/bsorrentino/PlantUML4iPad/commit/5b79a290163709cd74d9a751326fba9008c8ed80))
+ -  replace deprecated model gpt-4-vision-preview with gpt-4o ([a2795d8ea194514](https://github.com/bsorrentino/PlantUML4iPad/commit/a2795d8ea194514eedcf053bdf17af6d2e6742da))
+ -  clear error on prompt editing ([28f55f4cd565de3](https://github.com/bsorrentino/PlantUML4iPad/commit/28f55f4cd565de311dc885f2e7fa28bfe3b25b85))
+ -  enable scroll on drawing and disable finger draw when scrolling is enabled ([389c06a7be55a80](https://github.com/bsorrentino/PlantUML4iPad/commit/389c06a7be55a80703d29082fc21f20ed0b35918))
+ -  lock/unlock drawing ([c8ea8f664868eb7](https://github.com/bsorrentino/PlantUML4iPad/commit/c8ea8f664868eb75c7aacd49d9770a77caad6f02))
+
+
+
+### Refactor
+
+ -  rename status 'Editing' to 'Processing' ([b167816e5de88c5](https://github.com/bsorrentino/PlantUML4iPad/commit/b167816e5de88c57e7dbd083c307c31b8733cc99))
+
+### ALM 
+
+ -  move to next version ([e8361e14701caee](https://github.com/bsorrentino/PlantUML4iPad/commit/e8361e14701caeea4c92c6ebacb898b036f21cbb))
+ -  update LangGraph package ([c05a5af8ad45d34](https://github.com/bsorrentino/PlantUML4iPad/commit/c05a5af8ad45d34f3481eb7e7864f9ad6889822e))
+ -  update LangGraph ([ff8bea19356071e](https://github.com/bsorrentino/PlantUML4iPad/commit/ff8bea19356071eb9d514b0d6d2a4497529ab0a0))
+
+
+"name: v3.0.0_1" is a release tag
+
+## [v3.0.0_1](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.0.0_1) (2024-03-29)
+
+### Features
+
+ -  complete demo using UI test process ([cc8c81247ff2be7](https://github.com/bsorrentino/PlantUML4iPad/commit/cc8c81247ff2be7f35c5fdc557c60e1f4b617d8f))
+ -  add accessibilityIdentifier ([da3d55087262599](https://github.com/bsorrentino/PlantUML4iPad/commit/da3d55087262599036e16628ce33fd73aaa935dd))
+ -  starting the DEMo using UI Automation ([b711c5570a44052](https://github.com/bsorrentino/PlantUML4iPad/commit/b711c5570a44052e9ecf90936535d5ec90d9ee74))
+ -  enable drawing demo ([0d4307e99b5433f](https://github.com/bsorrentino/PlantUML4iPad/commit/0d4307e99b5433f78207db9a2791d5df9ce3baba))
+ -  add new AIAgent workspace package that import externa LangGraph dep ([103444b660b59a7](https://github.com/bsorrentino/PlantUML4iPad/commit/103444b660b59a7e97b31e9f8d6d2689f99d2531))
+ -  add LangGraph workflow to manage image translation ([a248082994673e4](https://github.com/bsorrentino/PlantUML4iPad/commit/a248082994673e401275e4f603262b273cf7dbd6))
+ -  add LangGraph implementation as internal package ([b13b57d8e50512d](https://github.com/bsorrentino/PlantUML4iPad/commit/b13b57d8e50512d10d18ef81299ad8299a6f7939))
+ -  save drawing ([fc00eb3624fd59a](https://github.com/bsorrentino/PlantUML4iPad/commit/fc00eb3624fd59a9a2e2b6b72fc0ec1236af55e8))
+ -  add usage description to save in photos ([ab89425e66c7826](https://github.com/bsorrentino/PlantUML4iPad/commit/ab89425e66c7826b48afe9be2cf89dc2ce1d3b6e))
+ -  add activity view ([38b9dea32ffdc4f](https://github.com/bsorrentino/PlantUML4iPad/commit/38b9dea32ffdc4f62067934c945ef4fd19624a3c))
+ -  add load vision prompt from file resource ([7952a95fa5f8065](https://github.com/bsorrentino/PlantUML4iPad/commit/7952a95fa5f806506761516ffb86052e3156e164))
+ -  add Errors enum ([b1da221e5b5b920](https://github.com/bsorrentino/PlantUML4iPad/commit/b1da221e5b5b920b381d9651b6bda7a8c392d31d))
+ -  add activity view ([61e571c377770aa](https://github.com/bsorrentino/PlantUML4iPad/commit/61e571c377770aa2970b058cf3897fdc862cbd1a))
+ -  allow initialize new document with a custom text ([d10ddff13c11328](https://github.com/bsorrentino/PlantUML4iPad/commit/d10ddff13c113288ccda859ffed11b5a0f3bab98))
+ -  pass fileName to Document Proxy view ([03983f5f778cb40](https://github.com/bsorrentino/PlantUML4iPad/commit/03983f5f778cb406992361ec5ceadbf86171b564))
+ -  add event to manage "generated script from vision api" ([23e330fc7e8b058](https://github.com/bsorrentino/PlantUML4iPad/commit/23e330fc7e8b0586a14e02e0ca6d7a8962e3d365))
+ -  set default content if document is new ([1aacf06f0bff20d](https://github.com/bsorrentino/PlantUML4iPad/commit/1aacf06f0bff20d6b6c6e098d58cd4188edd3222))
+ -  remove openaikit references ([4183e86e2b77927](https://github.com/bsorrentino/PlantUML4iPad/commit/4183e86e2b7792742d3be0651c21c0303d19a349))
+ -  activate menu on new document ([69f432253f1daa4](https://github.com/bsorrentino/PlantUML4iPad/commit/69f432253f1daa48d37bda4777fdbca53bfedce3))
+ -  remove openaikit  in favor of openai ([26b1d33855e38b4](https://github.com/bsorrentino/PlantUML4iPad/commit/26b1d33855e38b44d475fae9266c24bb7ff92ced))
+ -  allow check if document is a new or not ([2a242ab2ae1f17d](https://github.com/bsorrentino/PlantUML4iPad/commit/2a242ab2ae1f17d1f47526cf44b600a0dccebcae))
+ -  add PKCanvasView support ([ce999056e0a9e17](https://github.com/bsorrentino/PlantUML4iPad/commit/ce999056e0a9e17391914e94bef03de3141a6380))
+ -  add menu to choose HandDrawn or HandWritten diagram ([392bd5a8f49e965](https://github.com/bsorrentino/PlantUML4iPad/commit/392bd5a8f49e9658231311f4b56fdaa6cbd16f12))
+
+### Bug Fixes
+
+ -  PKToolPicker lifecycle ([e2ec080f04e13e9](https://github.com/bsorrentino/PlantUML4iPad/commit/e2ec080f04e13e9501ee88701945d6b2f68bbcfd))
+
+### Documentation
+
+ -  update readme ([10e08703fad21d3](https://github.com/bsorrentino/PlantUML4iPad/commit/10e08703fad21d32ae217f29bbc5b55f17c898b5))
+ -  update readme ([58142a2f6e4bd1e](https://github.com/bsorrentino/PlantUML4iPad/commit/58142a2f6e4bd1e1774a6ed4335381349cc2e974))
+ -  update changelog ([275fb43f6ea0df7](https://github.com/bsorrentino/PlantUML4iPad/commit/275fb43f6ea0df7532675035ee90bea5ef7239db))
+
+### Refactor
+
+ -  finalize demo process ([0f6da5a42e7fab3](https://github.com/bsorrentino/PlantUML4iPad/commit/0f6da5a42e7fab3d434d08af26940653162ebf84))
+ -  remove demo setting  in prod settings ([7a28d092bcf48a6](https://github.com/bsorrentino/PlantUML4iPad/commit/7a28d092bcf48a657c1b405fd4837af6cf498fec))
+ -  update menu items layouts and title ([bf7279ed81db901](https://github.com/bsorrentino/PlantUML4iPad/commit/bf7279ed81db90186488e4a081572ba9115b6ad3))
+ -  update I tests layout ([e0d0a970ead98ab](https://github.com/bsorrentino/PlantUML4iPad/commit/e0d0a970ead98abe3bbf3ffa4911d7abea7c356c))
+ -  update the navigation model of app ([016637719a4d7a3](https://github.com/bsorrentino/PlantUML4iPad/commit/016637719a4d7a3103e0e30d5b56e4d992d4cf94))
+ -  add support of metadata in UIActivityViewController ([563f66e700887e1](https://github.com/bsorrentino/PlantUML4iPad/commit/563f66e700887e1ae8eaeca005e39202f3615585))
+ -  switch to #Preview macro ([ec6cb96dad9aefa](https://github.com/bsorrentino/PlantUML4iPad/commit/ec6cb96dad9aefa2b2e4cebd74729bbabf000663))
+ -  update progress messages ([2efa3b0bc0f7a47](https://github.com/bsorrentino/PlantUML4iPad/commit/2efa3b0bc0f7a471373c50e2adc1636a3573f4d1))
+ -  move update plantuml method in AgentExecutor module ([ddceebde53d4926](https://github.com/bsorrentino/PlantUML4iPad/commit/ddceebde53d4926b2ab69dff1cd6c40a2c594db2))
+ -  update langgraph version ([9ba4b492ff9b90a](https://github.com/bsorrentino/PlantUML4iPad/commit/9ba4b492ff9b90a73e68f19d41c588a9ad23aed5))
+ -  remove useles argument ([b296b16bf3185ee](https://github.com/bsorrentino/PlantUML4iPad/commit/b296b16bf3185ee1c0c2812850b68e4f433c8343))
+ -  add try to setEntryPoint ([6e5ca13e4676740](https://github.com/bsorrentino/PlantUML4iPad/commit/6e5ca13e4676740d6a93ec01670541fcfd70cd2e))
+ -  add END safe check on addNode and setEntryPoint ([91950556dca1cfc](https://github.com/bsorrentino/PlantUML4iPad/commit/91950556dca1cfc3c0ea994af7521ce6171b70de))
+ -  refine AgentExecutor implementation ([2c7c81f78f3bc03](https://github.com/bsorrentino/PlantUML4iPad/commit/2c7c81f78f3bc03ac3a0290110bd0c2cd952a683))
+ -  add use of lang_graph - step 1 ([18a012173d0f180](https://github.com/bsorrentino/PlantUML4iPad/commit/18a012173d0f180c4b55a3ce40e63143fd1dec00))
+ -  set titleAndIcon in vision process button ([f5426283212db22](https://github.com/bsorrentino/PlantUML4iPad/commit/f5426283212db229f8d33cade25eb270d36b2681))
+ -  try to fix problem on PKToolPicker dismission ([c90ce111e3597fd](https://github.com/bsorrentino/PlantUML4iPad/commit/c90ce111e3597fdc18142176b241b827cd708769))
+ -  apply attributes renaming ([147e58536f24dd9](https://github.com/bsorrentino/PlantUML4iPad/commit/147e58536f24dd9676b638469ee888656d9485a9))
+ -  give more meaningful names to class ([535773c3c37edfc](https://github.com/bsorrentino/PlantUML4iPad/commit/535773c3c37edfcc4aea0786ff098ecee9271427))
+ -  clean code ([29ac9d9f241f4c4](https://github.com/bsorrentino/PlantUML4iPad/commit/29ac9d9f241f4c4f5a1c04e70a83d6fd073ecd8b))
+ -  clean code ([6b3082e08350359](https://github.com/bsorrentino/PlantUML4iPad/commit/6b3082e0835035924c685701369d099d7e66f466))
+ -  add vision api call in OpenAIService ([8273992023c5563](https://github.com/bsorrentino/PlantUML4iPad/commit/8273992023c55638a20b289f9b905e8b37dccf5e))
+ -  rerrange project layout ([2f8a176c59e5755](https://github.com/bsorrentino/PlantUML4iPad/commit/2f8a176c59e575578a0ddb65b20efbb20e01f34d))
+ -  rename classes/files names ([1188a36cdb13bc0](https://github.com/bsorrentino/PlantUML4iPad/commit/1188a36cdb13bc0463c27875a5f2cdedf925ae58))
+
+### ALM 
+
+ -  add video preview for release 3 ([ed76cf73fcb1ae6](https://github.com/bsorrentino/PlantUML4iPad/commit/ed76cf73fcb1ae611d1d40e49a2fec0bd69d601c))
+ -  update version ([8705a096be421a9](https://github.com/bsorrentino/PlantUML4iPad/commit/8705a096be421a90ea6c41c941459d421408ebe9))
+ -  upgrade lang-graph package version ([41f611f234b6f46](https://github.com/bsorrentino/PlantUML4iPad/commit/41f611f234b6f461269700ac559f8edf2534e651))
+ -  remove unseless files ([ec848c0cf9b5bfc](https://github.com/bsorrentino/PlantUML4iPad/commit/ec848c0cf9b5bfc0bb73d57955a20481e2bfdf41))
+ -  update LangGraph dep ([ffdf2534758f4b4](https://github.com/bsorrentino/PlantUML4iPad/commit/ffdf2534758f4b48e1a5b359e9a2e069439f0de2))
+ -  move compatibility from iOS 16.6 ([d7f4a79010455a7](https://github.com/bsorrentino/PlantUML4iPad/commit/d7f4a79010455a7b548587d63fdcaca54820d3c6))
+ -  update project settings ([e2d5203a20c9cbb](https://github.com/bsorrentino/PlantUML4iPad/commit/e2d5203a20c9cbb6ceb7a41d9200e5636a5d0358))
+ -  update build ([306d273e0700995](https://github.com/bsorrentino/PlantUML4iPad/commit/306d273e070099549d1877b2b1a94d147a630b65))
+ -  update settings ([8b2a1071f2cf112](https://github.com/bsorrentino/PlantUML4iPad/commit/8b2a1071f2cf112773c6fa9a72e973f6497bbb57))
+ -  add OpenAI package ([279899f61bb7388](https://github.com/bsorrentino/PlantUML4iPad/commit/279899f61bb7388bc8572acb3211b3ea5fe94da5))
+
+
 "name: v2.1.0_1" is a release tag
 
 ## [v2.1.0_1](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v2.1.0_1) (2023-09-12)
@@ -190,7 +322,6 @@
  -  **AppSecureStorage.swift**  remove internal state value ([7c69834cfcb52fc](https://github.com/bsorrentino/PlantUML4iPad/commit/7c69834cfcb52fc2726f2b8e83108db320a41e01))
  -  **AppSecureStorage.swift**  remove binding compliance ([8d3d8f30d59288a](https://github.com/bsorrentino/PlantUML4iPad/commit/8d3d8f30d59288a3057fe454b608c873b2b35714))
  -  **KeychainWrapper.swift**  remove deprecated ([3bfe04ec17286e8](https://github.com/bsorrentino/PlantUML4iPad/commit/3bfe04ec17286e88ac8e5b4534a948529d85d217))
- -  update source comments ([8262e89d70a6d83](https://github.com/bsorrentino/PlantUML4iPad/commit/8262e89d70a6d834324960231961a9b789947901))
 
 ### ALM 
 
@@ -203,7 +334,6 @@
  -  update line editor package ([b07ee6a59394c60](https://github.com/bsorrentino/PlantUML4iPad/commit/b07ee6a59394c60bdf5ff9bc0ad3d14afca9b0e5))
  -  add OpenAIKit package ([dcccd1e314cb476](https://github.com/bsorrentino/PlantUML4iPad/commit/dcccd1e314cb47616c2b1fea8b499ebf3e43d58b))
  -  **OpenAI.config.secret**  add encrypted OpenAI configuration ([108547041862fb7](https://github.com/bsorrentino/PlantUML4iPad/commit/108547041862fb7b9f1a8a03825b09d5672242f2))
- -  update screenshots ([0da780baee8653d](https://github.com/bsorrentino/PlantUML4iPad/commit/0da780baee8653dab6720231c718480442ee994d))
 
 
 "name: v1.3.3_2" is a release tag
@@ -245,11 +375,15 @@
 
 
 
+### Refactor
+
+ -  update source comments ([8262e89d70a6d83](https://github.com/bsorrentino/PlantUML4iPad/commit/8262e89d70a6d834324960231961a9b789947901))
 
 ### ALM 
 
  -  prepare for next release ([c57c1344c9c2add](https://github.com/bsorrentino/PlantUML4iPad/commit/c57c1344c9c2add97f03cf2d8d308ad27ce267cb))
  -  move to next version ([92efe78259e2e2f](https://github.com/bsorrentino/PlantUML4iPad/commit/92efe78259e2e2f955d5c9afefc6bdf7f901197a))
+ -  update screenshots ([0da780baee8653d](https://github.com/bsorrentino/PlantUML4iPad/commit/0da780baee8653dab6720231c718480442ee994d))
 
 
 "name: v1.3.2" is a release tag
@@ -354,6 +488,7 @@
  -  draft implementation with UIViewRepresentable ([c3f63a55035dc65](https://github.com/bsorrentino/PlantUML4iPad/commit/c3f63a55035dc6565800214f11303d96b9c35c0a))
  -  add UIViewRepresentable(PlantUMLTextFieldWithCustomKeyboard) for managing inputView ([beb3a38b32007aa](https://github.com/bsorrentino/PlantUML4iPad/commit/beb3a38b32007aac3da1a6450988afecfb879afc))
  -  add show custom keyboard on top of standard keyboard ([2b2b1bff53275d1](https://github.com/bsorrentino/PlantUML4iPad/commit/2b2b1bff53275d109a65a8fb5faf26ea9963ad9d))
+ -  **CustomKeyboardObject**  reduce height of custom keyboard avoiding hide standard keyboard topper ([695fc0a7e95542f](https://github.com/bsorrentino/PlantUML4iPad/commit/695fc0a7e95542f3daa8776acd406be36e4a62b1))
  -  **PlantUMLScript**  set CustomStringConvertible ([4063a47b34b923f](https://github.com/bsorrentino/PlantUML4iPad/commit/4063a47b34b923f6116cac4b9612bdd28fb78593))
  -  set text field 'asciiCapableNumberPad' ([0faa27534e7e795](https://github.com/bsorrentino/PlantUML4iPad/commit/0faa27534e7e795285848e7d58d1859649878de1))
  -  implement multiline command  - #2 ([1c8d48a710692b6](https://github.com/bsorrentino/PlantUML4iPad/commit/1c8d48a710692b6c24cd1a3e52bb5693ea630877))
