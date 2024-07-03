@@ -140,7 +140,7 @@ func describeDiagramImage<T:AgentExecutorDelegate>( state: AgentExecutorState,
                     .chatCompletionContentPartTextParam(.init(text: prompt)),
                     .chatCompletionContentPartImageParam(.init(imageUrl: .init(url: url, detail: .auto)))
                 ])))
-            ], model: Model.gpt4_vision_preview, maxTokens: 2000)
+            ], model: Model.gpt4_o, maxTokens: 2000)
         case .data(let data):
             ChatQuery(messages: [
                 .user(.init(content: .vision([
