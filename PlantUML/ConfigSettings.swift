@@ -7,15 +7,19 @@
 
 import Foundation
 
-fileprivate func makeBool( _ value: Any? ) -> Bool {
-    guard let asString = value as? NSString else {
-        return false
-    }
-    
-    return asString.boolValue
 
+
+@inline(__always) func readConfigString( forInfoDictionaryKey key: String ) -> String? {
+    Bundle.main.object(forInfoDictionaryKey: key) as? String
 }
 
-let SAVE_DRAWING_IMAGE = makeBool(Bundle.main.object(forInfoDictionaryKey: "SAVE_DRAWING_IMAGE"))
+func readConfigBool( forInfoDictionaryKey key: String ) -> Bool {
+    guard let value = Bundle.main.object(forInfoDictionaryKey: key) as? NSString else {
+        return false
+    }
+    return value.boolValue
+}
 
-let DEMO_MODE = makeBool(Bundle.main.object(forInfoDictionaryKey: "DEMO_MODE"))
+let DEMO_MODE = readConfigBool(forInfoDictionaryKey: "DEMO_MODE")
+let SAVE_DRAWING_IMAGE = readConfigBool(forInfoDictionaryKey: "SAVE_DRAWING_IMAGE")
+
