@@ -18,14 +18,13 @@ struct PlantUMLDiagramMenu: View {
     
     @Binding var doc: PlantUMLDocument
     @State var activeScreen:MenuItem = .Menu
-    @State var canvas = PKCanvasView()
     
     var body: some View {
         if case .Menu = activeScreen, doc.isNew {
             Menu
         }
         else if case .HandDrawn = activeScreen, doc.isNew {
-            PlantUMLDrawingView( canvas: $canvas,
+            PlantUMLDrawingView( 
                                  service:OpenAIObservableService(),
                                  document: PlantUMLObservableDocument( document: $doc, fileName:"Untitled"  ) )
         }

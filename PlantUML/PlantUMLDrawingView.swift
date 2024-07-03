@@ -12,7 +12,7 @@ import AIAgent
 #Preview( "PlantUMLDrawingView") {
     NavigationStack {
         PlantUMLDrawingView(
-            canvas: .constant(PKCanvasView(frame: CGRect(x: 0, y: 0, width: 2000, height: 2000))),
+            
             service: OpenAIObservableService(),
             document: PlantUMLObservableDocument(document:.constant(PlantUMLDocument()), fileName:"Untitled")
         )
@@ -23,7 +23,6 @@ import AIAgent
 struct PlantUMLDrawingView: View {
     @Environment( \.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    @Binding var canvas:PKCanvasView
     @ObservedObject var service:OpenAIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
     @State var isScrollEnabled = true
@@ -32,11 +31,12 @@ struct PlantUMLDrawingView: View {
     @State var processingLabel: String = "👀 Processing ..."
     @State private var processImageTask:Task<(),Never>? = nil
     
+    
     var body: some View {
         
         ActivityView(isShowing: processing, label: processingLabel )  {
             
-            DrawingView(canvas: $canvas,
+            DrawingView(drawing: $document.drawing,
                         isUsePickerTool: isUseDrawingTool,
                         isScrollEnabled: isScrollEnabled )
             .font(.system(size: 35))
@@ -80,12 +80,11 @@ struct PlantUMLDrawingView: View {
         .onCancel {
             processImageTask?.cancel()
         }
-        .onAppear(perform: setupDrawing )
         .onDisappear( perform: updateDiagram )
     }
     
     private func toImage() -> UIImage {
-        canvas.drawing.image(from: canvas.drawing.bounds, scale: 1)
+        document.drawing.image(from: document.drawing.bounds, scale: 1)
     }
     
     private func saveImageToPhotos() {
@@ -94,30 +93,7 @@ struct PlantUMLDrawingView: View {
     }
     
     private func updateDiagram() {
-        document.drawing = canvas.drawing.dataRepresentation()
-    }
-    
-    private func setupDrawing() {
-        
-        guard let drawing = document.drawing else {
-            return
-        }
-        
-        do {
-            
-            let drawing = try PKDrawing(data: drawing)
-            
-            if DEMO_MODE {
-                slowDrawingForDemo( canvas, drawing: drawing, timeInterval: 0.2)
-            }
-            else {
-                canvas.drawing = drawing
-            }
-            
-        }
-        catch {
-            fatalError( "failed to load drawing")
-        }
+//        document.drawingData = canvas.drawing.dataRepresentation()
     }
     
 }
@@ -192,25 +168,3 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
     
 }
 
-// MARK: DEMO
-
-fileprivate func slowDrawingForDemo( _ canvas: PKCanvasView, drawing: PKDrawing, timeInterval: TimeInterval  )  {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-        
-        canvas.drawing = PKDrawing()
-        
-        let strokes = drawing.strokes
-        var current:Int = 0
-        
-        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
-            
-            guard current < strokes.count else {
-                timer.invalidate()
-                return
-            }
-            let newDrawing = PKDrawing(strokes: [strokes[current]] )
-            canvas.drawing.append(newDrawing  )
-            current += 1
-        }
-    }
-}

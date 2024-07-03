@@ -44,7 +44,7 @@ struct PlantUMLDocumentView: View {
     
     @State private var editorViewId  = 1
     
-    @State private var canvas = PKCanvasView(frame: CGRect(x: 0, y: 0, width: 2000, height: 2000))
+//    @State private var canvas = PKCanvasView(frame: CGRect(x: 0, y: 0, width: 2000, height: 2000))
     
     var body: some View {
         
@@ -140,8 +140,7 @@ extension PlantUMLDocumentView {
     var DiagramDrawingView: some View {
         
         NavigationStack {
-            PlantUMLDrawingView( canvas: $canvas,
-                                 service: openAIService,
+            PlantUMLDrawingView( service: openAIService,
                                  document: document )
             
         }
