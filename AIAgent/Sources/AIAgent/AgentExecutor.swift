@@ -10,8 +10,8 @@ import OSLog
 import OpenAI
 import LangGraph
 
-@inline(__always) func _EX( _ msg: String ) -> GraphRunnerError {
-    GraphRunnerError.executionError(msg)
+@inline(__always) func _EX( _ msg: String ) -> CompiledGraphError {
+    CompiledGraphError.executionError(msg)
 }
 
 func loadPromptFromBundle( fileName: String ) throws -> String {
@@ -169,6 +169,7 @@ func describeDiagramImage<T:AgentExecutorDelegate>( state: AgentExecutorState,
     let result = chatResult.choices[0].message.content
     
     if case .string(let content) = result {
+        // print(content)
         let diagram = try diagramDescriptionOutputParse( content )
         
         await delegate.progress( "diagram type\n '\(diagram.type)'")
@@ -178,6 +179,7 @@ func describeDiagramImage<T:AgentExecutorDelegate>( state: AgentExecutorState,
     
     throw _EX("invalid content")
 }
+
 
 func translateSequenceDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( state: AgentExecutorState,
                                                     openAI:OpenAI,
@@ -228,17 +230,18 @@ func translateSequenceDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( sta
 
 }
 
-func translateGenericDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( state: AgentExecutorState, 
-                                                                            openAI:OpenAI,
-                                                                            delegate:T ) async throws -> PartialAgentState {
-    
+
+func translateDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( state: AgentExecutorState,
+                                                                     openAI:OpenAI,
+                                                                     delegate:T ) async throws -> PartialAgentState {
+
     guard let diagram = state.diagram else {
         throw _EX("diagram not initialized!")
     }
     
-    await delegate.progress("translating diagram to\nGeneric Diagram")
+    await delegate.progress("translating diagram to\n\(diagram.type.capitalized) Diagram")
     
-    var prompt = try loadPromptFromBundle(fileName: "generic_diagram_prompt")
+    var prompt = try loadPromptFromBundle(fileName: "\(diagram.type)_diagram_prompt")
     
     let encoder = JSONEncoder()
     
@@ -255,16 +258,6 @@ func translateGenericDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( stat
         .user(.init(content: .string(prompt)))
     ], model: Model.gpt3_5Turbo, maxTokens: 2000)
 
-//    let query = ChatQuery(
-//        model: .gpt3_5Turbo,
-//        messages: [
-//            Chat(role: .user, content: [
-//                ChatContent(text: prompt),
-//            ])
-//        ],
-//        maxTokens: 2000
-//    )
-    
     let chatResult = try await openAI.chats(query: query)
     
     let result = chatResult.choices[0].message.content
@@ -277,14 +270,18 @@ func translateGenericDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( stat
     
 }
 
+
 func routeDiagramTranslation( state: AgentExecutorState ) async throws -> String {
     
     guard let diagram = state.diagram else {
-        throw GraphRunnerError.executionError("diagram is nil!")
+        throw CompiledGraphError.executionError("diagram is nil!")
     }
-    if diagram.type == "sequence" {
+    switch diagram.type {
+    case "sequence":
         return "sequence"
-    } else {
+    case "usecase":
+        return "usecase"
+    default:
         return "generic"
     }
 }
@@ -298,7 +295,7 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: Open
                                                                     imageValue: DiagramImageValue,
                                                                     delegate:T ) async throws -> String? {
     
-    let workflow = GraphState { AgentExecutorState() }
+    let workflow = StateGraph { AgentExecutorState() }
     
     try workflow.addNode("agent_describer", action: { state in
         try await describeDiagramImage(state: state, openAI: openAI, delegate: delegate)
@@ -306,11 +303,15 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: Open
     try workflow.addNode("agent_sequence_plantuml", action: { state in
         try await translateSequenceDiagramDescriptionToPlantUML( state: state, openAI:openAI, delegate:delegate )
     })
-     try workflow.addNode("agent_generic_plantuml", action: { state in
-         try await translateGenericDiagramDescriptionToPlantUML( state: state, openAI:openAI, delegate:delegate )
+    try workflow.addNode("agent_usecase_plantuml", action: { state in
+         try await translateDiagramDescriptionToPlantUML( state: state, openAI:openAI, delegate:delegate )
+    })
+    try workflow.addNode("agent_generic_plantuml", action: { state in
+         try await translateDiagramDescriptionToPlantUML( state: state, openAI:openAI, delegate:delegate )
     })
     
     try workflow.addEdge(sourceId: "agent_sequence_plantuml", targetId: END)
+    try workflow.addEdge(sourceId: "agent_usecase_plantuml", targetId: END)
     try workflow.addEdge(sourceId: "agent_generic_plantuml", targetId: END)
     
     try workflow.addConditionalEdge(
@@ -318,6 +319,7 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: Open
         condition: routeDiagramTranslation,
         edgeMapping: [
             "sequence": "agent_sequence_plantuml",
+            "usecase": "agent_usecase_plantuml",
             "generic": "agent_generic_plantuml",
         ]
     )

@@ -32,6 +32,11 @@ final class AgentExecutorTests : XCTestCase {
         
         print( sequence )
 
+        let usecase = try loadPromptFromBundle( fileName: "usecase_diagram_prompt" )
+        
+        XCTAssertNotNil(usecase)
+        
+        print( usecase )
     }
     
     func testParseDiagramDescriptionOutput() async throws {
