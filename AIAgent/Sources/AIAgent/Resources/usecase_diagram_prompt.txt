@@ -2,6 +2,7 @@
     - each participant with shape equals to "person" must be translated in plantuml "actor" in the form: actor "<name>" as <camel case name><<description>>
     - each container must be translated in a plantuml "rectangle" in the form: rectangle "<name>" { <children participants> }. The <children participants> must appear only inside the "rectangle"
     - each other participant must be translated in a plantuml "usecase" element in the form: usecase "<name>" as <camel case name><<description>>
+    - relation must be translated in a plantuml arrow int the form: <source> --> <target> : <description>
     - put diagram description in the legend of the diagram in the form:
     legend
     <description with a bullet point for each steps>
