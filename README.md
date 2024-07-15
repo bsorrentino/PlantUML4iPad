@@ -36,6 +36,9 @@ _Promotional Text_ 🤞
 
 **Take a Note:**
 
+* **Release 3.2**
+    > add detection of [use-case diagram][usecase] from drawing.
+
 * **Release 3.1**
     > From release `3.1` the deprecated model `gpt-4-vision-preview` has been replaced by `gpt-4o`.
 
@@ -85,3 +88,4 @@ Below all references that helped to develop such App
 [ace]: https://ace.c9.io
 [OpenAI Vision API]: https://platform.openai.com/docs/guides/vision
 [PlantUML online server]: https://plantuml.com/server
+[usecase]: https://plantuml.com/usecase
