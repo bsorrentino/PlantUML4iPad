@@ -4,7 +4,7 @@ The output should be a markdown code snippet formatted in the following schema, 
 
 ```json
 {
-        "type": string  // Diagram tipology (one word). Eg. "sequence", "class", "process", etc."),
+        "type": string  // UML Diagram tipology (one word). It can be "sequence", "usecase" and as default "generic",
         "title": string  // Diagram summary (max one line) or title (if any)
         "participants": array  // list of participants in the diagram in the form { name:"<name>", shape:"<shape>", description:"<participant description>" }
         "relations": array  // list of relations in the diagram in the form { source:"<source participant>", target:"<target participant>", description:"<relation description>" }

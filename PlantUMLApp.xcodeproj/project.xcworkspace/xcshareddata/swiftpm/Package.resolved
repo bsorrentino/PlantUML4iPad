@@ -5,9 +5,9 @@
         "package": "LangGraph",
         "repositoryURL": "https://github.com/bsorrentino/LangGraph-Swift.git",
         "state": {
-          "branch": null,
-          "revision": "9365b1b812e9f95982ed16deae2e232319f9abe0",
-          "version": "1.2.2"
+          "branch": "develop",
+          "revision": "45e5243ee11632614908caef34432629278591a0",
+          "version": null
         }
       },
       {

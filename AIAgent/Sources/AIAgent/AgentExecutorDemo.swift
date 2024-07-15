@@ -29,11 +29,12 @@ struct AgentExecutorDemoState : AgentState {
     
 }
 
+
+
 public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( openAI: OpenAI,
                                                                         imageValue: DiagramImageValue,
                                                                         delegate:T ) async throws -> String? {
-    
-    let workflow = GraphState { AgentExecutorState() }
+    let workflow = StateGraph { AgentExecutorState() }
     
     try workflow.addNode("agent_describer", action: { state in
         await delegate.progress("starting analyze\ndiagram 👀")
@@ -101,4 +102,76 @@ public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( openAI: 
     return response.diagramCode
 }
 
+
+let usecase_description = """
+```json
+{
+ "type": "usecase",
+ "title": "TEST Diagram",
+ "participants": [
+     { "name": "Person", "shape": "actor", "description": "External user or system" },
+     { "name": "A", "shape": "ellipse", "description": "Use case A" },
+     { "name": "B", "shape": "ellipse", "description": "Use case B" },
+     { "name": "C", "shape": "ellipse", "description": "Use case C" },
+     { "name": "D", "shape": "ellipse", "description": "Use case D" }
+ ],
+ "relations": [
+     { "source": "Person", "target": "A", "description": "interacts with" },
+     { "source": "Person", "target": "B", "description": "interacts with" },
+     { "source": "Person", "target": "C", "description": "interacts with" },
+     { "source": "Person", "target": "D", "description": "interacts with" }
+ ],
+ "containers": [
+     { "name": "TEST", "children": ["A", "B", "C", "D"], "description": "Container for use cases" }
+ ],
+ "description": [
+     "1. The 'Person' actor interacts with Use Case 'A' within the 'TEST' container.",
+     "2. The 'Person' actor interacts with Use Case 'B' within the 'TEST' container.",
+     "3. The 'Person' actor interacts with Use Case 'C' within the 'TEST' container.",
+     "4. The 'Person' actor interacts with Use Case 'D' within the 'TEST' container."
+ ]
+}
+```
+"""
+
+
+public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( openAI: OpenAI,
+                                                                        imageValue: DiagramImageValue,
+                                                                        delegate:T ) async throws -> String? {
+    let workflow = StateGraph { AgentExecutorState() }
+    
+    try workflow.addNode("agent_describer", action: { state in
+        await delegate.progress("starting analyze\ndiagram 👀")
+        
+        try await Task.sleep( nanoseconds: 5_000_000_000 )
+        
+        await delegate.progress( "diagram processed ✅")
+        
+        let diagram = try diagramDescriptionOutputParse( usecase_description )
+        
+        await delegate.progress( "diagram type\n '\(diagram.type)'")
+        
+        return [ "diagram": diagram ]
+        
+    })
+    
+    try workflow.addNode("agent_usecase_plantuml", action: { state in
+        try await translateDiagramDescriptionToPlantUML( state: state, openAI:openAI, delegate:delegate )
+    })
+    
+    try workflow.addEdge( sourceId: "agent_describer",
+                          targetId: "agent_usecase_plantuml" )
+    
+    try workflow.addEdge(sourceId: "agent_usecase_plantuml", targetId: END)
+
+    try workflow.setEntryPoint( "agent_describer")
+    
+    let app = try workflow.compile()
+    
+    let inputs:[String : Any] = [:]
+    
+    let response = try await app.invoke( inputs: inputs)
+    
+    return response.diagramCode
+}
 
