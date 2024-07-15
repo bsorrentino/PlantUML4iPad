@@ -1,6 +1,27 @@
 # Changelog
 
 
+"name: v3.2.0_3" is a release tag
+
+## [v3.2.0_3](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.2.0_3) (2024-07-15)
+
+### Features
+
+ -  refine usecase prompt ([fd89b34ee2d3e5f](https://github.com/bsorrentino/PlantUML4iPad/commit/fd89b34ee2d3e5fb453b3f9d90a288f894704dce))
+ -  add usecase support ([84f208bfb1724e7](https://github.com/bsorrentino/PlantUML4iPad/commit/84f208bfb1724e7ddd6b39325df70d1c4661b96c))
+ -  remove need of orgid ([ad64422e071b2e9](https://github.com/bsorrentino/PlantUML4iPad/commit/ad64422e071b2e94c456b209f667094098abe2c2))
+
+
+### Documentation
+
+ -  update changelog ([bf3b6e88c67fcac](https://github.com/bsorrentino/PlantUML4iPad/commit/bf3b6e88c67fcac8ced7e8edae637dd02c9ca62e))
+
+
+### ALM 
+
+ -  update project setting ([93a9414ffdd08c8](https://github.com/bsorrentino/PlantUML4iPad/commit/93a9414ffdd08c83777b49008d928718a20abec0))
+
+
 "name: v3.1.0_2" is a release tag
 
 ## [v3.1.0_2](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.1.0_2) (2024-07-03)
