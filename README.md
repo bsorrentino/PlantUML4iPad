@@ -37,7 +37,7 @@ _Promotional Text_ 🤞
 **Take a Note:**
 
 * **Release 3.2**
-  * refine prompt for `gpt-4o` model
+  * prompt refinements
   * add detection of [use-case diagram][usecase] from drawing.
 
 * **Release 3.1**
