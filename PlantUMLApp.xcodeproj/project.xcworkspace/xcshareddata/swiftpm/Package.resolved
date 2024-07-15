@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "LangGraph",
+        "repositoryURL": "https://github.com/bsorrentino/LangGraph-Swift.git",
+        "state": {
+          "branch": "develop",
+          "revision": "45e5243ee11632614908caef34432629278591a0",
+          "version": null
+        }
+      },
+      {
+        "package": "OpenAI",
+        "repositoryURL": "https://github.com/MacPaw/OpenAI.git",
+        "state": {
+          "branch": "main",
+          "revision": "fd13a41e987004d14f1793c570721953a2767b03",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
