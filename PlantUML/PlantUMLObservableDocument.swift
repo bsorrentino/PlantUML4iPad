@@ -32,6 +32,8 @@ class DebounceRequest {
     }
 }
 
+let NEW_FILE_TITLE = "title Untitled"
+
 class PlantUMLObservableDocument : ObservableObject {
     
     @Binding var object: PlantUMLDocument
@@ -46,7 +48,7 @@ class PlantUMLObservableDocument : ObservableObject {
     
     init( document: Binding<PlantUMLDocument>, fileName:String ) {
         self._object = document
-        self.text = document.wrappedValue.isNew ? "title Untitled" : document.wrappedValue.text
+        self.text = document.wrappedValue.isNew ?  NEW_FILE_TITLE : document.wrappedValue.text
         self.fileName = fileName
         
         do {
