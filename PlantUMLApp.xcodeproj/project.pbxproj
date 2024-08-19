@@ -7,24 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A00823992C73A5B000464590 /* AIAgent in Frameworks */ = {isa = PBXBuildFile; productRef = A00823982C73A5B000464590 /* AIAgent */; };
+		A008239B2C73A5B000464590 /* AppSecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A008239A2C73A5B000464590 /* AppSecureStorage */; };
+		A008239D2C73A5B000464590 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A008239C2C73A5B000464590 /* PlantUMLFramework */; };
 		A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */; };
 		A02BB3E82B41C9430073D432 /* OpenAIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */; };
-		A036CC3D2A0FC67C003FDB5E /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A084B53329EB15C50043B853 /* PlantUMLKeyboard */; };
 		A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F629EB16280048D9C6 /* PlantUMLFramework */; };
 		A038DB6029D489BA0032E312 /* PlantUMLOpenAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */; };
 		A04512F12B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04512F02B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift */; };
 		A04512F32B3E2D8E00CD1158 /* PlantUMLDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
-		A04F96B22C31763900044DCB /* AIAgent in Frameworks */ = {isa = PBXBuildFile; productRef = A04F96B12C31763900044DCB /* AIAgent */; };
-		A04F96B42C31763900044DCB /* AppSecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A04F96B32C31763900044DCB /* AppSecureStorage */; };
-		A04F96B62C31763900044DCB /* CodeViewer in Frameworks */ = {isa = PBXBuildFile; productRef = A04F96B52C31763900044DCB /* CodeViewer */; };
-		A04F96B82C31763900044DCB /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A04F96B72C31763900044DCB /* PlantUMLFramework */; };
-		A04F96BA2C31763900044DCB /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A04F96B92C31763900044DCB /* PlantUMLKeyboard */; };
 		A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A068572D29D8B31100E82C2F /* View+Clipboard.swift */; };
 		A082CB002A9A68D80055D6D6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A082CAFF2A9A68D80055D6D6 /* Settings.bundle */; };
 		A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0943A6E2944A44900342426 /* ScaleToFit+ToggleStyle.swift */; };
 		A09F62DD29DDD08600650C9A /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DC29DDD08600650C9A /* PlantUMLFramework */; };
-		A09F62DF29DDD08D00650C9A /* PlantUMLKeyboard in Frameworks */ = {isa = PBXBuildFile; productRef = A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */; };
 		A0A139352A13C49A00B69FBC /* View+Secure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A139342A13C49A00B69FBC /* View+Secure.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLObservableDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */; };
@@ -83,7 +79,6 @@
 		A01907EF2951CD5C0059CCBE /* privacy_policy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacy_policy.md; sourceTree = "<group>"; };
 		A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIObservableService.swift; sourceTree = "<group>"; };
 		A036CC402A0FC67C003FDB5E /* PlantUMLAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantUMLAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A036CF972A92BCFF007FDEB6 /* PlantUMLEditor */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLEditor; sourceTree = "<group>"; };
 		A038DB5B29D452880032E312 /* OpenAI.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OpenAI.xcconfig; sourceTree = "<group>"; };
 		A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLOpenAIView.swift; sourceTree = "<group>"; };
 		A04512F02B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramMenu.swift; sourceTree = "<group>"; };
@@ -124,7 +119,6 @@
 		A0EA85622BADDBFA00800522 /* XCTestCase+Wait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Wait.swift"; sourceTree = "<group>"; };
 		A0EA85642BADDC5B00800522 /* EditorElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorElement.swift; sourceTree = "<group>"; };
 		A0EA85662BADF6F200800522 /* ConfigSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigSettings.swift; sourceTree = "<group>"; };
-		A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLKeyboard; sourceTree = "<group>"; };
 		A0F2B14129353C2D00A44481 /* SwiftUI+Rotate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Rotate.swift"; sourceTree = "<group>"; };
 		A0FED5D32BAEFA55003F1769 /* PlantUMLAppUITests+Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlantUMLAppUITests+Deprecated.swift"; sourceTree = "<group>"; };
 		A0FED5D72BAEFAFE003F1769 /* DrawingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingUITests.swift; sourceTree = "<group>"; };
@@ -136,7 +130,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */,
-				A036CC3D2A0FC67C003FDB5E /* PlantUMLKeyboard in Frameworks */,
 				A0C0C33C2B5D9C7700CE66A2 /* AppSecureStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,11 +138,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A04F96B82C31763900044DCB /* PlantUMLFramework in Frameworks */,
-				A04F96B22C31763900044DCB /* AIAgent in Frameworks */,
-				A04F96B42C31763900044DCB /* AppSecureStorage in Frameworks */,
-				A04F96BA2C31763900044DCB /* PlantUMLKeyboard in Frameworks */,
-				A04F96B62C31763900044DCB /* CodeViewer in Frameworks */,
+				A00823992C73A5B000464590 /* AIAgent in Frameworks */,
+				A008239D2C73A5B000464590 /* PlantUMLFramework in Frameworks */,
+				A008239B2C73A5B000464590 /* AppSecureStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +148,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A09F62DF29DDD08D00650C9A /* PlantUMLKeyboard in Frameworks */,
 				A09F62DD29DDD08600650C9A /* PlantUMLFramework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,10 +215,8 @@
 				A0943A6D29448A1700342426 /* AppStore.xcassets */,
 				A01907EF2951CD5C0059CCBE /* privacy_policy.md */,
 				A083144E2BA5F8270077190F /* AIAgent */,
-				A036CF972A92BCFF007FDEB6 /* PlantUMLEditor */,
 				A0A139312A129F5400B69FBC /* AppSecureStorage */,
 				A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */,
-				A0EF7AF128C40A6300660F09 /* PlantUMLKeyboard */,
 				A0D3C64828984A0E000838D7 /* PlantUML */,
 				A0D3C65C28984A10000838D7 /* PlantUMLTests */,
 				A00729B929DB2A9D00D73D1A /* PlantUMLAppUITests */,
@@ -313,7 +301,6 @@
 			);
 			name = PlantUMLAppUITests;
 			packageProductDependencies = (
-				A084B53329EB15C50043B853 /* PlantUMLKeyboard */,
 				A0BD13F629EB16280048D9C6 /* PlantUMLFramework */,
 				A0C0C33B2B5D9C7700CE66A2 /* AppSecureStorage */,
 			);
@@ -335,11 +322,9 @@
 			);
 			name = PlantUMLApp;
 			packageProductDependencies = (
-				A04F96B12C31763900044DCB /* AIAgent */,
-				A04F96B32C31763900044DCB /* AppSecureStorage */,
-				A04F96B52C31763900044DCB /* CodeViewer */,
-				A04F96B72C31763900044DCB /* PlantUMLFramework */,
-				A04F96B92C31763900044DCB /* PlantUMLKeyboard */,
+				A00823982C73A5B000464590 /* AIAgent */,
+				A008239A2C73A5B000464590 /* AppSecureStorage */,
+				A008239C2C73A5B000464590 /* PlantUMLFramework */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
@@ -361,7 +346,6 @@
 			name = PlantUMLTests;
 			packageProductDependencies = (
 				A09F62DC29DDD08600650C9A /* PlantUMLFramework */,
-				A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */,
 			);
 			productName = PlantUMLTests;
 			productReference = A0D3C65928984A10000838D7 /* PlantUMLTests.xctest */;
@@ -698,7 +682,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -737,7 +721,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_ASSET_PATHS = "\"PlantUML/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = 48J595L9BX;
 				ENABLE_PREVIEWS = YES;
 				"EXCLUDED_SOURCE_FILE_NAMES[arch=*]" = OpenAI.xcconfig;
@@ -857,37 +841,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A04F96B12C31763900044DCB /* AIAgent */ = {
+		A00823982C73A5B000464590 /* AIAgent */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AIAgent;
 		};
-		A04F96B32C31763900044DCB /* AppSecureStorage */ = {
+		A008239A2C73A5B000464590 /* AppSecureStorage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppSecureStorage;
 		};
-		A04F96B52C31763900044DCB /* CodeViewer */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CodeViewer;
-		};
-		A04F96B72C31763900044DCB /* PlantUMLFramework */ = {
+		A008239C2C73A5B000464590 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLFramework;
-		};
-		A04F96B92C31763900044DCB /* PlantUMLKeyboard */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PlantUMLKeyboard;
-		};
-		A084B53329EB15C50043B853 /* PlantUMLKeyboard */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PlantUMLKeyboard;
 		};
 		A09F62DC29DDD08600650C9A /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLFramework;
-		};
-		A09F62DE29DDD08D00650C9A /* PlantUMLKeyboard */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PlantUMLKeyboard;
 		};
 		A0BD13F629EB16280048D9C6 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;

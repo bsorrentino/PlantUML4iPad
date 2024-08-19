@@ -8,11 +8,9 @@
 import SwiftUI
 import Combine
 import PlantUMLFramework
-import PlantUMLKeyboard
-import CodeViewer
 import AppSecureStorage
 import PencilKit
-
+import AceEditor
 //
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
 //
@@ -23,14 +21,13 @@ import PencilKit
 
 
 struct PlantUMLDocumentView: View {
-    typealias PlantUMLEditorView = CodeViewer
     
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
     @Environment(\.openURL) private var openURL
     
-    @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
-    @AppStorage("darkTheme") var darkTheme:String = CodeWebView.Theme.monokai.rawValue
+    @AppStorage("lightTheme") var lightTheme:String = AceEditorWebView.Theme.chrome.rawValue
+    @AppStorage("darkTheme") var darkTheme:String = AceEditorWebView.Theme.monokai.rawValue
     @AppStorage("fontSize") var fontSize:Int = 15
     
     @StateObject var document: PlantUMLObservableDocument
@@ -53,9 +50,10 @@ struct PlantUMLDocumentView: View {
                 
                 
                 VStack {
-                    PlantUMLEditorView( content: $document.text,
-                                        darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
-                                        lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
+                    AceEditorView( content: $document.text,
+                                        mode: .plantuml,
+                                        darkTheme: AceEditorWebView.Theme(rawValue: darkTheme)!,
+                                        lightTheme: AceEditorWebView.Theme(rawValue: lightTheme)!,
                                         isReadOnly: false,
                                         fontSize: CGFloat(fontSize),
                                         showGutter: showLine

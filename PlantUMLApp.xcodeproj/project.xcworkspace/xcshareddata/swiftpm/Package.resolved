@@ -18,6 +18,15 @@
           "revision": "fd13a41e987004d14f1793c570721953a2767b03",
           "version": null
         }
+      },
+      {
+        "package": "SwiftyAceEditor",
+        "repositoryURL": "https://github.com/bsorrentino/SwiftyACE.git",
+        "state": {
+          "branch": "plantuml",
+          "revision": "7131760a100219845edad7296d87b926812eb871",
+          "version": null
+        }
       }
     ]
   },
