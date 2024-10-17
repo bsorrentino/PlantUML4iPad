@@ -51,13 +51,13 @@ struct PlantUMLDocumentView: View {
                 
                 VStack {
                     AceEditorView( content: $document.text,
+                                   options: AceEditorView.Options(
                                         mode: .plantuml,
                                         darkTheme: AceEditorWebView.Theme(rawValue: darkTheme)!,
                                         lightTheme: AceEditorWebView.Theme(rawValue: lightTheme)!,
                                         isReadOnly: false,
                                         fontSize: CGFloat(fontSize),
-                                        showGutter: showLine
-                    )
+                                        showGutter: showLine))
                     .id( editorViewId )
                     .if( isRunningTests ) { /// this need for catching current editor data from UI test
                         $0.overlay(alignment: .bottom) {
