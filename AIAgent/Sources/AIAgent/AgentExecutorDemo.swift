@@ -34,7 +34,7 @@ struct AgentExecutorDemoState : AgentState {
 public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( openAI: OpenAI,
                                                                         imageValue: DiagramImageValue,
                                                                         delegate:T ) async throws -> String? {
-    let workflow = StateGraph { AgentExecutorState() }
+    let workflow = StateGraph { AgentExecutorState($0) }
     
     try workflow.addNode("agent_describer", action: { state in
         await delegate.progress("starting analyze\ndiagram 👀")
@@ -91,7 +91,7 @@ public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( openAI: 
     try workflow.addEdge( sourceId: "agent_describer",
                           targetId: "agent_generic_plantuml" )
     
-    try workflow.setEntryPoint( "agent_describer")
+    try workflow.addEdge( sourceId: START, targetId: "agent_describer")
     
     let app = try workflow.compile()
     
@@ -138,7 +138,7 @@ let usecase_description = """
 public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( openAI: OpenAI,
                                                                         imageValue: DiagramImageValue,
                                                                         delegate:T ) async throws -> String? {
-    let workflow = StateGraph { AgentExecutorState() }
+    let workflow = StateGraph { AgentExecutorState($0) }
     
     try workflow.addNode("agent_describer", action: { state in
         await delegate.progress("starting analyze\ndiagram 👀")
@@ -164,7 +164,7 @@ public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( o
     
     try workflow.addEdge(sourceId: "agent_usecase_plantuml", targetId: END)
 
-    try workflow.setEntryPoint( "agent_describer")
+    try workflow.addEdge( sourceId: START, targetId: "agent_describer")
     
     let app = try workflow.compile()
     

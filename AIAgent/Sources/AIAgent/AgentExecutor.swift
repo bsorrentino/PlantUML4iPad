@@ -295,7 +295,7 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: Open
                                                                     imageValue: DiagramImageValue,
                                                                     delegate:T ) async throws -> String? {
     
-    let workflow = StateGraph { AgentExecutorState() }
+    let workflow = StateGraph { AgentExecutorState($0) }
     
     try workflow.addNode("agent_describer", action: { state in
         try await describeDiagramImage(state: state, openAI: openAI, delegate: delegate)
@@ -323,7 +323,7 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: Open
             "generic": "agent_generic_plantuml",
         ]
     )
-    try workflow.setEntryPoint( "agent_describer")
+    try workflow.addEdge( sourceId: START, targetId: "agent_describer")
     
     let app = try workflow.compile()
     
