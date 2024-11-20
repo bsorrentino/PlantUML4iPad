@@ -17,7 +17,7 @@ let package = Package(
     ],
     dependencies: [
 //        .package(url: "https://github.com/bsorrentino/LangGraph-Swift.git", exact: "2.0.0"),
-        .package(url: "https://github.com/bsorrentino/LangGraph-Swift.git", branch: "develop"),
+        .package(url: "https://github.com/bsorrentino/LangGraph-Swift.git", branch: "main"),
 //        .package(url: "https://github.com/bsorrentino/Swift-OpenAI.git", branch: "develop"), // Add the dependency here
         .package(url: "https://github.com/MacPaw/OpenAI.git", branch: "main")
     ],

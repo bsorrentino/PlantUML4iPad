@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bsorrentino/LangGraph-Swift.git",
       "state" : {
-        "branch" : "develop",
-        "revision" : "95af8170cd8caa8b8034b558d4ccf15ed1d47e57"
+        "branch" : "main",
+        "revision" : "18cbf4542ac90f73952d8a9c9398d6b3b5de3f25"
       }
     },
     {
@@ -24,7 +24,7 @@
       "location" : "https://github.com/bsorrentino/SwiftyACE.git",
       "state" : {
         "branch" : "main",
-        "revision" : "5b0ac9051313279d8d9b2f436494cd1d0ac0a8c3"
+        "revision" : "b538153f25e353a00a9f1f970649bb1144b8a8f4"
       }
     }
   ],
