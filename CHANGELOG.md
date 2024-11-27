@@ -1,6 +1,44 @@
 # Changelog
 
 
+"name: v3.3.0_2" is a release tag
+
+## [v3.3.0_2](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.3.0_2) (2024-11-27)
+
+### Features
+
+ -  add network monitoring service to app ([c8a00441857a16a](https://github.com/bsorrentino/PlantUML4iPad/commit/c8a00441857a16a7c5b4f5ff527e2ba2463e457c))
+
+
+### Documentation
+
+ -  add release notes for version 3.3 🎉 ([5da71f658c79e28](https://github.com/bsorrentino/PlantUML4iPad/commit/5da71f658c79e2863de4be98efb1df69226be4e2))
+ -  add README.md to project resources ([954ce0dd580419a](https://github.com/bsorrentino/PlantUML4iPad/commit/954ce0dd580419ade30691ca104ccc765e09a713))
+ -  update readme ([91fa10b5bad8459](https://github.com/bsorrentino/PlantUML4iPad/commit/91fa10b5bad84593d38faca68429b485f537d331))
+ -  updare readme ([6a07e6d9f761bde](https://github.com/bsorrentino/PlantUML4iPad/commit/6a07e6d9f761bde82db198ade397686f8823118b))
+ -  update readme ([28ffe4fd1ef4a64](https://github.com/bsorrentino/PlantUML4iPad/commit/28ffe4fd1ef4a643f2186969c45e03bc5874d0e2))
+ -  update readme ([0e1213ee5f8689e](https://github.com/bsorrentino/PlantUML4iPad/commit/0e1213ee5f8689e64ecc07933d6b8418344058f8))
+ -  update changelog ([0631a643d49d1a8](https://github.com/bsorrentino/PlantUML4iPad/commit/0631a643d49d1a8929298b05d260cc27c497aacc))
+
+### Refactor
+
+ -  update to last AceEditor version ([c82abd66866eafb](https://github.com/bsorrentino/PlantUML4iPad/commit/c82abd66866eafb742cc45b55db94c5d54ca10a6))
+ -  update to last langgraph version ([a8959b5235f6810](https://github.com/bsorrentino/PlantUML4iPad/commit/a8959b5235f681015312dbe8a01dcd08f4596a68))
+ -  add eternal package SwiftyACE, removing the local one ([1313cf7b4803631](https://github.com/bsorrentino/PlantUML4iPad/commit/1313cf7b4803631765ea9cbf8a15d3c53cc0feef))
+ -  clean code ([950d81f310742b1](https://github.com/bsorrentino/PlantUML4iPad/commit/950d81f310742b1e23373d0d372f5d5a5024e896))
+
+### ALM 
+
+ -  add hotfix script for CHANGELOG generation ([ebfff1e428cce0f](https://github.com/bsorrentino/PlantUML4iPad/commit/ebfff1e428cce0f6324c87bbc3d02ebcf93b7867))
+ -  increment project version to 2 ([af3ce415f4aeb96](https://github.com/bsorrentino/PlantUML4iPad/commit/af3ce415f4aeb96d15349d01fd64639f4f5adb75))
+ -  update packages ([74b838ad1ca8d86](https://github.com/bsorrentino/PlantUML4iPad/commit/74b838ad1ca8d86a268f44f49f8543531deaf5a2))
+ -  update SwiftyACE package ([1c5497e6fe91d43](https://github.com/bsorrentino/PlantUML4iPad/commit/1c5497e6fe91d43866202923303a7c44bfe30f71))
+ -  update version packages ([cdd2d78388f28e4](https://github.com/bsorrentino/PlantUML4iPad/commit/cdd2d78388f28e4c26484ffb8fc433e28ebd3c10))
+ -  update project version ([75997ceb2ba28e9](https://github.com/bsorrentino/PlantUML4iPad/commit/75997ceb2ba28e97ffe2f659f0823cc61ab41978))
+ -  update SwiftyACE package ([e7ec636bd76ff6f](https://github.com/bsorrentino/PlantUML4iPad/commit/e7ec636bd76ff6fc4b492e8907fb2692eabc7690))
+ -  update project settings ([f4eb64505d31da6](https://github.com/bsorrentino/PlantUML4iPad/commit/f4eb64505d31da6786c8ac4b1ceedb2944f3e3ae))
+
+
 "name: v3.2.0_3" is a release tag
 
 ## [v3.2.0_3](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.2.0_3) (2024-07-15)
