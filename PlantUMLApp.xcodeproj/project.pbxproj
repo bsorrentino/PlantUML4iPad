@@ -27,6 +27,7 @@
 		A0A80A762B3ED90A00CB08CA /* SwiftUI+PencilKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A80A752B3ED90A00CB08CA /* SwiftUI+PencilKit.swift */; };
 		A0AC4EAD2CF760AE00E5090A /* NetworkObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC4EAC2CF760AC00E5090A /* NetworkObservableService.swift */; };
 		A0AC4EB02CF791DC00E5090A /* hotfix-changelog.sh in Resources */ = {isa = PBXBuildFile; fileRef = A0AC4EAF2CF791DC00E5090A /* hotfix-changelog.sh */; };
+		A0AC4EB22CF7925600E5090A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A0AC4EB12CF7925600E5090A /* README.md */; };
 		A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */; };
 		A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0BFBA9C290D551F008340E3 /* Localizable.strings */; };
 		A0C0C3282B5D95DD00CE66A2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0C3272B5D95DD00CE66A2 /* Errors.swift */; };
@@ -103,6 +104,7 @@
 		A0A80A752B3ED90A00CB08CA /* SwiftUI+PencilKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+PencilKit.swift"; sourceTree = "<group>"; };
 		A0AC4EAC2CF760AC00E5090A /* NetworkObservableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkObservableService.swift; sourceTree = "<group>"; };
 		A0AC4EAF2CF791DC00E5090A /* hotfix-changelog.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "hotfix-changelog.sh"; sourceTree = "<group>"; };
+		A0AC4EB12CF7925600E5090A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Conditional.swift"; sourceTree = "<group>"; };
 		A0BFBA9B290D551F008340E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A0C0C3272B5D95DD00CE66A2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 		A0D3C63D28984A0E000838D7 = {
 			isa = PBXGroup;
 			children = (
+				A0AC4EB12CF7925600E5090A /* README.md */,
 				A0AC4EAF2CF791DC00E5090A /* hotfix-changelog.sh */,
 				A05F2E372A1FFC49007FDF36 /* CHANGELOG.md */,
 				A074F6982A16D40500061398 /* OpenAI.prod.xcconfig */,
@@ -414,6 +417,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0AC4EB22CF7925600E5090A /* README.md in Resources */,
 				A0D3C65328984A10000838D7 /* Preview Assets.xcassets in Resources */,
 				A0AC4EB02CF791DC00E5090A /* hotfix-changelog.sh in Resources */,
 				A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */,
