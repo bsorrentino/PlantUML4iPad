@@ -36,6 +36,10 @@ _Promotional Text_ 🤞
 
 **Take a Note:**
 
+* **Release 3.3**
+  * add offline detection
+  * bump up SwiftyACE package
+  
 * **Release 3.2**
   * prompt refinements
   * add detection of [use-case diagram][usecase] from drawing.
