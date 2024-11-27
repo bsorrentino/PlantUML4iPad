@@ -31,8 +31,8 @@ struct PlantUMLDocumentView: View {
     @AppStorage("fontSize") var fontSize:Int = 15
     
     @StateObject var document: PlantUMLObservableDocument
-    @StateObject private var openAIService = OpenAIObservableService()
-    
+    @StateObject var openAIService = OpenAIObservableService()
+    @StateObject var networkService = NetworkObservableService()
     @State var isOpenAIVisible  = false
     
     @State var keyboardTab: String  = "general"
@@ -47,7 +47,6 @@ struct PlantUMLDocumentView: View {
         
         VStack {
             GeometryReader { geometry in
-                
                 
                 VStack {
                     AceEditorView( content: $document.text,
@@ -73,8 +72,11 @@ struct PlantUMLDocumentView: View {
             }
             if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
                 OpenAIView( service: openAIService,
-                            document: document,
-                            drawingView:  { DiagramDrawingView } )
+                            document: document ) {
+                                DiagramDrawingView
+                                .environmentObject(networkService)
+                            }
+                .environmentObject(networkService)
                 .frame( height: 200 )
                 .onChange(of: openAIService.status ) { newStatus in
                     if( .Ready == newStatus ) {
@@ -96,15 +98,7 @@ struct PlantUMLDocumentView: View {
                 saving = false
             }
         }
-        .onRotate(perform: { orientation in
-            //            if  (orientation.isPortrait && isDiagramVisible) ||
-            //                    (orientation.isLandscape && isEditorVisible)
-            //            {
-            //                isEditorVisible.toggle()
-            //            }
-        })
-//        .navigationBarTitle(Text( "📝 Diagram Editor" ), displayMode: .inline)
-        
+//        .onRotate(perform: { orientation in })
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) { }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -129,6 +123,7 @@ struct PlantUMLDocumentView: View {
         }
     }
 }
+
 
 //
 // MARK: - Drawing extension -
@@ -237,26 +232,62 @@ extension PlantUMLDocumentView {
 }
 
 //
+// MARK: - AI extension -
+//
+extension PlantUMLDocumentView {
+    
+    var ToggleOpenAIButton: some View {
+        
+        Button {
+            isOpenAIVisible.toggle()
+        }
+        label: {
+            Label {
+                Text("OpenAI Editor")
+            } icon: {
+                #if __OPENAI_LOGO
+                // [How can I set an image tint in SwiftUI?](https://stackoverflow.com/a/73289182/521197)
+                Image("openai")
+                    .resizable()
+                    .colorMultiply(isOpenAIVisible ? .blue : .gray)
+                    .frame( width: 28, height: 28)
+                #else
+                Image( systemName: "brain" )
+                    .resizable()
+                    .frame( width: 24, height: 20)
+                #endif
+            }
+            .environment(\.symbolVariants, .fill)
+            .labelStyle(.iconOnly)
+        }
+        .networkEnabled(networkService)
+        .accessibilityIdentifier("openai")
+    }
+    
+}
+
+
+//
 // MARK: - Diagram extension -
 //
 extension PlantUMLDocumentView {
     
     func ToggleDiagramButton() -> some View {
-        
-        NavigationLink(  destination: {
-            PlantUMLDiagramView( url: document.buildURL())
+        NavigationLink(destination: {
+            PlantUMLDiagramView(url: document.buildURL())
                 .toolbarRole(.navigationStack)
         }) {
-            Label( "Preview >", systemImage: "photo.fill" )
+            Label("Preview >", systemImage: "photo.fill")
                 .labelStyle(.titleOnly)
-                .foregroundColor( .blue )
         }
         .accessibilityIdentifier("diagram_preview")
         .padding(.leading, 15)
-        
+        .networkEnabled(networkService) 
+            
     }
     
 }
+
 
 
 // MARK: - Preview -

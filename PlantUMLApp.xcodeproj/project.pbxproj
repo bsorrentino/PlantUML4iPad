@@ -25,6 +25,7 @@
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLObservableDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */; };
 		A0A80A762B3ED90A00CB08CA /* SwiftUI+PencilKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A80A752B3ED90A00CB08CA /* SwiftUI+PencilKit.swift */; };
+		A0AC4EAD2CF760AE00E5090A /* NetworkObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC4EAC2CF760AC00E5090A /* NetworkObservableService.swift */; };
 		A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */; };
 		A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0BFBA9C290D551F008340E3 /* Localizable.strings */; };
 		A0C0C3282B5D95DD00CE66A2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0C3272B5D95DD00CE66A2 /* Errors.swift */; };
@@ -99,6 +100,7 @@
 		A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDiagramView.swift; sourceTree = "<group>"; };
 		A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLObservableDocument.swift; sourceTree = "<group>"; };
 		A0A80A752B3ED90A00CB08CA /* SwiftUI+PencilKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+PencilKit.swift"; sourceTree = "<group>"; };
+		A0AC4EAC2CF760AC00E5090A /* NetworkObservableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkObservableService.swift; sourceTree = "<group>"; };
 		A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Conditional.swift"; sourceTree = "<group>"; };
 		A0BFBA9B290D551F008340E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A0C0C3272B5D95DD00CE66A2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			children = (
 				A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */,
 				A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */,
+				A0AC4EAC2CF760AC00E5090A /* NetworkObservableService.swift */,
 			);
 			name = Observable;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */,
 				A0A139352A13C49A00B69FBC /* View+Secure.swift in Sources */,
 				A0F2B14229353C2D00A44481 /* SwiftUI+Rotate.swift in Sources */,
+				A0AC4EAD2CF760AE00E5090A /* NetworkObservableService.swift in Sources */,
 				A04512F12B3DFCB900CD1158 /* PlantUMLDiagramMenu.swift in Sources */,
 				A0C0C3282B5D95DD00CE66A2 /* Errors.swift in Sources */,
 				A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */,
