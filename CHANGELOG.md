@@ -1,15 +1,6 @@
 # Changelog
 
 
-
-## [Unreleased](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/Unreleased) ()
-
-
-
-
-
-
-
 "name: v3.3.0_2" is a release tag
 
 ## [v3.3.0_2](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.3.0_2) (2024-11-27)
