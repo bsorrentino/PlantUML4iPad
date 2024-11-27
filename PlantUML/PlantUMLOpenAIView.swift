@@ -17,8 +17,10 @@ struct OpenAIView<DrawingView :View> : View {
         case Settings
     }
     
-    @ObservedObject var service:OpenAIObservableService
+    @ObservedObject var service:  OpenAIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
+    @EnvironmentObject var networkService: NetworkObservableService
+
     @State var instruction:String = ""
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
@@ -48,11 +50,13 @@ struct OpenAIView<DrawingView :View> : View {
                 .accessibilityIdentifier("openai_drawing")
                 .disabled( !service.isSettingsValid )
                 
+                
                 Button( action: { tabs = .Prompt } ) {
                     Label( "Prompt", systemImage: "keyboard.onehanded.right")
                 }
                 .accessibilityIdentifier("openai_prompt")
                 .disabled( !service.isSettingsValid )
+                .networkEnabled( networkService )
 
 //                Divider().frame(height: 20 )
                 Button( action: { tabs = .PromptHistory } ) {
@@ -192,6 +196,7 @@ extension OpenAIView {
                     })
                     .disabled( isEditing )
                     .accessibilityIdentifier("openai_submit")
+                    .networkEnabled(networkService)
                 }
             }
             .padding(EdgeInsets( top: 10, leading: 0, bottom: 5, trailing: 10))
@@ -297,38 +302,6 @@ extension OpenAIView {
             .padding()
         }
         
-    }
-    
-}
-
-extension PlantUMLDocumentView {
-    
-    var ToggleOpenAIButton: some View {
-        
-        Button {
-            isOpenAIVisible.toggle()
-        }
-        label: {
-            Label {
-                Text("OpenAI Editor")
-            } icon: {
-                #if __OPENAI_LOGO
-                // [How can I set an image tint in SwiftUI?](https://stackoverflow.com/a/73289182/521197)
-                Image("openai")
-                    .resizable()
-                    .colorMultiply(isOpenAIVisible ? .blue : .gray)
-                    .frame( width: 28, height: 28)
-                #else
-                Image( systemName: "brain" )
-                    .resizable()
-                    .foregroundColor( isOpenAIVisible ? .blue : .gray)
-                    .frame( width: 24, height: 20)
-                #endif
-            }
-            .environment(\.symbolVariants, .fill)
-            .labelStyle(.iconOnly)
-        }
-        .accessibilityIdentifier("openai")
     }
     
 }

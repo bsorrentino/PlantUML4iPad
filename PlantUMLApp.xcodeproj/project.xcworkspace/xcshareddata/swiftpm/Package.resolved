@@ -1,25 +1,32 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "LangGraph",
-        "repositoryURL": "https://github.com/bsorrentino/LangGraph-Swift.git",
-        "state": {
-          "branch": "develop",
-          "revision": "45e5243ee11632614908caef34432629278591a0",
-          "version": null
-        }
-      },
-      {
-        "package": "OpenAI",
-        "repositoryURL": "https://github.com/MacPaw/OpenAI.git",
-        "state": {
-          "branch": "main",
-          "revision": "fd13a41e987004d14f1793c570721953a2767b03",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "langgraph-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bsorrentino/LangGraph-Swift.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "18cbf4542ac90f73952d8a9c9398d6b3b5de3f25"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "openai",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MacPaw/OpenAI.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "843e087929aa806adb611dbca93f9a4a7f28be04"
+      }
+    },
+    {
+      "identity" : "swiftyace",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bsorrentino/SwiftyACE.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b538153f25e353a00a9f1f970649bb1144b8a8f4"
+      }
+    }
+  ],
+  "version" : 2
 }

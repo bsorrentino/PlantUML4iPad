@@ -25,6 +25,7 @@ struct PlantUMLDrawingView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var service:OpenAIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
+    @EnvironmentObject var networkService: NetworkObservableService
     @State var isScrollEnabled = true
     @State var isUseDrawingTool = false
     @State var processing = false
@@ -71,11 +72,12 @@ struct PlantUMLDrawingView: View {
                     Label( "process", systemImage: "eye")
                         .foregroundColor(Color.orange)
                         .labelStyle(.titleOnly)
+                        .networkEnabledStyle(networkService)
                     
                 })
                 .accessibilityIdentifier("drawing_process")
-            }
-            )
+                .networkEnabled(networkService)
+            })
         }
         .onCancel {
             processImageTask?.cancel()
@@ -93,7 +95,7 @@ struct PlantUMLDrawingView: View {
     }
     
     private func updateDiagram() {
-//        document.drawingData = canvas.drawing.dataRepresentation()
+        //        document.drawingData = canvas.drawing.dataRepresentation()
     }
     
 }

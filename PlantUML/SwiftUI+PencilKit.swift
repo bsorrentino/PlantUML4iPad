@@ -96,11 +96,7 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if DEMO_MODE {
-            
-        }
+        super.viewDidAppear(animated)        
     }
 
     override func viewDidDisappear(_ animated: Bool) {

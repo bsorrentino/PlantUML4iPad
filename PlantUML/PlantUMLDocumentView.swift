@@ -8,11 +8,9 @@
 import SwiftUI
 import Combine
 import PlantUMLFramework
-import PlantUMLKeyboard
-import CodeViewer
 import AppSecureStorage
 import PencilKit
-
+import AceEditor
 //
 // [Managing Focus in SwiftUI List Views](https://peterfriese.dev/posts/swiftui-list-focus/)
 //
@@ -23,19 +21,18 @@ import PencilKit
 
 
 struct PlantUMLDocumentView: View {
-    typealias PlantUMLEditorView = CodeViewer
     
     @Environment(\.scenePhase) var scene
     @Environment(\.interfaceOrientation) var interfaceOrientation: InterfaceOrientationHolder
     @Environment(\.openURL) private var openURL
     
-    @AppStorage("lightTheme") var lightTheme:String = CodeWebView.Theme.chrome.rawValue
-    @AppStorage("darkTheme") var darkTheme:String = CodeWebView.Theme.monokai.rawValue
+    @AppStorage("lightTheme") var lightTheme:String = AceEditorWebView.Theme.chrome.rawValue
+    @AppStorage("darkTheme") var darkTheme:String = AceEditorWebView.Theme.monokai.rawValue
     @AppStorage("fontSize") var fontSize:Int = 15
     
     @StateObject var document: PlantUMLObservableDocument
-    @StateObject private var openAIService = OpenAIObservableService()
-    
+    @StateObject var openAIService = OpenAIObservableService()
+    @StateObject var networkService = NetworkObservableService()
     @State var isOpenAIVisible  = false
     
     @State var keyboardTab: String  = "general"
@@ -51,15 +48,15 @@ struct PlantUMLDocumentView: View {
         VStack {
             GeometryReader { geometry in
                 
-                
                 VStack {
-                    PlantUMLEditorView( content: $document.text,
-                                        darkTheme: CodeWebView.Theme(rawValue: darkTheme)!,
-                                        lightTheme: CodeWebView.Theme(rawValue: lightTheme)!,
+                    AceEditorView( content: $document.text,
+                                   options: AceEditorView.Options(
+                                        mode: .plantuml,
+                                        darkTheme: AceEditorWebView.Theme(rawValue: darkTheme)!,
+                                        lightTheme: AceEditorWebView.Theme(rawValue: lightTheme)!,
                                         isReadOnly: false,
                                         fontSize: CGFloat(fontSize),
-                                        showGutter: showLine
-                    )
+                                        showGutter: showLine))
                     .id( editorViewId )
                     .if( isRunningTests ) { /// this need for catching current editor data from UI test
                         $0.overlay(alignment: .bottom) {
@@ -75,8 +72,11 @@ struct PlantUMLDocumentView: View {
             }
             if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
                 OpenAIView( service: openAIService,
-                            document: document,
-                            drawingView:  { DiagramDrawingView } )
+                            document: document ) {
+                                DiagramDrawingView
+                                .environmentObject(networkService)
+                            }
+                .environmentObject(networkService)
                 .frame( height: 200 )
                 .onChange(of: openAIService.status ) { newStatus in
                     if( .Ready == newStatus ) {
@@ -98,15 +98,7 @@ struct PlantUMLDocumentView: View {
                 saving = false
             }
         }
-        .onRotate(perform: { orientation in
-            //            if  (orientation.isPortrait && isDiagramVisible) ||
-            //                    (orientation.isLandscape && isEditorVisible)
-            //            {
-            //                isEditorVisible.toggle()
-            //            }
-        })
-//        .navigationBarTitle(Text( "📝 Diagram Editor" ), displayMode: .inline)
-        
+//        .onRotate(perform: { orientation in })
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarLeading) { }
             ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -131,6 +123,7 @@ struct PlantUMLDocumentView: View {
         }
     }
 }
+
 
 //
 // MARK: - Drawing extension -
@@ -239,26 +232,62 @@ extension PlantUMLDocumentView {
 }
 
 //
+// MARK: - AI extension -
+//
+extension PlantUMLDocumentView {
+    
+    var ToggleOpenAIButton: some View {
+        
+        Button {
+            isOpenAIVisible.toggle()
+        }
+        label: {
+            Label {
+                Text("OpenAI Editor")
+            } icon: {
+                #if __OPENAI_LOGO
+                // [How can I set an image tint in SwiftUI?](https://stackoverflow.com/a/73289182/521197)
+                Image("openai")
+                    .resizable()
+                    .colorMultiply(isOpenAIVisible ? .blue : .gray)
+                    .frame( width: 28, height: 28)
+                #else
+                Image( systemName: "brain" )
+                    .resizable()
+                    .frame( width: 24, height: 20)
+                #endif
+            }
+            .environment(\.symbolVariants, .fill)
+            .labelStyle(.iconOnly)
+        }
+        .networkEnabled(networkService)
+        .accessibilityIdentifier("openai")
+    }
+    
+}
+
+
+//
 // MARK: - Diagram extension -
 //
 extension PlantUMLDocumentView {
     
     func ToggleDiagramButton() -> some View {
-        
-        NavigationLink(  destination: {
-            PlantUMLDiagramView( url: document.buildURL())
+        NavigationLink(destination: {
+            PlantUMLDiagramView(url: document.buildURL())
                 .toolbarRole(.navigationStack)
         }) {
-            Label( "Preview >", systemImage: "photo.fill" )
+            Label("Preview >", systemImage: "photo.fill")
                 .labelStyle(.titleOnly)
-                .foregroundColor( .blue )
         }
         .accessibilityIdentifier("diagram_preview")
         .padding(.leading, 15)
-        
+        .networkEnabled(networkService) 
+            
     }
     
 }
+
 
 
 // MARK: - Preview -
