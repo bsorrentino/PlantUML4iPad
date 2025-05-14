@@ -24,6 +24,7 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         else {
             self.canvas.drawing = drawing
         }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -32,6 +33,13 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) {
+            (self: Self, previousTraitCollection: UITraitCollection) in
+            
+            self.updateAppearance(for: self.traitCollection.userInterfaceStyle)
+        }
+        
         setupScrollView()
         setupCanvasView()
     }
@@ -75,15 +83,14 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         return canvas
     }
     
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        
-        // Check if the user interface style has changed
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            updateAppearance(for: traitCollection.userInterfaceStyle)
-        }
-    }
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        super.traitCollectionDidChange(previousTraitCollection)
+//        
+//        // Check if the user interface style has changed
+//        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+//            updateAppearance(for: traitCollection.userInterfaceStyle)
+//        }
+//    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
