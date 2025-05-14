@@ -78,17 +78,17 @@ struct PlantUMLDocumentView: View {
                             }
                 .environmentObject(networkService)
                 .frame( height: 200 )
-                .onChange(of: openAIService.status ) { newStatus in
+                .onChange(of: openAIService.status ) { _, newStatus in
                     if( .Ready == newStatus ) {
                         // Force rendering editor view
-                        //                            print( "FORCE RENDERING OF EDITOR VIEW")
+                        // print( "FORCE RENDERING OF EDITOR VIEW")
                         editorViewId += 1
                     }
                 }
                 
             }
         }
-        .onChange(of: document.text ) { _ in
+        .onChange(of: document.text ) {
             saving = true
             document.updateRequest.send()
         }
