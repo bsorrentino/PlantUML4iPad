@@ -2,9 +2,10 @@
 
 {{#tags}}
 
-{{#ifReleaseTag .}}
-"{{.}}" is a release tag
-{{/ifReleaseTag}}
+
+{{!#ifReleaseTag .}}
+<!-- "{{.}}" is a release tag -->
+{{!/ifReleaseTag}}
 
 ## [{{name}}](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/{{name}}) ({{tagDate .}})
 
@@ -13,7 +14,11 @@
 
     {{#commits}}
       {{#ifCommitType . type='feat'}}
- - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://github.com/bsorrentino/PlantUML4iPad/commit/{{hashFull}}))
+ * {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://github.com/bsorrentino/PlantUML4iPad/commit/{{hashFull}}))
+   {{#messageBodyItems}} 
+     > {{.}}
+   {{/messageBodyItems}}
+   
       {{/ifCommitType}}
     {{/commits}}
 {{/ifContainsType}}
@@ -24,6 +29,10 @@
     {{#commits}}
       {{#ifCommitType . type='fix'}}
  - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://github.com/bsorrentino/PlantUML4iPad/commit/{{hashFull}}))
+   {{#messageBodyItems}}
+     > {{.}}
+   {{/messageBodyItems}}
+
       {{/ifCommitType}}
     {{/commits}}
 {{/ifContainsType}}
@@ -34,6 +43,10 @@
     {{#commits}}
       {{#ifCommitType . type='docs'}}
  - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://github.com/bsorrentino/PlantUML4iPad/commit/{{hashFull}}))
+   {{#messageBodyItems}}
+     > {{.}}
+   {{/messageBodyItems}}
+
       {{/ifCommitType}}
     {{/commits}}
 {{/ifContainsType}}
@@ -44,6 +57,9 @@
     {{#commits}}
       {{#ifCommitType . type='refactor'}}
  - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://github.com/bsorrentino/PlantUML4iPad/commit/{{hashFull}}))
+   {{#messageBodyItems}} > {{.}}
+   {{/messageBodyItems}}
+
       {{/ifCommitType}}
     {{/commits}}
 {{/ifContainsType}}
@@ -54,8 +70,38 @@
     {{#commits}}
       {{#ifCommitType . type='build'}}
  - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://github.com/bsorrentino/PlantUML4iPad/commit/{{hashFull}}))
+   {{#messageBodyItems}} > {{.}}
+   {{/messageBodyItems}}
+
       {{/ifCommitType}}
     {{/commits}}
 {{/ifContainsType}}
+
+{{#ifContainsType commits type='test'}}
+### Test 
+
+    {{#commits}}
+      {{#ifCommitType . type='test'}}
+ - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://github.com/bsorrentino/PlantUML4iPad/commit/{{hashFull}}))
+   {{#messageBodyItems}} > {{.}}
+   {{/messageBodyItems}}
+
+      {{/ifCommitType}}
+    {{/commits}}
+{{/ifContainsType}}
+
+{{#ifContainsType commits type='ci'}}
+### Continuous Integration
+
+    {{#commits}}
+      {{#ifCommitType . type='ci'}}
+ - {{#eachCommitScope .}} **{{.}}** {{/eachCommitScope}} {{{commitDescription .}}} ([{{hash}}](https://github.com/bsorrentino/PlantUML4iPad/commit/{{hashFull}}))
+   {{#messageBodyItems}} > {{.}}
+   {{/messageBodyItems}}
+
+      {{/ifCommitType}}
+    {{/commits}}
+{{/ifContainsType}}
+
 
 {{/tags}}
