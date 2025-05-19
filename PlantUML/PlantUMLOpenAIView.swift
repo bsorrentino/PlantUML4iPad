@@ -136,7 +136,7 @@ extension OpenAIView {
                     .padding( .bottom, 35)
                     .accessibilityIdentifier("openai_instruction")
                     .focused($promptInFocus)
-                    .onChange(of: instruction) {
+                    .onChange(of: instruction) { _ in
                         if service.status != .Ready {
                             service.status = .Ready
                         }
