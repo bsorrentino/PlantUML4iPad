@@ -34,10 +34,12 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        registerForTraitChanges([UITraitUserInterfaceStyle.self]) {
-            (self: Self, previousTraitCollection: UITraitCollection) in
-            
-            self.updateAppearance(for: self.traitCollection.userInterfaceStyle)
+        if #available(iOS 17.0, *) {
+            registerForTraitChanges([UITraitUserInterfaceStyle.self]) {
+                (self: Self, previousTraitCollection: UITraitCollection) in
+
+                self.updateAppearance(for: self.traitCollection.userInterfaceStyle)
+            }
         }
         
         setupScrollView()
@@ -56,8 +58,11 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     private func setupCanvasView() {
         picker.showsDrawingPolicyControls = false
         canvas.isOpaque = false
+        #if targetEnvironment(simulator)
+        canvas.drawingPolicy = .anyInput
+        #else
         canvas.drawingPolicy = .pencilOnly
-        
+        #endif
         updateAppearance( for: UITraitCollection.current.userInterfaceStyle )
         
         scrollView.addSubview(canvas)
@@ -83,14 +88,16 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         return canvas
     }
     
-//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-//        super.traitCollectionDidChange(previousTraitCollection)
-//        
-//        // Check if the user interface style has changed
-//        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-//            updateAppearance(for: traitCollection.userInterfaceStyle)
-//        }
-//    }
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+   
+        if ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 17 {
+            // Check if the user interface style has changed
+            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                updateAppearance(for: traitCollection.userInterfaceStyle)
+            }
+        }
+    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -103,7 +110,7 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)        
+        super.viewDidAppear(animated)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
