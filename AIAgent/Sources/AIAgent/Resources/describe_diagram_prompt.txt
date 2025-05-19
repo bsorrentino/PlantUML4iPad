@@ -1,8 +1,7 @@
 describe the diagram in the image step by step so we can translate it into diagram-as-code syntax.
 
-The output should be a markdown code snippet formatted in the following schema, including the leading and trailing "```json" and "```":
+The output should be conform with the following JSON schema:
 
-```json
 {
         "type": string  // UML Diagram tipology (one word). It can be "sequence", "usecase" and as default "generic",
         "title": string  // Diagram summary (max one line) or title (if any)
@@ -10,5 +9,5 @@ The output should be a markdown code snippet formatted in the following schema, 
         "relations": array  // list of relations in the diagram in the form { source:"<source participant>", target:"<target participant>", description:"<relation description>" }
         "containers": array  // list of participants that contain other ones in the diagram in the form { name:"<name>", children:[ list of elements name contained separated by comma ], description:"<container description>" }
         "description": array  // Step by step description of the diagram with clear indication of participants and actions between them.
+        "error": string // optional. In the case it is not possible transate diagram, report problem here
 }
-```

@@ -19,7 +19,8 @@ let package = Package(
 //        .package(url: "https://github.com/bsorrentino/LangGraph-Swift.git", exact: "2.0.0"),
         .package(url: "https://github.com/bsorrentino/LangGraph-Swift.git", branch: "main"),
 //        .package(url: "https://github.com/bsorrentino/Swift-OpenAI.git", branch: "develop"), // Add the dependency here
-        .package(url: "https://github.com/MacPaw/OpenAI.git", branch: "main")
+//        .package(url: "https://github.com/MacPaw/OpenAI.git", branch: "main")
+        .package(url: "https://github.com/MacPaw/OpenAI.git", exact: "0.4.3")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

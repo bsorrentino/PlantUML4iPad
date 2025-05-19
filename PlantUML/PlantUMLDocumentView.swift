@@ -81,14 +81,14 @@ struct PlantUMLDocumentView: View {
                 .onChange(of: openAIService.status ) { newStatus in
                     if( .Ready == newStatus ) {
                         // Force rendering editor view
-                        //                            print( "FORCE RENDERING OF EDITOR VIEW")
+                        // print( "FORCE RENDERING OF EDITOR VIEW")
                         editorViewId += 1
                     }
                 }
                 
             }
         }
-        .onChange(of: document.text ) { _ in
+        .onChange( of: document.text ) { _ in
             saving = true
             document.updateRequest.send()
         }
@@ -121,6 +121,7 @@ struct PlantUMLDocumentView: View {
                 }
             }
         }
+        
     }
 }
 

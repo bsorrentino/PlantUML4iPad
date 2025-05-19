@@ -127,7 +127,7 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
     
     func processImage() {
         
-        updateDiagram()
+        updateDiagram()  
         
         // getting image from Canvas
         
@@ -150,17 +150,12 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
                 }
                 
                 if let content = await service.processImageWithAgents( imageData: imageData, delegate: self ) {
-                    
                     document.text = content
-                    
                 }
                 
                 //                let base64Image = imageData.base64EncodedString()
-                //
                 //                if let content = await service.processImageWithAgents( imageUrl: "data:image/png;base64,\(base64Image)", delegate: self ) {
-                //
                 //                    document.text = content
-                //
                 //                }
                 
             }

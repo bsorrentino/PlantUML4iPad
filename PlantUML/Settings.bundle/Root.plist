@@ -202,40 +202,42 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>gpt-3.5-turbo</string>
+			<string>GPT 4o mini</string>
 			<key>Key</key>
 			<string>openaiModel</string>
 			<key>Title</key>
 			<string>Prompt Model</string>
 			<key>Titles</key>
 			<array>
-				<string>gpt-3.5-turbo</string>
-				<string>gpt-4o</string>
+				<string>GPT 4o mini</string>
+				<string>GPT 4o</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Values</key>
 			<array>
-				<string>gpt-3.5-turbo</string>
-				<string>gpt-4</string>
+				<string>gpt-4o-mini</string>
+				<string>gpt-4o</string>
 			</array>
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>gpt-4o</string>
+			<string>GPT 4o</string>
 			<key>Key</key>
 			<string>visionModel</string>
 			<key>Title</key>
 			<string>Vision Model</string>
 			<key>Titles</key>
 			<array>
-				<string>gpt-4o</string>
+				<string>GPT 4o</string>
+				<string>GPT 4.1 mini</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Values</key>
 			<array>
 				<string>gpt-4o</string>
+				<string>gpt-4.1-mini</string>
 			</array>
 		</dict>
 	</array>
