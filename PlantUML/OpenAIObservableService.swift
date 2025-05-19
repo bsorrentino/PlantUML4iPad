@@ -29,7 +29,7 @@ class OpenAIObservableService : ObservableObject {
     #endif
 
     @AppSecureStorage("openaikey") private var openAIKey:String?
-    @AppStorage("openaiModel") private var openAIModel:String = "gpt-3.5-turbo"
+    @AppStorage("openaiModel") private var promptModel:String = "gpt-3.5-turbo"
     @AppStorage("visionModel") private var visionModel:String = "gpt-4o"
 
     var clipboardQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
@@ -122,7 +122,7 @@ class OpenAIObservableService : ObservableObject {
         do {
             
             if let content = try await updatePlantUML(openAI: openAI,
-                                                      withModel: openAIModel,
+                                                      withModel: promptModel,
                                                       input: input,
                                                       withInstruction: instruction) {
                 
@@ -167,8 +167,15 @@ extension OpenAIObservableService {
             
             async let runTranslation = DEMO_MODE ?
                 // try runTranslateDrawingToPlantUMLDemo( openAI: openAI, imageValue: DiagramImageValue.data(imageData), delegate:delegate) :
-                try runTranslateDrawingToPlantUMLUseCaseDemo( openAI: openAI, imageValue: DiagramImageValue.data(imageData), delegate:delegate) :
-            try runTranslateDrawingToPlantUML( openAI: openAI, imageValue: DiagramImageValue.data(imageData), delegate:delegate);
+                try runTranslateDrawingToPlantUMLUseCaseDemo( openAI: openAI,
+                                                              promptModel: promptModel,
+                                                              imageValue: DiagramImageValue.data(imageData),
+                                                              delegate:delegate) :
+                try runTranslateDrawingToPlantUML( openAI: openAI,
+                                                   visionModel: visionModel,
+                                                   promptModel: promptModel,
+                                                   imageValue: DiagramImageValue.data(imageData),
+                                                   delegate:delegate);
 
             
             if let content = try await runTranslation {
