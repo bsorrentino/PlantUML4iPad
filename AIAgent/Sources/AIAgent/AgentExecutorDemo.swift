@@ -136,8 +136,9 @@ let usecase_description = """
 
 
 public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( openAI: OpenAI,
-                                                                        imageValue: DiagramImageValue,
-                                                                        delegate:T ) async throws -> String? {
+                                                                               promptModel: String,
+                                                                               imageValue: DiagramImageValue,
+                                                                               delegate:T ) async throws -> String? {
     let workflow = StateGraph { AgentExecutorState($0) }
     
     try workflow.addNode("agent_describer", action: { state in
@@ -156,7 +157,10 @@ public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( o
     })
     
     try workflow.addNode("agent_usecase_plantuml", action: { state in
-        try await translateDiagramDescriptionToPlantUML( state: state, openAI:openAI, delegate:delegate )
+        try await translateDiagramDescriptionToPlantUML( state: state,
+                                                         openAI:openAI,
+                                                         promptModel: promptModel,
+                                                         delegate:delegate )
     })
     
     try workflow.addEdge( sourceId: "agent_describer",
