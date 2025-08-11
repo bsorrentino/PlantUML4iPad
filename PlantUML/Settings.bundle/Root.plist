@@ -202,7 +202,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>GPT 4o mini</string>
+			<string>gpt-4o-mini</string>
 			<key>Key</key>
 			<string>openaiModel</string>
 			<key>Title</key>
@@ -222,7 +222,7 @@
 		</dict>
 		<dict>
 			<key>DefaultValue</key>
-			<string>GPT 4o</string>
+			<string>gpt-4o</string>
 			<key>Key</key>
 			<string>visionModel</string>
 			<key>Title</key>
