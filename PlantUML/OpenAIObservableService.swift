@@ -29,7 +29,7 @@ class OpenAIObservableService : ObservableObject {
     #endif
 
     @AppSecureStorage("openaikey") private var openAIKey:String?
-    @AppStorage("openaiModel") private var promptModel:String = "gpt-3.5-turbo"
+    @AppStorage("openaiModel") private var promptModel:String = "gpt-4o-mini"
     @AppStorage("visionModel") private var visionModel:String = "gpt-4o"
 
     var clipboardQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
