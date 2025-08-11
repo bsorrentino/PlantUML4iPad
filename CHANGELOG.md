@@ -2,6 +2,34 @@
 
 
 
+<!-- "name: v3.4.1_1" is a release tag -->
+
+## [v3.4.1_1](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.4.1_1) (2025-08-11)
+
+
+
+### Documentation
+
+ -  update changeme ([ff01ed635418747](https://github.com/bsorrentino/PlantUML4iPad/commit/ff01ed6354187479adfa93424ccae4893b48493e))
+
+
+### Refactor
+
+ -  update application settings ([0b2e9fbcf1c0461](https://github.com/bsorrentino/PlantUML4iPad/commit/0b2e9fbcf1c0461fb1442854e22509a7e18c0a94))
+   
+ -  set default openai model to gpt-4o-mini ([80609930ca7b18f](https://github.com/bsorrentino/PlantUML4iPad/commit/80609930ca7b18f6b1d0d57833e515682cb6645b))
+   
+
+### ALM 
+
+ -  update settings ([63f43c22309595b](https://github.com/bsorrentino/PlantUML4iPad/commit/63f43c22309595b0d655ac0de0f8695055d44c74))
+   
+
+
+
+
+
+
 <!-- "name: v3.4.0_1" is a release tag -->
 
 ## [v3.4.0_1](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.4.0_1) (2025-05-19)
