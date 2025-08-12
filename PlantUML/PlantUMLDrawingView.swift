@@ -8,6 +8,9 @@
 import SwiftUI
 import PencilKit
 import AIAgent
+import PhotosUI
+import UniformTypeIdentifiers
+import UIKit
 
 #Preview( "PlantUMLDrawingView") {
     NavigationStack {
@@ -32,6 +35,13 @@ struct PlantUMLDrawingView: View {
     @State var processingLabel: String = "👀 Processing ..."
     @State private var processImageTask:Task<(),Never>? = nil
     
+    // Image importing state
+    @State private var importedImage: UIImage? = nil
+    @State private var showPhotoPicker = false
+    @State private var showCameraPicker = false
+    @State private var showFilesPicker = false
+    @State private var photoPickerItem: PhotosPickerItem? = nil
+    
     
     var body: some View {
         
@@ -39,18 +49,16 @@ struct PlantUMLDrawingView: View {
             
             DrawingView(drawing: $document.drawing,
                         isUsePickerTool: isUseDrawingTool,
-                        isScrollEnabled: isScrollEnabled )
+                        isScrollEnabled: isScrollEnabled,
+                        backgroundImage: importedImage )
             .font(.system(size: 35))
             .navigationBarTitleDisplayMode(.inline)
             .foregroundColor(Color.purple)
             .navigationTitle( "\(document.fileName)   -   📝 Draw Diagram" )
             .navigationBarItems(trailing:
                                     HStack(spacing: 10) {
-                
                 Button(action: {
-                    
                     isScrollEnabled.toggle()
-                    //                            self.canvas.drawingGestureRecognizer.isEnabled = isScrollEnabled
                 }) {
                     Label( "tools", systemImage:  isScrollEnabled ? "lock.open.fill" : "lock.fill" )
                         .foregroundColor(Color.orange)
@@ -65,6 +73,33 @@ struct PlantUMLDrawingView: View {
                         .labelStyle(.titleOnly)
                 }
                 .accessibilityIdentifier("drawing_tools")
+                
+                Divider()
+                
+                // Import menu
+                Menu {
+                    Button(action: { showPhotoPicker = true }) {
+                        Label("Photos", systemImage: "photo")
+                    }
+                    Button(action: { pasteFromClipboard() }) {
+                        Label("Paste from Clipboard", systemImage: "doc.on.clipboard")
+                    }
+                    Button(action: { showCameraPicker = true }) {
+                        Label("Camera", systemImage: "camera")
+                    }
+                    Button(action: { showFilesPicker = true }) {
+                        Label("Files", systemImage: "folder")
+                    }
+                    if importedImage != nil {
+                        Button(role: .destructive, action: { importedImage = nil }) {
+                            Label("Clear Image", systemImage: "trash")
+                        }
+                    }
+                } label: {
+                    Label("Import", systemImage: "square.and.arrow.down")
+                        .foregroundColor(Color.orange)
+                }
+                .accessibilityIdentifier("drawing_import")
                 
                 Divider()
                 
@@ -83,6 +118,26 @@ struct PlantUMLDrawingView: View {
             processImageTask?.cancel()
         }
         .onDisappear( perform: updateDiagram )
+        // Photos picker (Photo Library)
+        .photosPicker(isPresented: $showPhotoPicker, selection: $photoPickerItem, matching: .images)
+        .onChange(of: photoPickerItem) { newItem in
+            guard let item = newItem else { return }
+            Task {
+                if let data = try? await item.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data) {
+                    importedImage = uiImage
+                }
+            }
+        }
+        // Camera picker
+        .sheet(isPresented: $showCameraPicker) {
+            CameraPicker(image: $importedImage)
+                .ignoresSafeArea()
+        }
+        // Files picker
+        .sheet(isPresented: $showFilesPicker) {
+            DocumentImagePicker(image: $importedImage)
+        }
     }
     
     private func toImage() -> UIImage {
@@ -98,6 +153,16 @@ struct PlantUMLDrawingView: View {
         //        document.drawingData = canvas.drawing.dataRepresentation()
     }
     
+    private func pasteFromClipboard() {
+        let pb = UIPasteboard.general
+        if let img = pb.image {
+            importedImage = img
+        } else if let data = pb.data(forPasteboardType: UTType.png.identifier),
+                  let img = UIImage(data: data) {
+            importedImage = img
+        }
+    }
+    
 }
 
 
@@ -110,7 +175,9 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
         processingLabel = message
     }
     
-    fileprivate func saveData( _ data: Data, toFile fileName: String, inDirectory directory: FileManager.SearchPathDirectory ) {
+    fileprivate func saveData( _ data: Data,
+                               toFile fileName: String,
+                               inDirectory directory: FileManager.SearchPathDirectory ) {
         do {
             let dir = try FileManager.default.url(for: directory,
                                                   in: .userDomainMask,
@@ -127,7 +194,7 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
     
     func processImage() {
         
-        updateDiagram()  
+        updateDiagram()
         
         // getting image from Canvas
         
@@ -137,7 +204,9 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
         if let imageData = image.pngData() {
             
             if SAVE_DRAWING_IMAGE {
-                saveData(imageData, toFile: "image.png", inDirectory: .picturesDirectory)
+                saveData(imageData,
+                         toFile: "image.png",
+                         inDirectory: .picturesDirectory)
             }
             
             processing.toggle()
@@ -165,3 +234,64 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
     
 }
 
+// MARK: - UIKit bridges for Camera and Files
+
+private struct CameraPicker: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+    
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    
+    final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: CameraPicker
+        init(_ parent: CameraPicker) { self.parent = parent }
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let img = info[.originalImage] as? UIImage {
+                parent.image = img
+            }
+            picker.dismiss(animated: true)
+        }
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            picker.dismiss(animated: true)
+        }
+    }
+}
+
+private struct DocumentImagePicker: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+    
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let types: [UTType] = [.png, .jpeg, .heic, .image]
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: types, asCopy: true)
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+    
+    final class Coordinator: NSObject, UIDocumentPickerDelegate {
+        let parent: DocumentImagePicker
+        init(_ parent: DocumentImagePicker) { self.parent = parent }
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            guard let url = urls.first else { return }
+            if url.startAccessingSecurityScopedResource() {
+                defer { url.stopAccessingSecurityScopedResource() }
+                if let data = try? Data(contentsOf: url), let img = UIImage(data: data) {
+                    parent.image = img
+                }
+            } else if let data = try? Data(contentsOf: url), let img = UIImage(data: data) {
+                parent.image = img
+            }
+        }
+    }
+}

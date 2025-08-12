@@ -12,10 +12,21 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     
     var canvas: PKCanvasView
     let scrollView = UIScrollView()
+    let contentView = UIView()
+    let backgroundImageView = UIImageView()
+    var backgroundImage: UIImage? {
+        didSet {
+            backgroundImageView.image = backgroundImage
+            // Update canvas background when an image is set/removed
+            self.updateAppearance(for: self.traitCollection.userInterfaceStyle)
+        }
+    }
     var picker = PKToolPicker()
         
     init( initialDrawing drawing: PKDrawing ) {
         self.canvas = PKCanvasView(frame: CGRect(x: 0, y: 0, width: 2000, height: 2000))
+        // contentView has same size as the canvas and will host backgroundImageView + canvas
+        self.contentView.frame = self.canvas.frame
         super.init(nibName: nil, bundle: nil );
         
         if DEMO_MODE {
@@ -65,8 +76,20 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         #endif
         updateAppearance( for: UITraitCollection.current.userInterfaceStyle )
         
-        scrollView.addSubview(canvas)
-        scrollView.contentSize = canvas.frame.size
+        // Prepare background image view (behind the canvas)
+        backgroundImageView.frame = canvas.bounds
+        backgroundImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        backgroundImageView.contentMode = .scaleAspectFit
+        backgroundImageView.image = backgroundImage
+
+        // contentView hosts both the background image and the canvas
+        contentView.frame = canvas.frame
+        contentView.addSubview(backgroundImageView)
+        contentView.addSubview(canvas)
+
+        // Add the container to the scroll view
+        scrollView.addSubview(contentView)
+        scrollView.contentSize = contentView.frame.size
     }
     
     private func updateAppearance(for userInterfaceStyle: UIUserInterfaceStyle) {
@@ -74,18 +97,22 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         let color = PKInkingTool.convertColor(.white, from: .light, to: .dark)
         canvas.tool = PKInkingTool(.pen, color: color)
 
-        switch userInterfaceStyle {
-         case .dark:
-            canvas.backgroundColor = .black
-         default:
-            canvas.backgroundColor = .white
-         }
-
+        if backgroundImageView.image != nil {
+            // When an image is set, let it show through the canvas
+            canvas.backgroundColor = .clear
+        } else {
+            switch userInterfaceStyle {
+            case .dark:
+                canvas.backgroundColor = .black
+            default:
+                canvas.backgroundColor = .white
+            }
+        }
     }
     
     // UIScrollViewDelegate method to enable zooming
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return canvas
+        return contentView
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -175,10 +202,12 @@ struct DrawingView: UIViewControllerRepresentable {
     @Binding var drawing: PKDrawing
     var isUsePickerTool: Bool
     var isScrollEnabled: Bool
+    var backgroundImage: UIImage? = nil
     
     func makeUIViewController(context: Context) -> UIDrawingViewController {
         let controller =  UIDrawingViewController( initialDrawing: drawing )
         controller.canvas.delegate = context.coordinator
+        controller.backgroundImage = backgroundImage
         return controller
     }
     
@@ -186,7 +215,7 @@ struct DrawingView: UIViewControllerRepresentable {
         // updating the tool whenever the view updates
         uiViewController.update(isUsePickerTool: isUsePickerTool)
         uiViewController.isScrollEnabled = isScrollEnabled
-        
+        uiViewController.backgroundImage = backgroundImage
     }
     
     func makeCoordinator() -> Coordinator {
@@ -230,7 +259,8 @@ extension UIImage {
     
     DrawingView( drawing: .constant(PKDrawing()),
                  isUsePickerTool: true,
-                 isScrollEnabled: true)
+                 isScrollEnabled: false,
+                 backgroundImage: UIImage(named: "diagram"))
     
     
 }
