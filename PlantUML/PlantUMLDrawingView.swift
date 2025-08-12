@@ -36,7 +36,7 @@ struct PlantUMLDrawingView: View {
     @State private var processImageTask:Task<(),Never>? = nil
     
     // Image importing state
-    @State private var importedImage: UIImage? = nil
+    //@State private var importedImage: UIImage? = nil
     @State private var showPhotoPicker = false
     @State private var showCameraPicker = false
     @State private var showFilesPicker = false
@@ -50,7 +50,7 @@ struct PlantUMLDrawingView: View {
             DrawingView(drawing: $document.drawing,
                         isUsePickerTool: isUseDrawingTool,
                         isScrollEnabled: isScrollEnabled,
-                        backgroundImage: importedImage )
+                        backgroundImage: document.drawingBackgroundImage )
             .font(.system(size: 35))
             .navigationBarTitleDisplayMode(.inline)
             .foregroundColor(Color.purple)
@@ -90,8 +90,8 @@ struct PlantUMLDrawingView: View {
                     Button(action: { showFilesPicker = true }) {
                         Label("Files", systemImage: "folder")
                     }
-                    if importedImage != nil {
-                        Button(role: .destructive, action: { importedImage = nil }) {
+                    if document.drawingBackgroundImage != nil {
+                        Button(role: .destructive, action: { document.drawingBackgroundImage = nil }) {
                             Label("Clear Image", systemImage: "trash")
                         }
                     }
@@ -125,23 +125,23 @@ struct PlantUMLDrawingView: View {
             Task {
                 if let data = try? await item.loadTransferable(type: Data.self),
                    let uiImage = UIImage(data: data) {
-                    importedImage = uiImage
+                    document.drawingBackgroundImage = uiImage
                 }
             }
         }
         // Camera picker
         .sheet(isPresented: $showCameraPicker) {
-            CameraPicker(image: $importedImage)
+            CameraPicker(image: $document.drawingBackgroundImage)
                 .ignoresSafeArea()
         }
         // Files picker
         .sheet(isPresented: $showFilesPicker) {
-            DocumentImagePicker(image: $importedImage)
+            DocumentImagePicker(image: $document.drawingBackgroundImage)
         }
     }
     
     private func toImage() -> UIImage {
-        document.drawing.image(from: document.drawing.bounds, scale: 1)
+        return document.drawing.image(from: document.drawing.bounds, scale: 1)
     }
     
     private func saveImageToPhotos() {
@@ -156,10 +156,10 @@ struct PlantUMLDrawingView: View {
     private func pasteFromClipboard() {
         let pb = UIPasteboard.general
         if let img = pb.image {
-            importedImage = img
+            document.drawingBackgroundImage = img
         } else if let data = pb.data(forPasteboardType: UTType.png.identifier),
                   let img = UIImage(data: data) {
-            importedImage = img
+            document.drawingBackgroundImage = img
         }
     }
     

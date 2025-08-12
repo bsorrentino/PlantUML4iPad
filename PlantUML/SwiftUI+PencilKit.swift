@@ -78,8 +78,8 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         
         // Prepare background image view (behind the canvas)
         backgroundImageView.frame = canvas.bounds
-        backgroundImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        backgroundImageView.contentMode = .scaleAspectFit
+        //backgroundImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        //backgroundImageView.contentMode = .scaleAspectFit
         backgroundImageView.image = backgroundImage
 
         // contentView hosts both the background image and the canvas
