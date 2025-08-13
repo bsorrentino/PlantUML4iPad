@@ -2,6 +2,48 @@
 
 
 
+<!-- "name: v3.4.2_2" is a release tag -->
+
+## [v3.4.2_2](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.4.2_2) (2025-08-13)
+
+### Features
+
+ *  setup support of background image on drawing canvas ([07cd0cdfb0af007](https://github.com/bsorrentino/PlantUML4iPad/commit/07cd0cdfb0af00706506eb979677a01d2ec9ae20))
+   
+
+### Bug Fixes
+
+ -  resolve holds on return from diagram preview ([845236771a5271f](https://github.com/bsorrentino/PlantUML4iPad/commit/845236771a5271f25602a7d13147b266a2b83c7e))
+
+ -  merge background  and drawing images respecting ratio ([1c28f5d025d9d64](https://github.com/bsorrentino/PlantUML4iPad/commit/1c28f5d025d9d64190babb46e6bf1eadb9134891))
+
+
+### Documentation
+
+ -  update changeme ([3ce1f89c2915852](https://github.com/bsorrentino/PlantUML4iPad/commit/3ce1f89c291585286684c02bd0392922e00471c0))
+
+
+### Refactor
+
+ -  disable "background image support" implementation ([a55b9950002b0ac](https://github.com/bsorrentino/PlantUML4iPad/commit/a55b9950002b0acaea707678c1cc8acb10793032))
+   
+ -  moderinize code to merge backaground and drawing images ([a7bff1579ddae2b](https://github.com/bsorrentino/PlantUML4iPad/commit/a7bff1579ddae2b0931b16d557a2ab0bd08310dc))
+   
+ -  drawing on background image refinements ([e4285a31566d603](https://github.com/bsorrentino/PlantUML4iPad/commit/e4285a31566d603ce17787c16e447d8ca46a9cc1))
+   
+
+### ALM 
+
+ -  bump version 3.4.2_2 ([2dd6dfc40596437](https://github.com/bsorrentino/PlantUML4iPad/commit/2dd6dfc405964373ade7a6625f77cbb3215a5036))
+   
+ -  bump to version 3.4.2 ([8d1bb3817ac0a42](https://github.com/bsorrentino/PlantUML4iPad/commit/8d1bb3817ac0a4218cc6b676d7385d31b626599a))
+   
+
+
+
+
+
+
 <!-- "name: v3.4.1_1" is a release tag -->
 
 ## [v3.4.1_1](https://github.com/bsorrentino/PlantUML4iPad/releases/tag/v3.4.1_1) (2025-08-11)
