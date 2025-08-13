@@ -59,11 +59,10 @@ struct PlantUMLDrawingView: View {
                     processImage()
                 }
             }
-            
             .font(.system(size: 35))
-            .navigationBarTitleDisplayMode(.inline)
+            //.navigationBarTitleDisplayMode(.inline)
             .foregroundColor(Color.purple)
-            .navigationTitle( "\(document.fileName)   -   📝 Draw Diagram" )
+            .navigationBarTitle( "\(document.fileName)   -   📝 Draw Diagram", displayMode: .inline )
             .navigationBarItems(trailing:
                                     HStack(spacing: 10) {
                 // Import menu

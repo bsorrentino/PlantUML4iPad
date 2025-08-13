@@ -40,7 +40,8 @@ struct PlantUMLDocumentView: View {
     @State private var saving = false
     
     @State private var editorViewId  = 1
-    
+    @State private var isDrawingPresented = false
+
 //    @State private var canvas = PKCanvasView(frame: CGRect(x: 0, y: 0, width: 2000, height: 2000))
     
     var body: some View {
@@ -73,8 +74,11 @@ struct PlantUMLDocumentView: View {
             if isOpenAIVisible /* && interfaceOrientation.value.isPortrait */ {
                 OpenAIView( service: openAIService,
                             document: document ) {
-                                DiagramDrawingView
-                                .environmentObject(networkService)
+                                NavigationStack {
+                                    PlantUMLDrawingView( service: openAIService,
+                                             document: document )
+                                    .environmentObject(networkService)
+                                }
                             }
                 .environmentObject(networkService)
                 .frame( height: 200 )
@@ -121,23 +125,13 @@ struct PlantUMLDocumentView: View {
                 }
             }
         }
-        
-    }
-}
+        .fullScreenCover(isPresented: $isDrawingPresented ) {
+            NavigationStack {
+                PlantUMLDiagramView(url: document.buildURL())
+            }
 
-
-//
-// MARK: - Drawing extension -
-//
-extension PlantUMLDocumentView {
-    
-    var DiagramDrawingView: some View {
-        
-        NavigationStack {
-            PlantUMLDrawingView( service: openAIService,
-                                 document: document )
-            
         }
+
         
     }
 }
@@ -274,10 +268,10 @@ extension PlantUMLDocumentView {
 extension PlantUMLDocumentView {
     
     func ToggleDiagramButton() -> some View {
-        NavigationLink(destination: {
-            PlantUMLDiagramView(url: document.buildURL())
-                .toolbarRole(.navigationStack)
-        }) {
+        Button {
+            isDrawingPresented.toggle()
+        }
+        label: {
             Label("Preview >", systemImage: "photo.fill")
                 .labelStyle(.titleOnly)
         }
@@ -288,8 +282,6 @@ extension PlantUMLDocumentView {
     }
     
 }
-
-
 
 // MARK: - Preview -
 #Preview {
