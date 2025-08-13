@@ -39,6 +39,7 @@ class PlantUMLObservableDocument : ObservableObject {
     @Binding var object: PlantUMLDocument
     @Published var text: String
     @Published var drawing: PKDrawing
+    @Published var drawingBackgroundImage: UIImage?
 
     var fileName:String
 
