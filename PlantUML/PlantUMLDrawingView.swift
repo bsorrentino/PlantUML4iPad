@@ -13,12 +13,13 @@ import UniformTypeIdentifiers
 import UIKit
 
 #Preview( "PlantUMLDrawingView") {
+    
     NavigationStack {
         PlantUMLDrawingView(
             
             service: OpenAIObservableService(),
             document: PlantUMLObservableDocument(document:.constant(PlantUMLDocument()), fileName:"Untitled")
-        )
+        ).environmentObject(NetworkObservableService())
         
     }
 }
@@ -65,25 +66,6 @@ struct PlantUMLDrawingView: View {
             .navigationTitle( "\(document.fileName)   -   📝 Draw Diagram" )
             .navigationBarItems(trailing:
                                     HStack(spacing: 10) {
-                Button(action: {
-                    isScrollEnabled.toggle()
-                }) {
-                    Label( "tools", systemImage:  isScrollEnabled ? "lock.open.fill" : "lock.fill" )
-                        .foregroundColor(Color.orange)
-                        .labelStyle(.iconOnly)
-                }
-                .accessibilityIdentifier("drawing_lock")
-                Button(action: {
-                    isUseDrawingTool.toggle()
-                }) {
-                    Label( "tools", systemImage: "rectangle.and.pencil.and.ellipsis")
-                        .foregroundColor(Color.orange)
-                        .labelStyle(.titleOnly)
-                }
-                .accessibilityIdentifier("drawing_tools")
-                
-                Divider()
-                
                 // Import menu
                 Menu {
                     Button(action: { showPhotoPicker = true }) {
@@ -104,10 +86,30 @@ struct PlantUMLDrawingView: View {
                         }
                     }
                 } label: {
-                    Label("Import", systemImage: "square.and.arrow.down")
+                    Label("Import", systemImage: "photo.badge.plus")
                         .foregroundColor(Color.orange)
                 }
                 .accessibilityIdentifier("drawing_import")
+                
+                Divider()
+                
+
+                Button(action: {
+                    isScrollEnabled.toggle()
+                }) {
+                    Label( "tools", systemImage:  isScrollEnabled ? "lock.open.fill" : "lock.fill" )
+                        .foregroundColor(Color.orange)
+                        .labelStyle(.iconOnly)
+                }
+                .accessibilityIdentifier("drawing_lock")
+                Button(action: {
+                    isUseDrawingTool.toggle()
+                }) {
+                    Label( "tools", systemImage: "rectangle.and.pencil.and.ellipsis")
+                        .foregroundColor(Color.orange)
+                        .labelStyle(.titleOnly)
+                }
+                .accessibilityIdentifier("drawing_tools")
                 
                 Divider()
                 
@@ -227,23 +229,15 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
             isUseDrawingTool = false
             service.status = .Ready
             
-            
-            /*
             processImageTask = Task {
                 
-                defer {
-            */
-                    dismiss()
-            /*
-                }
+                defer { dismiss() }
                 
                 if let content = await service.processImageWithAgents( imageData: imageData, delegate: self ) {
                     document.text = content
                 }
                 
-                
             }
-            */
             
         }
     }

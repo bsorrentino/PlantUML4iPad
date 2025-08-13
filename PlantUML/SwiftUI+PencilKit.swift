@@ -45,6 +45,7 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
                 result.origin.x += (rect.width - width) / 2.0
                 result.size = CGSize(width: width, height: rect.height)
             }
+            // Prevents blurry rendering 
             return result.integral
         }
 
