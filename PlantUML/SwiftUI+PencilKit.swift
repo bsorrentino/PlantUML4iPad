@@ -52,24 +52,22 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         let bgTargetRect = aspectFitRect(imageSize: bgImage.size, in: canvasRect)
 
         // Render transparent, device scale
-        UIGraphicsBeginImageContextWithOptions(canvasSize, false, 0)
-        let ctx = UIGraphicsGetCurrentContext()
-
-        // Fill with canvas background color (use white if clear)
-        let bgColor = (canvas.backgroundColor ?? .white)
-        ctx?.setFillColor(bgColor.cgColor)
-        ctx?.fill(canvasRect)
-
-        // Draw the background image aspect-fitted inside the canvas
-        bgImage.draw(in: bgTargetRect)
-
-        // Draw the drawing (it already matches the canvas coordinate space)
-        drawingUIImage.draw(in: canvasRect, blendMode: .normal, alpha: 1.0)
-
-        let merged = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return merged
+        let renderer = UIGraphicsImageRenderer(size: canvasSize)
+        let merged = renderer.image { context in
+            let ctx = context.cgContext
             
+            // Fill with canvas background color (use white if clear)
+            let bgColor = (canvas.backgroundColor ?? .white)
+            ctx.setFillColor(bgColor.cgColor)
+            ctx.fill(canvasRect)
+            
+            // Draw the background image aspect-fitted inside the canvas
+            bgImage.draw(in: bgTargetRect)
+            
+            // Draw the drawing (it already matches the canvas coordinate space)
+            drawingUIImage.draw(in: canvasRect, blendMode: .normal, alpha: 1.0)
+        }
+        return merged
     }
     
     var backgroundImage: UIImage? {
