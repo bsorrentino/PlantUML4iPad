@@ -41,16 +41,24 @@ struct PlantUMLDrawingView: View {
     @State private var showCameraPicker = false
     @State private var showFilesPicker = false
     @State private var photoPickerItem: PhotosPickerItem? = nil
-    
+    @State private var resultImage: UIImage? = nil
+    @State private var requestImage = false
     
     var body: some View {
         
         ActivityView(isShowing: processing, label: processingLabel )  {
             
-            DrawingView(drawing: $document.drawing,
+            DrawingView(document: document,
                         isUsePickerTool: isUseDrawingTool,
                         isScrollEnabled: isScrollEnabled,
-                        backgroundImage: document.drawingBackgroundImage )
+                        requestImage: requestImage,
+                        resultImage: $resultImage)
+            .onChange(of: requestImage) { newValue in
+                if newValue {
+                    processImage()
+                }
+            }
+            
             .font(.system(size: 35))
             .navigationBarTitleDisplayMode(.inline)
             .foregroundColor(Color.purple)
@@ -103,7 +111,10 @@ struct PlantUMLDrawingView: View {
                 
                 Divider()
                 
-                Button( action: processImage, label: {
+                Button( action: {
+                    //processImage()
+                    requestImage = true
+                }, label: {
                     Label( "process", systemImage: "eye")
                         .foregroundColor(Color.orange)
                         .labelStyle(.titleOnly)
@@ -140,17 +151,17 @@ struct PlantUMLDrawingView: View {
         }
     }
     
-    private func toImage() -> UIImage {
-        return document.drawing.image(from: document.drawing.bounds, scale: 1)
-    }
-    
     private func saveImageToPhotos() {
         // saving to album
-        UIImageWriteToSavedPhotosAlbum(toImage(), nil, nil, nil)
+        guard let resultImage else {
+            return
+        }
+        UIImageWriteToSavedPhotosAlbum(resultImage, nil, nil, nil)
+        
     }
     
     private func updateDiagram() {
-        //        document.drawingData = canvas.drawing.dataRepresentation()
+        // document.drawingData = canvas.drawing.dataRepresentation()
     }
     
     private func pasteFromClipboard() {
@@ -193,13 +204,16 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
     }
     
     func processImage() {
+        guard let resultImage else {
+            return
+        }
         
         updateDiagram()
         
         // getting image from Canvas
         
         let backgroundColor:UIColor = (colorScheme == .dark ) ? .black : .white
-        let image = toImage().withBackground(color: backgroundColor)
+        let image = resultImage.withBackground(color: backgroundColor)
         
         if let imageData = image.pngData() {
             
@@ -212,22 +226,24 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
             processing.toggle()
             isUseDrawingTool = false
             service.status = .Ready
+            
+            
+            /*
             processImageTask = Task {
                 
                 defer {
+            */
                     dismiss()
+            /*
                 }
                 
                 if let content = await service.processImageWithAgents( imageData: imageData, delegate: self ) {
                     document.text = content
                 }
                 
-                //                let base64Image = imageData.base64EncodedString()
-                //                if let content = await service.processImageWithAgents( imageUrl: "data:image/png;base64,\(base64Image)", delegate: self ) {
-                //                    document.text = content
-                //                }
                 
             }
+            */
             
         }
     }
