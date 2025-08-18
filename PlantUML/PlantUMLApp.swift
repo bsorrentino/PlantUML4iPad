@@ -22,7 +22,7 @@ func versionString() -> AttributedString {
     let version = info?["CFBundleShortVersionString"] as? String ?? "?"
     let build   = info?["CFBundleVersion"] as? String ?? "?"
     var str = AttributedString("v\(version) (\(build))")
-    str.foregroundColor = .blue
+    str.foregroundColor = .gray
     str.font = .footnote.italic()
     return str
 }
@@ -55,9 +55,8 @@ struct PlantUMLApp: App {
                 .navigationBarTitleDisplayMode(.inline)
             }
             .overlay(
-                Text(versionString())
-                .padding( .trailing ),            // padding from edges
-                alignment: .bottomTrailing
+                Text(versionString()),
+                alignment: .bottom
             )
         }
         

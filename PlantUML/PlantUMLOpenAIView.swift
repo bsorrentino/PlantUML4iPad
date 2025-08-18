@@ -249,7 +249,7 @@ extension OpenAIView {
 extension OpenAIView {
    
     var Settings_Fragment: some View {
-        ZStack(alignment: .bottomTrailing ) {
+        ZStack(alignment: .bottom ) {
             // [How to scroll a Form to a specific UI element in SwiftUI](https://stackoverflow.com/a/65777080/521197)
             ScrollViewReader { p in
                 Form {
@@ -265,7 +265,7 @@ extension OpenAIView {
                             HideToggleButton(hidden: $hideOpenAISecrets)
                         }
                         .id( "openai-secret")
-                        
+
                     }
                     footer: {
                         HStack {
@@ -274,10 +274,11 @@ extension OpenAIView {
                             Spacer()
                         }
                     }
-                                        
                 }
+                
             }
             HStack {
+                Spacer()
                 Button( action: {
                     service.resetSettings()
                 },
@@ -301,6 +302,8 @@ extension OpenAIView {
             }
             .padding()
         }
+        .border(Color.gray)
+        .padding()
         
     }
     
@@ -343,5 +346,6 @@ extension OpenAIView {
                        drawingView: {
                             FullScreenModalView()
                         })
+            .environmentObject( NetworkObservableService())
             .frame(height: 200)
 }
