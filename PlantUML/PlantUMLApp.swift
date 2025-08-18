@@ -17,6 +17,16 @@ func getFileName( _ file: FileDocumentConfiguration<PlantUMLDocument>, default d
     file.fileURL?.deletingPathExtension().lastPathComponent ?? def
 }
 
+func versionString() -> AttributedString {
+    let info = Bundle.main.infoDictionary
+    let version = info?["CFBundleShortVersionString"] as? String ?? "?"
+    let build   = info?["CFBundleVersion"] as? String ?? "?"
+    var str = AttributedString("v\(version) (\(build))")
+    str.foregroundColor = .blue
+    str.font = .footnote.italic()
+    return str
+}
+
 @main
 struct PlantUMLApp: App {
    
@@ -37,11 +47,18 @@ struct PlantUMLApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: PlantUMLDocument()) { file in                
             
-            PlantUMLDocumentView( document: PlantUMLObservableDocument( document: file.$document,
-                                                                        fileName: getFileName(file, default: "Untitled" )))
-            // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
-            .toolbarRole(.navigationStack)
-            .navigationBarTitleDisplayMode(.inline)
+            ZStack {
+                PlantUMLDocumentView( document: PlantUMLObservableDocument( document: file.$document,
+                                                                            fileName: getFileName(file, default: "Untitled" )))
+                // [Document based app shows 2 back chevrons on iPad](https://stackoverflow.com/a/74245034/521197)
+                .toolbarRole(.navigationStack)
+                .navigationBarTitleDisplayMode(.inline)
+            }
+            .overlay(
+                Text(versionString())
+                .padding( .trailing ),            // padding from edges
+                alignment: .bottomTrailing
+            )
         }
         
     }
