@@ -30,7 +30,7 @@ struct PlantUMLDrawingView: View {
     @ObservedObject var service:OpenAIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
     @EnvironmentObject var networkService: NetworkObservableService
-    @State var isScrollEnabled = true
+    @State var isScrollEnabled = false
     @State var isUseDrawingTool = false
     @State var processing = false
     @State var processingLabel: String = "👀 Processing ..."
