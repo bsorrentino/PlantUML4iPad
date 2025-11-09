@@ -97,7 +97,7 @@ public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( openAI: 
     
     let inputs:[String : Any] = [:]
     
-    let response = try await app.invoke( inputs: inputs)
+    let response = try await app.invoke( GraphInput.args(inputs))
     
     return response.diagramCode
 }
@@ -174,7 +174,7 @@ public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( o
     
     let inputs:[String : Any] = [:]
     
-    let response = try await app.invoke( inputs: inputs)
+    let response = try await app.invoke( GraphInput.args(inputs) )
     
     return response.diagramCode
 }

@@ -472,7 +472,7 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( openAI: Open
          "diagram_image_url_or_data": imageValue
      ]
     
-    let response = try await app.invoke( inputs: inputs)
+    let response = try await app.invoke( GraphInput.args(inputs) )
     
     return response.diagramCode
 }
