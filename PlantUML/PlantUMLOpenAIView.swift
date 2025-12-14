@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import OpenAI
+import AnyLanguageModel
 
 struct OpenAIView<DrawingView :View> : View {
     
@@ -136,7 +136,7 @@ extension OpenAIView {
                     .padding( .bottom, 35)
                     .accessibilityIdentifier("openai_instruction")
                     .focused($promptInFocus)
-                    .onChange(of: instruction) { _ in
+                    .onChange(of: instruction) { _,_ in
                         if service.status != .Ready {
                             service.status = .Ready
                         }

@@ -21,8 +21,8 @@ let package = Package(
 //        .package(url: "https://github.com/MacPaw/OpenAI.git", branch: "main")
 //        .package(url: "https://github.com/1amageek/OpenFoundationModels-OpenAI.git", branch: "main")
 //        .package(url: "https://github.com/mattt/AnyLanguageModel", from: "0.5.0")
+//        .package(url: "https://github.com/MacPaw/OpenAI.git", exact: "0.4.3"),
         .package(url: "https://github.com/bsorrentino/LangGraph-Swift.git", branch: "main"),
-        .package(url: "https://github.com/MacPaw/OpenAI.git", exact: "0.4.3"),
         .package(url: "https://github.com/bsorrentino/AnyLanguageModel.git", branch: "develop")
     ],
     targets: [
@@ -32,7 +32,7 @@ let package = Package(
             name: "AIAgent", 
             dependencies: [
 //                .product(name: "OpenAI", package: "Swift-OpenAI"),
-                .product(name: "OpenAI", package: "OpenAI"),
+//                .product(name: "OpenAI", package: "OpenAI"),
                 .product(name: "LangGraph", package: "LangGraph-Swift"),
                 .product(name: "AnyLanguageModel", package: "AnyLanguageModel")
             ], resources: [ .process("Resources")]),

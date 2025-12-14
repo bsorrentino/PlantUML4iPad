@@ -7,7 +7,7 @@
 import Playgrounds
 import AnyLanguageModel
 
-@Generable
+@Generable(description: "Output from the model")
 struct Output {
 
     @Guide(description: "affermative or negative response")
@@ -24,6 +24,7 @@ struct Output {
             apiKey: apiKey,
             model: "gpt-4o-mini"
         )
+        
         
         let session = LanguageModelSession( model: model )
         
