@@ -255,9 +255,6 @@ extension OpenAIView {
                 Form {
                     Section {
                         SecureToggleField( "Api Key", value: $service.inputApiKey, hidden: hideOpenAISecrets)
-                        #if __USE_ORGID
-                        SecureToggleField( "Org Id", value: $service.inputOrgId, hidden: hideOpenAISecrets)
-                        #endif
                     }
                     header: {
                         HStack {

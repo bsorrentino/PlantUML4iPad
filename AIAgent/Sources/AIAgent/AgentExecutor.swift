@@ -104,7 +104,7 @@ func diagramDescriptionOutputParse( _ content: String ) throws -> DiagramGuide.D
 }
 
 func describeDiagramImage<T:AgentExecutorDelegate>( state: AgentExecutorState,
-                                                    session:LanguageModelSession,
+                                                    session: LanguageModelSession,
                                                     delegate:T ) async throws -> PartialAgentState {
     
     guard let imageUrlValue = state.diagramImageUrlOrData else {
@@ -113,7 +113,7 @@ func describeDiagramImage<T:AgentExecutorDelegate>( state: AgentExecutorState,
     
     await delegate.progress("starting analyze\ndiagram 👀")
 
-    let schema = try loadFileFromBundle(fileName: "describe_diagram_schmea", withExtension: "json")
+    let schema = try loadFileFromBundle(fileName: "describe_diagram_schema", withExtension: "json")
     let promptTemplate = try loadPromptFromBundle(fileName: "describe_diagram_prompt")
 
     let prompt = promptTemplate.replacingOccurrences(of: "{DESCRIBE_DIAGRAM_SCHEMA}", with: schema)
@@ -183,7 +183,8 @@ func translateSequenceDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( sta
 
 }
 
-func translateDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( state: AgentExecutorState,
+func translateDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( forDiagramType type: String,
+                                                                     state: AgentExecutorState,
                                                                      session: LanguageModelSession,
                                                                      delegate:T ) async throws -> PartialAgentState {
     guard let diagram = state.diagram else {
@@ -192,7 +193,7 @@ func translateDiagramDescriptionToPlantUML<T:AgentExecutorDelegate>( state: Agen
     
     await delegate.progress("translating diagram to\n\(diagram.type.capitalized) Diagram")
     
-    var prompt = try loadPromptFromBundle(fileName: "\(diagram.type)_diagram_prompt")
+    var prompt = try loadPromptFromBundle(fileName: "\(type)_diagram_prompt")
     
     let encoder = JSONEncoder()
     
@@ -255,12 +256,14 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( visionModel:
                                                                  delegate:delegate )
     })
     try workflow.addNode("agent_usecase_plantuml", action: { state in
-         try await translateDiagramDescriptionToPlantUML( state: state,
-                                                          session: promptSession,
-                                                          delegate:delegate )
+        try await translateDiagramDescriptionToPlantUML( forDiagramType: "usecase",
+                                                         state: state,
+                                                         session: promptSession,
+                                                         delegate:delegate )
     })
     try workflow.addNode("agent_generic_plantuml", action: { state in
-         try await translateDiagramDescriptionToPlantUML( state: state,
+         try await translateDiagramDescriptionToPlantUML( forDiagramType: "generic",
+                                                          state: state,
                                                           session: promptSession,
                                                           delegate:delegate )
     })
@@ -298,27 +301,20 @@ public func updatePlantUML( languageModel: any LanguageModel,
     
     let system_prompt = try loadPromptFromBundle(fileName: "update_diagram_prompt")
     
+    let session = LanguageModelSession( model: languageModel, instructions: system_prompt )
     
-/*
-    let query = ChatQuery(messages: [
-            .system( .init(content: system_prompt)),
-            .assistant(.init( content: input)),
-            .user(.init(content: .string(instruction))) ],
-                          model: model,
-                          responseFormat: .derivedJsonSchema(name: "plantuml result",
-                                                             type: PlantUMLResult.self),
-                          temperature: 0.0,
-                          topP: 1.0)
+    let result = try await session.respond(to: Prompt {
+        "starting from the the current <plantuml> script:"
+        "<platuml>"
+        input
+        "</plantuml>"
+        "apply the following <instruction>:"
+        "<instruction>"
+        instruction
+        "</instruction>"
+    }, generating: PlantUMLResult.self)
+   
+    return result.content.script
 
-    let chat = try await openAI.chats(query: query)
-
-    if let content = chat.choices[0].message.content {
-        
-        let result = try plantumlOutputParse(content)
-        
-        return result.script
-    }
-*/
-    return nil
-
+    
 }

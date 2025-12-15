@@ -156,7 +156,8 @@ public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( p
     
     
     try workflow.addNode("agent_usecase_plantuml", action: { state in
-        try await translateDiagramDescriptionToPlantUML( state: state,
+        try await translateDiagramDescriptionToPlantUML( forDiagramType: "usecase",
+                                                         state: state,
                                                          session: session,
                                                          delegate:delegate )
     })

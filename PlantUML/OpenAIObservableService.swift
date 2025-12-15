@@ -68,6 +68,7 @@ class OpenAIObservableService : ObservableObject {
             return nil
         }
         
+        //print( "promptModel: \(promptModel)")
         self.status = .Processing
         
         do {
@@ -115,7 +116,8 @@ extension OpenAIObservableService {
         status = .Processing
         
         do {
-            
+            print( "promptModel: \(promptModel) - visionModel: \(visionModel)")
+
             let promptLanguageModel = OpenAILanguageModel(apiKey: openAIKey, model: promptModel)
             let visionLanguageModel = OpenAILanguageModel(apiKey: openAIKey, model: visionModel)
 
