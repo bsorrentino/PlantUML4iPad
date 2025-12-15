@@ -1,0 +1,114 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Diagram typology (one word). Eg. 'sequence', 'class', 'process', etc."
+    },
+    "title": {
+      "type": "string",
+      "description": "Diagram summary (max one line) or title (if any)"
+    },
+    "participants": {
+      "type": "array",
+      "description": "list of participants in the diagrams",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "participant name"
+          },
+          "shape": {
+            "type": "string",
+            "description": "participant shape. The acceptable shapes are which ones compliant with plantuml syntax"
+          },
+          "description": {
+            "type": "string",
+            "description": "participant description"
+          }
+        },
+        "required": [
+          "name",
+          "shape",
+          "description"
+        ]
+      }
+    },
+    "relations": {
+      "type": "array",
+      "description": "list of relations in the diagram",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "source participant"
+          },
+          "target": {
+            "type": "string",
+            "description": "target participant"
+          },
+          "description": {
+            "type": "string",
+            "description": "relation description"
+          }
+        },
+        "required": [
+          "source",
+          "target",
+          "description"
+        ]
+      }
+    },
+    "groups": {
+      "type": "array",
+      "description": "list of group containing one or mopre participants",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "group name"
+          },
+          "children": {
+            "type": "array",
+            "description": "list of contained participant name",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "group description"
+          }
+        },
+        "required": [
+          "name",
+          "children",
+          "description"
+        ]
+      }
+    },
+    "description": {
+      "type": "array",
+      "description": "Step by step description of the diagram with clear indication of participants and actions between them.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "error": {
+      "type": "string",
+      "description": "In the case it's not possible transate diagram, report problem here"
+    }
+  },
+  "required": [
+    "type",
+    "title",
+    "participants",
+    "relations",
+    "groups",
+    "description"
+  ]
+}
+

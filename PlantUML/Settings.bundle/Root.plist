@@ -210,14 +210,20 @@
 			<key>Titles</key>
 			<array>
 				<string>GPT 4o mini</string>
+				<string>GPT 5 mini</string>
+				<string>GPT 5 nano</string>
 				<string>GPT 4o</string>
+				<string>GPT 5</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Values</key>
 			<array>
 				<string>gpt-4o-mini</string>
+				<string>gpt-5-mini</string>
+				<string>gpt5-nano</string>
 				<string>gpt-4o</string>
+				<string>gpt-5</string>
 			</array>
 		</dict>
 		<dict>
@@ -230,14 +236,20 @@
 			<key>Titles</key>
 			<array>
 				<string>GPT 4o</string>
-				<string>GPT 4.1 mini</string>
+				<string>GPT 4.1</string>
+				<string>GPT 5</string>
+				<string>GPT 5 mini</string>
+				<string>GPT 5 nano</string>
 			</array>
-			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Values</key>
+            <key>Type</key>
+            <string>PSMultiValueSpecifier</string>
+            <key>Values</key>
 			<array>
 				<string>gpt-4o</string>
-				<string>gpt-4.1-mini</string>
+				<string>gpt-4.1</string>
+				<string>gpt-5</string>
+				<string>gpt-5-mini</string>
+				<string>gpt-5-nano</string>
 			</array>
 		</dict>
 	</array>

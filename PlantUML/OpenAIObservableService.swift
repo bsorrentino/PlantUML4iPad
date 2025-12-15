@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AppSecureStorage
-import OpenAI
+import AnyLanguageModel
 import PlantUMLFramework
 import AIAgent
 
@@ -23,11 +23,6 @@ class OpenAIObservableService : ObservableObject {
     @Published public var status: Status = .Ready
     @Published public var inputApiKey = ""
 
-    #if __USE_ORGID
-    @Published public var inputOrgId = ""
-    @AppSecureStorage("openaiorg") private var openAIOrg:String?
-    #endif
-
     @AppSecureStorage("openaikey") private var openAIKey:String?
     @AppStorage("openaiModel") private var promptModel:String = "gpt-4o-mini"
     @AppStorage("visionModel") private var visionModel:String = "gpt-4o"
@@ -41,16 +36,8 @@ class OpenAIObservableService : ObservableObject {
         if let apiKey = readConfigString(forInfoDictionaryKey: "OPENAI_API_KEY"), !apiKey.isEmpty {
             openAIKey = apiKey
         }
-        #if __USE_ORGID
-        if let orgId = readConfigString(forInfoDictionaryKey: "OPENAI_ORG_ID"), !orgId.isEmpty  {
-            openAIOrg = orgId
-        }
-        #endif
         
         inputApiKey = openAIKey ?? ""
-        #if __USE_ORGID
-        inputOrgId = openAIOrg ?? ""
-        #endif
         
      }
     
@@ -59,70 +46,35 @@ class OpenAIObservableService : ObservableObject {
             return
         }
         openAIKey = inputApiKey
-        #if __USE_ORGID
-        guard !inputOrgId.isEmpty else {
-            return
-        }
-        openAIOrg = inputOrgId
-        #endif
         status = .Ready
     }
     
     func resetSettings() {
         inputApiKey = ""
         openAIKey = nil
-        #if __USE_ORGID
-        inputOrgId = ""
-        openAIOrg = nil
-        #endif
     }
 
     var isSettingsValid:Bool {
-        #if __USE_ORGID
-        guard let openAIKey, !openAIKey.isEmpty, let openAIOrg, !openAIOrg.isEmpty else {
-            return false
-        }
-        #else
         guard let openAIKey, !openAIKey.isEmpty else {
             return false
         }
-        #endif
         return true
-    }
-
-    var openAI: OpenAI? {
-
-        guard let openAIKey  else {
-            status = .Error("api key not found!")
-            return nil
-        }
-        #if __USE_ORGID
-        guard let openAIOrg  else {
-            status = .Error("org id not found!")
-            return nil
-        }
-
-        let config = OpenAI.Configuration( token: openAIKey, organizationIdentifier: openAIOrg)
-        #else
-        let config = OpenAI.Configuration( token: openAIKey )
-        #endif
-        return OpenAI( configuration: config )
-
     }
 
     @MainActor
     func updatePlantUMLDiagram( input: String, instruction: String ) async -> String? {
         
-        guard let openAI /*, let  openAIModel */, case .Ready = status else {
+        guard let openAIKey, case .Ready = status else {
             return nil
         }
         
+        //print( "promptModel: \(promptModel)")
         self.status = .Processing
         
         do {
+            let promptLanguageModel = OpenAILanguageModel(apiKey: openAIKey, model: promptModel)
             
-            if let content = try await updatePlantUML(openAI: openAI,
-                                                      withModel: promptModel,
+            if let content = try await updatePlantUML( languageModel: promptLanguageModel,
                                                       input: input,
                                                       withInstruction: instruction) {
                 
@@ -156,7 +108,7 @@ extension OpenAIObservableService {
     @MainActor
     func processImageWithAgents<T:AgentExecutorDelegate>( imageData: Data, delegate:T ) async -> String? {
         
-        guard let openAI, case .Ready = status else {
+        guard let openAIKey, case .Ready = status else {
             delegate.progress("WARNING: OpenAI API not initialized")
             return nil
         }
@@ -164,19 +116,23 @@ extension OpenAIObservableService {
         status = .Processing
         
         do {
-            
-            async let runTranslation = DEMO_MODE ?
-                // try runTranslateDrawingToPlantUMLDemo( openAI: openAI, imageValue: DiagramImageValue.data(imageData), delegate:delegate) :
-                try runTranslateDrawingToPlantUMLUseCaseDemo( openAI: openAI,
-                                                              promptModel: promptModel,
+            print( "promptModel: \(promptModel) - visionModel: \(visionModel)")
+
+            let promptLanguageModel = OpenAILanguageModel(apiKey: openAIKey, model: promptModel)
+            let visionLanguageModel = OpenAILanguageModel(apiKey: openAIKey, model: visionModel)
+
+            async let runTranslation = if DEMO_MODE  {
+                try runTranslateDrawingToPlantUMLUseCaseDemo( promptModel: promptLanguageModel,
                                                               imageValue: DiagramImageValue.data(imageData),
-                                                              delegate:delegate) :
-                try runTranslateDrawingToPlantUML( openAI: openAI,
-                                                   visionModel: visionModel,
-                                                   promptModel: promptModel,
+                                                              delegate:delegate)
+            }
+            else {
+                
+                try runTranslateDrawingToPlantUML( visionModel: visionLanguageModel,
+                                                   promptModel: promptLanguageModel,
                                                    imageValue: DiagramImageValue.data(imageData),
                                                    delegate:delegate);
-
+            }
             
             if let content = try await runTranslation {
                 

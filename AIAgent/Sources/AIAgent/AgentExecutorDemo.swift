@@ -7,9 +7,8 @@
 
 import Foundation
 import OSLog
-import OpenAI
 import LangGraph
-
+import AnyLanguageModel
 
 struct AgentExecutorDemoState : AgentState {
     
@@ -29,9 +28,7 @@ struct AgentExecutorDemoState : AgentState {
     
 }
 
-
-
-public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( openAI: OpenAI,
+public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( session: LanguageModelSession,
                                                                         imageValue: DiagramImageValue,
                                                                         delegate:T ) async throws -> String? {
     let workflow = StateGraph { AgentExecutorState($0) }
@@ -97,7 +94,7 @@ public func runTranslateDrawingToPlantUMLDemo<T:AgentExecutorDelegate>( openAI: 
     
     let inputs:[String : Any] = [:]
     
-    let response = try await app.invoke( inputs: inputs)
+    let response = try await app.invoke( GraphInput.args(inputs))
     
     return response.diagramCode
 }
@@ -135,10 +132,11 @@ let usecase_description = """
 """
 
 
-public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( openAI: OpenAI,
-                                                                               promptModel: String,
+public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( promptModel: any LanguageModel,
                                                                                imageValue: DiagramImageValue,
                                                                                delegate:T ) async throws -> String? {
+    let session = LanguageModelSession( model: promptModel )
+    
     let workflow = StateGraph { AgentExecutorState($0) }
     
     try workflow.addNode("agent_describer", action: { state in
@@ -156,10 +154,11 @@ public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( o
         
     })
     
+    
     try workflow.addNode("agent_usecase_plantuml", action: { state in
-        try await translateDiagramDescriptionToPlantUML( state: state,
-                                                         openAI:openAI,
-                                                         promptModel: promptModel,
+        try await translateDiagramDescriptionToPlantUML( forDiagramType: "usecase",
+                                                         state: state,
+                                                         session: session,
                                                          delegate:delegate )
     })
     
@@ -174,7 +173,7 @@ public func runTranslateDrawingToPlantUMLUseCaseDemo<T:AgentExecutorDelegate>( o
     
     let inputs:[String : Any] = [:]
     
-    let response = try await app.invoke( inputs: inputs)
+    let response = try await app.invoke( GraphInput.args(inputs) )
     
     return response.diagramCode
 }

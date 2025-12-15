@@ -54,7 +54,7 @@ struct PlantUMLDrawingView: View {
                         isScrollEnabled: isScrollEnabled,
                         requestImage: requestImage,
                         resultImage: $resultImage)
-            .onChange(of: requestImage) { newValue in
+            .onChange(of: requestImage, initial: false) { oldValue, newValue in
                 if newValue {
                     processImage()
                 }
@@ -133,7 +133,7 @@ struct PlantUMLDrawingView: View {
         .onDisappear( perform: updateDiagram )
         // Photos picker (Photo Library)
         .photosPicker(isPresented: $showPhotoPicker, selection: $photoPickerItem, matching: .images)
-        .onChange(of: photoPickerItem) { newItem in
+        .onChange(of: photoPickerItem ) { oldItem, newItem in
             guard let item = newItem else { return }
             Task {
                 if let data = try? await item.loadTransferable(type: Data.self),

@@ -7,6 +7,8 @@
 
 import XCTest
 import PlantUMLFramework
+import AnyLanguageModel
+@testable import PlantUMLApp
 
 extension String {
     // [How to remove all the spaces in a String?](https://stackoverflow.com/a/34940120/521197)
@@ -47,19 +49,6 @@ class PlantUMLTests: XCTestCase {
         
         XCTAssertEqual(msg( "Api Key" ), "secure_toggle_field_apikey")
         XCTAssertEqual(msg( "Org Id"), "secure_toggle_field_orgid")
-
-    }
-    func testSwiftPlantUML() {
-
-        let clazz = SyntaxStructure(rawValue: "title test")
-
-        let script = PlantUMLScript( items: [clazz] )
-
-        let presenter = PlantUMLBrowserPresenter( format: .imagePng)
-
-        let url = presenter.url( of: script )
-        
-        print( url )
 
     }
     

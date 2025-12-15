@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import OpenAI
+import AnyLanguageModel
 
 struct OpenAIView<DrawingView :View> : View {
     
@@ -136,7 +136,7 @@ extension OpenAIView {
                     .padding( .bottom, 35)
                     .accessibilityIdentifier("openai_instruction")
                     .focused($promptInFocus)
-                    .onChange(of: instruction) { _ in
+                    .onChange(of: instruction) { _,_ in
                         if service.status != .Ready {
                             service.status = .Ready
                         }
@@ -255,9 +255,6 @@ extension OpenAIView {
                 Form {
                     Section {
                         SecureToggleField( "Api Key", value: $service.inputApiKey, hidden: hideOpenAISecrets)
-                        #if __USE_ORGID
-                        SecureToggleField( "Org Id", value: $service.inputOrgId, hidden: hideOpenAISecrets)
-                        #endif
                     }
                     header: {
                         HStack {
