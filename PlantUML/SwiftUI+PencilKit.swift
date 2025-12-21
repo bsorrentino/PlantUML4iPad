@@ -154,8 +154,8 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     
     private func updateAppearance(for userInterfaceStyle: UIUserInterfaceStyle) {
         /// [Using PencilKit in dark mode results in wrong color](https://stackoverflow.com/a/75646551/521197)
-        let color = PKInkingTool.convertColor(.white, from: .light, to: .dark)
-        canvas.tool = PKInkingTool(.pen, color: color)
+        //let color = PKInkingTool.convertColor(.white, from: .light, to: .dark)
+        //canvas.tool = PKInkingTool(.pen, color: color)
 
         if backgroundImageView.image != nil {
             // When an image is set, let it show through the canvas
@@ -210,6 +210,7 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     func update( isUsePickerTool: Bool ) {
         
         if( isUsePickerTool ) {
+            picker.removeObserver(canvas)
             picker.addObserver(canvas)
             picker.setVisible(true, forFirstResponder: canvas)
         }
