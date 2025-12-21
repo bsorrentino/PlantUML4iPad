@@ -45,7 +45,7 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
                 result.origin.x += (rect.width - width) / 2.0
                 result.size = CGSize(width: width, height: rect.height)
             }
-            // Prevents blurry rendering 
+            // Prevents blurry rendering
             return result.integral
         }
 
@@ -104,12 +104,9 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 17.0, *) {
-            registerForTraitChanges([UITraitUserInterfaceStyle.self]) {
-                (self: Self, previousTraitCollection: UITraitCollection) in
-
-                self.updateAppearance(for: self.traitCollection.userInterfaceStyle)
-            }
+        // iOS 17+: observe trait changes via UITraitChangeObservable registration APIs
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, previousTraitCollection: UITraitCollection) in
+            self.updateAppearance(for: self.traitCollection.userInterfaceStyle)
         }
         
         setupScrollView()
@@ -133,7 +130,7 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         #else
         canvas.drawingPolicy = .pencilOnly
         #endif
-        updateAppearance( for: UITraitCollection.current.userInterfaceStyle )
+        updateAppearance(for: self.traitCollection.userInterfaceStyle)
         
         // Prepare background image view (behind the canvas)
         backgroundImageView.frame = canvas.bounds
@@ -154,9 +151,11 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     
     private func updateAppearance(for userInterfaceStyle: UIUserInterfaceStyle) {
         /// [Using PencilKit in dark mode results in wrong color](https://stackoverflow.com/a/75646551/521197)
-        let color = PKInkingTool.convertColor(.white, from: .light, to: .dark)
-        canvas.tool = PKInkingTool(.pen, color: color)
+        //let color = PKInkingTool.convertColor(.white, from: .light, to: .dark)
+        //canvas.tool = PKInkingTool(.pen, color: color)
 
+        //print( "==> PICKER SLECTED TOOL \(picker.selectedTool)" )
+        
         if backgroundImageView.image != nil {
             // When an image is set, let it show through the canvas
             canvas.backgroundColor = .clear
@@ -175,17 +174,6 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
         return contentView
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-   
-        if ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 17 {
-            // Check if the user interface style has changed
-            if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-                updateAppearance(for: traitCollection.userInterfaceStyle)
-            }
-        }
-    }
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         scrollView.frame = view.bounds
@@ -210,8 +198,9 @@ class UIDrawingViewController : UIViewController, UIScrollViewDelegate {
     func update( isUsePickerTool: Bool ) {
         
         if( isUsePickerTool ) {
-            picker.addObserver(canvas)
+            picker.removeObserver(canvas)
             picker.setVisible(true, forFirstResponder: canvas)
+            picker.addObserver(canvas)
         }
         else {
             picker.setVisible(false, forFirstResponder: canvas)
