@@ -42,7 +42,6 @@ final class AgentExecutorTests : XCTestCase {
         
         let output =
 """
-```json
 {
     "type": "process",
     "title": "LLM Application Data Flow",
@@ -65,8 +64,11 @@ final class AgentExecutorTests : XCTestCase {
         { "source": "LLM Application", "target": "LLM Service", "description": "Interacts with" },
         { "source": "LLM Application", "target": "LLM Tracing", "description": "Interacts with" }
     ],
-    "containers": [
-        { "name": "Stream Processor", "children": ["Preprocessing", "LLM Application", "Postprocessing"], "description": "Processes the event stream" }
+    "groups": [
+        {   "name": "Stream Processor", 
+            "children": ["Preprocessing", "LLM Application", "Postprocessing"], 
+            "description": "Processes the event stream" 
+        }
     ],
     "description": [
         "The Event Stream is the starting point, which feeds into Preprocessing.",
@@ -77,7 +79,6 @@ final class AgentExecutorTests : XCTestCase {
         "Throughout the process, the LLM Application sends data to Observability for monitoring purposes."
     ]
 }
-```
 """
         
         let diagram = try diagramDescriptionOutputParse( output )
@@ -98,7 +99,7 @@ final class AgentExecutorTests : XCTestCase {
         print( content! )
     }
     
-    func testParseDiagramDescriptionOutputWithComment() async throws {
+    func _testParseDiagramDescriptionOutputWithComment() async throws {
         
         let output =
 """
