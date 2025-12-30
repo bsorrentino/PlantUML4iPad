@@ -305,7 +305,7 @@ public func updatePlantUML( languageModel: any LanguageModel,
     
     let result = try await session.respond(to: Prompt {
         "starting from the the current <plantuml> script:"
-        "<platuml>"
+        "<plantuml>"
         input
         "</plantuml>"
         "apply the following <instruction>:"
