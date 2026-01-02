@@ -11,6 +11,8 @@ import AIAgent
 import PhotosUI
 import UniformTypeIdentifiers
 import UIKit
+import DrawOnImage
+
 
 #Preview( "PlantUMLDrawingView") {
     
@@ -57,6 +59,7 @@ struct PlantUMLDrawingView: View {
             .onChange(of: requestImage) { newValue in
                 if newValue {
                     processImage()
+                    requestImage = false
                 }
             }
             .font(.system(size: 35))
@@ -64,8 +67,7 @@ struct PlantUMLDrawingView: View {
             .foregroundColor(Color.purple)
             .navigationBarTitle( "\(document.fileName)   -   📝 Draw Diagram", displayMode: .inline )
             .navigationBarItems(trailing:
-                                    HStack(spacing: 10) {
-#if __BACKGROUND_IMAGE_SUPPORT__
+                HStack(spacing: 10) {
                 // Import menu
                 Menu {
                     Button(action: { showPhotoPicker = true }) {
@@ -86,13 +88,13 @@ struct PlantUMLDrawingView: View {
                         }
                     }
                 } label: {
-                    Label("Import", systemImage: "photo.badge.plus")
+                    Label("import", systemImage: "photo")
                         .foregroundColor(Color.orange)
+                        .labelStyle(.iconOnly)
                 }
                 .accessibilityIdentifier("drawing_import")
                 
                 Divider()
-#endif // __BACKGROUND_IMAGE_SUPPORT__
                 
                 Button(action: {
                     isScrollEnabled.toggle()

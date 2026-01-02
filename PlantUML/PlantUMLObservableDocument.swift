@@ -11,7 +11,7 @@ import PlantUMLFramework
 import Combine
 import SwiftUI
 import PencilKit
-
+import DrawOnImage
 
 class DebounceRequest {
 
@@ -34,12 +34,10 @@ class DebounceRequest {
 
 let NEW_FILE_TITLE = "title Untitled"
 
-class PlantUMLObservableDocument : ObservableObject {
+class PlantUMLObservableDocument : DrawableObservableDocument {
     
     @Binding var object: PlantUMLDocument
     @Published var text: String
-    @Published var drawing: PKDrawing
-    @Published var drawingBackgroundImage: UIImage?
 
     var fileName:String
 
@@ -51,7 +49,8 @@ class PlantUMLObservableDocument : ObservableObject {
         self._object = document
         self.text = document.wrappedValue.isNew ?  NEW_FILE_TITLE : document.wrappedValue.text
         self.fileName = fileName
-        
+        super.init()
+
         do {
             if let drawingData = document.wrappedValue.drawing  {
                 self.drawing = try PKDrawing( data: drawingData )
