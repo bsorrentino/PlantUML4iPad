@@ -49,14 +49,14 @@ class PlantUMLObservableDocument : DrawableObservableDocument {
         self._object = document
         self.text = document.wrappedValue.isNew ?  NEW_FILE_TITLE : document.wrappedValue.text
         self.fileName = fileName
-        super.init()
+        
 
         do {
             if let drawingData = document.wrappedValue.drawing  {
-                self.drawing = try PKDrawing( data: drawingData )
+                super.init( drawing: try PKDrawing( data: drawingData ) )
             }
             else {
-                self.drawing = PKDrawing()
+                super.init( drawing: PKDrawing() )
             }
         }
         catch {
