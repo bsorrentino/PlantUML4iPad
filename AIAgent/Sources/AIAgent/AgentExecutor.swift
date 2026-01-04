@@ -62,9 +62,24 @@ struct AgentExecutorState : AgentState {
 }
 
 
+fileprivate func removeMarkdown( _ content: String )  -> String  {
+    let regex = #/```(json\n)?({)(?<code>.*)(}\n(```)?)/#.dotMatchesNewlines()
+    
+    if let match = try? regex.firstMatch(in: content) {
+        
+        return "\(match.code)"
+    }
+    
+    return content
+
+}
+
 func diagramDescriptionOutputParse( _ content: String ) throws -> DiagramGuide.Description {
+    
+    let safeContent = removeMarkdown( content );
+    
     let decoder = JSONDecoder()
-    if let data = content.data(using: .utf8) {
+    if let data = safeContent.data(using: .utf8) {
         
         let desc = try decoder.decode(DiagramGuide.Description.self, from: data )
         
@@ -78,29 +93,7 @@ func diagramDescriptionOutputParse( _ content: String ) throws -> DiagramGuide.D
     else {
         throw _EX( "error converting data to DiagramDescription!")
     }
-    
-//    let regex = #/```(json\n)?({)(?<code>.*)(}\n(```)?)/#.dotMatchesNewlines()
-//    
-//    if let match = try regex.firstMatch(in: content) {
-//        
-//        
-//        let decoder = JSONDecoder()
-//        
-//        let code = "{\(match.code)}"
-//        
-//        if let data = code.data(using: .utf8) {
-//            
-//            return try decoder.decode(DiagramDescription.self, from: data )
-//        }
-//        else {
-//            throw _EX( "error converting data!")
-//        }
-//    }
-//    else {
-//        throw _EX( "content doesn't match schema!")
-//    }
-    
-    
+        
 }
 
 func describeDiagramImage<T:AgentExecutorDelegate>( state: AgentExecutorState,
