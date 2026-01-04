@@ -11,6 +11,7 @@ import AIAgent
 import PhotosUI
 import UniformTypeIdentifiers
 import UIKit
+import DrawOnImage
 
 #Preview( "PlantUMLDrawingView") {
     
@@ -57,6 +58,7 @@ struct PlantUMLDrawingView: View {
             .onChange(of: requestImage, initial: false) { oldValue, newValue in
                 if newValue {
                     processImage()
+                    requestImage = false
                 }
             }
             .font(.system(size: 35))
@@ -215,7 +217,7 @@ extension PlantUMLDrawingView : AgentExecutorDelegate {
         // getting image from Canvas
         
         let backgroundColor:UIColor = (colorScheme == .dark ) ? .black : .white
-        let image = resultImage.withBackground(color: backgroundColor)
+        let image = resultImage.withBackgroundColor(backgroundColor)
         
         if let imageData = image.pngData() {
             
