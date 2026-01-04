@@ -18,7 +18,11 @@ struct OpenAIView<DrawingView :View> : View {
     }
     
     @ObservedObject var service:  OpenAIObservableService
+    #if USE_OBSERVABLE
+    var document: PlantUMLObservableDocument
+    #else
     @ObservedObject var document: PlantUMLObservableDocument
+    #endif
     @EnvironmentObject var networkService: NetworkObservableService
 
     @State var instruction:String = ""

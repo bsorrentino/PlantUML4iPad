@@ -15,13 +15,21 @@ import DrawOnImage
 
 #Preview( "PlantUMLDrawingView") {
     
+    let doc = PlantUMLObservableDocument(document:.constant(PlantUMLDocument()), fileName:"Untitled")
+    
     NavigationStack {
+#if USE_OBSERVABLE
         PlantUMLDrawingView(
-            
             service: OpenAIObservableService(),
-            document: PlantUMLObservableDocument(document:.constant(PlantUMLDocument()), fileName:"Untitled")
+            document: .constant(doc)
         ).environmentObject(NetworkObservableService())
-        
+#else
+        PlantUMLDrawingView(
+            service: OpenAIObservableService(),
+            document: doc
+        ).environmentObject(NetworkObservableService())
+#endif
+
     }
 }
 
@@ -29,7 +37,11 @@ struct PlantUMLDrawingView: View {
     @Environment( \.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @ObservedObject var service:OpenAIObservableService
+    #if USE_OBSERVABLE
+    @Binding var document: PlantUMLObservableDocument
+    #else
     @ObservedObject var document: PlantUMLObservableDocument
+    #endif
     @EnvironmentObject var networkService: NetworkObservableService
     @State var isScrollEnabled = false
     @State var isUseDrawingTool = false

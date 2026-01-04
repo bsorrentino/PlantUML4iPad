@@ -703,6 +703,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 4.0.0;
+				OTHER_SWIFT_FLAGS = "-DUSE_OBSERVABLE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -744,6 +745,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 4.0.0;
+				OTHER_SWIFT_FLAGS = "-DUSE_OBSERVABLE";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

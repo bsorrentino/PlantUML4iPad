@@ -37,7 +37,11 @@ let NEW_FILE_TITLE = "title Untitled"
 class PlantUMLObservableDocument : DrawableObservableDocument {
     
     @Binding var object: PlantUMLDocument
+    #if USE_OBSERVABLE
+    var text: String
+    #else
     @Published var text: String
+    #endif
 
     var fileName:String
 

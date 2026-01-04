@@ -30,7 +30,11 @@ struct PlantUMLDocumentView: View {
     @AppStorage("darkTheme") var darkTheme:String = AceEditorWebView.Theme.monokai.rawValue
     @AppStorage("fontSize") var fontSize:Int = 15
     
+    #if USE_OBSERVABLE
+    @State var document: PlantUMLObservableDocument
+    #else
     @StateObject var document: PlantUMLObservableDocument
+    #endif
     @StateObject var openAIService = OpenAIObservableService()
     @StateObject var networkService = NetworkObservableService()
     @State var isOpenAIVisible  = false
@@ -75,9 +79,18 @@ struct PlantUMLDocumentView: View {
                 OpenAIView( service: openAIService,
                             document: document ) {
                                 NavigationStack {
-                                    PlantUMLDrawingView( service: openAIService,
+                                    #if USE_OBSERVABLE
+                                    PlantUMLDrawingView(
+                                             service: openAIService,
+                                             document: $document )
+                                    .environmentObject(networkService)
+                                    #else
+                                    PlantUMLDrawingView(
+                                             service: openAIService,
                                              document: document )
                                     .environmentObject(networkService)
+                                    #endif
+                                    
                                 }
                             }
                 .environmentObject(networkService)
