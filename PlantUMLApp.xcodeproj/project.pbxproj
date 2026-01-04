@@ -16,6 +16,7 @@
 		A02BB3E82B41C9430073D432 /* OpenAIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */; };
 		A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F629EB16280048D9C6 /* PlantUMLFramework */; };
 		A038DB6029D489BA0032E312 /* PlantUMLOpenAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */; };
+		A0431E232F09911100A351F6 /* DrawOnImage in Frameworks */ = {isa = PBXBuildFile; productRef = A0431E222F09911100A351F6 /* DrawOnImage */; };
 		A04512F32B3E2D8E00CD1158 /* PlantUMLDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
 		A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A068572D29D8B31100E82C2F /* View+Clipboard.swift */; };
@@ -24,7 +25,6 @@
 		A0A139352A13C49A00B69FBC /* View+Secure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A139342A13C49A00B69FBC /* View+Secure.swift */; };
 		A0A42A76289ABC2D00E929EB /* PlantUMLDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */; };
 		A0A42A79289AC37C00E929EB /* PlantUMLObservableDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */; };
-		A0A80A762B3ED90A00CB08CA /* SwiftUI+PencilKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0A80A752B3ED90A00CB08CA /* SwiftUI+PencilKit.swift */; };
 		A0AC4EAD2CF760AE00E5090A /* NetworkObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0AC4EAC2CF760AC00E5090A /* NetworkObservableService.swift */; };
 		A0AC4EB02CF791DC00E5090A /* hotfix-changelog.sh in Resources */ = {isa = PBXBuildFile; fileRef = A0AC4EAF2CF791DC00E5090A /* hotfix-changelog.sh */; };
 		A0AC4EB22CF7925600E5090A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A0AC4EB12CF7925600E5090A /* README.md */; };
@@ -142,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A00823992C73A5B000464590 /* AIAgent in Frameworks */,
+				A0431E232F09911100A351F6 /* DrawOnImage in Frameworks */,
 				A008239D2C73A5B000464590 /* PlantUMLFramework in Frameworks */,
 				A008239B2C73A5B000464590 /* AppSecureStorage in Frameworks */,
 			);
@@ -323,6 +324,7 @@
 				A00823982C73A5B000464590 /* AIAgent */,
 				A008239A2C73A5B000464590 /* AppSecureStorage */,
 				A008239C2C73A5B000464590 /* PlantUMLFramework */,
+				A0431E222F09911100A351F6 /* DrawOnImage */,
 			);
 			productName = PlantUML;
 			productReference = A0D3C64628984A0E000838D7 /* PlantUMLApp.app */;
@@ -383,6 +385,7 @@
 			);
 			mainGroup = A0D3C63D28984A0E000838D7;
 			packageReferences = (
+				A0DCEFA62F098D9E002F1C54 /* XCRemoteSwiftPackageReference "SwiftUI-DrawOnImage" */,
 			);
 			productRefGroup = A0D3C64728984A0E000838D7 /* Products */;
 			projectDirPath = "";
@@ -457,7 +460,6 @@
 				A0A42A79289AC37C00E929EB /* PlantUMLObservableDocument.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
 				A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
-				A0A80A762B3ED90A00CB08CA /* SwiftUI+PencilKit.swift in Sources */,
 				A0D3C64C28984A0E000838D7 /* PlantUMLDocument.swift in Sources */,
 				A0EA85672BADF6F200800522 /* ConfigSettings.swift in Sources */,
 				A0D3C64E28984A0E000838D7 /* PlantUMLDocumentView.swift in Sources */,
@@ -839,6 +841,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A0DCEFA62F098D9E002F1C54 /* XCRemoteSwiftPackageReference "SwiftUI-DrawOnImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bsorrentino/SwiftUI-DrawOnImage.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		A00823982C73A5B000464590 /* AIAgent */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -859,6 +872,11 @@
 		A02010FD2ED7846D0098F2E0 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PlantUMLFramework;
+		};
+		A0431E222F09911100A351F6 /* DrawOnImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0DCEFA62F098D9E002F1C54 /* XCRemoteSwiftPackageReference "SwiftUI-DrawOnImage" */;
+			productName = DrawOnImage;
 		};
 		A0BD13F629EB16280048D9C6 /* PlantUMLFramework */ = {
 			isa = XCSwiftPackageProductDependency;

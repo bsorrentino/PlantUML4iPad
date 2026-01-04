@@ -64,6 +64,15 @@
       }
     },
     {
+      "identity" : "swiftui-drawonimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bsorrentino/SwiftUI-DrawOnImage.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a45caffc248db7e7d75d1946621792f0b4c389b9"
+      }
+    },
+    {
       "identity" : "swiftyace",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bsorrentino/SwiftyACE.git",
