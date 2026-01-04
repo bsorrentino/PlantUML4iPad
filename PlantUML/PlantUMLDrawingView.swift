@@ -78,8 +78,7 @@ struct PlantUMLDrawingView: View {
             .foregroundColor(Color.purple)
             .navigationBarTitle( "\(document.fileName)   -   📝 Draw Diagram", displayMode: .inline )
             .navigationBarItems(trailing:
-                                    HStack(spacing: 10) {
-#if __BACKGROUND_IMAGE_SUPPORT__
+                HStack(spacing: 10) {
                 // Import menu
                 Menu {
                     Button(action: { showPhotoPicker = true }) {
@@ -106,7 +105,6 @@ struct PlantUMLDrawingView: View {
                 .accessibilityIdentifier("drawing_import")
                 
                 Divider()
-#endif // __BACKGROUND_IMAGE_SUPPORT__
                 
                 Button(action: {
                     isScrollEnabled.toggle()
