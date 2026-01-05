@@ -83,6 +83,7 @@ class PlantUMLObservableDocument : DrawableObservableDocument {
     
     func reset() {
         self.text = self.object.text
+        self.drawingBackgroundImage = self.object.backgroundImage
         
         do {
             if let drawingData = self.object.drawing {
