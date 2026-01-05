@@ -61,6 +61,11 @@ class PlantUMLObservableDocument : DrawableObservableDocument {
             else {
                 super.init( drawing: PKDrawing() )
             }
+            
+            if let backgroundImage = document.wrappedValue.backgroundImage {
+                super.drawingBackgroundImage = backgroundImage
+            }
+
         }
         catch {
             fatalError( "failed to load drawing")
@@ -82,6 +87,7 @@ class PlantUMLObservableDocument : DrawableObservableDocument {
     
     func reset() {
         self.text = self.object.text
+        self.drawingBackgroundImage = self.object.backgroundImage
         
         do {
             if let drawingData = self.object.drawing {
@@ -100,6 +106,7 @@ class PlantUMLObservableDocument : DrawableObservableDocument {
         print( "save document")
         self.object.text = self.text
         self.object.drawing = self.drawing.dataRepresentation()
+        self.object.backgroundImage = self.drawingBackgroundImage
     }
 
     
