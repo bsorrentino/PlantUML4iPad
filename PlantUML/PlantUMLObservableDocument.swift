@@ -1,5 +1,5 @@
 //
-//  PlantUMLDiagramBuilder.swift
+//  PlantUMLObservableDocument.swift
 //  PlantUML
 //
 //  Created by Bartolomeo Sorrentino on 03/08/22.
