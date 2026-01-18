@@ -44,7 +44,7 @@ struct PlantUMLDocumentView: View {
     @State private var saving = false
     
     @State private var editorViewId  = 1
-    @State private var isDrawingPresented = false
+    @State private var isDiagramPresented = false
 
 //    @State private var canvas = PKCanvasView(frame: CGRect(x: 0, y: 0, width: 2000, height: 2000))
     
@@ -138,7 +138,7 @@ struct PlantUMLDocumentView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $isDrawingPresented ) {
+        .fullScreenCover(isPresented: $isDiagramPresented ) {
             NavigationStack {
                 PlantUMLDiagramView(url: document.buildURL())
             }
@@ -282,7 +282,7 @@ extension PlantUMLDocumentView {
     
     func ToggleDiagramButton() -> some View {
         Button {
-            isDrawingPresented.toggle()
+            isDiagramPresented.toggle()
         }
         label: {
             Label("Preview >", systemImage: "photo.fill")
