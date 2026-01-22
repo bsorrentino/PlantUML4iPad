@@ -24,8 +24,10 @@ class OpenAIObservableService : ObservableObject {
     @Published public var inputApiKey = ""
 
     @AppSecureStorage("openaikey") private var openAIKey:String?
-    @AppStorage("openaiModel") private var promptModel:String = "gpt-4o-mini"
-    @AppStorage("visionModel") private var visionModel:String = "gpt-4o"
+    /*@AppStorage("openaiModel") private*/
+    var promptModel:String = "gpt-4o-mini"
+    /*@AppStorage("visionModel") private*/
+    var visionModel:String = "gpt-4o"
 
     var clipboardQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
     var promptQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
@@ -38,6 +40,7 @@ class OpenAIObservableService : ObservableObject {
         }
         
         inputApiKey = openAIKey ?? ""
+        
         
      }
     

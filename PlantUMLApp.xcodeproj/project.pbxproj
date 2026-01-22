@@ -29,6 +29,7 @@
 		A0AC4EB02CF791DC00E5090A /* hotfix-changelog.sh in Resources */ = {isa = PBXBuildFile; fileRef = A0AC4EAF2CF791DC00E5090A /* hotfix-changelog.sh */; };
 		A0AC4EB22CF7925600E5090A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A0AC4EB12CF7925600E5090A /* README.md */; };
 		A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */; };
+		A0BC84112F22C53700B948A3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0BC84102F22C53700B948A3 /* SettingsView.swift */; };
 		A0BFBA9A290D551F008340E3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0BFBA9C290D551F008340E3 /* Localizable.strings */; };
 		A0C0C3282B5D95DD00CE66A2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C0C3272B5D95DD00CE66A2 /* Errors.swift */; };
 		A0C0C33C2B5D9C7700CE66A2 /* AppSecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A0C0C33B2B5D9C7700CE66A2 /* AppSecureStorage */; };
@@ -103,6 +104,7 @@
 		A0AC4EAF2CF791DC00E5090A /* hotfix-changelog.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "hotfix-changelog.sh"; sourceTree = "<group>"; };
 		A0AC4EB12CF7925600E5090A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A0BADC7029D4C2740056A098 /* SwiftUI+Conditional.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Conditional.swift"; sourceTree = "<group>"; };
+		A0BC84102F22C53700B948A3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A0BFBA9B290D551F008340E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A0C0C3272B5D95DD00CE66A2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		A0C0C3492B5DA7A200CE66A2 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */,
 				A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */,
 				A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */,
+				A0BC84102F22C53700B948A3 /* SettingsView.swift */,
 				A0BFBA9C290D551F008340E3 /* Localizable.strings */,
 				A0D3C64F28984A10000838D7 /* Assets.xcassets */,
 				A082CAFF2A9A68D80055D6D6 /* Settings.bundle */,
@@ -451,6 +454,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0BC84112F22C53700B948A3 /* SettingsView.swift in Sources */,
 				A0FB8F9C295616BF00910896 /* View+UIImage.swift in Sources */,
 				A038DB6029D489BA0032E312 /* PlantUMLOpenAIView.swift in Sources */,
 				A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */,

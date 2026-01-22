@@ -14,7 +14,7 @@ struct OpenAIView<DrawingView :View> : View {
         case Prompt
         case Result
         case PromptHistory
-        case Settings
+//        case Settings
     }
     
     @ObservedObject var service:  OpenAIObservableService
@@ -29,6 +29,7 @@ struct OpenAIView<DrawingView :View> : View {
     @State private var tabs: Tab = .Prompt
     @State private var hideOpenAISecrets = true
     @State private var isDrawingPresented = false
+    @State private var isSettingsPresented = false
     
     @FocusState private var promptInFocus: Bool
     
@@ -79,7 +80,10 @@ struct OpenAIView<DrawingView :View> : View {
                 Divider()
                     .background( .blue)
                     .frame(height: 20 )
-                Button( action: { tabs = .Settings } ) {
+                Button( action: {
+                    isSettingsPresented.toggle()
+                    //tabs = .Settings
+                } ) {
                     Label( "Settings", systemImage: "gearshape")
                         //.labelStyle(.iconOnly)
                 }
@@ -97,20 +101,25 @@ struct OpenAIView<DrawingView :View> : View {
             if case .PromptHistory = tabs {
                 HistoryPrompts_Fragment
             }
-            if case .Settings = tabs {
-                Settings_Fragment
-            }
+//            if case .Settings = tabs {
+//                Settings_Fragment
+//                
+//            }
         }
         .padding( EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 0))
         .onAppear {
             if( !service.isSettingsValid ) {
-                tabs = .Settings
+                isSettingsPresented.toggle()
+//                tabs = .Settings
             }
         }
         .fullScreenCover(isPresented: $isDrawingPresented ) {
             drawingView()
         }
-        
+        .fullScreenCover(isPresented: $isSettingsPresented ) {
+            SettingsView( openAIService: service )
+        }
+
     }
     
 }
@@ -250,66 +259,65 @@ extension OpenAIView {
 }
 
 // MARK: Settings Extension
-extension OpenAIView {
-   
-    var Settings_Fragment: some View {
-        ZStack(alignment: .bottom ) {
-            // [How to scroll a Form to a specific UI element in SwiftUI](https://stackoverflow.com/a/65777080/521197)
-            ScrollViewReader { p in
-                Form {
-                    Section {
-                        SecureToggleField( "Api Key", value: $service.inputApiKey, hidden: hideOpenAISecrets)
-                    }
-                    header: {
-                        HStack {
-                            Text("OpenAI Secrets")
-                            HideToggleButton(hidden: $hideOpenAISecrets)
-                        }
-                        .id( "openai-secret")
-
-                    }
-                    footer: {
-                        HStack {
-                            Spacer()
-                            Text("these data will be stored in onboard secure keychain")
-                            Spacer()
-                        }
-                    }
-                }
-                
-            }
-            HStack {
-                Spacer()
-                Button( action: {
-                    service.resetSettings()
-                },
-                label: {
-                    Label( "Clear", systemImage: "xmark")
-                })
-                Button( action: {
-                    service.commitSettings()
-                    tabs = .Prompt
-                    promptInFocus = true
-                    
-                },
-                label: {
-                    Label( "Save", systemImage: "arrow.right")
-                })
-                #if __USE_ORGID
-                .disabled( service.inputApiKey.isEmpty || service.inputOrgId.isEmpty )
-                #else
-                .disabled( service.inputApiKey.isEmpty )
-                #endif
-            }
-            .padding()
-        }
-        .border(Color.gray)
-        .padding()
-        
-    }
-    
-}
-
+//extension OpenAIView {
+//   
+//    var Settings_Fragment: some View {
+//        ZStack(alignment: .bottom ) {
+//            // [How to scroll a Form to a specific UI element in SwiftUI](https://stackoverflow.com/a/65777080/521197)
+//            ScrollViewReader { p in
+//                Form {
+//                    Section {
+//                        SecureToggleField( "Api Key", value: $service.inputApiKey, hidden: hideOpenAISecrets)
+//                    }
+//                    header: {
+//                        HStack {
+//                            Text("OpenAI Secrets")
+//                            HideToggleButton(hidden: $hideOpenAISecrets)
+//                        }
+//                        .id( "openai-secret")
+//
+//                    }
+//                    footer: {
+//                        HStack {
+//                            Spacer()
+//                            Text("these data will be stored in onboard secure keychain")
+//                            Spacer()
+//                        }
+//                    }
+//                }
+//                
+//            }
+//            HStack {
+//                Spacer()
+//                Button( action: {
+//                    service.resetSettings()
+//                },
+//                label: {
+//                    Label( "Clear", systemImage: "xmark")
+//                })
+//                Button( action: {
+//                    service.commitSettings()
+//                    tabs = .Prompt
+//                    promptInFocus = true
+//                    
+//                },
+//                label: {
+//                    Label( "Save", systemImage: "arrow.right")
+//                })
+//                #if __USE_ORGID
+//                .disabled( service.inputApiKey.isEmpty || service.inputOrgId.isEmpty )
+//                #else
+//                .disabled( service.inputApiKey.isEmpty )
+//                #endif
+//            }
+//            .padding()
+//        }
+//        .border(Color.gray)
+//        .padding()
+//        
+//    }
+//    
+//}
 
 
 
