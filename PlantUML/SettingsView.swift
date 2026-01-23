@@ -10,40 +10,43 @@ enum AIProvider: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-/// Settings Model for SettingsView binding
-@Observable
-class SettingsViewModel {
-    var provider: AIProvider = .openAI
-    var ollamaURL: String = ""
-    
-    @ObservationIgnored
-    let allModels = [
-        "OpenAI": ( vision: ["gpt-4o", "gpt-4-vision"],
-                    prompt: ["gpt-4o-mini", "gpt-3.5-turbo"])
-        ]
-            
-}
+let allModels = [
+    "OpenAI": ( vision: [
+                    "gpt-5",
+                    "gpt-4o",
+                    "gpt-5-mini",
+                    "gpt-5-nano",
+                    "gpt-4.1"
+                ],
+                prompt: [
+                    "gpt5-nano",
+                    "gpt-5-mini",
+                    "gpt-4o-mini",
+                    "gpt-5",
+                    "gpt-4o"
+                ])
+    ]
 
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var openAIService: OpenAIObservableService
-    @State var viewModel: SettingsViewModel = SettingsViewModel()
+    @ObservedObject var serviceAI: AIObservableService
     @State private var hideOpenAISecrets = true
-    
+    @State var provider: AIProvider = .openAI
+
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("Provider")) {
-                    Picker("Provider", selection: $viewModel.provider) {
+                    Picker("Provider", selection: $provider) {
                         ForEach(AIProvider.allCases) { provider in
                             Text(provider.rawValue).tag(provider)
                         }
                     }
                     .pickerStyle(.segmented)
                 }
-                Section(header: Text("\(viewModel.provider.id) configuration")) {
-                    if viewModel.provider == .ollama {
-                        TextField("URL", text: $viewModel.ollamaURL)
+                Section(header: Text("\(provider.id) configuration")) {
+                    if provider == .ollama {
+                        TextField("URL", text: $serviceAI.ollamaURL)
                             .keyboardType(.URL)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
@@ -51,7 +54,7 @@ struct SettingsView: View {
                     }
                     else {
                         Section {
-                            SecureToggleField( "Api Key", value: $openAIService.inputApiKey, hidden: hideOpenAISecrets)
+                            SecureToggleField( "Api Key", value: $serviceAI.inputApiKey, hidden: hideOpenAISecrets)
                         }
                         header: {
                             HStack {
@@ -69,11 +72,11 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text("Model")) {
-                    if viewModel.provider == .ollama {
+                    if provider == .ollama {
                         OllamaModels
                     }
                     else {
-                        OtherModels
+                        OpenAIModels
                     }
                     
                 }
@@ -91,17 +94,17 @@ struct SettingsView: View {
         }
     }
     
-    var OtherModels: some View {
-        let allModelsByProvider = viewModel.allModels[viewModel.provider.id]
+    var OpenAIModels: some View {
+        let allModelsByProvider = allModels[provider.id]
         return Group {
-            Picker("Vision", selection: $openAIService.visionModel) {
+            Picker("Vision", selection: $serviceAI.openaivisionModel) {
                 ForEach(allModelsByProvider?.vision ?? [], id: \.self) { model in
                     Text(model).tag(model)
                 }
             }
             .pickerStyle(.menu)
             
-            Picker("Prompt", selection: $openAIService.promptModel) {
+            Picker("Prompt", selection: $serviceAI.openaiPromptModel) {
                 ForEach(allModelsByProvider?.prompt ?? [], id: \.self) { model in
                         Text(model).tag(model)
                     }
@@ -113,12 +116,12 @@ struct SettingsView: View {
     
     var OllamaModels: some View {
         Group {
-            TextField("Vision", text: $openAIService.visionModel)
+            TextField("Vision", text: $serviceAI.ollamaVisionModel)
                 .keyboardType(.default)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
 
-            TextField("Prompt", text: $openAIService.promptModel)
+            TextField("Prompt", text: $serviceAI.ollamaPromptModel)
                 .keyboardType(.default)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
@@ -128,7 +131,7 @@ struct SettingsView: View {
 
 #if DEBUG
 #Preview {
-    SettingsView(openAIService: OpenAIObservableService())
+    SettingsView(serviceAI: AIObservableService())
 }
 #endif
 
