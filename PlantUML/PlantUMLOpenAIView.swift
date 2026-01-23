@@ -1,5 +1,5 @@
 //
-//  PlantUML+OpenAI.swift
+//  PlantUMLOpenAIView.swift
 //  PlantUMLApp
 //
 //  Created by Bartolomeo Sorrentino on 29/03/23.
@@ -257,69 +257,6 @@ extension OpenAIView {
     }
     
 }
-
-// MARK: Settings Extension
-//extension OpenAIView {
-//   
-//    var Settings_Fragment: some View {
-//        ZStack(alignment: .bottom ) {
-//            // [How to scroll a Form to a specific UI element in SwiftUI](https://stackoverflow.com/a/65777080/521197)
-//            ScrollViewReader { p in
-//                Form {
-//                    Section {
-//                        SecureToggleField( "Api Key", value: $service.inputApiKey, hidden: hideOpenAISecrets)
-//                    }
-//                    header: {
-//                        HStack {
-//                            Text("OpenAI Secrets")
-//                            HideToggleButton(hidden: $hideOpenAISecrets)
-//                        }
-//                        .id( "openai-secret")
-//
-//                    }
-//                    footer: {
-//                        HStack {
-//                            Spacer()
-//                            Text("these data will be stored in onboard secure keychain")
-//                            Spacer()
-//                        }
-//                    }
-//                }
-//                
-//            }
-//            HStack {
-//                Spacer()
-//                Button( action: {
-//                    service.resetSettings()
-//                },
-//                label: {
-//                    Label( "Clear", systemImage: "xmark")
-//                })
-//                Button( action: {
-//                    service.commitSettings()
-//                    tabs = .Prompt
-//                    promptInFocus = true
-//                    
-//                },
-//                label: {
-//                    Label( "Save", systemImage: "arrow.right")
-//                })
-//                #if __USE_ORGID
-//                .disabled( service.inputApiKey.isEmpty || service.inputOrgId.isEmpty )
-//                #else
-//                .disabled( service.inputApiKey.isEmpty )
-//                #endif
-//            }
-//            .padding()
-//        }
-//        .border(Color.gray)
-//        .padding()
-//        
-//    }
-//    
-//}
-
-
 
 
 #Preview {
