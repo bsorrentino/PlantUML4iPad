@@ -11,6 +11,16 @@ import AnyLanguageModel
 import PlantUMLFramework
 import AIAgent
 
+/// Enum for selecting the AI Provider
+enum AIProvider: String, CaseIterable, Identifiable {
+    case openAI = "OpenAI"
+    case ollama = "Ollama"
+    //case gemini = "Gemini"
+    
+    var id: String { rawValue }
+}
+
+
 
 class AIObservableService : ObservableObject {
     
@@ -22,7 +32,8 @@ class AIObservableService : ObservableObject {
 
     @Published public var status: Status = .Ready
     @Published public var inputApiKey = ""
-
+    @Published public var provider: AIProvider = .openAI
+    
     @AppSecureStorage("openaikey") private var openAIKey:String?
     @AppStorage("openaiModel") var openaiPromptModel:String = "gpt-4o-mini"
     @AppStorage("visionModel") var openaivisionModel:String = "gpt-4o"
@@ -30,7 +41,7 @@ class AIObservableService : ObservableObject {
     
     @AppStorage("ollamaPromptModel") var ollamaPromptModel:String = ""
     @AppStorage("ollamaVisionModel") var ollamaVisionModel:String = ""
-    @AppStorage("ollamaURL")var ollamaURL: String = "http://localhost:1234"
+    @AppStorage("ollamaURL")var ollamaURL: String = OllamaLanguageModel.defaultBaseURL.absoluteString
 
     var clipboardQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
     var promptQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
@@ -78,12 +89,18 @@ class AIObservableService : ObservableObject {
         self.status = .Processing
         
         do {
-            let promptLanguageModel = OpenAILanguageModel(apiKey: openAIKey, model: openaiPromptModel)
+            let promptLanguageModel: any LanguageModel = switch( provider ) {
+                case .ollama:
+                    OllamaLanguageModel(baseURL: URL(string: ollamaURL)!, model: ollamaPromptModel)
+                default:
+                    OpenAILanguageModel(apiKey: openAIKey, model: openaiPromptModel)
+                }
             
             if let content = try await updatePlantUML( languageModel: promptLanguageModel,
-                                                      input: input,
-                                                      withInstruction: instruction) {
-                
+                                                       input: input,
+                                                       withInstruction: instruction,
+                                                       supportStructuredOutput: provider == .openAI)
+            {
                 status = .Ready
                 
                 return content
