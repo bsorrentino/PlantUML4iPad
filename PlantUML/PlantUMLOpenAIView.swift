@@ -17,7 +17,7 @@ struct OpenAIView<DrawingView :View> : View {
 //        case Settings
     }
     
-    @ObservedObject var service:  OpenAIObservableService
+    @ObservedObject var service:  AIObservableService
     #if USE_OBSERVABLE
     var document: PlantUMLObservableDocument
     #else
@@ -117,7 +117,7 @@ struct OpenAIView<DrawingView :View> : View {
             drawingView()
         }
         .fullScreenCover(isPresented: $isSettingsPresented ) {
-            SettingsView( openAIService: service )
+            SettingsView( serviceAI: service )
         }
 
     }
@@ -345,7 +345,7 @@ extension OpenAIView {
         
     }
     
-    return OpenAIView( service: OpenAIObservableService(),
+    return OpenAIView( service: AIObservableService(),
                        document: PlantUMLObservableDocument(
                             document:.constant(PlantUMLDocument(text: """
                         @startuml
