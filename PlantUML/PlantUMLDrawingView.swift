@@ -20,7 +20,7 @@ import DrawOnImage
     NavigationStack {
 #if USE_OBSERVABLE
         PlantUMLDrawingView(
-            service: OpenAIObservableService(),
+            service: AIObservableService(),
             document: .constant(doc)
         ).environmentObject(NetworkObservableService())
 #else
@@ -36,7 +36,7 @@ import DrawOnImage
 struct PlantUMLDrawingView: View {
     @Environment( \.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var service:OpenAIObservableService
+    @ObservedObject var service:AIObservableService
     #if USE_OBSERVABLE
     @Binding var document: PlantUMLObservableDocument
     #else
