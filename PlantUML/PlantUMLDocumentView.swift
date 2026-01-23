@@ -35,7 +35,7 @@ struct PlantUMLDocumentView: View {
     #else
     @StateObject var document: PlantUMLObservableDocument
     #endif
-    @StateObject var openAIService = OpenAIObservableService()
+    @StateObject var openAIService = AIObservableService()
     @StateObject var networkService = NetworkObservableService()
     @State var isOpenAIVisible  = false
     
