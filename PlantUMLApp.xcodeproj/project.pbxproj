@@ -13,7 +13,7 @@
 		A02010FC2ED7846D0098F2E0 /* AIAgent in Frameworks */ = {isa = PBXBuildFile; productRef = A02010FB2ED7846D0098F2E0 /* AIAgent */; };
 		A02010FE2ED7846D0098F2E0 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A02010FD2ED7846D0098F2E0 /* PlantUMLFramework */; };
 		A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */; };
-		A02BB3E82B41C9430073D432 /* OpenAIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */; };
+		A02BB3E82B41C9430073D432 /* AIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* AIObservableService.swift */; };
 		A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F629EB16280048D9C6 /* PlantUMLFramework */; };
 		A038DB6029D489BA0032E312 /* PlantUMLOpenAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */; };
 		A0431E232F09911100A351F6 /* DrawOnImage in Frameworks */ = {isa = PBXBuildFile; productRef = A0431E222F09911100A351F6 /* DrawOnImage */; };
@@ -79,7 +79,7 @@
 		A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A01907EF2951CD5C0059CCBE /* privacy_policy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacy_policy.md; sourceTree = "<group>"; };
-		A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIObservableService.swift; sourceTree = "<group>"; };
+		A02BB3E72B41C9430073D432 /* AIObservableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIObservableService.swift; sourceTree = "<group>"; };
 		A036CC402A0FC67C003FDB5E /* PlantUMLAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantUMLAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A038DB5B29D452880032E312 /* OpenAI.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OpenAI.xcconfig; sourceTree = "<group>"; };
 		A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLOpenAIView.swift; sourceTree = "<group>"; };
@@ -184,7 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */,
-				A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */,
+				A02BB3E72B41C9430073D432 /* AIObservableService.swift */,
 				A0AC4EAC2CF760AC00E5090A /* NetworkObservableService.swift */,
 			);
 			name = Observable;
@@ -460,7 +460,7 @@
 				A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */,
 				A04512F32B3E2D8E00CD1158 /* PlantUMLDrawingView.swift in Sources */,
 				A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */,
-				A02BB3E82B41C9430073D432 /* OpenAIObservableService.swift in Sources */,
+				A02BB3E82B41C9430073D432 /* AIObservableService.swift in Sources */,
 				A0A42A79289AC37C00E929EB /* PlantUMLObservableDocument.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
 				A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
