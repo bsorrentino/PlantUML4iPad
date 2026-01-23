@@ -1,15 +1,6 @@
 import SwiftUI
 import AppSecureStorage
 
-/// Enum for selecting the AI Provider
-enum AIProvider: String, CaseIterable, Identifiable {
-    case openAI = "OpenAI"
-    case ollama = "Ollama"
-    //case gemini = "Gemini"
-    
-    var id: String { rawValue }
-}
-
 let allModels = [
     "OpenAI": ( vision: [
                     "gpt-5",
@@ -31,21 +22,21 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var serviceAI: AIObservableService
     @State private var hideOpenAISecrets = true
-    @State var provider: AIProvider = .openAI
+    
 
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("Provider")) {
-                    Picker("Provider", selection: $provider) {
+                    Picker("Provider", selection: $serviceAI.provider) {
                         ForEach(AIProvider.allCases) { provider in
                             Text(provider.rawValue).tag(provider)
                         }
                     }
                     .pickerStyle(.segmented)
                 }
-                Section(header: Text("\(provider.id) configuration")) {
-                    if provider == .ollama {
+                Section(header: Text("\($serviceAI.provider.id) configuration")) {
+                    if serviceAI.provider == .ollama {
                         TextField("URL", text: $serviceAI.ollamaURL)
                             .keyboardType(.URL)
                             .autocapitalization(.none)
@@ -72,7 +63,7 @@ struct SettingsView: View {
                     }
                 }
                 Section(header: Text("Model")) {
-                    if provider == .ollama {
+                    if serviceAI.provider == .ollama {
                         OllamaModels
                     }
                     else {
@@ -95,7 +86,7 @@ struct SettingsView: View {
     }
     
     var OpenAIModels: some View {
-        let allModelsByProvider = allModels[provider.id]
+        let allModelsByProvider = allModels[$serviceAI.provider.id]
         return Group {
             Picker("Vision", selection: $serviceAI.openaivisionModel) {
                 ForEach(allModelsByProvider?.vision ?? [], id: \.self) { model in
