@@ -62,7 +62,19 @@ struct AgentExecutorState : AgentState {
 }
 
 
-fileprivate func removeMarkdown( _ content: String )  -> String  {
+fileprivate func removeMarkdownAroundPlantuml( _ content: String )  -> String  {
+    let regex = #/```(plantuml\n)?(?<script>.*)(\n(```)?)/#.dotMatchesNewlines()
+    
+    if let match = try? regex.firstMatch(in: content) {
+        
+        return "\(match.script)"
+    }
+    
+    return content
+
+}
+
+fileprivate func removeMarkdownAroundJson( _ content: String )  -> String  {
     let regex = #/```(json\n)?({)(?<code>.*)(}\n(```)?)/#.dotMatchesNewlines()
     
     if let match = try? regex.firstMatch(in: content) {
@@ -76,7 +88,7 @@ fileprivate func removeMarkdown( _ content: String )  -> String  {
 
 func diagramDescriptionOutputParse( _ content: String ) throws -> DiagramGuide.Description {
     
-    let safeContent = removeMarkdown( content );
+    let safeContent = removeMarkdownAroundJson( content );
     
     let decoder = JSONDecoder()
     if let data = safeContent.data(using: .utf8) {
@@ -290,11 +302,27 @@ public func runTranslateDrawingToPlantUML<T:AgentExecutorDelegate>( visionModel:
 
 public func updatePlantUML( languageModel: any LanguageModel,
                             input: String,
-                            withInstruction instruction: String ) async throws -> String? {
+                            withInstruction instruction: String,
+                            supportStructuredOutput: Bool = true) async throws -> String? {
     
     let system_prompt = try loadPromptFromBundle(fileName: "update_diagram_prompt")
     
     let session = LanguageModelSession( model: languageModel, instructions: system_prompt )
+    
+    if supportStructuredOutput  {
+        let result = try await session.respond(to: Prompt {
+            "starting from the the current <plantuml> script:"
+            "<plantuml>"
+            input
+            "</plantuml>"
+            "apply the following <instruction>:"
+            "<instruction>"
+            instruction
+            "</instruction>"
+        }, generating: PlantUMLResult.self)
+        
+        return result.content.script
+    }
     
     let result = try await session.respond(to: Prompt {
         "starting from the the current <plantuml> script:"
@@ -305,9 +333,10 @@ public func updatePlantUML( languageModel: any LanguageModel,
         "<instruction>"
         instruction
         "</instruction>"
-    }, generating: PlantUMLResult.self)
-   
-    return result.content.script
+        "return raw PlantUML diagram script in the format of PlantUML language"
+    })
+    
+    return removeMarkdownAroundPlantuml(result.content)
 
     
 }
