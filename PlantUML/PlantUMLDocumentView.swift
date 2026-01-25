@@ -31,7 +31,7 @@ struct PlantUMLDocumentView: View {
     @AppStorage("fontSize") var fontSize:Int = 15
     
     @StateObject var document: PlantUMLObservableDocument
-    @StateObject var openAIService = OpenAIObservableService()
+    @StateObject var openAIService = AIObservableService()
     @StateObject var networkService = NetworkObservableService()
     @State var isOpenAIVisible  = false
     

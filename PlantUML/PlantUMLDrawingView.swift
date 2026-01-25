@@ -19,7 +19,7 @@ import DrawOnImage
     NavigationStack {
         PlantUMLDrawingView(
             
-            service: OpenAIObservableService(),
+            service: AIObservableService(),
             document: PlantUMLObservableDocument(document:.constant(PlantUMLDocument()), fileName:"Untitled")
         ).environmentObject(NetworkObservableService())
         
@@ -29,7 +29,7 @@ import DrawOnImage
 struct PlantUMLDrawingView: View {
     @Environment( \.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var service:OpenAIObservableService
+    @ObservedObject var service:AIObservableService
     @ObservedObject var document: PlantUMLObservableDocument
     @EnvironmentObject var networkService: NetworkObservableService
     @State var isScrollEnabled = false
