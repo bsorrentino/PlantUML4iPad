@@ -34,7 +34,8 @@ class AIObservableService : ObservableObject {
     @Published public var inputApiKey = ""
     @Published public var provider: AIProvider = .openAI
     
-    @AppSecureStorage("openaikey") private var openAIKey:String?
+    @AppStorage("aiProvider") var providerSetting:String = "OpenAI"
+    @AppSecureStorage("openaikey") private var openAIKeySetting:String?
     @AppStorage("openaiModel") var openaiPromptModel:String = "gpt-4o-mini"
     @AppStorage("visionModel") var openaivisionModel:String = "gpt-4o"
     
@@ -43,36 +44,53 @@ class AIObservableService : ObservableObject {
     @AppStorage("ollamaVisionModel") var ollamaVisionModel:String = ""
     @AppStorage("ollamaURL")var ollamaURL: String = OllamaLanguageModel.defaultBaseURL.absoluteString
 
-    var clipboardQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
-    var promptQueue = LILOFixedSizeQueue<String>( maxSize: 10 )
+    var clipboardQueue  = LILOFixedSizeQueue<String>( maxSize: 10 )
+    var promptQueue     = LILOFixedSizeQueue<String>( maxSize: 10 )
     
     
     init() {
         
+        if let provider = UserDefaults.standard.string(forKey: "aiProvider") {
+            self.providerSetting = provider
+        }
         if let apiKey = readConfigString(forInfoDictionaryKey: "OPENAI_API_KEY"), !apiKey.isEmpty {
-            openAIKey = apiKey
+            self.openAIKeySetting = apiKey
         }
         
-        inputApiKey = openAIKey ?? ""
+        self.provider = AIProvider(rawValue: self.providerSetting) ?? .openAI
+        
+        self.inputApiKey = self.openAIKeySetting ?? ""
         
         
      }
     
     func commitSettings() {
-        guard !inputApiKey.isEmpty else {
-            return
+        if( self.provider.rawValue != self.providerSetting ) {
+            self.providerSetting = self.provider.rawValue
         }
-        openAIKey = inputApiKey
-        status = .Ready
+        
+        if( self.inputApiKey != self.openAIKeySetting ) {
+            self.openAIKeySetting = self.inputApiKey
+        }
+
+        if !self.inputApiKey.isEmpty {
+            status = .Ready
+        }
+        
     }
     
-    func resetSettings() {
-        inputApiKey = ""
-        openAIKey = nil
+    func rollbackSettings() {
+        if( self.provider.rawValue != self.providerSetting ) {
+            self.provider = AIProvider( rawValue: self.providerSetting ) ?? .openAI
+        }
+        
+        if( self.inputApiKey != self.openAIKeySetting ) {
+            self.inputApiKey = self.openAIKeySetting ?? ""
+        }
     }
 
     var isSettingsValid:Bool {
-        guard let openAIKey, !openAIKey.isEmpty else {
+        guard let openAIKeySetting, !openAIKeySetting.isEmpty else {
             return false
         }
         return true
@@ -81,7 +99,7 @@ class AIObservableService : ObservableObject {
     @MainActor
     func updatePlantUMLDiagram( input: String, instruction: String ) async -> String? {
         
-        guard let openAIKey, case .Ready = status else {
+        guard let openAIKeySetting, case .Ready = status else {
             return nil
         }
         
@@ -93,7 +111,7 @@ class AIObservableService : ObservableObject {
                 case .ollama:
                     OllamaLanguageModel(baseURL: URL(string: ollamaURL)!, model: ollamaPromptModel)
                 default:
-                    OpenAILanguageModel(apiKey: openAIKey, model: openaiPromptModel)
+                    OpenAILanguageModel(apiKey: openAIKeySetting, model: openaiPromptModel)
                 }
             
             if let content = try await updatePlantUML( languageModel: promptLanguageModel,
@@ -131,7 +149,7 @@ extension AIObservableService {
     @MainActor
     func processImageWithAgents<T:AgentExecutorDelegate>( imageData: Data, delegate:T ) async -> String? {
         
-        guard let openAIKey, case .Ready = status else {
+        guard let openAIKeySetting, case .Ready = status else {
             delegate.progress("WARNING: OpenAI API not initialized")
             return nil
         }
@@ -141,8 +159,8 @@ extension AIObservableService {
         do {
             print( "promptModel: \(openaiPromptModel) - visionModel: \(openaivisionModel)")
 
-            let promptLanguageModel = OpenAILanguageModel(apiKey: openAIKey, model: openaiPromptModel)
-            let visionLanguageModel = OpenAILanguageModel(apiKey: openAIKey, model: openaivisionModel)
+            let promptLanguageModel = OpenAILanguageModel(apiKey: openAIKeySetting, model: openaiPromptModel)
+            let visionLanguageModel = OpenAILanguageModel(apiKey: openAIKeySetting, model: openaivisionModel)
 
             async let runTranslation = if DEMO_MODE  {
                 try runTranslateDrawingToPlantUMLUseCaseDemo( promptModel: promptLanguageModel,
@@ -222,3 +240,4 @@ class LILOFixedSizeQueue<T> : LILOQueue<T> {
     }
     
 }
+
