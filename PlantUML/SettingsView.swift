@@ -72,7 +72,8 @@ struct SettingsView: View {
                     
                 }
                 
-                Button("Done") {
+                Button("Save") {
+                    serviceAI.commitSettings()
                     dismiss()
                 }
                 .frame(maxWidth: .infinity)
