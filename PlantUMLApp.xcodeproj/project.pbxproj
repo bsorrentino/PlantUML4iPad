@@ -11,10 +11,11 @@
 		A008239B2C73A5B000464590 /* AppSecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A008239A2C73A5B000464590 /* AppSecureStorage */; };
 		A008239D2C73A5B000464590 /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A008239C2C73A5B000464590 /* PlantUMLFramework */; };
 		A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09A6DDA293D0E5E000856ED /* AsyncImage+Cache.swift */; };
-		A02BB3E82B41C9430073D432 /* OpenAIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */; };
+		A02BB3E82B41C9430073D432 /* AIObservableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02BB3E72B41C9430073D432 /* AIObservableService.swift */; };
 		A036CC3F2A0FC67C003FDB5E /* PlantUMLFramework in Frameworks */ = {isa = PBXBuildFile; productRef = A0BD13F629EB16280048D9C6 /* PlantUMLFramework */; };
 		A038DB6029D489BA0032E312 /* PlantUMLOpenAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */; };
 		A03B74652F0837C1007465AF /* DrawOnImage in Frameworks */ = {isa = PBXBuildFile; productRef = A03B74642F0837C1007465AF /* DrawOnImage */; };
+		A0426A012F265DD1001A3B7A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0426A002F265DC8001A3B7A /* SettingsView.swift */; };
 		A04512F32B3E2D8E00CD1158 /* PlantUMLDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */; };
 		A047206F29549ACC007E061F /* SwiftUI+Share.swift in Sources */ = {isa = PBXBuildFile; fileRef = A047206E29549ACC007E061F /* SwiftUI+Share.swift */; };
 		A068572E29D8B31100E82C2F /* View+Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A068572D29D8B31100E82C2F /* View+Clipboard.swift */; };
@@ -79,10 +80,11 @@
 		A00729BC29DB2A9D00D73D1A /* PlantUMLAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A01552A228CF47DF00F2B8A1 /* PlantUMLFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PlantUMLFramework; sourceTree = "<group>"; };
 		A01907EF2951CD5C0059CCBE /* privacy_policy.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacy_policy.md; sourceTree = "<group>"; };
-		A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIObservableService.swift; sourceTree = "<group>"; };
+		A02BB3E72B41C9430073D432 /* AIObservableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIObservableService.swift; sourceTree = "<group>"; };
 		A036CC402A0FC67C003FDB5E /* PlantUMLAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlantUMLAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A038DB5B29D452880032E312 /* OpenAI.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = OpenAI.xcconfig; sourceTree = "<group>"; };
 		A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlantUMLOpenAIView.swift; sourceTree = "<group>"; };
+		A0426A002F265DC8001A3B7A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantUMLDrawingView.swift; sourceTree = "<group>"; };
 		A047206E29549ACC007E061F /* SwiftUI+Share.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Share.swift"; sourceTree = "<group>"; };
 		A04FE0482AA26B8000210EFC /* PlantUML.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PlantUML.xctestplan; sourceTree = SOURCE_ROOT; };
@@ -181,7 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				A0A42A78289AC37C00E929EB /* PlantUMLObservableDocument.swift */,
-				A02BB3E72B41C9430073D432 /* OpenAIObservableService.swift */,
+				A02BB3E72B41C9430073D432 /* AIObservableService.swift */,
 				A0AC4EAC2CF760AC00E5090A /* NetworkObservableService.swift */,
 			);
 			name = Observable;
@@ -255,6 +257,7 @@
 				A04512F22B3E2D8E00CD1158 /* PlantUMLDrawingView.swift */,
 				A0A42A75289ABC2D00E929EB /* PlantUMLDiagramView.swift */,
 				A038DB5F29D489BA0032E312 /* PlantUMLOpenAIView.swift */,
+				A0426A002F265DC8001A3B7A /* SettingsView.swift */,
 				A0BFBA9C290D551F008340E3 /* Localizable.strings */,
 				A0D3C64F28984A10000838D7 /* Assets.xcassets */,
 				A082CAFF2A9A68D80055D6D6 /* Settings.bundle */,
@@ -357,7 +360,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					A00729B729DB2A9D00D73D1A = {
 						CreatedOnToolsVersion = 14.1;
@@ -448,12 +451,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0426A012F265DD1001A3B7A /* SettingsView.swift in Sources */,
 				A0FB8F9C295616BF00910896 /* View+UIImage.swift in Sources */,
 				A038DB6029D489BA0032E312 /* PlantUMLOpenAIView.swift in Sources */,
 				A0BADC7129D4C2740056A098 /* SwiftUI+Conditional.swift in Sources */,
 				A04512F32B3E2D8E00CD1158 /* PlantUMLDrawingView.swift in Sources */,
 				A0277C0B293D11D7005435AE /* AsyncImage+Cache.swift in Sources */,
-				A02BB3E82B41C9430073D432 /* OpenAIObservableService.swift in Sources */,
+				A02BB3E82B41C9430073D432 /* AIObservableService.swift in Sources */,
 				A0A42A79289AC37C00E929EB /* PlantUMLObservableDocument.swift in Sources */,
 				A0D3C64A28984A0E000838D7 /* PlantUMLApp.swift in Sources */,
 				A0943A6F2944A44900342426 /* ScaleToFit+ToggleStyle.swift in Sources */,
@@ -610,6 +614,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -666,6 +671,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -699,7 +705,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.5.0;
+				MARKETING_VERSION = 3.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -739,7 +745,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.5.0;
+				MARKETING_VERSION = 3.6.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.bsc.PlantUML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
