@@ -492,7 +492,7 @@ public func updatePlantUML( openAI: OpenAI,
                           model: model,
                           responseFormat: .derivedJsonSchema(name: "plantuml result",
                                                              type: PlantUMLResult.self),
-                          temperature: 0.0,
+//                          temperature: 0.0,
                           topP: 1.0)
 
     let chat = try await openAI.chats(query: query)
