@@ -20,10 +20,10 @@ let package = Package(
 //        .package(url: "https://github.com/bsorrentino/Swift-OpenAI.git", branch: "develop"), // Add the dependency here
 //        .package(url: "https://github.com/MacPaw/OpenAI.git", branch: "main")
 //        .package(url: "https://github.com/1amageek/OpenFoundationModels-OpenAI.git", branch: "main")
-//        .package(url: "https://github.com/mattt/AnyLanguageModel", from: "0.5.0")
+        .package(url: "https://github.com/mattt/AnyLanguageModel", from: "0.6.0"),
 //        .package(url: "https://github.com/MacPaw/OpenAI.git", exact: "0.4.3"),
         .package(url: "https://github.com/bsorrentino/LangGraph-Swift.git", branch: "main"),
-        .package(url: "https://github.com/bsorrentino/AnyLanguageModel.git", branch: "develop")
+//        .package(url: "https://github.com/bsorrentino/AnyLanguageModel.git", branch: "develop")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

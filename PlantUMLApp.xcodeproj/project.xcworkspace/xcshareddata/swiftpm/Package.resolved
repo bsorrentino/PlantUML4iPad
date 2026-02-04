@@ -3,10 +3,10 @@
     {
       "identity" : "anylanguagemodel",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bsorrentino/AnyLanguageModel.git",
+      "location" : "https://github.com/mattt/AnyLanguageModel",
       "state" : {
-        "branch" : "develop",
-        "revision" : "668a2c65d21cb27f86fea3ed60ce4546608f22a2"
+        "revision" : "060866f8c1a4b3f5c52ccac406d51ab903dbeab6",
+        "version" : "0.6.0"
       }
     },
     {
